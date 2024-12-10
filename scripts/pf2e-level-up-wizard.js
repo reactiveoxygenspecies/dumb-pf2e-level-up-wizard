@@ -1,5 +1,5 @@
-import { renderLevelUpButton } from './scripts/actor.js';
-import { registerSettings } from './scripts/settings.js';
+import { renderLevelUpButton } from './actor.js';
+import { registerSettings } from './settings.js';
 
 export const module_name = 'pf2e-level-up-wizard';
 

@@ -46,11 +46,11 @@ jobs:
             `# The files that will be included.` \
             module.json                          \
             README.md                            \
-            pf2e-level-up-wizard.js              \
-            pf2e-level-up-wizard.css             \
             LICENSE                              \
             templates                            \
             scripts/                             \
+            styles/                              \
+            packs/                               \
             language/                            \
             lang/
           # Don't forget to add a backslash at the end of the line for any
