@@ -1,5 +1,67 @@
 {
   "PF2E_LEVEL_UP_WIZARD": {
-    "button-tooltip": "Level Up!"
+    "button-tooltip": "Level Up!",
+    "menu": {
+      "header": {
+        "name": "{{actorName}} leveled up to {{newLevel}}!",
+        "description": "Here's an overview of your new features. Please make selections where prompted!"
+      },
+      "dropdown": {
+        "placeholder": "Make a Selection"
+      },
+      "classFeats": {
+        "header": "Class Feats",
+        "row": {
+          "available": "New Class Feat Available:"
+        }
+      },
+      "ancestryFeats": {
+        "header": "Ancestry Feats",
+        "row": {
+          "available": "New Ancestry Feat Available:"
+        }
+      },
+      "skillFeats": {
+        "header": "Skill Feats",
+        "row": {
+          "available": "New Skill Feat Available:"
+        }
+      },
+      "generalFeats": {
+        "header": "General Feats",
+        "row": {
+          "available": "New General Feat Available:"
+        }
+      },
+      "skillIncreases": {
+        "header": "Skill Increases",
+        "row": {
+          "available": "Skill Increase Available:"
+        }
+      },
+      "features": {
+        "class": {
+          "header": "New Class Features",
+          "row": {
+            "noAction": "No action required"
+          }
+        },
+        "manual": {
+          "update": "Update this manually on the",
+          "tab": {
+            "character": "Character",
+            "spellcasting": "Spellcasting"
+          },
+          "sheet": "tab of your character sheet."
+        },
+        "abilityScore": {
+          "header": "Ability Score Increases:"
+        },
+        "spellcasting": {
+          "rank": "New Spell Rank & Slots Available:",
+          "slots": "New Spell Slots:"
+        }
+      }
+    }
   }
 }
