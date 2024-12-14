@@ -34,6 +34,6 @@ Feel free to reach out to me on Discord at Zumanzo#8754, and/or open an [issue o
 
 I'm always happy to accept contribution from others! If you'd like to contribute, please follow these guidelines:
 
-- Create branch out of latest `develop` branch. Make sure to do a `git pull origin/develop` for latest copy.
+- Create branch out of latest `main` branch. Make sure to do a `git pull origin/main` for latest copy.
 - Branch names should be a description of the feature being implemented/bug being fixed (i.e. `my-feature`, `bug-123-bug-summary`), preferring dashes over camelCasing in branch names.
-- When ready for review, open a PR from your feature branch against `develop`.
+- When ready for review, open a PR from your feature branch against `main`.
