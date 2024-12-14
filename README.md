@@ -29,3 +29,11 @@ You can find the project board of planned features at the [PF2e Level-Up Wizard 
 **Note**: Before submitting an Feature Request, please check the [project board](https://github.com/users/BenABaron/projects/1) to see if the feature is already planned.
 
 Feel free to reach out to me on Discord at Zumanzo#8754, and/or open an [issue on Github](https://github.com/BenABaron/pf2e-level-up-wizard/issues).
+
+## Contributing
+
+I'm always happy to accept contribution from others! If you'd like to contribute, please follow these guidelines:
+
+- Create branch out of latest `develop` branch. Make sure to do a `git pull origin/develop` for latest copy.
+- Branch names should be a description of the feature being implemented/bug being fixed (i.e. `my-feature`, `bug-123-bug-summary`), preferring dashes over camelCasing in branch names.
+- When ready for review, open a PR from your feature branch against `develop`.
