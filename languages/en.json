@@ -3,7 +3,7 @@
     "button-tooltip": "Level Up!",
     "menu": {
       "header": {
-        "name": "{{actorName}} leveled up to {{newLevel}}!",
+        "name": "{actorName} leveled up to {newLevel}!",
         "description": "Here's an overview of your new features. Please make selections where prompted!"
       },
       "dropdown": {
@@ -11,40 +11,28 @@
       },
       "classFeats": {
         "header": "Class Feats",
-        "row": {
-          "available": "New Class Feat Available:"
-        }
+        "label": "New Class Feat Available:"
       },
       "ancestryFeats": {
         "header": "Ancestry Feats",
-        "row": {
-          "available": "New Ancestry Feat Available:"
-        }
+        "label": "New Ancestry Feat Available:"
       },
       "skillFeats": {
         "header": "Skill Feats",
-        "row": {
-          "available": "New Skill Feat Available:"
-        }
+        "label": "New Skill Feat Available:"
       },
       "generalFeats": {
         "header": "General Feats",
-        "row": {
-          "available": "New General Feat Available:"
-        }
+        "label": "New General Feat Available:"
       },
       "skillIncreases": {
         "header": "Skill Increases",
-        "row": {
-          "available": "Skill Increase Available:"
-        }
+        "label": "Skill Increase Available:"
       },
       "features": {
         "class": {
           "header": "New Class Features",
-          "row": {
-            "noAction": "No action required"
-          }
+          "noAction": "No action required"
         },
         "manual": {
           "update": "Update this manually on the",
