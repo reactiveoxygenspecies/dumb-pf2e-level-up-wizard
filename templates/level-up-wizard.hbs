@@ -1,14 +1,21 @@
 <form>
-  <h1 class='fancy-font'>{{localize "PF2E_LEVEL_UP_WIZARD.menu.header.name" actorName=actorName newLevel=newLevel}}</h1>
-  <p class='flavor-text'>{{localize "PF2E_LEVEL_UP_WIZARD.menu.header.description" }}</p>
+  <h1 class='fancy-font'>{{localize
+      'PF2E_LEVEL_UP_WIZARD.menu.header.name'
+      actorName=actorName
+      newLevel=newLevel
+    }}</h1>
+  <p class='flavor-text'>{{localize
+      'PF2E_LEVEL_UP_WIZARD.menu.header.description'
+    }}</p>
 
+  {{! Class Feats }}
   {{#if classFeats}}
     <h3><strong>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.classFeats.header" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.classFeats.header'}}
       </strong></h3>
     <div class='selection-row'>
       <label for='classFeats'>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.classFeats.new" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.classFeats.label'}}
       </label>
       <select
         name='classFeats'
@@ -16,7 +23,9 @@
         class='form-select-feat'
         data-required='true'
       >
-        <option value='' disabled selected>{{localize "PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder" }}</option>
+        <option value='' disabled selected>{{localize
+            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
+          }}</option>
         {{#each classFeats}}
           <option value={{uuid}}>{{name}} | {{system.level.value}}</option>
         {{/each}}
@@ -24,12 +33,15 @@
     </div>
   {{/if}}
 
+  {{! Ancestry Feats }}
   {{#if ancestryFeats}}
     <h3><strong>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.header" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.header'}}
       </strong></h3>
     <div class='selection-row'>
-      <label for='ancestryFeats'>{{localize "PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.new" }}
+      <label for='ancestryFeats'>{{localize
+          'PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.label'
+        }}
       </label>
       <select
         name='ancestryFeats'
@@ -37,7 +49,9 @@
         class='form-select-feat'
         data-required='true'
       >
-        <option value='' disabled selected>{{localize "PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder" }}</option>
+        <option value='' disabled selected>{{localize
+            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
+          }}</option>
         {{#each ancestryFeats}}
           <option value={{uuid}}>{{name}} | {{system.level.value}}</option>
         {{/each}}
@@ -45,13 +59,14 @@
     </div>
   {{/if}}
 
+  {{! Skill Feats }}
   {{#if skillFeats}}
     <h3><strong>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.skillFeats.header" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillFeats.header'}}
       </strong></h3>
     <div class='selection-row'>
       <label for='skillFeats'>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.skillFeats.row.new" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillFeats.label'}}
       </label>
       <select
         name='skillFeats'
@@ -59,7 +74,9 @@
         class='form-select-feat'
         data-required='true'
       >
-        <option value='' disabled selected>{{localize "PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder" }}</option>
+        <option value='' disabled selected>{{localize
+            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
+          }}</option>
         {{#each skillFeats}}
           <option value={{uuid}}>{{name}} | {{system.level.value}}</option>
         {{/each}}
@@ -67,13 +84,14 @@
     </div>
   {{/if}}
 
+  {{! General Feats }}
   {{#if generalFeats}}
     <h3><strong>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.generalFeats.header" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.generalFeats.header'}}
       </strong></h3>
     <div class='selection-row'>
       <label for='generalFeats'>
-         {{localize "PF2E_LEVEL_UP_WIZARD.menu.generalFeats.row.new" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.generalFeats.label'}}
       </label>
       <select
         name='generalFeats'
@@ -81,20 +99,24 @@
         class='form-select-feat'
         data-required='true'
       >
-        <option value='' disabled selected>{{localize "PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder" }}</option>
+        <option value='' disabled selected>{{localize
+            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
+          }}</option>
         {{#each generalFeats}}
           <option value={{uuid}}>{{name}} | {{system.level.value}}</option>
         {{/each}}
       </select>
     </div>
   {{/if}}
+
+  {{! Skill Increases }}
   {{#if skills}}
     <h3><strong>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.skillIncreases.header" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillIncreases.header'}}
       </strong></h3>
     <div class='selection-row'>
       <label for='skills'>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.skillIncreases.row.available" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillIncreases.label'}}
       </label>
       <select
         name='skills'
@@ -102,7 +124,9 @@
         class='form-select-skill'
         data-required='true'
       >
-        <option value='' disabled selected>{{localize "PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder" }}</option>
+        <option value='' disabled selected>{{localize
+            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
+          }}</option>
         {{#each skills}}
           <option value={{label}} class={{class}}>{{label}}</option>
         {{/each}}
@@ -110,45 +134,69 @@
     </div>
   {{/if}}
 
+  {{! Class Features }}
   {{#if hasFeaturesToDisplay}}
     <h3><strong>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.header" }}
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.class.header'}}
       </strong>
     </h3>
+
+    {{! Innate Features }}
     {{#if features.featuresForLevel.length}}
       {{#each features.featuresForLevel}}
-        <p><strong>{{this.name}} ({{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.row.noAction" }}):</strong>
+        <p><strong>{{this.name}}
+            ({{localize
+              'PF2E_LEVEL_UP_WIZARD.menu.features.class.noAction'
+            }}):</strong>
           {{{this.description}}}</p>
       {{/each}}
     {{/if}}
+
+    {{! Ability Score Increases }}
     {{#if features.abilityScoreIncreaseLevel}}
       <p>
-        <strong>{{localize "PF2E_LEVEL_UP_WIZARD.menu.features.abilityScore.header" }}</strong>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.update" }}
-        <em>{{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.tab.character" }}</em>
-        {{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.sheet" }}
+        <strong>{{localize
+            'PF2E_LEVEL_UP_WIZARD.menu.features.abilityScore.header'
+          }}</strong>
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.update'}}
+        <em>{{localize
+            'PF2E_LEVEL_UP_WIZARD.menu.features.manual.tab.character'
+          }}</em>
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.sheet'}}
       </p>
     {{/if}}
+
+    {{! Spellcasting }}
     {{#if features.spellcasting}}
+      {{! New Spell Rank }}
       {{#if features.newSpellRankLevel}}
         <p>
-          <strong>{{localize "PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.rank" }}</strong>
-          {{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.update" }}
-          <em>{{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.tab.spellcasting" }}</em>
-          {{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.sheet" }}
+          <strong>{{localize
+              'PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.rank'
+            }}</strong>
+          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.update'}}
+          <em>{{localize
+              'PF2E_LEVEL_UP_WIZARD.menu.features.manual.tab.spellcasting'
+            }}</em>
+          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.sheet'}}
         </p>
+        {{! New Spell Slots }}
       {{else}}
         <p>
-          <strong>{{localize "PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.slots" }}</strong>
-          {{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.update" }}
-          <em>{{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.tab.spellcasting" }}</em>
-          {{localize "PF2E_LEVEL_UP_WIZARD.menu.features.class.features.manual.sheet" }}
+          <strong>{{localize
+              'PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.slots'
+            }}</strong>
+          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.update'}}
+          <em>{{localize
+              'PF2E_LEVEL_UP_WIZARD.menu.features.manual.tab.spellcasting'
+            }}</em>
+          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.sheet'}}
         </p>
       {{/if}}
     {{/if}}
   {{/if}}
 
-  <!-- Submit Button -->
+  {{! Submit Button }}
   <div style='margin-top: 20px;'>
     <button type='submit' class='btn btn-primary' disabled>Submit</button>
   </div>
