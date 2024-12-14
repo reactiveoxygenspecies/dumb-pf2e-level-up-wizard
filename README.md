@@ -22,21 +22,10 @@ The wizard even sends confirmation messages in chat, as well as whispers to indi
 
 ## Future
 
-### Planned Settings
-
-- Allowing the GM to enable/disable the wizard between level ups
-- Disabling the level input on character sheets
-- Enabling Dedication Feats (currently disabled)
-
-### Planned Features
-
-- Ability Score Increases
-- Free Archetype Support
-- Ancestry Paragon Support
-- Updating Feats Dropdown (better styling, seeing feat details, sending in chat, etc.)
-- Marking Feats that have prerequisites
-- Proper Localization :)
+You can find the project board of planned features at the [PF2e Level-Up Wizard Workshop](https://github.com/users/BenABaron/projects/1)
 
 ## Bug Reporting, Issues, & Feature Requests
+
+**Note**: Before submitting an Feature Request, please check the [project board](https://github.com/users/BenABaron/projects/1) to see if the feature is already planned.
 
 Feel free to reach out to me on Discord at Zumanzo#8754, and/or open an [issue on Github](https://github.com/BenABaron/pf2e-level-up-wizard/issues).
