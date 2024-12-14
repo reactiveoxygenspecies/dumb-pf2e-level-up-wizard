@@ -3,7 +3,7 @@
     "button-tooltip": "Level Up!",
     "menu": {
       "header": {
-        "name": "{actorName} leveled up to {newLevel}!",
+        "name": "{actorName} leveled up to {targetLevel}!",
         "description": "Here's an overview of your new features. Please make selections where prompted!"
       },
       "dropdown": {

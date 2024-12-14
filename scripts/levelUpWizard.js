@@ -10,9 +10,10 @@ import {
 } from './helpers.js';
 
 export class PF2eLevelUpWizardConfig extends FormApplication {
-  constructor(sheetData) {
+  constructor(actorData, triggeredByManualLevelUp = false) {
     super();
-    this.sheetData = sheetData;
+    this.actorData = actorData;
+    this.triggeredByManualLevelUp = triggeredByManualLevelUp;
   }
 
   static get defaultOptions() {
@@ -57,14 +58,34 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
   }
 
   async getData() {
-    const classFeats = await getFeatsForLevel(this.sheetData, 'class');
-    const ancestryFeats = await getFeatsForLevel(this.sheetData, 'ancestry');
-    const skillFeats = await getFeatsForLevel(this.sheetData, 'skill');
-    const generalFeats = await getFeatsForLevel(this.sheetData, 'general');
-    const features = await getFeaturesForLevel(this.sheetData);
-    const skills = getSkillsForLevel(this.sheetData);
-    const actorName = this.sheetData.actor.name;
-    const newLevel = this.sheetData.actor.system.details.level.value + 1;
+    const currentLevel = this.actorData.system.details.level.value;
+
+    const targetLevel = this.triggeredByManualLevelUp
+      ? currentLevel
+      : currentLevel + 1;
+    const classFeats = await getFeatsForLevel(
+      this.actorData,
+      'class',
+      targetLevel
+    );
+    const ancestryFeats = await getFeatsForLevel(
+      this.actorData,
+      'ancestry',
+      targetLevel
+    );
+    const skillFeats = await getFeatsForLevel(
+      this.actorData,
+      'skill',
+      targetLevel
+    );
+    const generalFeats = await getFeatsForLevel(
+      this.actorData,
+      'general',
+      targetLevel
+    );
+    const features = await getFeaturesForLevel(this.actorData, targetLevel);
+    const skills = getSkillsForLevel(this.actorData, targetLevel);
+    const actorName = this.actorData.name;
 
     // Check if at least one field in `features` is truthy
     const hasFeaturesToDisplay = !!(
@@ -83,7 +104,7 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
       skills,
       hasFeaturesToDisplay,
       actorName,
-      newLevel
+      targetLevel
     };
   }
 
@@ -92,23 +113,35 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
 
     if (!confirmed) return;
 
-    const actor = this.sheetData.object;
-    const newLevel = actor.system.details.level.value + 1;
+    const actor = this.actorData;
+    const currentLevel = actor.system.details.level.value;
+    const targetLevel = this.triggeredByManualLevelUp
+      ? currentLevel
+      : currentLevel + 1;
     const playerId = game.user.id;
     const actorName = actor.name;
 
-    ui.notifications.info(`Updating ${actorName} to level ${newLevel}...`);
+    if (!this.triggeredByManualLevelUp) {
+      ui.notifications.info(`Updating ${actorName} to level ${targetLevel}...`);
 
-    const data = await this.getData();
+      const data = await this.getData();
 
-    formData.abilityScoreIncreaseLevel =
-      data.features.abilityScoreIncreaseLevel;
-    formData.spellcasting = data.features.spellcasting;
-    formData.newSpellRankLevel = data.features.newSpellRankLevel;
+      formData.abilityScoreIncreaseLevel =
+        data.features.abilityScoreIncreaseLevel;
+      formData.spellcasting = data.features.spellcasting;
+      formData.newSpellRankLevel = data.features.newSpellRankLevel;
 
-    await actor.update({ 'system.details.level.value': newLevel });
+      await actor.update({ 'system.details.level.value': targetLevel });
 
-    await Hooks.once('updateActor', () => {});
+      await Hooks.once('updateActor', () => {});
+    } else {
+      const data = await this.getData();
+
+      formData.abilityScoreIncreaseLevel =
+        data.features.abilityScoreIncreaseLevel;
+      formData.spellcasting = data.features.spellcasting;
+      formData.newSpellRankLevel = data.features.newSpellRankLevel;
+    }
 
     const featEntries = Object.entries({
       classFeats: formData.classFeats,
@@ -139,8 +172,8 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
       ...feat.toObject(),
       system: {
         ...feat.system,
-        location: `${featGroupMap[type]}-${newLevel}`,
-        level: { ...feat.system.level, taken: newLevel }
+        location: `${featGroupMap[type]}-${targetLevel}`,
+        level: { ...feat.system.level, taken: targetLevel }
       }
     }));
 
@@ -165,7 +198,7 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
 
     createGlobalLevelMessage(
       actorName,
-      newLevel,
+      targetLevel,
       selectedFeats,
       skillIncreaseMessage
     );
