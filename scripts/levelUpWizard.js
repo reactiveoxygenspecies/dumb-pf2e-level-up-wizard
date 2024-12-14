@@ -121,26 +121,19 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
     const playerId = game.user.id;
     const actorName = actor.name;
 
+    const data = await this.getData();
+
+    formData.abilityScoreIncreaseLevel =
+      data.features.abilityScoreIncreaseLevel;
+    formData.spellcasting = data.features.spellcasting;
+    formData.newSpellRankLevel = data.features.newSpellRankLevel;
+
     if (!this.triggeredByManualLevelUp) {
       ui.notifications.info(`Updating ${actorName} to level ${targetLevel}...`);
-
-      const data = await this.getData();
-
-      formData.abilityScoreIncreaseLevel =
-        data.features.abilityScoreIncreaseLevel;
-      formData.spellcasting = data.features.spellcasting;
-      formData.newSpellRankLevel = data.features.newSpellRankLevel;
 
       await actor.update({ 'system.details.level.value': targetLevel });
 
       await Hooks.once('updateActor', () => {});
-    } else {
-      const data = await this.getData();
-
-      formData.abilityScoreIncreaseLevel =
-        data.features.abilityScoreIncreaseLevel;
-      formData.spellcasting = data.features.spellcasting;
-      formData.newSpellRankLevel = data.features.newSpellRankLevel;
     }
 
     const featEntries = Object.entries({

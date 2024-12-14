@@ -27,10 +27,21 @@ export const renderLevelUpButton = (sheet, html) => {
     const button = $(
       `<a class="level-up-wizard" title="Level Up Wizard"><i class="fas fa-hat-wizard"></i>${title}</a>`
     );
+
     button.on('click', () =>
       new PF2eLevelUpWizardConfig(sheet.actor).render(true)
     );
 
     html.find('.window-title').after(button);
   }
+};
+
+export const renderWizardOnLevelUp = (actor, updateData, options, userId) => {
+  if (actor.type !== 'character' || game.user.id !== userId) return;
+
+  const newLevel = updateData?.system?.details?.level?.value;
+
+  if (!newLevel) return;
+
+  new PF2eLevelUpWizardConfig(actor, true).render(true);
 };

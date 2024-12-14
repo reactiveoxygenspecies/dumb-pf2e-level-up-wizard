@@ -46,10 +46,7 @@ export const getMaxSkillProficiency = (level) => {
   return 2; // Expert
 };
 
-const stripParagraphTags = (html) => {
-  if (!html) return '';
-  return html.replace(/^<p>/, '').replace(/<\/p>$/, '');
-};
+const stripParagraphTags = (html) => html?.replace(/^<p>|<\/p>$/g, '') || '';
 
 export const getClassSpecificDescription = (description, characterClass) => {
   if (!description || !characterClass) return description;
@@ -114,17 +111,9 @@ export const getFeatsForLevel = async (characterData, type, targetLevel) => {
   return filterAndSortFeats(searchQuery, targetLevel);
 };
 
-export const getFeaturesForLevel = async (characterData, targetLevel) => {
-  const characterClass = characterData?.class?.name;
-  const spellcasting = characterData?.class?.system?.spellcasting;
-  const featuresArray = Object.values(characterData?.class?.system?.items);
-
-  const featuresForLevel = featuresArray.filter(
-    (boon) => boon.level === targetLevel
-  );
-
-  const featuresWithDetails = await Promise.all(
-    featuresForLevel.map(async (feature) => {
+const mapFeaturesWithDetails = async (features, characterClass) => {
+  return Promise.all(
+    features.map(async (feature) => {
       const item = await fromUuid(feature.uuid).catch(() => null);
       if (!item) return null;
 
@@ -140,18 +129,27 @@ export const getFeaturesForLevel = async (characterData, targetLevel) => {
         uuid: feature.uuid
       };
     })
+  ).then((results) => results.filter((feature) => feature));
+};
+
+export const getFeaturesForLevel = async (characterData, targetLevel) => {
+  const characterClass = characterData?.class?.name;
+  const spellcasting = characterData?.class?.system?.spellcasting;
+  const featuresArray = Object.values(characterData?.class?.system?.items);
+
+  const featuresForLevel = featuresArray.filter(
+    (boon) => boon.level === targetLevel
   );
 
-  const abilityScoreIncreaseLevel =
-    abilityScoreIncreaseLevels.includes(targetLevel);
-
-  const newSpellRankLevel =
-    newSpellRankLevels.includes(targetLevel) && spellcasting;
+  const featuresWithDetails = await mapFeaturesWithDetails(
+    featuresForLevel,
+    characterClass
+  );
 
   return {
-    featuresForLevel: featuresWithDetails.filter((feature) => feature),
-    abilityScoreIncreaseLevel,
-    newSpellRankLevel,
+    featuresForLevel: featuresWithDetails,
+    abilityScoreIncreaseLevel: abilityScoreIncreaseLevels.includes(targetLevel),
+    newSpellRankLevel: newSpellRankLevels.includes(targetLevel) && spellcasting,
     spellcasting
   };
 };

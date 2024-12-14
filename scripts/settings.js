@@ -3,8 +3,8 @@ import { renderLevelUpButton } from './actor.js';
 
 export const registerSettings = () => {
   game.settings.register(module_name, 'show-level-up-button', {
-    name: 'Show Level-Up Button',
-    hint: 'If toggled on, display a button to trigger the wizard and subsequent level-up. If toggled off, the wizard will be activated after a character is leveled-up manually.',
+    name: 'Enable Level-Up Button',
+    hint: "Choose whether to show a Level-Up button on character sheets. When disabled, the Level-Up Wizard will activate automatically after manually updating a character's level.",
     scope: 'world',
     config: true,
     type: Boolean,
@@ -13,14 +13,14 @@ export const registerSettings = () => {
   });
 
   game.settings.register(module_name, 'button-placement', {
-    name: 'Button Placement',
-    hint: 'If displaying the Level-Up Button, controls whether it is on the character sheet next to the level or in the toolbar',
+    name: 'Level-Up Button Placement',
+    hint: "Select where the Level-Up button appears: either next to the character's level or in the toolbar at the top of the character sheet.",
     scope: 'client',
     config: true,
     type: String,
     default: 'CHAR_HEADER',
     choices: {
-      CHAR_HEADER: 'Next To Level',
+      CHAR_HEADER: 'Next to Level',
       WINDOW_HEADER: 'Toolbar'
     },
     onChange: () => {

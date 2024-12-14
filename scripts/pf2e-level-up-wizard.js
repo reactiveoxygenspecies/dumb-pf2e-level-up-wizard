@@ -1,18 +1,7 @@
-import { renderLevelUpButton } from './actor.js';
-import { PF2eLevelUpWizardConfig } from './levelUpWizard.js';
+import { renderLevelUpButton, renderWizardOnLevelUp } from './actor.js';
 import { registerSettings } from './settings.js';
 
 export const module_name = 'pf2e-level-up-wizard';
-
-const renderWizardOnLevelUp = (actor, updateData, options, userId) => {
-  if (actor.type !== 'character' || game.user.id !== userId) return;
-
-  const newLevel = updateData?.system?.details?.level?.value;
-
-  if (!newLevel) return;
-
-  new PF2eLevelUpWizardConfig(actor, true).render(true);
-};
 
 Hooks.on('init', () => {
   console.log('PF2e Level-Up Wizard | Module Initialized');
@@ -20,11 +9,11 @@ Hooks.on('init', () => {
 });
 
 Hooks.on('ready', () => {
-  if (game.settings.get(module_name, 'show-level-up-button')) {
-    Hooks.on('renderCharacterSheetPF2e', renderLevelUpButton);
-  } else {
-    Hooks.on('updateActor', renderWizardOnLevelUp);
-  }
+  const showButton = game.settings.get(module_name, 'show-level-up-button');
+  const hook = showButton ? 'renderCharacterSheetPF2e' : 'updateActor';
+  const handler = showButton ? renderLevelUpButton : renderWizardOnLevelUp;
+
+  Hooks.on(hook, handler);
 });
 
 document.addEventListener('change', (event) => {
