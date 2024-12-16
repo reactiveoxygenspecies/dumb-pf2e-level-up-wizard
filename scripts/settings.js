@@ -71,6 +71,13 @@ export const registerSettings = () => {
     scope: 'world',
     config: true,
     type: Boolean,
-    default: false
+    default: false,
+    onChange: () => {
+      Object.values(ui.windows).forEach((app) => {
+        if (app.options.id === 'level-up-wizard') {
+          app.render(true);
+        }
+      });
+    }
   });
 };
