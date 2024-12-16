@@ -45,4 +45,23 @@ export const registerSettings = () => {
       });
     }
   });
+
+  game.settings.register(module_name, 'feat-sort-method', {
+    name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.sortMethod.name'),
+    hint: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.sortMethod.hint'),
+    scope: 'client',
+    config: true,
+    default: 'LEVEL_DESC',
+    choices: {
+      LEVEL_DESC: game.i18n.localize(
+        'PF2E_LEVEL_UP_WIZARD.settings.sortMethod.options.levelDesc'
+      ),
+      LEVEL_ASC: game.i18n.localize(
+        'PF2E_LEVEL_UP_WIZARD.settings.sortMethod.options.levelAsc'
+      ),
+      ALPHABETICAL: game.i18n.localize(
+        'PF2E_LEVEL_UP_WIZARD.settings.sortMethod.options.alphabetical'
+      )
+    }
+  });
 };

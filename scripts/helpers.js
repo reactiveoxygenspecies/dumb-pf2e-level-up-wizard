@@ -1,3 +1,5 @@
+import { module_name } from './pf2e-level-up-wizard.js';
+
 let cachedFeats = null;
 
 // @Constants
@@ -96,6 +98,26 @@ const filterFeats = async (searchQuery, targetLevel, existingFeats) => {
   });
 };
 
+const sortFeats = (feats, method) => {
+  switch (method) {
+    case 'LEVEL_ASC': // Sort by level (Low to High)
+      return feats.sort((a, b) =>
+        a.system.level.value !== b.system.level.value
+          ? a.system.level.value - b.system.level.value
+          : a.name.localeCompare(b.name)
+      );
+    case 'ALPHABETICAL': // Sort alphabetically (A-Z)
+      return feats.sort((a, b) => a.name.localeCompare(b.name));
+    case 'LEVEL_DESC': // Sort by level (High to Low)
+    default:
+      return feats.sort((a, b) =>
+        a.system.level.value !== b.system.level.value
+          ? b.system.level.value - a.system.level.value
+          : a.name.localeCompare(b.name)
+      );
+  }
+};
+
 export const getFeatsForLevel = async (
   characterData,
   type,
@@ -127,11 +149,11 @@ export const getFeatsForLevel = async (
     ? await filterFeats('archetype', targetLevel, existingFeats)
     : [];
 
-  return [...feats, ...archetypeFeats].sort((a, b) =>
-    a.system.level.value !== b.system.level.value
-      ? b.system.level.value - a.system.level.value
-      : a.name.localeCompare(b.name)
-  );
+  const allFeats = [...feats, ...archetypeFeats];
+
+  const sortMethod = game.settings.get(module_name, 'feat-sort-method');
+
+  return sortFeats(allFeats, sortMethod);
 };
 
 const mapFeaturesWithDetails = async (features, characterClass) => {
