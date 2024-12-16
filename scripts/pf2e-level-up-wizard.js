@@ -3,9 +3,13 @@ import { registerSettings } from './settings.js';
 
 export const module_name = 'pf2e-level-up-wizard';
 
-Hooks.on('init', () => {
+Hooks.on('init', async () => {
   console.log('PF2e Level-Up Wizard | Module Initialized');
   registerSettings();
+
+  const featDropdownPath = `modules/${module_name}/templates/partials/feat-dropdown.hbs`;
+  const featDropdownTemplate = await getTemplate(featDropdownPath);
+  Handlebars.registerPartial('featDropdown', featDropdownTemplate);
 });
 
 Hooks.on('ready', () => {

@@ -1,3 +1,5 @@
+import { module_name } from './pf2e-level-up-wizard.js';
+
 let cachedFeats = null;
 
 // @Constants
@@ -19,6 +21,12 @@ const getCachedFeats = async () => {
     cachedFeats = await featsCompendium.getDocuments();
   }
   return cachedFeats;
+};
+
+const getExistingFeats = (actor) => {
+  return actor.items
+    .filter((item) => item.type === 'feat')
+    .map((item) => item.name.toLowerCase());
 };
 
 export const normalizeString = (str) => str.replace(/\s+/g, '-').toLowerCase();
@@ -73,25 +81,49 @@ export const confirmChanges = async () => {
   });
 };
 
-const filterAndSortFeats = async (searchQuery, targetLevel) => {
+const filterFeats = async (searchQuery, targetLevel, existingFeats) => {
   const feats = await getCachedFeats();
   const normalizedQuery = normalizeString(searchQuery);
 
-  const filteredFeats = feats.filter((feat) => {
+  return feats.filter((feat) => {
     const traits = feat.system.traits.value.map(normalizeString);
+    const isTaken = existingFeats.includes(feat.name.toLowerCase());
+    const maxTakable = feat.system.maxTakable;
+
     return (
-      traits.includes(normalizedQuery) && feat.system.level.value <= targetLevel
+      traits.includes(normalizedQuery) &&
+      feat.system.level.value <= targetLevel &&
+      !(isTaken && maxTakable === 1)
     );
   });
-
-  return filteredFeats.sort((a, b) =>
-    a.system.level.value !== b.system.level.value
-      ? b.system.level.value - a.system.level.value
-      : a.name.localeCompare(b.name)
-  );
 };
 
-export const getFeatsForLevel = async (characterData, type, targetLevel) => {
+const sortFeats = (feats, method) => {
+  switch (method) {
+    case 'LEVEL_ASC': // Sort by level (Low to High)
+      return feats.sort((a, b) =>
+        a.system.level.value !== b.system.level.value
+          ? a.system.level.value - b.system.level.value
+          : a.name.localeCompare(b.name)
+      );
+    case 'ALPHABETICAL': // Sort alphabetically (A-Z)
+      return feats.sort((a, b) => a.name.localeCompare(b.name));
+    case 'LEVEL_DESC': // Sort by level (High to Low)
+    default:
+      return feats.sort((a, b) =>
+        a.system.level.value !== b.system.level.value
+          ? b.system.level.value - a.system.level.value
+          : a.name.localeCompare(b.name)
+      );
+  }
+};
+
+export const getFeatsForLevel = async (
+  characterData,
+  type,
+  targetLevel,
+  includeArchetypeFeats = false
+) => {
   const levelsArray =
     characterData?.class?.system?.[`${type}FeatLevels`]?.value;
 
@@ -110,7 +142,18 @@ export const getFeatsForLevel = async (characterData, type, targetLevel) => {
     return;
   }
 
-  return filterAndSortFeats(searchQuery, targetLevel);
+  const existingFeats = getExistingFeats(characterData);
+  const feats = await filterFeats(searchQuery, targetLevel, existingFeats);
+
+  const archetypeFeats = includeArchetypeFeats
+    ? await filterFeats('archetype', targetLevel, existingFeats)
+    : [];
+
+  const allFeats = [...feats, ...archetypeFeats];
+
+  const sortMethod = game.settings.get(module_name, 'feat-sort-method');
+
+  return sortFeats(allFeats, sortMethod);
 };
 
 const mapFeaturesWithDetails = async (features, characterClass) => {
