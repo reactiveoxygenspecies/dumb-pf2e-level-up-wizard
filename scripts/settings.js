@@ -64,4 +64,13 @@ export const registerSettings = () => {
       )
     }
   });
+
+  game.settings.register(module_name, 'show-feat-prerequisites', {
+    name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.featPrereqs.name'),
+    hint: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.featPrereqs.hint'),
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  });
 };

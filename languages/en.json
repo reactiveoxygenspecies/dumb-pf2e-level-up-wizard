@@ -78,6 +78,10 @@
           "levelAsc": "By Level (Low to High)",
           "alphabetical": "Alphabetical (A-Z)"
         }
+      },
+      "featPrereqs": {
+        "name": "Display Feat Prerequisites",
+        "hint": "Toggle whether an asterisk (*) appears next to Feats with prerequisites in dropdowns."
       }
     },
     "messages": {

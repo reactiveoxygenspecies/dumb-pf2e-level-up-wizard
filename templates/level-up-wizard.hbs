@@ -1,4 +1,3 @@
-{{log 'level-up-helper' this}}
 <form>
   <h1 class='fancy-font'>{{localize
       'PF2E_LEVEL_UP_WIZARD.menu.header.name'
@@ -6,36 +5,20 @@
       targetLevel=targetLevel
     }}</h1>
   <p>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.header.description'}}</p>
-  <p class='flavor-text'><strong>Note:</strong>
-    Feats with prerequisites are marked with an asterisk (*)</p>
+  {{#if showFeatPrerequisites}}
+    <p class='flavor-text'><strong>Note:</strong>
+      Feats with prerequisites are marked with an asterisk (*)</p>
+  {{/if}}
 
   {{! Class Feats }}
   {{#if classFeats}}
-    <h3><strong>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.classFeats.header'}}
-      </strong></h3>
-    <div class='selection-row'>
-      <label for='classFeats'>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.classFeats.label'}}
-      </label>
-      <select
-        name='classFeats'
-        id='classFeats'
-        class='form-select-feat'
-        data-required='true'
-      >
-        <option value='' disabled selected>{{localize
-            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
-          }}</option>
-        {{#each classFeats}}
-          <option value={{uuid}}>{{name}}{{#if
-              system.prerequisites.value
-            }}*{{/if}}
-            |
-            {{system.level.value}}</option>
-        {{/each}}
-      </select>
-    </div>
+    {{> featDropdown
+      name="classFeats"
+      feats=classFeats
+      headerKey='PF2E_LEVEL_UP_WIZARD.menu.classFeats.header'
+      labelKey='PF2E_LEVEL_UP_WIZARD.menu.classFeats.label'
+      showFeatPrerequisites=showFeatPrerequisites
+    }}
     <div class='checkbox-row'>
       <label for='includeArchetypeFeats'>{{localize
           'PF2E_LEVEL_UP_WIZARD.menu.classFeats.checkbox'
@@ -52,90 +35,35 @@
 
   {{! Ancestry Feats }}
   {{#if ancestryFeats}}
-    <h3><strong>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.header'}}
-      </strong></h3>
-    <div class='selection-row'>
-      <label for='ancestryFeats'>{{localize
-          'PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.label'
-        }}
-      </label>
-      <select
-        name='ancestryFeats'
-        id='ancestryFeats'
-        class='form-select-feat'
-        data-required='true'
-      >
-        <option value='' disabled selected>{{localize
-            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
-          }}</option>
-        {{#each ancestryFeats}}
-          <option value={{uuid}}>{{name}}{{#if
-              system.prerequisites.value
-            }}*{{/if}}
-            |
-            {{system.level.value}}</option>
-        {{/each}}
-      </select>
-    </div>
+    {{> featDropdown
+      name="ancestryFeats"
+      feats=ancestryFeats
+      headerKey='PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.header'
+      labelKey='PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.label'
+      showFeatPrerequisites=showFeatPrerequisites
+    }}
   {{/if}}
 
   {{! Skill Feats }}
   {{#if skillFeats}}
-    <h3><strong>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillFeats.header'}}
-      </strong></h3>
-    <div class='selection-row'>
-      <label for='skillFeats'>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillFeats.label'}}
-      </label>
-      <select
-        name='skillFeats'
-        id='skillFeats'
-        class='form-select-feat'
-        data-required='true'
-      >
-        <option value='' disabled selected>{{localize
-            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
-          }}</option>
-        {{#each skillFeats}}
-          <option value={{uuid}}>{{name}}{{#if
-              system.prerequisites.value
-            }}*{{/if}}
-            |
-            {{system.level.value}}</option>
-        {{/each}}
-      </select>
-    </div>
+    {{> featDropdown
+      name="skillFeats"
+      feats=skillFeats
+      headerKey='PF2E_LEVEL_UP_WIZARD.menu.skillFeats.header'
+      labelKey='PF2E_LEVEL_UP_WIZARD.menu.skillFeats.label'
+      showFeatPrerequisites=showFeatPrerequisites
+    }}
   {{/if}}
 
   {{! General Feats }}
   {{#if generalFeats}}
-    <h3><strong>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.generalFeats.header'}}
-      </strong></h3>
-    <div class='selection-row'>
-      <label for='generalFeats'>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.generalFeats.label'}}
-      </label>
-      <select
-        name='generalFeats'
-        id='generalFeats'
-        class='form-select-feat'
-        data-required='true'
-      >
-        <option value='' disabled selected>{{localize
-            'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'
-          }}</option>
-        {{#each generalFeats}}
-          <option value={{uuid}}>{{name}}{{#if
-              system.prerequisites.value
-            }}*{{/if}}
-            |
-            {{system.level.value}}</option>
-        {{/each}}
-      </select>
-    </div>
+    {{> featDropdown
+      name="generalFeats"
+      feats=generalFeats
+      headerKey='PF2E_LEVEL_UP_WIZARD.menu.generalFeats.header'
+      labelKey='PF2E_LEVEL_UP_WIZARD.menu.generalFeats.label'
+      showFeatPrerequisites=showFeatPrerequisites
+    }}
   {{/if}}
 
   {{! Skill Increases }}

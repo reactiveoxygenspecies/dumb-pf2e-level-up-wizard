@@ -1,3 +1,4 @@
+import { module_name } from './pf2e-level-up-wizard.js';
 import {
   normalizeString,
   getFeatsForLevel,
@@ -94,6 +95,10 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
     const features = await getFeaturesForLevel(this.actorData, targetLevel);
     const skills = getSkillsForLevel(this.actorData, targetLevel);
     const actorName = this.actorData.name;
+    const showFeatPrerequisites = game.settings.get(
+      module_name,
+      'show-feat-prerequisites'
+    );
 
     // Check if at least one field in `features` is truthy
     const hasFeaturesToDisplay = !!(
@@ -113,7 +118,8 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
       hasFeaturesToDisplay,
       actorName,
       targetLevel,
-      includeArchetypeFeats: this.includeArchetypeFeats || false
+      includeArchetypeFeats: this.includeArchetypeFeats || false,
+      showFeatPrerequisites
     };
   }
 
