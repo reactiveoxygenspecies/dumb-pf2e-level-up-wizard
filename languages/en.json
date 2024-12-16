@@ -2,8 +2,9 @@
   "PF2E_LEVEL_UP_WIZARD": {
     "button-tooltip": "Level Up!",
     "menu": {
+      "title": "Level-Up Wizard",
       "header": {
-        "name": "{actorName} leveled up to {newLevel}!",
+        "name": "{actorName} leveled up to {targetLevel}!",
         "description": "Here's an overview of your new features. Please make selections where prompted!"
       },
       "dropdown": {
@@ -49,7 +50,48 @@
           "rank": "New Spell Rank & Slots Available:",
           "slots": "New Spell Slots:"
         }
+      },
+      "confirmDialog": {
+        "title": "Confirm Changes",
+        "content": "Are you sure you want to apply these level-up changes?"
       }
+    },
+    "settings": {
+      "showButton": {
+        "name": "Enable Level-Up Button",
+        "hint": "Choose whether to show a Level-Up button on character sheets. When disabled, the Level-Up Wizard will activate automatically after manually updating a character's level."
+      },
+      "buttonPlacement": {
+        "name": "Level-Up Button Placement",
+        "hint": "Select where the Level-Up button appears: either next to the character's level or in the toolbar at the top of the character sheet.",
+        "options": {
+          "charHeader": "Next to Level",
+          "windowHeader": "Toolbar"
+        }
+      }
+    },
+    "messages": {
+      "skillIncrease": {
+        "rankName": "Rank {updatedRank}",
+        "rankIncrease": "{skill} skill rank increased to {rankName}."
+      },
+      "global": {
+        "header": "{actorName} has leveled up to level {targetLevel}!",
+        "feats": "Selected Feats:",
+        "noFeats": "No Feats selected.",
+        "skills": "Skill Increase:"
+      },
+      "personal": {
+        "header": "Manual Updates Needed",
+        "abilityScores": "Ability Score Increases (Character tab)",
+        "spellRank": "New Spell Rank & Slots (Spellcasting tab)",
+        "spellSlots": "New Spell Slots (Spellcasting tab)"
+      }
+    },
+    "notifications": {
+      "levelUpStart": "Updating {actorName} to level {targetLevel}...",
+      "levelUpComplete": "{actorName} level up complete!",
+      "wizardStartup": "Starting up Level-Up Wizard..."
     }
   }
 }

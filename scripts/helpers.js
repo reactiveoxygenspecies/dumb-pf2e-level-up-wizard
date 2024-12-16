@@ -46,10 +46,7 @@ export const getMaxSkillProficiency = (level) => {
   return 2; // Expert
 };
 
-const stripParagraphTags = (html) => {
-  if (!html) return '';
-  return html.replace(/^<p>/, '').replace(/<\/p>$/, '');
-};
+const stripParagraphTags = (html) => html?.replace(/^<p>|<\/p>$/g, '') || '';
 
 export const getClassSpecificDescription = (description, characterClass) => {
   if (!description || !characterClass) return description;
@@ -69,20 +66,21 @@ export const getClassSpecificDescription = (description, characterClass) => {
 
 export const confirmChanges = async () => {
   return Dialog.confirm({
-    title: 'Confirm Changes',
-    content: '<p>Are you sure you want to apply these level-up changes?</p>'
+    title: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.menu.confirmDialog.title'),
+    content: `<p>${game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.menu.confirmDialog.content'
+    )}</p>`
   });
 };
 
-const filterAndSortFeats = async (searchQuery, toCharacterLevel) => {
+const filterAndSortFeats = async (searchQuery, targetLevel) => {
   const feats = await getCachedFeats();
   const normalizedQuery = normalizeString(searchQuery);
 
   const filteredFeats = feats.filter((feat) => {
     const traits = feat.system.traits.value.map(normalizeString);
     return (
-      traits.includes(normalizedQuery) &&
-      feat.system.level.value <= toCharacterLevel
+      traits.includes(normalizedQuery) && feat.system.level.value <= targetLevel
     );
   });
 
@@ -93,17 +91,15 @@ const filterAndSortFeats = async (searchQuery, toCharacterLevel) => {
   );
 };
 
-export const getFeatsForLevel = async (characterData, type) => {
+export const getFeatsForLevel = async (characterData, type, targetLevel) => {
   const levelsArray =
-    characterData?.object?.class?.system?.[`${type}FeatLevels`]?.value;
-  const toCharacterLevel =
-    characterData?.object?.system?.details?.level?.value + 1;
+    characterData?.class?.system?.[`${type}FeatLevels`]?.value;
 
-  if (!levelsArray.includes(toCharacterLevel)) return;
+  if (!levelsArray.includes(targetLevel)) return;
 
   const queryMap = {
-    class: characterData?.object?.class?.name,
-    ancestry: characterData?.object?.ancestry?.name,
+    class: characterData?.class?.name,
+    ancestry: characterData?.ancestry?.name,
     general: 'general',
     skill: 'skill'
   };
@@ -114,24 +110,12 @@ export const getFeatsForLevel = async (characterData, type) => {
     return;
   }
 
-  return filterAndSortFeats(searchQuery, toCharacterLevel);
+  return filterAndSortFeats(searchQuery, targetLevel);
 };
 
-export const getFeaturesForLevel = async (characterData) => {
-  const toCharacterLevel =
-    characterData?.object?.system?.details?.level?.value + 1;
-  const characterClass = characterData?.object?.class?.name;
-  const spellcasting = characterData?.object?.class?.system?.spellcasting;
-  const featuresArray = Object.values(
-    characterData?.object?.class?.system?.items
-  );
-
-  const featuresForLevel = featuresArray.filter(
-    (boon) => boon.level === toCharacterLevel
-  );
-
-  const featuresWithDetails = await Promise.all(
-    featuresForLevel.map(async (feature) => {
+const mapFeaturesWithDetails = async (features, characterClass) => {
+  return Promise.all(
+    features.map(async (feature) => {
       const item = await fromUuid(feature.uuid).catch(() => null);
       if (!item) return null;
 
@@ -147,51 +131,65 @@ export const getFeaturesForLevel = async (characterData) => {
         uuid: feature.uuid
       };
     })
+  ).then((results) => results.filter((feature) => feature));
+};
+
+export const getFeaturesForLevel = async (characterData, targetLevel) => {
+  const characterClass = characterData?.class?.name;
+  const spellcasting = characterData?.class?.system?.spellcasting;
+  const featuresArray = Object.values(characterData?.class?.system?.items);
+
+  const featuresForLevel = featuresArray.filter(
+    (boon) => boon.level === targetLevel
   );
 
-  const abilityScoreIncreaseLevel =
-    abilityScoreIncreaseLevels.includes(toCharacterLevel);
-
-  const newSpellRankLevel =
-    newSpellRankLevels.includes(toCharacterLevel) && spellcasting;
+  const featuresWithDetails = await mapFeaturesWithDetails(
+    featuresForLevel,
+    characterClass
+  );
 
   return {
-    featuresForLevel: featuresWithDetails.filter((feature) => feature),
-    abilityScoreIncreaseLevel,
-    newSpellRankLevel,
+    featuresForLevel: featuresWithDetails,
+    abilityScoreIncreaseLevel: abilityScoreIncreaseLevels.includes(targetLevel),
+    newSpellRankLevel: newSpellRankLevels.includes(targetLevel) && spellcasting,
     spellcasting
   };
 };
 
-export const getSkillsForLevel = (characterData) => {
-  const toCharacterLevel =
-    characterData?.object?.system?.details?.level?.value + 1;
-  const levelsArray =
-    characterData?.object?.class?.system?.skillIncreaseLevels?.value;
+export const getSkillsForLevel = (characterData, targetLevel) => {
+  const levelsArray = characterData?.class?.system?.skillIncreaseLevels?.value;
 
-  if (!levelsArray.includes(toCharacterLevel)) return [];
+  if (!levelsArray.includes(targetLevel)) return [];
 
-  const maxProficiency = getMaxSkillProficiency(toCharacterLevel);
+  const maxProficiency = getMaxSkillProficiency(targetLevel);
 
-  return Object.values(characterData?.object?.skills)
+  return Object.values(characterData?.skills)
     .filter((skill) => skill.rank < maxProficiency)
     .map((skill) => ({ ...skill, class: getSkillRankClass(skill.rank) }));
 };
 
 export const createGlobalLevelMessage = (
   actorName,
-  newLevel,
+  targetLevel,
   selectedFeats,
   skillIncreaseMessage
 ) => {
   const globalMessage = `
-  <h2>${actorName} has leveled up to Level ${newLevel}!</h2>
-  <p><strong>Selected Feats:</strong> ${
-    selectedFeats || 'No feats selected.'
+  <h2>${game.i18n.format('PF2E_LEVEL_UP_WIZARD.messages.global.header', {
+    actorName,
+    targetLevel
+  })}</h2>
+  <p><strong>${game.i18n.localize(
+    'PF2E_LEVEL_UP_WIZARD.messages.global.feats'
+  )}</strong> ${
+    selectedFeats ||
+    `${game.i18n.localize('PF2E_LEVEL_UP_WIZARD.messages.global.noFeats')}`
   }</p>
   ${
     skillIncreaseMessage
-      ? `<p><strong>Skill Increase:</strong> ${skillIncreaseMessage}</p>`
+      ? `<p><strong>${game.i18n.localize(
+          'PF2E_LEVEL_UP_WIZARD.messages.global.skills'
+        )}</strong> ${skillIncreaseMessage}</p>`
       : ''
   }
 `;
@@ -204,19 +202,25 @@ export const createGlobalLevelMessage = (
 export const createPersonalLevelMessage = (formData, playerId, actorName) => {
   const manualUpdates = [];
   if (formData.abilityScoreIncreaseLevel) {
-    manualUpdates.push('Ability Score Increases (Character tab)');
+    manualUpdates.push(
+      game.i18n.localize('PF2E_LEVEL_UP_WIZARD.messages.personal.abilityScores')
+    );
   }
   if (formData.spellcasting) {
     manualUpdates.push(
       formData.newSpellRankLevel
-        ? 'New Spell Rank & Slots (Spellcasting tab)'
-        : 'New Spell Slots (Spellcasting tab)'
+        ? game.i18n.localize('PF2E_LEVEL_UP_WIZARD.messages.personal.spellRank')
+        : game.i18n.localize(
+            'PF2E_LEVEL_UP_WIZARD.messages.personal.spellSlots'
+          )
     );
   }
 
   if (manualUpdates.length > 0) {
     const whisperMessage = `
-                <h2>Manual Updates Needed</h2>
+                <h2>${game.i18n.localize(
+                  'PF2E_LEVEL_UP_WIZARD.messages.personal.header'
+                )}</h2>
                 <ul>${manualUpdates
                   .map((update) => `<li>${update}</li>`)
                   .join('')}</ul>
