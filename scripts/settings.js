@@ -3,8 +3,8 @@ import { renderLevelUpButton } from './actor.js';
 
 export const registerSettings = () => {
   game.settings.register(module_name, 'show-level-up-button', {
-    name: 'Enable Level-Up Button',
-    hint: "Choose whether to show a Level-Up button on character sheets. When disabled, the Level-Up Wizard will activate automatically after manually updating a character's level.",
+    name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.showButton.name'),
+    hint: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.showButton.hint'),
     scope: 'world',
     config: true,
     type: Boolean,
@@ -13,15 +13,23 @@ export const registerSettings = () => {
   });
 
   game.settings.register(module_name, 'button-placement', {
-    name: 'Level-Up Button Placement',
-    hint: "Select where the Level-Up button appears: either next to the character's level or in the toolbar at the top of the character sheet.",
+    name: game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.name'
+    ),
+    hint: game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.hint'
+    ),
     scope: 'client',
     config: true,
     type: String,
     default: 'CHAR_HEADER',
     choices: {
-      CHAR_HEADER: 'Next to Level',
-      WINDOW_HEADER: 'Toolbar'
+      CHAR_HEADER: game.i18n.localize(
+        'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.options.charHeader'
+      ),
+      WINDOW_HEADER: game.i18n.localize(
+        'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.options.windowHeader'
+      )
     },
     onChange: () => {
       Object.values(ui.windows).forEach((app) => {

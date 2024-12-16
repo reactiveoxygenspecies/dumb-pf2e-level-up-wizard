@@ -43,5 +43,9 @@ export const renderWizardOnLevelUp = (actor, updateData, options, userId) => {
 
   if (!newLevel) return;
 
+  ui.notifications.info(
+    game.i18n.localize('PF2E_LEVEL_UP_WIZARD.notifications.wizardStartup')
+  );
+
   new PF2eLevelUpWizardConfig(actor, true).render(true);
 };

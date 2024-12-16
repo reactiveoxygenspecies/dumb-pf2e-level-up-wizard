@@ -23,7 +23,7 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
       resizable: true,
       id: 'level-up-wizard',
       template: './modules/pf2e-level-up-wizard/templates/level-up-wizard.hbs',
-      title: 'Level Up Wizard',
+      title: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.menu.title'),
       closeOnSubmit: false
     });
   }
@@ -129,7 +129,12 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
     formData.newSpellRankLevel = data.features.newSpellRankLevel;
 
     if (!this.triggeredByManualLevelUp) {
-      ui.notifications.info(`Updating ${actorName} to level ${targetLevel}...`);
+      ui.notifications.info(
+        game.i18n.format('PF2E_LEVEL_UP_WIZARD.notifications.levelUpStart', {
+          actorName,
+          targetLevel
+        })
+      );
 
       await actor.update({ 'system.details.level.value': targetLevel });
 
@@ -181,8 +186,18 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
       await actor.update({ [skillRankPath]: updatedRank });
 
       const rankName =
-        skillProficiencyRanks[updatedRank] || `Rank ${updatedRank}`;
-      skillIncreaseMessage = `${skill} skill rank increased to ${rankName}.`;
+        skillProficiencyRanks[updatedRank] ||
+        game.i18n.format(
+          'PF2E_LEVEL_UP_WIZARD.messages.skillIncrease.rankName',
+          {
+            updatedRank
+          }
+        );
+
+      skillIncreaseMessage = game.i18n.format(
+        'PF2E_LEVEL_UP_WIZARD.messages.skillIncrease.rankIncrease',
+        { skill, rankName }
+      );
     }
 
     const selectedFeats = featsToAdd
@@ -198,7 +213,11 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
 
     createPersonalLevelMessage(formData, playerId, actorName);
 
-    ui.notifications.info(`${actorName} Level up complete!`);
+    ui.notifications.info(
+      game.i18n.format('PF2E_LEVEL_UP_WIZARD.notifications.levelUpComplete', {
+        actorName
+      })
+    );
 
     this.close();
   }

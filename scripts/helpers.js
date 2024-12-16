@@ -66,8 +66,10 @@ export const getClassSpecificDescription = (description, characterClass) => {
 
 export const confirmChanges = async () => {
   return Dialog.confirm({
-    title: 'Confirm Changes',
-    content: '<p>Are you sure you want to apply these level-up changes?</p>'
+    title: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.menu.confirmDialog.title'),
+    content: `<p>${game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.menu.confirmDialog.content'
+    )}</p>`
   });
 };
 
@@ -173,13 +175,21 @@ export const createGlobalLevelMessage = (
   skillIncreaseMessage
 ) => {
   const globalMessage = `
-  <h2>${actorName} has leveled up to Level ${targetLevel}!</h2>
-  <p><strong>Selected Feats:</strong> ${
-    selectedFeats || 'No feats selected.'
+  <h2>${game.i18n.format('PF2E_LEVEL_UP_WIZARD.messages.global.header', {
+    actorName,
+    targetLevel
+  })}</h2>
+  <p><strong>${game.i18n.localize(
+    'PF2E_LEVEL_UP_WIZARD.messages.global.feats'
+  )}</strong> ${
+    selectedFeats ||
+    `${game.i18n.localize('PF2E_LEVEL_UP_WIZARD.messages.global.noFeats')}`
   }</p>
   ${
     skillIncreaseMessage
-      ? `<p><strong>Skill Increase:</strong> ${skillIncreaseMessage}</p>`
+      ? `<p><strong>${game.i18n.localize(
+          'PF2E_LEVEL_UP_WIZARD.messages.global.skills'
+        )}</strong> ${skillIncreaseMessage}</p>`
       : ''
   }
 `;
@@ -192,19 +202,25 @@ export const createGlobalLevelMessage = (
 export const createPersonalLevelMessage = (formData, playerId, actorName) => {
   const manualUpdates = [];
   if (formData.abilityScoreIncreaseLevel) {
-    manualUpdates.push('Ability Score Increases (Character tab)');
+    manualUpdates.push(
+      game.i18n.localize('PF2E_LEVEL_UP_WIZARD.messages.personal.abilityScores')
+    );
   }
   if (formData.spellcasting) {
     manualUpdates.push(
       formData.newSpellRankLevel
-        ? 'New Spell Rank & Slots (Spellcasting tab)'
-        : 'New Spell Slots (Spellcasting tab)'
+        ? game.i18n.localize('PF2E_LEVEL_UP_WIZARD.messages.personal.spellRank')
+        : game.i18n.localize(
+            'PF2E_LEVEL_UP_WIZARD.messages.personal.spellSlots'
+          )
     );
   }
 
   if (manualUpdates.length > 0) {
     const whisperMessage = `
-                <h2>Manual Updates Needed</h2>
+                <h2>${game.i18n.localize(
+                  'PF2E_LEVEL_UP_WIZARD.messages.personal.header'
+                )}</h2>
                 <ul>${manualUpdates
                   .map((update) => `<li>${update}</li>`)
                   .join('')}</ul>
