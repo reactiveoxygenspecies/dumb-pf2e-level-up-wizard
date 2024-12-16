@@ -96,4 +96,17 @@ export const registerSettings = () => {
     default: false,
     onChange: rerenderCharacterSheet
   });
+
+  game.settings.register(module_name, 'send-gm-whispers', {
+    name: game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.settings.sendGMWhispers.name'
+    ),
+    hint: game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.settings.sendGMWhispers.hint'
+    ),
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false
+  });
 };

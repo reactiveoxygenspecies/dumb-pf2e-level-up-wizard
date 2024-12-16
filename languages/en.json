@@ -89,7 +89,11 @@
       },
       "disableLevelInput": {
         "name": "Disable Level Input",
-        "hint": "If enabled, the default level input on the character sheet will be disabled to encourage the use of the Level-Up Wizard for leveling up."
+        "hint": "If enabled, the default level input on the character sheet will be disabled to encourage the use of the Level-Up Wizard for leveling up. This setting has no effect if the 'Enable Level-Up Button' setting is disabled."
+      },
+      "sendGMWhispers": {
+        "name": "Send Manual Update Whispers to GM",
+        "hint": "When enabled, whispers about required manual updates (such as ability score increases or spell updates) will also be sent to the GM in addition to the player."
       }
     },
     "messages": {
@@ -104,7 +108,7 @@
         "skills": "Skill Increase:"
       },
       "personal": {
-        "header": "Manual Updates Needed",
+        "header": "{actorName} Manual Updates Needed",
         "abilityScores": "Ability Score Increases (Character tab)",
         "spellRank": "New Spell Rank & Slots (Spellcasting tab)",
         "spellSlots": "New Spell Slots (Spellcasting tab)"
