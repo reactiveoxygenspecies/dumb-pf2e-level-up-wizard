@@ -36,6 +36,18 @@
         {{/each}}
       </select>
     </div>
+    <div class='checkbox-row'>
+      <label for='includeArchetypeFeats'>{{localize
+          'PF2E_LEVEL_UP_WIZARD.menu.classFeats.checkbox'
+        }}</label>
+      <input
+        type='checkbox'
+        id='includeArchetypeFeats'
+        name='includeArchetypeFeats'
+        class='form-checkbox'
+        {{checked includeArchetypeFeats}}
+      />
+    </div>
   {{/if}}
 
   {{! Ancestry Feats }}

@@ -73,7 +73,7 @@ export const confirmChanges = async () => {
   });
 };
 
-const filterAndSortFeats = async (searchQuery, targetLevel) => {
+const filterFeats = async (searchQuery, targetLevel) => {
   const feats = await getCachedFeats();
   const normalizedQuery = normalizeString(searchQuery);
 
@@ -91,7 +91,12 @@ const filterAndSortFeats = async (searchQuery, targetLevel) => {
   );
 };
 
-export const getFeatsForLevel = async (characterData, type, targetLevel) => {
+export const getFeatsForLevel = async (
+  characterData,
+  type,
+  targetLevel,
+  includeArchetypeFeats = false
+) => {
   const levelsArray =
     characterData?.class?.system?.[`${type}FeatLevels`]?.value;
 
@@ -110,7 +115,17 @@ export const getFeatsForLevel = async (characterData, type, targetLevel) => {
     return;
   }
 
-  return filterAndSortFeats(searchQuery, targetLevel);
+  const feats = await filterFeats(searchQuery, targetLevel);
+
+  const archetypeFeats = includeArchetypeFeats
+    ? await filterFeats('archetype', targetLevel)
+    : [];
+
+  return [...feats, ...archetypeFeats].sort((a, b) =>
+    a.system.level.value !== b.system.level.value
+      ? b.system.level.value - a.system.level.value
+      : a.name.localeCompare(b.name)
+  );
 };
 
 const mapFeaturesWithDetails = async (features, characterClass) => {

@@ -12,7 +12,8 @@
       },
       "classFeats": {
         "header": "Class Feats",
-        "label": "New Class Feat Available:"
+        "label": "New Class Feat Available:",
+        "checkbox": "Include Archetype Feats"
       },
       "ancestryFeats": {
         "header": "Ancestry Feats",

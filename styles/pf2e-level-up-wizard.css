@@ -50,6 +50,12 @@
   }
 }
 
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .form-select-feat {
   flex: 2 !important;
 }

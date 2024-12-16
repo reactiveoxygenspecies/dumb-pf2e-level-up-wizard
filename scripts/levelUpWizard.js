@@ -48,6 +48,13 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
       validateForm();
 
       form.on('change', '[data-required="true"]', validateForm);
+
+      const archetypeCheckbox = form.find('#includeArchetypeFeats');
+
+      archetypeCheckbox.on('change', (event) => {
+        this.includeArchetypeFeats = event.target.checked; // Update the state
+        this.render(true); // Re-render the form
+      });
     });
   }
 
@@ -66,7 +73,8 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
     const classFeats = await getFeatsForLevel(
       this.actorData,
       'class',
-      targetLevel
+      targetLevel,
+      this.includeArchetypeFeats
     );
     const ancestryFeats = await getFeatsForLevel(
       this.actorData,
@@ -104,7 +112,8 @@ export class PF2eLevelUpWizardConfig extends FormApplication {
       skills,
       hasFeaturesToDisplay,
       actorName,
-      targetLevel
+      targetLevel,
+      includeArchetypeFeats: this.includeArchetypeFeats || false
     };
   }
 
