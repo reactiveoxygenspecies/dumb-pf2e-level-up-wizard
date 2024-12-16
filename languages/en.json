@@ -86,6 +86,10 @@
       "featPrereqs": {
         "name": "Display Feat Prerequisites",
         "hint": "Toggle whether an asterisk (*) appears next to Feats with prerequisites in dropdowns."
+      },
+      "disableLevelInput": {
+        "name": "Disable Level Input",
+        "hint": "If enabled, the default level input on the character sheet will be disabled to encourage the use of the Level-Up Wizard for leveling up."
       }
     },
     "messages": {

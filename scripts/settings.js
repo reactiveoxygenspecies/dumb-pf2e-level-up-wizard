@@ -1,6 +1,20 @@
 import { module_name } from './pf2e-level-up-wizard.js';
 import { renderLevelUpButton } from './actor.js';
 
+const rerenderCharacterSheet = () => {
+  Object.values(ui.windows).forEach((app) => {
+    if (
+      app.options.classes.includes('character') &&
+      app.actor?.type === 'character'
+    ) {
+      app.render(false);
+
+      const html = $(app.element);
+      renderLevelUpButton(app, html);
+    }
+  });
+};
+
 export const registerSettings = () => {
   game.settings.register(module_name, 'show-level-up-button', {
     name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.showButton.name'),
@@ -31,19 +45,7 @@ export const registerSettings = () => {
         'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.options.windowHeader'
       )
     },
-    onChange: () => {
-      Object.values(ui.windows).forEach((app) => {
-        if (
-          app.options.classes.includes('character') &&
-          app.actor?.type === 'character'
-        ) {
-          app.render(false);
-
-          const html = $(app.element);
-          renderLevelUpButton(app, html);
-        }
-      });
-    }
+    onChange: rerenderCharacterSheet
   });
 
   game.settings.register(module_name, 'feat-sort-method', {
@@ -79,5 +81,19 @@ export const registerSettings = () => {
         }
       });
     }
+  });
+
+  game.settings.register(module_name, 'disable-level-input', {
+    name: game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.settings.disableLevelInput.name'
+    ),
+    hint: game.i18n.localize(
+      'PF2E_LEVEL_UP_WIZARD.settings.disableLevelInput.hint'
+    ),
+    scope: 'world',
+    config: true,
+    type: Boolean,
+    default: false,
+    onChange: rerenderCharacterSheet
   });
 };

@@ -34,6 +34,14 @@ export const renderLevelUpButton = (sheet, html) => {
 
     html.find('.window-title').after(button);
   }
+
+  if (game.settings.get(module_name, 'disable-level-input')) {
+    const levelInput = html
+      .find('.char-header')
+      .find('input[name="system.details.level.value"]');
+
+    levelInput.prop('disabled', true);
+  }
 };
 
 export const renderWizardOnLevelUp = (actor, updateData, options, userId) => {
