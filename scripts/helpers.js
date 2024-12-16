@@ -261,16 +261,22 @@ export const createPersonalLevelMessage = (formData, playerId, actorName) => {
 
   if (manualUpdates.length > 0) {
     const whisperMessage = `
-                <h2>${game.i18n.localize(
-                  'PF2E_LEVEL_UP_WIZARD.messages.personal.header'
-                )}</h2>
-                <ul>${manualUpdates
-                  .map((update) => `<li>${update}</li>`)
-                  .join('')}</ul>
-            `;
+      <h2>${game.i18n.format('PF2E_LEVEL_UP_WIZARD.messages.personal.header', {
+        actorName
+      })}</h2>
+      <ul>${manualUpdates.map((update) => `<li>${update}</li>`).join('')}</ul>
+    `;
+
+    const whisperRecipients = [playerId];
+
+    if (game.settings.get(module_name, 'send-gm-whispers')) {
+      const gmUsers = game.users.filter((user) => user.isGM);
+      whisperRecipients.push(...gmUsers.map((user) => user.id));
+    }
+
     ChatMessage.create({
       content: whisperMessage,
-      whisper: [playerId],
+      whisper: whisperRecipients,
       speaker: { alias: actorName }
     });
   }
