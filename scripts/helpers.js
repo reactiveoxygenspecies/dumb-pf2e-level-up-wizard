@@ -21,6 +21,12 @@ const getCachedFeats = async () => {
   return cachedFeats;
 };
 
+const getExistingFeats = (actor) => {
+  return actor.items
+    .filter((item) => item.type === 'feat')
+    .map((item) => item.name.toLowerCase());
+};
+
 export const normalizeString = (str) => str.replace(/\s+/g, '-').toLowerCase();
 
 export const getSkillRankClass = (rank) => {
@@ -73,22 +79,21 @@ export const confirmChanges = async () => {
   });
 };
 
-const filterFeats = async (searchQuery, targetLevel) => {
+const filterFeats = async (searchQuery, targetLevel, existingFeats) => {
   const feats = await getCachedFeats();
   const normalizedQuery = normalizeString(searchQuery);
 
-  const filteredFeats = feats.filter((feat) => {
+  return feats.filter((feat) => {
     const traits = feat.system.traits.value.map(normalizeString);
+    const isTaken = existingFeats.includes(feat.name.toLowerCase());
+    const maxTakable = feat.system.maxTakable;
+
     return (
-      traits.includes(normalizedQuery) && feat.system.level.value <= targetLevel
+      traits.includes(normalizedQuery) &&
+      feat.system.level.value <= targetLevel &&
+      !(isTaken && maxTakable === 1)
     );
   });
-
-  return filteredFeats.sort((a, b) =>
-    a.system.level.value !== b.system.level.value
-      ? b.system.level.value - a.system.level.value
-      : a.name.localeCompare(b.name)
-  );
 };
 
 export const getFeatsForLevel = async (
@@ -115,10 +120,11 @@ export const getFeatsForLevel = async (
     return;
   }
 
-  const feats = await filterFeats(searchQuery, targetLevel);
+  const existingFeats = getExistingFeats(characterData);
+  const feats = await filterFeats(searchQuery, targetLevel, existingFeats);
 
   const archetypeFeats = includeArchetypeFeats
-    ? await filterFeats('archetype', targetLevel)
+    ? await filterFeats('archetype', targetLevel, existingFeats)
     : [];
 
   return [...feats, ...archetypeFeats].sort((a, b) =>
