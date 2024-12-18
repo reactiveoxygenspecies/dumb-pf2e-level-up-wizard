@@ -3,9 +3,16 @@
   border: 0;
   color: var(--color-pf-tertiary-darker);
   background: transparent;
-  font-size: 36px;
   line-height: normal;
   align-self: center;
+}
+
+.level-up-icon-button-large {
+  font-size: 36px;
+}
+
+.level-up-icon-button-small {
+  font-size: 24px;
 }
 
 .level-up-icon-button:hover,
@@ -39,6 +46,10 @@
   background-color: var(--color-proficiency-legendary);
 }
 
+.header-container p:last-of-type {
+  padding-bottom: 8px;
+}
+
 .selection-row {
   display: flex;
   justify-content: space-between;
@@ -67,10 +78,6 @@
 .fancy-font {
   font-family: var(--serif);
   font-weight: 600;
-}
-
-.flavor-text {
-  padding-bottom: 8px;
 }
 
 .attribute-boosts {
