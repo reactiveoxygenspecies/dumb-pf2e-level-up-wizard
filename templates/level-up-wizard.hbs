@@ -49,6 +49,17 @@
     </div>
   {{/if}}
 
+  {{! Free Archetype Feats }}
+  {{#if freeArchetypeFeats}}
+    {{> featDropdown
+      name="freeArchetypeFeats"
+      feats=freeArchetypeFeats
+      headerKey='PF2E_LEVEL_UP_WIZARD.menu.freeArchetypeFeats.header'
+      labelKey='PF2E_LEVEL_UP_WIZARD.menu.freeArchetypeFeats.label'
+      showFeatPrerequisites=showFeatPrerequisites
+    }}
+  {{/if}}
+
   {{! Ancestry Feats }}
   {{#if ancestryFeats}}
     {{> featDropdown
@@ -56,6 +67,17 @@
       feats=ancestryFeats
       headerKey='PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.header'
       labelKey='PF2E_LEVEL_UP_WIZARD.menu.ancestryFeats.label'
+      showFeatPrerequisites=showFeatPrerequisites
+    }}
+  {{/if}}
+
+  {{! Ancestry Paragon Feats }}
+  {{#if ancestryParagonFeats}}
+    {{> featDropdown
+      name="ancestryParagonFeats"
+      feats=ancestryParagonFeats
+      headerKey='PF2E_LEVEL_UP_WIZARD.menu.ancestryParagonFeats.header'
+      labelKey='PF2E_LEVEL_UP_WIZARD.menu.ancestryParagonFeats.label'
       showFeatPrerequisites=showFeatPrerequisites
     }}
   {{/if}}
