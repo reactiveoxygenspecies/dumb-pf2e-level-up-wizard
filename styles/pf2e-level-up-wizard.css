@@ -72,3 +72,69 @@
 .flavor-text {
   padding-bottom: 8px;
 }
+
+.attribute-boosts {
+  display: flex;
+  --button-color: #316549;
+  --color-boost-dark: #1b3c2a;
+}
+
+.attribute-boosts-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.attribute-boosts-label {
+  font: 400 var(--font-size-24) var(--serif-condensed);
+  width: 100%;
+  text-align: center;
+}
+
+.attribute-boosts-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--button-color);
+  border: 1px solid var(--button-color);
+  font-size: var(--font-size-12);
+  height: 1.5em;
+  outline: none;
+  width: 6em;
+  border-radius: 3px;
+}
+
+.attribute-boosts-button:hover,
+.attribute-boosts-button:focus {
+  box-shadow: 0 0 5px var(--button-color);
+}
+
+.attribute-boosts-button.selected {
+  background-color: var(--button-color);
+  color: var(--text-light);
+
+  &.partial {
+    background: var(--color-boost-dark);
+  }
+}
+
+.attribute-boosts-button:disabled {
+  background: rgba(0, 0, 0, 0.04);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.attribute-boosts-button:disabled:hover,
+.attribute-boosts-button:disabled:focus {
+  box-shadow: none;
+}
+
+.attribute-modifier {
+  font: 700 var(--font-size-24) var(--serif);
+}
+
+.boost-text {
+  padding-top: 2px;
+}

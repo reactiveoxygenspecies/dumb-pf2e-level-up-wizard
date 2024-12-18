@@ -99,6 +99,37 @@
     </div>
   {{/if}}
 
+  {{#if features.abilityScoreIncreaseLevel}}
+    <h3>
+      <strong>
+        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.header'}}
+      </strong>
+    </h3>
+    <p>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.label'}}</p>
+    <div class="attribute-boosts">
+      {{#each abilities}}
+        <div class="attribute-boosts-column">
+          <label for="boost-{{key}}" class="attribute-boosts-label">
+            {{localize (concat 'PF2E.AbilityId.' key)}}
+          </label>
+          <button 
+            class="attribute-boosts-button" 
+            data-value="{{key}}" 
+            id="boost-{{key}}" 
+            type="button"
+          >
+            <span class="boost-text">
+              {{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.boost'}}
+            </span>
+          </button>
+          <div class="attribute-modifier" id="modifier-{{key}}">
+            {{mod}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+
   {{! Class Features }}
   {{#if hasFeaturesToDisplay}}
     <h3>
@@ -120,20 +151,6 @@
       {{/each}}
     {{/if}}
 
-    {{! Ability Score Increases }}
-    {{#if features.abilityScoreIncreaseLevel}}
-      <p>
-        <strong>
-          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.abilityScore.header'}}
-        </strong>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.update'}}
-        <em>
-          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.tab.character'}}
-        </em>
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.sheet'}}
-      </p>
-    {{/if}}
-
     {{! Spellcasting }}
     {{#if features.spellcasting}}
       {{! New Spell Rank }}
@@ -144,7 +161,7 @@
           </strong>
           {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.update'}}
           <em>
-            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.tab.spellcasting'}}
+            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.spellcasting'}}
           </em>
           {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.sheet'}}
         </p>
@@ -156,7 +173,7 @@
           </strong>
           {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.update'}}
           <em>
-            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.tab.spellcasting'}}
+            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.spellcasting'}}
           </em>
           {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.manual.sheet'}}
         </p>
