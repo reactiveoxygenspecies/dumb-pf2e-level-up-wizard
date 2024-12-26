@@ -67,11 +67,10 @@ export const getAssociatedSkills = (prerequisites) => {
 
   return prerequisites.value
     .flatMap((prereq) => {
-      // Use a regex to match any skill name in the string
       const matches = SKILLS.filter((skill) =>
         new RegExp(`\\b${skill}\\b`, 'i').test(prereq.value)
       );
-      return matches; // Return all matches
+      return matches;
     })
-    .filter(Boolean); // Remove nulls or undefined
+    .filter(Boolean);
 };

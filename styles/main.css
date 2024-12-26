@@ -151,14 +151,12 @@
   padding-top: 2px;
 }
 
-/* General styles for the feat selector container */
 .feat-selector {
   position: relative;
   display: inline-block;
   width: 100%;
 }
 
-/* Button to toggle the feat selector menu */
 .feat-selector-toggle {
   height: calc(var(--form-field-height) + 1px);
   width: 50%;
