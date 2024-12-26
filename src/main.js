@@ -7,9 +7,16 @@ Hooks.on('init', async () => {
   console.log('PF2e Level-Up Wizard | Module Initialized');
   registerSettings();
 
-  const featDropdownPath = `modules/${module_name}/templates/partials/feat-dropdown.hbs`;
-  const featDropdownTemplate = await getTemplate(featDropdownPath);
-  Handlebars.registerPartial('featDropdown', featDropdownTemplate);
+  const featSelectorPath = `modules/${module_name}/templates/partials/feat-selector.hbs`;
+  const featSelectorTemplate = await getTemplate(featSelectorPath);
+  Handlebars.registerPartial('featSelector', featSelectorTemplate);
+
+  await loadTemplates([
+    `modules/${module_name}/templates/partials/feat-option.hbs`
+  ]);
+
+  Handlebars.registerHelper('notEqual', (a, b) => a !== b);
+  Handlebars.registerHelper('eq', (a, b) => a === b);
 });
 
 Hooks.on('ready', () => {
@@ -26,7 +33,6 @@ document.addEventListener('change', (event) => {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     const selectedClass = selectedOption.className;
 
-    // Remove previous skill rank classes
     selectElement.classList.remove(
       'skill-option-untrained',
       'skill-option-trained',
@@ -35,7 +41,6 @@ document.addEventListener('change', (event) => {
       'skill-option-legendary'
     );
 
-    // Add the class of the selected option
     if (selectedClass) {
       selectElement.classList.add(selectedClass);
     }

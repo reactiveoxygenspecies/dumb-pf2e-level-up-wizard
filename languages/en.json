@@ -7,6 +7,7 @@
         "name": "{actorName} leveled up to {targetLevel}!",
         "description": "Here's an overview of your new features. Please make selections where prompted!"
       },
+      "close": "Close",
       "notes": {
         "note": "Note:",
         "featsPrereq": "Feats with prerequisites are marked with an asterisk (*)",
@@ -68,7 +69,21 @@
       "confirmDialog": {
         "title": "Confirm Changes",
         "content": "Are you sure you want to apply these level-up changes?"
-      }
+      },
+      "filters": {
+        "orderBy": "Order by:",
+        "level": "Level",
+        "name": "Name",
+        "skills": "Filter by Skills",
+        "archetypeFeats": "Archetype Feats",
+        "placeholder": {
+          "nameSearch": "Search by Name",
+          "minLevel": "Min Level",
+          "maxLevel": "Max Level",
+          "dedicationSearch": "Search by Dedication"
+        }
+      },
+      "featButtonContent": "{name} | {level}"
     },
     "settings": {
       "showButton": {
@@ -86,11 +101,12 @@
       },
       "sortMethod": {
         "name": "Feat Sorting Method",
-        "hint": "Choose how feats should be sorted in dropdowns: by level or alphabetically.",
+        "hint": "Choose how feats should be sorted by default.",
         "options": {
           "levelDesc": "By Level (High to Low)",
           "levelAsc": "By Level (Low to High)",
-          "alphabetical": "Alphabetical (A-Z)"
+          "alphaAsc": "Alphabetical (A-Z)",
+          "alphaDesc": "Alphabetical (Z-A)"
         }
       },
       "featPrereqs": {
@@ -115,7 +131,8 @@
         "header": "{actorName} has leveled up to level {targetLevel}!",
         "feats": "Selected Feats:",
         "noFeats": "No Feats selected.",
-        "skills": "Skill Increase:"
+        "skills": "Skill Increase:",
+        "feat": "Feat"
       },
       "personal": {
         "header": "{actorName} Manual Updates Needed",
