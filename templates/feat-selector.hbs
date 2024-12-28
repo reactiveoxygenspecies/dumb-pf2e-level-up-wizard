@@ -23,6 +23,16 @@
         placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.minLevel'}}">
       <input type="number" id="max-level" 
         placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.maxLevel'}}">
+      {{#if (or (eq featType 'classFeats') (eq featType 'dualClassFeats') (eq featType 'skillFeats'))}}
+        <div class="archetype-feats-container">
+          <input type="checkbox" id="show-archetype-feats" name="show-archetype-feats" {{checked show-archetype-feats}}>
+          <label for="show-archetype-feats">
+            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.archetypeFeats'}}
+          </label>
+        </div>
+      {{/if}}
+      <input type="text" id="search-dedications" class="hidden" 
+        placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}">
       {{#if (eq featType 'skillFeats')}}
         <div class="skill-filter-container">
           <label for="skill-filter" class="skill-filter-label">
@@ -39,19 +49,8 @@
           </div>
         </div>
       {{/if}}
-      {{#if (eq featType 'classFeats')}}
-        <div class="archetype-feats-container">
-          <input type="checkbox" id="show-archetype-feats" name="show-archetype-feats" {{checked show-archetype-feats}}>
-          <label for="show-archetype-feats">
-            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.archetypeFeats'}}
-          </label>
-        </div>
-      {{/if}}
-      <input type="text" id="search-dedications" class="hidden" 
-        placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}">
     </div>
-    <ul class="feat-list">
-    </ul>
+    <ul class="feat-list"></ul>
   </div>
 </div>
 

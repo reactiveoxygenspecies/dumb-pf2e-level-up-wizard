@@ -194,13 +194,16 @@ export class FeatSelector extends foundry.applications.api.ApplicationV2 {
       archetypeCheckbox.on('change', (e) => {
         const isChecked = e.target.checked;
         this.filters.includeArchetypeFeats = isChecked;
-        this.updateFilteredFeats();
 
         if (isChecked) {
           dedicationSearch.removeClass('hidden');
         } else {
           dedicationSearch.addClass('hidden');
+          this.filters.dedicationSearch = '';
+          dedicationSearch.val('');
         }
+
+        this.updateFilteredFeats();
       });
     }
 

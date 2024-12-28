@@ -9,6 +9,10 @@ Hooks.on('init', async () => {
 
   Handlebars.registerHelper('notEqual', (a, b) => a !== b);
   Handlebars.registerHelper('eq', (a, b) => a === b);
+  Handlebars.registerHelper('or', (...args) => {
+    const options = args.pop();
+    return args.some(Boolean);
+  });
 });
 
 Hooks.on('ready', () => {
