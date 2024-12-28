@@ -1,6 +1,6 @@
-<form>
+<div>
   <div class="header-container">
-    <h1 class='fancy-font'>
+    <h1>
       {{localize
         'PF2E_LEVEL_UP_WIZARD.menu.header.name'
         actorName=actorName
@@ -207,8 +207,8 @@
     </h3>
 
     {{! Innate Features }}
-    {{#if features.featuresForLevel.length}}
-      {{#each features.featuresForLevel}}
+    {{#if featuresForLevel.length}}
+      {{#each featuresForLevel}}
         <p>
           <strong>
             {{this.name}}
@@ -220,9 +220,9 @@
     {{/if}}
 
     {{! Spellcasting }}
-    {{#if features.spellcasting}}
+    {{#if spellcasting}}
       {{! New Spell Rank }}
-      {{#if features.newSpellRankLevel}}
+      {{#if newSpellRankLevel}}
         <p>
           <strong>
             {{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.rank'}}
@@ -251,6 +251,6 @@
 
   {{! Submit Button }}
   <div style='margin-top: 20px;'>
-    <button type='submit' class='btn btn-primary' disabled>Submit</button>
+    <button type='submit' disabled>Submit</button>
   </div>
-</form>
+</div>
