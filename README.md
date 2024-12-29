@@ -2,6 +2,8 @@
 
 A module for PF2e on FoundryVTT that provides a level up assistant for players.
 
+If you enjoy the module consider [buying me a coffee](https://buymeacoffee.com/zumanzo)!
+
 ## Installation
 
 This module can be installed directly in Foundry via `Install Modules` and searching for the name. Alternatively you can install it via manifest using this link: `https://github.com/BenABaron/pf2e-level-up-wizard/releases/latest/download/module.json`
