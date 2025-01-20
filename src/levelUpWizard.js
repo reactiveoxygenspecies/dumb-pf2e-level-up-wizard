@@ -14,7 +14,8 @@ import {
 } from './helpers/formHelpers.js';
 import {
   getSkillsForLevel,
-  skillProficiencyRanks
+  skillProficiencyRanks,
+  getSkillTranslation
 } from './helpers/skillsHelpers.js';
 import {
   confirmChanges,
@@ -167,6 +168,11 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
       .split('-')
       .map((cls) => cls.trim());
 
+    // use the original english class name for determining the feats, if the name was translated with babele
+    let originalClassName;
+    if(this.actorData.class?.flags?.babele?.translated) {
+        originalClassName = this.actorData.class.flags.babele.originalName;
+    }
     let primaryClass = classNames[0];
     let secondaryClass = classNames[1] || null;
 
@@ -174,7 +180,7 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
       this.actorData,
       'class',
       targetLevel,
-      primaryClass
+      originalClassName || primaryClass
     );
     let dualClassFeats = [];
     if (secondaryClass) {
@@ -337,8 +343,8 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
 
     let skillIncreaseMessage = '';
     if (finalData.skills) {
-      const skill = finalData.skills;
-      const normalizedSkill = normalizeString(skill);
+      const normalizedSkill = normalizeString(finalData.skills);
+      const translatedSkill = getSkillTranslation(normalizedSkill);
       const skillRankPath = `system.skills.${normalizedSkill}.rank`;
       const updatedRank = actor.system.skills[normalizedSkill].rank + 1;
       await actor.update({ [skillRankPath]: updatedRank });
@@ -354,7 +360,7 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
 
       skillIncreaseMessage = game.i18n.format(
         'PF2E_LEVEL_UP_WIZARD.messages.skillIncrease.rankIncrease',
-        { skill, rankName }
+        { skill: translatedSkill, rankName }
       );
     }
 

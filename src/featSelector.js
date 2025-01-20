@@ -1,6 +1,5 @@
 import { createFeatChatMessage } from './helpers/foundryHelpers.js';
-import { getAssociatedSkills, SKILLS } from './helpers/skillsHelpers.js';
-import { capitalize } from './helpers/utility.js';
+import { getAssociatedSkills, getSkillTranslation, SKILLS } from './helpers/skillsHelpers.js';
 
 export class FeatSelector extends foundry.applications.api.ApplicationV2 {
   constructor(feats, featType, actorName, targetLevel, options) {
@@ -67,7 +66,7 @@ export class FeatSelector extends foundry.applications.api.ApplicationV2 {
     );
     const localizedSkills = SKILLS.map((skill) => ({
       key: skill,
-      label: game.i18n.localize(`PF2E.Skill.${capitalize(skill)}`)
+      label: getSkillTranslation(skill)
     }));
 
     this.filteredFeats.forEach((feat) => {
@@ -176,7 +175,7 @@ export class FeatSelector extends foundry.applications.api.ApplicationV2 {
     // Event: Select Skill
     skillFilter.on('change', 'input[type="checkbox"]', (e) => {
       const skill = e.target.value;
-
+      
       if (e.target.checked) {
         this.filters.skills.push(skill);
       } else {
@@ -288,14 +287,15 @@ export class FeatSelector extends foundry.applications.api.ApplicationV2 {
       const matchesArchetype =
         includeArchetypeFeats ||
         !feat.system.traits.value.includes('archetype');
-
-      const matchesDedicationSearch =
+      
+      const dedicationTranslated= game.i18n.localize('PF2E.TraitDedication').toLowerCase();
+      const matchesDedicationSearch = 
         !this.filters.dedicationSearch ||
         feat.system.prerequisites?.value?.some((prereq) => {
           const prerequisiteValue = prereq.value.toLowerCase();
           return (
             prerequisiteValue.includes(this.filters.dedicationSearch) &&
-            prerequisiteValue.includes('dedication')
+            (prerequisiteValue.includes('dedication') || prerequisiteValue.includes(dedicationTranslated))
           );
         });
 
