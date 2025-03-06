@@ -15,7 +15,9 @@ import {
 import {
   getSkillsForLevel,
   skillProficiencyRanks,
-  getSkillTranslation
+  getSkillTranslation,
+  getSkillPotencyForLevel,
+  buildPotencyModifier
 } from './helpers/skillsHelpers.js';
 import {
   confirmChanges,
@@ -155,6 +157,8 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
     const freeArchetype = game.settings.get('pf2e', 'freeArchetypeVariant');
     const mythicVariantEnabled =
       game.settings.get('pf2e', 'mythic') === 'enabled';
+    const ABPEnabled =
+      game.settings.get('pf2e', 'automaticBonusVariant') !== 'noABP';
     const ancestryParagon =
       game.modules.get('xdy-pf2e-workbench')?.active &&
       game.settings.get(
@@ -217,6 +221,15 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
     const ancestryParagonFeats =
       ancestryParagon &&
       (await getFeatsForLevel(this.actorData, 'ancestryParagon', targetLevel));
+    const {
+      hasSkillPotencyUpgrade,
+      potencyAvailableNewBoosts,
+      potencyUpgradeTo2Options,
+      potencyUpgradeTo3Options,
+      currentPotencyLevels
+    } =
+      ABPEnabled &&
+      getSkillPotencyForLevel(this.actorData, targetLevel, ABPEnabled);
 
     const gradualBoosts = game.settings.get('pf2e', 'gradualBoostsVariant');
 
@@ -266,7 +279,12 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
       actorName,
       targetLevel,
       showFeatPrerequisites,
-      classJournals
+      classJournals,
+      hasSkillPotencyUpgrade,
+      potencyAvailableNewBoosts,
+      potencyUpgradeTo2Options,
+      potencyUpgradeTo3Options,
+      currentPotencyLevels
     };
   }
 
@@ -370,6 +388,60 @@ export class PF2eLevelUpWizardConfig extends foundry.applications.api
         'PF2E_LEVEL_UP_WIZARD.messages.skillIncrease.rankIncrease',
         { skill: translatedSkill, rankName }
       );
+    }
+
+    if (finalData.newPotency) {
+      const normalizedSkill = normalizeString(finalData.newPotency);
+      const translatedSkill = getSkillTranslation(normalizedSkill);
+      const skillPath = `system.customModifiers.${normalizedSkill}`;
+      const newModifiers = buildPotencyModifier(1);
+
+      await actor.update({
+        [skillPath]: newModifiers
+      });
+
+      skillIncreaseMessage +=
+        ' ' +
+        game.i18n.format(
+          'PF2E_LEVEL_UP_WIZARD.messages.skillPotency.newPotency',
+          { skill: translatedSkill }
+        );
+    }
+
+    if (finalData.upgradePotencyTo2) {
+      const normalizedSkill = normalizeString(finalData.upgradePotencyTo2);
+      const translatedSkill = getSkillTranslation(normalizedSkill);
+      const skillPath = `system.customModifiers.${normalizedSkill}`;
+      const newModifiers = buildPotencyModifier(2);
+
+      await actor.update({
+        [skillPath]: newModifiers
+      });
+
+      skillIncreaseMessage +=
+        ' ' +
+        game.i18n.format(
+          'PF2E_LEVEL_UP_WIZARD.messages.skillPotency.upgradeTo2',
+          { skill: translatedSkill }
+        );
+    }
+
+    if (finalData.upgradePotencyTo3) {
+      const normalizedSkill = normalizeString(finalData.upgradePotencyTo3);
+      const translatedSkill = getSkillTranslation(normalizedSkill);
+      const skillPath = `system.customModifiers.${normalizedSkill}`;
+      const newModifiers = buildPotencyModifier(3);
+
+      await actor.update({
+        [skillPath]: newModifiers
+      });
+
+      skillIncreaseMessage +=
+        ' ' +
+        game.i18n.format(
+          'PF2E_LEVEL_UP_WIZARD.messages.skillPotency.upgradeTo3',
+          { skill: translatedSkill }
+        );
     }
 
     const selectedFeats = featsToAdd
