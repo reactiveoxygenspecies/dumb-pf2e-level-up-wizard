@@ -1,7 +1,9 @@
 {
   "name": "pf2e-level-up-wizard",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node --test && node tests/i18n-keys.mjs",
+    "build:archetype-feats": "node scripts/build-archetype-feats.mjs"
   },
   "type": "module",
   "author": "Zumanzo",

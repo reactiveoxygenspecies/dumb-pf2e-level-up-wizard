@@ -1,0 +1,28 @@
+<div class="feat-slot {{#if pick}}filled{{else}}{{#if required}}empty{{/if}}{{/if}}" data-slot-key="{{key}}">
+  <div class="slot-label">
+    <span class="group">{{groupLabel}}</span>
+    <span class="level" data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.slotLevel'}}">{{label}}</span>
+  </div>
+  {{#if pick}}
+    <div class="slot-pick">
+      <img src="{{pick.img}}" alt="" loading="lazy">
+      <a class="content-link" draggable="true" data-link data-uuid="{{pick.uuid}}" data-type="Item">{{pick.name}}</a>
+      <span class="feat-level">{{pick.effectiveLevel}}</span>
+      {{#if prereq}}
+        <i class="prereq {{prereq.status}} fa-solid {{prereq.icon}}" data-tooltip="{{prereq.tooltip}}"></i>
+      {{/if}}
+    </div>
+    <div class="slot-controls">
+      <button type="button" class="icon fa-solid fa-pen" data-action="openFeatSelector" data-slot-key="{{key}}"
+        data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.change'}}"
+        aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.change'}}"></button>
+      <button type="button" class="icon fa-solid fa-xmark" data-action="clearFeat" data-slot-key="{{key}}"
+        data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.clear'}}"
+        aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.clear'}}"></button>
+    </div>
+  {{else}}
+    <button type="button" class="slot-choose" data-action="openFeatSelector" data-slot-key="{{key}}">
+      <i class="fa-solid fa-magnifying-glass"></i> {{placeholder}}
+    </button>
+  {{/if}}
+</div>

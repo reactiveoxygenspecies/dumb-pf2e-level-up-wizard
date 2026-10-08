@@ -1,180 +1,199 @@
-import { module_name } from './main.js';
-import { renderLevelUpButton } from './actor.js';
+import { MODULE_ID } from './constants.js';
+import { invalidateFeatIndex } from './data/featIndex.js';
+import { localize, openApplications } from './helpers/utility.js';
 
-const rerenderCharacterSheet = () => {
-  Object.values(ui.windows).forEach((app) => {
-    if (
-      app.options.classes.includes('character') &&
-      app.actor?.type === 'character'
-    ) {
-      app.render(false);
-
-      const html = $(app.element);
-      renderLevelUpButton(app, html);
-    }
-  });
+/** Re-render open character sheets (ApplicationV1 today, ApplicationV2 once the system migrates) */
+export const rerenderCharacterSheets = () => {
+  const sheets = [
+    ...Object.values(ui.windows),
+    ...openApplications()
+  ].filter((app) => app.actor?.type === 'character' && app.rendered);
+  for (const sheet of new Set(sheets)) sheet.render(false);
 };
 
+/** Header buttons are built once per ApplicationV1 window, so moving the button needs a fresh window */
+const reopenCharacterSheets = async () => {
+  const sheets = Object.values(ui.windows).filter(
+    (app) => app.actor?.type === 'character' && app.rendered
+  );
+  for (const sheet of sheets) {
+    await sheet.close();
+    sheet.render(true);
+  }
+  rerenderCharacterSheets();
+};
+
+const rerenderWizards = () => {
+  for (const app of openApplications()) {
+    if (app.options.classes?.includes(MODULE_ID)) app.render();
+  }
+};
+
+const choices = (base, keys) =>
+  Object.fromEntries(keys.map(([value, key]) => [value, `${base}.${key}`]));
+
+const S = 'PF2E_LEVEL_UP_WIZARD.settings';
+
 export const registerSettings = () => {
-  game.settings.register(module_name, 'show-level-up-button', {
-    name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.showButton.name'),
-    hint: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.showButton.hint'),
+  const register = (key, data) =>
+    game.settings.register(MODULE_ID, key, {
+      name: `${S}.${data.i18n}.name`,
+      hint: `${S}.${data.i18n}.hint`,
+      config: true,
+      ...data
+    });
+
+  register('show-level-up-button', {
+    i18n: 'showButton',
     scope: 'world',
-    config: true,
     type: Boolean,
     default: true,
     requiresReload: true
   });
 
-  game.settings.register(module_name, 'button-placement', {
-    name: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.name'
-    ),
-    hint: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.hint'
-    ),
+  register('button-placement', {
+    i18n: 'buttonPlacement',
     scope: 'client',
-    config: true,
     type: String,
     default: 'CHAR_HEADER_SMALL',
-    choices: {
-      CHAR_HEADER: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.options.charHeaderLarge'
-      ),
-      CHAR_HEADER_SMALL: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.options.charHeaderSmall'
-      ),
-      WINDOW_HEADER: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.buttonPlacement.options.windowHeader'
-      )
-    },
-    onChange: rerenderCharacterSheet
+    choices: choices(`${S}.buttonPlacement.options`, [
+      ['CHAR_HEADER', 'charHeaderLarge'],
+      ['CHAR_HEADER_SMALL', 'charHeaderSmall'],
+      ['WINDOW_HEADER', 'windowHeader']
+    ]),
+    onChange: reopenCharacterSheets
   });
 
-  game.settings.register(module_name, 'feat-sort-method', {
-    name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.sortMethod.name'),
-    hint: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.sortMethod.hint'),
+  register('disable-level-input', {
+    i18n: 'disableLevelInput',
+    scope: 'world',
+    type: Boolean,
+    default: false,
+    onChange: rerenderCharacterSheets
+  });
+
+  register('xp-enforcement', {
+    i18n: 'xpEnforcement',
+    scope: 'world',
+    type: Boolean,
+    default: false,
+    onChange: rerenderCharacterSheets
+  });
+
+  register('require-all-choices', {
+    i18n: 'requireAllChoices',
+    scope: 'world',
+    type: Boolean,
+    default: true,
+    onChange: rerenderWizards
+  });
+
+  register('allow-player-undo', {
+    i18n: 'allowPlayerUndo',
+    scope: 'world',
+    type: Boolean,
+    default: true
+  });
+
+  register('prerequisite-mode', {
+    i18n: 'prerequisiteMode',
+    scope: 'world',
+    type: String,
+    default: 'show',
+    choices: choices(`${S}.prerequisiteMode.options`, [
+      ['show', 'show'],
+      ['off', 'off']
+    ]),
+    onChange: rerenderWizards
+  });
+
+  register('hide-unmet-prerequisites', {
+    i18n: 'hideUnmetPrerequisites',
     scope: 'client',
-    config: true,
+    type: Boolean,
+    default: false
+  });
+
+  register('hidden-rarities', {
+    i18n: 'hiddenRarities',
+    scope: 'world',
+    type: String,
+    default: 'none',
+    choices: choices(`${S}.hiddenRarities.options`, [
+      ['none', 'none'],
+      ['rare', 'rare'],
+      ['uncommon', 'uncommon']
+    ]),
+    onChange: rerenderWizards
+  });
+
+  register('feat-sort-method', {
+    i18n: 'sortMethod',
+    scope: 'client',
+    type: String,
     default: 'LEVEL_DESC',
-    choices: {
-      LEVEL_DESC: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.sortMethod.options.levelDesc'
-      ),
-      LEVEL_ASC: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.sortMethod.options.levelAsc'
-      ),
-      ALPHA_DESC: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.sortMethod.options.alphaDesc'
-      ),
-      ALPHA_ASC: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.sortMethod.options.alphaAsc'
-      )
-    }
+    choices: choices(`${S}.sortMethod.options`, [
+      ['LEVEL_DESC', 'levelDesc'],
+      ['LEVEL_ASC', 'levelAsc'],
+      ['ALPHA_ASC', 'alphaAsc'],
+      ['ALPHA_DESC', 'alphaDesc']
+    ])
   });
 
-  game.settings.register(module_name, 'show-feat-prerequisites', {
-    name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.featPrereqs.name'),
-    hint: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.featPrereqs.hint'),
-    scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false,
-    onChange: () => {
-      Object.values(ui.windows).forEach((app) => {
-        if (app.options.id === 'level-up-wizard') {
-          app.render(true);
-        }
-      });
-    }
-  });
-
-  game.settings.register(module_name, 'skill-increase-info', {
-    name: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.skillInfo.name'),
-    hint: game.i18n.localize('PF2E_LEVEL_UP_WIZARD.settings.skillInfo.hint'),
+  register('skill-increase-info', {
+    i18n: 'skillInfo',
     scope: 'client',
-    config: true,
     type: String,
-    default: 'NAME_ONLY',
-    choices: {
-      NAME_ONLY: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.skillInfo.options.nameOnly'
-      ),
-      NAME_WITH_MOD: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.skillInfo.options.nameWithMod'
-      ),
-      NAME_WITH_RANK: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.skillInfo.options.nameWithRank'
-      ),
-      NAME_WITH_MOD_AND_RANK: game.i18n.localize(
-        'PF2E_LEVEL_UP_WIZARD.settings.skillInfo.options.nameWithModAndRank'
-      )
-    }
+    default: 'NAME_WITH_MOD_AND_RANK',
+    choices: choices(`${S}.skillInfo.options`, [
+      ['NAME_ONLY', 'nameOnly'],
+      ['NAME_WITH_MOD', 'nameWithMod'],
+      ['NAME_WITH_RANK', 'nameWithRank'],
+      ['NAME_WITH_MOD_AND_RANK', 'nameWithModAndRank']
+    ]),
+    onChange: rerenderWizards
   });
 
-  game.settings.register(module_name, 'disable-level-input', {
-    name: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.disableLevelInput.name'
-    ),
-    hint: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.disableLevelInput.hint'
-    ),
+  register('send-gm-whispers', {
+    i18n: 'sendGMWhispers',
     scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false,
-    onChange: rerenderCharacterSheet
-  });
-
-  game.settings.register(module_name, 'send-gm-whispers', {
-    name: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.sendGMWhispers.name'
-    ),
-    hint: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.sendGMWhispers.hint'
-    ),
-    scope: 'world',
-    config: true,
     type: Boolean,
     default: false
   });
 
-  game.settings.register(module_name, 'hide-uncommon-feats', {
-    name: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.hideUncommonFeats.name'
-    ),
-    hint: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.hideUncommonFeats.hint'
-    ),
+  register('additional-feat-compendiums', {
+    i18n: 'additionalCompendiums',
     scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false
-  });
-
-  game.settings.register(module_name, 'xp-enforcement', {
-    name: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.xpEnforcement.name'
-    ),
-    hint: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.xpEnforcement.hint'
-    ),
-    scope: 'world',
-    config: true,
-    type: Boolean,
-    default: false
-  });
-
-  game.settings.register(module_name, 'additional-feat-compendiums', {
-    name: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.additionalCompendiums.name'
-    ),
-    hint: game.i18n.localize(
-      'PF2E_LEVEL_UP_WIZARD.settings.additionalCompendiums.hint'
-    ),
-    scope: 'world',
-    config: true,
     type: String,
-    requiresReload: true
+    default: '',
+    onChange: invalidateFeatIndex
   });
+
+  // Replaced by 'hidden-rarities'; kept registered so its stored value can be migrated
+  game.settings.register(MODULE_ID, 'hide-uncommon-feats', {
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: false
+  });
+
+  game.settings.register(MODULE_ID, 'settings-version', {
+    scope: 'world',
+    config: false,
+    type: Number,
+    default: 0
+  });
+};
+
+/** One-time migration of settings from the upstream module (GM only) */
+export const migrateSettings = async () => {
+  if (!game.user.isGM) return;
+  const version = game.settings.get(MODULE_ID, 'settings-version');
+  if (version >= 1) return;
+
+  if (game.settings.get(MODULE_ID, 'hide-uncommon-feats')) {
+    await game.settings.set(MODULE_ID, 'hidden-rarities', 'uncommon');
+  }
+  await game.settings.set(MODULE_ID, 'settings-version', 1);
+  console.log(`${MODULE_ID} | ${localize('notifications.settingsMigrated')}`);
 };

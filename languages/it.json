@@ -1,0 +1,259 @@
+{
+  "PF2E_LEVEL_UP_WIZARD": {
+    "button-tooltip": "Sali di livello!",
+    "button": {
+      "needXp": "PE insufficienti per salire di livello (ne servono ancora {needed})",
+      "levelLocked": "Usa la Procedura guidata di avanzamento per cambiare livello",
+      "toolbarLabel": "Sali di livello",
+      "historyLabel": "Cronologia degli avanzamenti di livello",
+      "historyHint": "Clic destro per la cronologia degli avanzamenti di livello"
+    },
+    "menu": {
+      "windowTitle": "Procedura guidata di avanzamento: {actorName} (livello {targetLevel})",
+      "header": {
+        "name": "{actorName} sta raggiungendo il livello {targetLevel}!",
+        "description": "Ecco cosa ottieni. Fai le tue scelte qui sotto, poi applica l'avanzamento di livello.",
+        "levelJump": "Il livello è passato da {previousLevel} a {targetLevel} in un solo passaggio. Le scelte di tutti i livelli intermedi sono mostrate insieme."
+      },
+      "nothingToChoose": "A questo livello non ci sono scelte da fare. Controlla le tue nuove capacità di classe qui sotto e applica l'avanzamento di livello.",
+      "notes": {
+        "classJournal": "Scopri di più sulla tua classe:"
+      },
+      "dropdown": {
+        "placeholder": "Fai una scelta"
+      },
+      "feats": {
+        "header": "Talenti",
+        "missedHeader": "Slot talento vuoti dei livelli precedenti ({count})",
+        "missedHint": "Questi slot non sono mai stati riempiti. Sono facoltativi: riempi ora quelli che vuoi.",
+        "slotLevel": "Livello dello slot",
+        "change": "Cambia talento",
+        "clear": "Cancella selezione"
+      },
+      "skillIncreases": {
+        "header": "Incremento di abilità",
+        "label": "Incremento",
+        "hint": "Aumenta di un grado di competenza un'abilità. A questo livello un'abilità può raggiungere: {rank}."
+      },
+      "skillPotency": {
+        "header": "Potenza delle abilità (Progressione automatica dei bonus)",
+        "current": "Attuale:",
+        "newBoost": "Nuova potenza di abilità (+1)",
+        "upgradeTo2": "Migliora una potenza di abilità a +2",
+        "upgradeTo3": "Migliora una potenza di abilità a +3",
+        "modifierLabel": "Potenza dell'abilità"
+      },
+      "attributeBoosts": {
+        "header": "Potenziamenti di attributo",
+        "label": "Potenzia {count} attributi diversi.",
+        "gradualLabel": "Potenziamenti graduali: potenzia {count} attributo/i del set del livello {set}.",
+        "boost": "Potenzia",
+        "partial": "Parziale",
+        "partialHint": "Questo attributo è già +4 o più, quindi questo potenziamento vale solo a metà. Un secondo potenziamento più avanti aumenterà il modificatore.",
+        "alreadyBoosted": "Già potenziato in questo set",
+        "manual": "Questo personaggio usa modificatori di attributo inseriti a mano, quindi la procedura salta i potenziamenti di attributo. Aggiornali sulla scheda del personaggio."
+      },
+      "intBonus": {
+        "header": "Aumento di Intelligenza",
+        "hint": "Il tuo modificatore di Intelligenza è aumentato: diventa addestrato in un'abilità aggiuntiva (e impara una lingua in più qui sotto).",
+        "skill": "Abilità addestrata aggiuntiva"
+      },
+      "languages": {
+        "header": "Lingue",
+        "hint": "Puoi imparare altre lingue. Sceglile ora o più tardi sulla scheda del personaggio.",
+        "label": "Lingua",
+        "later": "Scegli più tardi"
+      },
+      "features": {
+        "class": {
+          "header": "Nuove capacità di classe",
+          "hint": "Vengono aggiunte automaticamente al tuo personaggio."
+        },
+        "spellcasting": {
+          "header": "Incantesimi",
+          "rank": "Ora sono disponibili gli incantesimi di grado {rank}.",
+          "slots": "Gli slot incantesimo e i repertori non sono automatizzati. Controllali nella scheda Incantesimi per:"
+        }
+      },
+      "footer": {
+        "missing": "Ancora da scegliere:",
+        "submit": "Applica livello {targetLevel}",
+        "applying": "Applicazione in corso…"
+      },
+      "confirmDialog": {
+        "title": "Conferma avanzamento di livello",
+        "content": "Applicare queste modifiche a {actorName} e salire al livello {targetLevel}?",
+        "skipped": "Queste scelte restano vuote e potranno essere fatte più tardi sulla scheda del personaggio:"
+      },
+      "filters": {
+        "orderBy": "Ordina per",
+        "level": "Livello",
+        "name": "Nome",
+        "rarity": "Rarità",
+        "skills": "Filtra per abilità",
+        "archetypeFeats": "Mostra talenti di archetipo",
+        "hideSkillFeats": "Nascondi talenti di abilità",
+        "hideUnmet": "Nascondi i talenti con prerequisiti non soddisfatti",
+        "toggleOrder": "Inverti l'ordinamento",
+        "reset": "Reimposta filtri",
+        "placeholder": {
+          "nameSearch": "Cerca per nome",
+          "minLevel": "Min",
+          "maxLevel": "Max",
+          "dedicationSearch": "Cerca per archetipo"
+        }
+      },
+      "tooltips": {
+        "selectFeat": "Scegli questo talento",
+        "sendToChat": "Invia in chat"
+      }
+    },
+    "selector": {
+      "title": "{group}: livello {level}",
+      "count": "{count} talenti su {total}",
+      "noResults": "Nessun talento corrisponde a questi filtri.",
+      "level": "Livello {level}",
+      "prerequisites": "Prerequisiti",
+      "pickHint": "Scegli un talento a sinistra per leggerlo qui. Fai doppio clic su un talento per sceglierlo subito.",
+      "choose": "Scegli",
+      "takenElsewhere": "Scelto in un altro slot",
+      "grantedBy": "Disponibile tramite {dedication}."
+    },
+    "prerequisites": {
+      "met": "Prerequisiti soddisfatti",
+      "unmet": "Prerequisiti non soddisfatti",
+      "unknown": "Alcuni prerequisiti non possono essere verificati automaticamente"
+    },
+    "history": {
+      "title": "Cronologia degli avanzamenti di livello",
+      "windowTitle": "Cronologia degli avanzamenti di livello: {actorName}",
+      "level": "Livello {levels}",
+      "empty": "Nessun avanzamento di livello registrato finora.",
+      "undoButton": "Annulla l'ultimo avanzamento di livello",
+      "undoTitle": "Annulla avanzamento di livello",
+      "undoConfirm": "Annullare l'ultimo avanzamento di livello di {actorName}? I talenti aggiunti vengono rimossi e il livello torna da {fromLevel} a {toLevel}. Gradi di competenza delle abilità, potenziamenti di attributo, lingue e PE vengono ripristinati."
+    },
+    "settings": {
+      "showButton": {
+        "name": "Abilita il pulsante di avanzamento",
+        "hint": "Mostra un pulsante di avanzamento sulle schede dei personaggi. Se disabilitato, la procedura si apre automaticamente dopo che il livello di un personaggio viene aumentato a mano."
+      },
+      "buttonPlacement": {
+        "name": "Posizione del pulsante di avanzamento",
+        "hint": "Dove appare il pulsante di avanzamento: accanto al livello del personaggio o nell'intestazione della finestra.",
+        "options": {
+          "charHeaderSmall": "Accanto al livello (piccolo)",
+          "charHeaderLarge": "Accanto al livello (grande)",
+          "windowHeader": "Intestazione della finestra"
+        }
+      },
+      "sortMethod": {
+        "name": "Ordinamento dei talenti",
+        "hint": "Come vengono ordinati i talenti per impostazione predefinita nel selettore dei talenti.",
+        "options": {
+          "levelDesc": "Per livello (dal più alto al più basso)",
+          "levelAsc": "Per livello (dal più basso al più alto)",
+          "alphaAsc": "Alfabetico (A-Z)",
+          "alphaDesc": "Alfabetico (Z-A)"
+        }
+      },
+      "prerequisiteMode": {
+        "name": "Verifica dei prerequisiti",
+        "hint": "Verifica i prerequisiti dei talenti rispetto al personaggio e segna ogni talento come soddisfatto, non soddisfatto o non verificabile. I controlli sono solo indicativi: nulla viene bloccato.",
+        "options": {
+          "show": "Verifica e segna i prerequisiti",
+          "off": "Disattivata"
+        }
+      },
+      "hideUnmetPrerequisites": {
+        "name": "Nascondi i talenti con prerequisiti non soddisfatti",
+        "hint": "Valore predefinito del filtro «Nascondi i talenti con prerequisiti non soddisfatti» del selettore dei talenti. I talenti i cui prerequisiti non possono essere verificati sono sempre mostrati."
+      },
+      "skillInfo": {
+        "name": "Info sull'incremento di abilità",
+        "hint": "Quante informazioni mostrare nella scelta delle abilità.",
+        "options": {
+          "nameOnly": "Nome dell'abilità (Natura)",
+          "nameWithMod": "Nome e modificatore (Natura +12)",
+          "nameWithRank": "Nome e cambio di grado (Natura (Esperto → Maestro))",
+          "nameWithModAndRank": "Nome, modificatore e cambio di grado (Natura +12 (Esperto → Maestro))"
+        }
+      },
+      "disableLevelInput": {
+        "name": "Blocca il campo del livello",
+        "hint": "Disabilita il campo del livello sulle schede dei personaggi, così la procedura guidata è l'unico modo per salire di livello. Vale anche quando il requisito di PE non è soddisfatto."
+      },
+      "requireAllChoices": {
+        "name": "Richiedi tutte le scelte",
+        "hint": "Se abilitato, ogni slot talento, incremento di abilità e potenziamento deve essere scelto prima di applicare l'avanzamento di livello. Disabilita per permettere ai giocatori di lasciare scelte vuote e completarle più tardi."
+      },
+      "allowPlayerUndo": {
+        "name": "Permetti ai giocatori di annullare gli avanzamenti di livello",
+        "hint": "Se abilitato, i giocatori possono annullare l'ultimo avanzamento di livello del proprio personaggio. Il GM può sempre annullarlo."
+      },
+      "sendGMWhispers": {
+        "name": "Invia i promemoria al GM con un sussurro",
+        "hint": "Invia anche al GM, con un sussurro, i promemoria sugli aggiornamenti manuali (come gli slot incantesimo)."
+      },
+      "additionalCompendiums": {
+        "name": "Compendi di talenti aggiuntivi",
+        "hint": "I talenti provengono da tutti i compendi selezionati nelle impostazioni del Browser dei compendi del sistema. Aggiungi qui altri ID di compendio come elenco separato da virgole, ad es. 'my-module.feats, world.homebrew-feats'."
+      },
+      "hiddenRarities": {
+        "name": "Rarità di talenti nascoste",
+        "hint": "Rarità di talenti che i giocatori non vedono nel selettore dei talenti.",
+        "options": {
+          "none": "Mostra tutte le rarità",
+          "rare": "Nascondi i talenti rari e unici",
+          "uncommon": "Nascondi i talenti non comuni, rari e unici"
+        }
+      },
+      "xpEnforcement": {
+        "name": "Applica i requisiti di PE",
+        "hint": "Permette di salire di livello solo quando il personaggio ha abbastanza PE. I PE del livello vengono sottratti e il resto viene mantenuto."
+      }
+    },
+    "messages": {
+      "global": {
+        "header": "{actorName} ha raggiunto il livello {targetLevel}!",
+        "feats": "Talenti",
+        "skills": "Abilità",
+        "boosts": "Potenziamenti di attributo:",
+        "languages": "Lingue:",
+        "potency": "Potenza delle abilità:",
+        "noChoices": "Nessuna nuova scelta a questo livello."
+      },
+      "personal": {
+        "header": "{actorName}: ancora da fare",
+        "spellRank": "Sono disponibili incantesimi di grado {rank}: aggiorna slot incantesimo e incantesimi nella scheda Incantesimi.",
+        "spellSlots": "Controlla gli slot incantesimo per: {entries}.",
+        "featSpells": "Questi nuovi talenti citano incantesimi, trucchetti o incantesimi focus, che potrebbero dover essere aggiunti a mano: {feats}.",
+        "languages": "Puoi imparare {count} lingua/e in più: aggiungile sulla scheda del personaggio.",
+        "intSkill": "Il tuo aumento di Intelligenza concede {count} abilità addestrata/e in più: scegli sulla scheda del personaggio.",
+        "emptySlots": "Slot talento vuoti da riempire sulla scheda del personaggio: {slots}."
+      }
+    },
+    "notifications": {
+      "levelUpStart": "Aggiornamento di {actorName} al livello {targetLevel}…",
+      "levelUpComplete": "Avanzamento di livello di {actorName} completato!",
+      "levelUpFailed": "Non è stato possibile preparare l'avanzamento di livello. Vedi la console (F12) per i dettagli.",
+      "levelUpRolledBack": "L'avanzamento di livello non è riuscito ed è stato annullato. Vedi la console (F12) per i dettagli.",
+      "featsSkipped": "Non aggiunti (scelta annullata): {feats}. Aggiungili dalla scheda del personaggio se necessario.",
+      "wizardStartup": "Avvio della Procedura guidata di avanzamento…",
+      "missingClass": "La Procedura guidata di avanzamento richiede che il personaggio abbia una classe.",
+      "companionClass": "La Procedura guidata di avanzamento non supporta compagni o eidolon. Assegna i loro talenti a mano.",
+      "maxLevel": "Questo personaggio è già al livello 20.",
+      "incomplete": "Fai prima tutte le scelte richieste.",
+      "levelChanged": "Il livello del personaggio è cambiato mentre la procedura era aperta. Riaprila.",
+      "nothingToUndo": "Non c'è nessun avanzamento di livello da annullare.",
+      "cannotUndo": "Si può annullare solo l'ultimo avanzamento di livello, e solo finché il personaggio è ancora al livello {level}.",
+      "undone": "Avanzamento di livello annullato per {actorName}.",
+      "settingsMigrated": "Impostazioni migrate dalla versione precedente.",
+      "additionalCompendiums": {
+        "failedToLoad": "Impossibile caricare il compendio {key}. Assicurati che sia un compendio di oggetti valido.",
+        "compendiumNotFound": "Compendio {key} non trovato. Controlla l'ortografia nelle impostazioni della Procedura guidata di avanzamento."
+      },
+      "openFailed": "Impossibile aprire la procedura di avanzamento. Vedi la console (F12) per i dettagli."
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<footer class="form-footer wizard-footer">
+  {{#if missing.length}}
+    <p class="missing {{#if requireAll}}blocking{{/if}}">
+      <i class="fa-solid {{#if requireAll}}fa-triangle-exclamation{{else}}fa-circle-info{{/if}}"></i>
+      {{localize 'PF2E_LEVEL_UP_WIZARD.menu.footer.missing'}}
+      {{#each missing}}<span class="tag">{{this}}</span>{{/each}}
+    </p>
+  {{/if}}
+  <div class="footer-buttons">
+    {{#if canUndo}}
+      <button type="button" data-action="undo" class="undo">
+        <i class="fa-solid fa-rotate-left"></i>
+        {{localize 'PF2E_LEVEL_UP_WIZARD.history.undoButton'}}
+      </button>
+    {{/if}}
+    <button type="submit" class="submit" {{#unless canSubmit}}disabled{{/unless}}>
+      {{#if submitting}}
+        <i class="fa-solid fa-spinner fa-spin"></i> {{localize 'PF2E_LEVEL_UP_WIZARD.menu.footer.applying'}}
+      {{else}}
+        <i class="fa-solid fa-hat-wizard"></i> {{localize 'PF2E_LEVEL_UP_WIZARD.menu.footer.submit' targetLevel=targetLevel}}
+      {{/if}}
+    </button>
+  </div>
+</footer>

@@ -1,205 +1,259 @@
 {
   "PF2E_LEVEL_UP_WIZARD": {
     "button-tooltip": "Monter de niveau !",
+    "button": {
+      "needXp": "Pas assez d'XP pour monter de niveau ({needed} de plus requis)",
+      "levelLocked": "Utilisez l'Assistant de montée de niveau pour changer de niveau",
+      "toolbarLabel": "Monter de niveau",
+      "historyLabel": "Historique des montées de niveau",
+      "historyHint": "Clic droit pour l'historique des montées de niveau"
+    },
     "menu": {
-      "title": "Assistant de montée de niveau",
+      "windowTitle": "Assistant de montée de niveau : {actorName} (niveau {targetLevel})",
       "header": {
-        "name": "{actorName} monte au niveau {targetLevel} !",
-        "description": "Voici un aperçu des nouvelles capacités disponibles. Veuillez faire votre sélection lorsque cela est demandé !"
+        "name": "{actorName} atteint le niveau {targetLevel} !",
+        "description": "Voici ce que vous gagnez. Faites vos choix ci-dessous, puis appliquez la montée de niveau.",
+        "levelJump": "Le niveau est passé de {previousLevel} à {targetLevel} en une seule étape. Les choix de tous les niveaux intermédiaires sont affichés ensemble."
       },
-      "close": "Fermer",
+      "nothingToChoose": "Aucun choix à faire à ce niveau. Passez en revue vos nouvelles capacités de classe ci-dessous et appliquez la montée de niveau.",
       "notes": {
-        "note": "Note :",
-        "featsPrereq": "Les dons avec des prérequis sont marqués avec un astérisque (*)",
         "classJournal": "Pour en apprendre plus sur votre classe :"
       },
       "dropdown": {
         "placeholder": "Faites un choix"
       },
-      "classFeats": {
-        "header": "Les dons de la classe {className}",
-        "label": "Nouveaux dons de classe disponible :",
-        "checkbox": "Inclure les dons d'archétype"
-      },
-      "freeArchetypeFeats": {
-        "header": "Dons d'archétype gratuit",
-        "label": "Nouveaux dons d'archétype gratuit disponible :"
-      },
-      "mythicFeats": {
-        "header": "Dons mythiques",
-        "label": "Nouveau don mythique disponible :"
-      },
-      "mythicDestiny": {
-        "header": "Déstinée mythique ",
-        "label": "Nouvelle déstinée mythique disponible :"
-      },
-      "ancestryFeats": {
-        "header": "Dons ancestraux",
-        "label": "Nouveau don ancestral disponible :"
-      },
-      "ancestryParagonFeats": {
-        "header": "Dons de parangon ancestraux",
-        "label": "Nouveau don de parangon ancestraux Disponible :"
-      },
-      "skillFeats": {
-        "header": "Dons de compétence",
-        "label": "Nouveau don de compétence disponible :"
-      },
-      "generalFeats": {
-        "header": "Dons generaux",
-        "label": "Nouveau don general disponible :"
+      "feats": {
+        "header": "Dons",
+        "missedHeader": "Emplacements de don vides des niveaux précédents ({count})",
+        "missedHint": "Ces emplacements n'ont jamais été remplis. Ils sont facultatifs : remplissez ceux que vous voulez maintenant.",
+        "slotLevel": "Niveau de l'emplacement",
+        "change": "Changer de don",
+        "clear": "Effacer la sélection"
       },
       "skillIncreases": {
         "header": "Amélioration de compétence",
-        "label": "Amélioration de compétence disponible :"
+        "label": "Amélioration",
+        "hint": "Augmentez une compétence d'un rang de maîtrise. À ce niveau, une compétence peut atteindre : {rank}."
       },
       "skillPotency": {
-        "header": "Puissance de compétence (PBA)",
-        "newPotency": "Nouvelle puissance de compétence disponible (+1) :",
-        "upgradeTo2": "Amélioration de puissance de compétence disponible (+2) :",
-        "upgradeTo3": "Amélioration de puissance de compétence disponible (+3) :"
+        "header": "Puissance de compétence (Progression des bonus automatiques)",
+        "current": "Actuel :",
+        "newBoost": "Nouvelle puissance de compétence (+1)",
+        "upgradeTo2": "Améliorer une puissance de compétence à +2",
+        "upgradeTo3": "Améliorer une puissance de compétence à +3",
+        "modifierLabel": "Puissance de compétence"
       },
       "attributeBoosts": {
         "header": "Primes d'attribut",
-        "label": "Choisissez quatre primes d'attribut à augmenter :",
-        "gradualBoostLabel": "Choisissez une prime d'attribut à augmenter :",
-        "boost": "AUGMENTÉ",
-        "partial": "AUGMENTATION GRADUELLE"
+        "label": "Augmentez {count} attributs différents.",
+        "gradualLabel": "Primes graduelles : augmentez {count} attribut(s) du lot du niveau {set}.",
+        "boost": "Prime",
+        "partial": "Partielle",
+        "partialHint": "Cet attribut est déjà à +4 ou plus, donc cette prime ne compte que pour moitié. Une seconde prime plus tard augmentera le modificateur.",
+        "alreadyBoosted": "Déjà augmenté dans ce lot",
+        "manual": "Ce personnage utilise des modificateurs d'attribut saisis manuellement, l'assistant ignore donc les primes d'attribut. Mettez-les à jour sur la fiche de personnage."
+      },
+      "intBonus": {
+        "header": "Augmentation d'Intelligence",
+        "hint": "Votre modificateur d'Intelligence a augmenté : devenez formé dans une compétence supplémentaire (et apprenez une langue de plus ci-dessous).",
+        "skill": "Compétence formée supplémentaire"
+      },
+      "languages": {
+        "header": "Langues",
+        "hint": "Vous pouvez apprendre d'autres langues. Choisissez-les maintenant ou plus tard sur la fiche de personnage.",
+        "label": "Langue",
+        "later": "Choisir plus tard"
       },
       "features": {
         "class": {
           "header": "Nouvelles capacités de classe",
-          "noAction": "Aucune action n'est requise"
-        },
-        "manual": {
-          "update": "Mettez ceci à jour manuellement dans la tab",
-          "spellcasting": "Incantation",
-          "sheet": "de votre fiche de personnage."
+          "hint": "Elles sont ajoutées automatiquement à votre personnage."
         },
         "spellcasting": {
-          "rank": "Nouveau rang et emplacements de dort disponible :",
-          "slots": "Nouveaux emplacements de dort :"
+          "header": "Incantation",
+          "rank": "Les sorts de rang {rank} sont maintenant disponibles.",
+          "slots": "Les emplacements de sort et les répertoires ne sont pas automatisés. Vérifiez-les dans l'onglet Incantation pour :"
         }
+      },
+      "footer": {
+        "missing": "Reste à choisir :",
+        "submit": "Appliquer le niveau {targetLevel}",
+        "applying": "Application en cours…"
       },
       "confirmDialog": {
-        "title": "Confirmez les changement",
-        "content": "Êtes-vous sûr de vouloir appliquer ces changements ?"
+        "title": "Confirmer la montée de niveau",
+        "content": "Appliquer ces changements à {actorName} et monter au niveau {targetLevel} ?",
+        "skipped": "Ces choix restent vides et pourront être faits plus tard sur la fiche de personnage :"
       },
       "filters": {
-        "orderBy": "Trié par :",
+        "orderBy": "Trier par",
         "level": "Niveau",
         "name": "Nom",
+        "rarity": "Rareté",
         "skills": "Filtrer par compétences",
-        "archetypeFeats": "Dons d'Aarchétype ",
-        "hideSkillFeats": "Cacher les dons de compétence ",
+        "archetypeFeats": "Afficher les dons d'archétype",
+        "hideSkillFeats": "Cacher les dons de compétence",
+        "hideUnmet": "Cacher les dons dont les prérequis ne sont pas remplis",
+        "toggleOrder": "Inverser le sens du tri",
+        "reset": "Réinitialiser les filtres",
         "placeholder": {
           "nameSearch": "Chercher par nom",
-          "minLevel": "Niveau Min ",
-          "maxLevel": "Niveau Max ",
-          "dedicationSearch": "Chercher par Dévouement"
+          "minLevel": "Min",
+          "maxLevel": "Max",
+          "dedicationSearch": "Chercher par archétype"
         }
       },
-      "featButtonContent": "{name} | {level}",
       "tooltips": {
-        "viewFeat": "Voir le don",
-        "selectFeat": "Sélectionner le don"
+        "selectFeat": "Choisir ce don",
+        "sendToChat": "Envoyer dans le chat"
       }
+    },
+    "selector": {
+      "title": "{group} : niveau {level}",
+      "count": "{count} dons sur {total}",
+      "noResults": "Aucun don ne correspond à ces filtres.",
+      "level": "Niveau {level}",
+      "prerequisites": "Prérequis",
+      "pickHint": "Choisissez un don à gauche pour le lire ici. Double-cliquez sur un don pour le choisir directement.",
+      "choose": "Choisir",
+      "takenElsewhere": "Choisi dans un autre emplacement",
+      "grantedBy": "Disponible grâce à {dedication}."
+    },
+    "prerequisites": {
+      "met": "Prérequis remplis",
+      "unmet": "Prérequis non remplis",
+      "unknown": "Certains prérequis ne peuvent pas être vérifiés automatiquement"
+    },
+    "history": {
+      "title": "Historique des montées de niveau",
+      "windowTitle": "Historique des montées de niveau : {actorName}",
+      "level": "Niveau {levels}",
+      "empty": "Aucune montée de niveau enregistrée pour l'instant.",
+      "undoButton": "Annuler la dernière montée de niveau",
+      "undoTitle": "Annuler la montée de niveau",
+      "undoConfirm": "Annuler la dernière montée de niveau de {actorName} ? Les dons ajoutés sont retirés et le niveau repasse de {fromLevel} à {toLevel}. Les rangs de compétence, les primes d'attribut, les langues et les XP sont restaurés."
     },
     "settings": {
       "showButton": {
         "name": "Activer le bouton de montée de niveau",
-        "hint": "Lorsque ce paramètre est activé, cela affiche un bouton de montée de niveau sur la fiche de personnage. Si le paramètre est désactivé, l'Assistant de montée de niveau s'activera automatiquement après avoir mis à jour le niveau du personnage manuellement."
+        "hint": "Affiche un bouton de montée de niveau sur les fiches de personnage. Si l'option est désactivée, l'assistant s'ouvre automatiquement après une augmentation manuelle du niveau du personnage."
       },
       "buttonPlacement": {
-        "name": "Placement du bouton de montée de niveau ",
-        "hint": "Choisissez où le bouton de montée de niveau apparait : soit à côté du niveau du personnage soit dans la barre d'outil au dessus de la fiche de personnage.",
+        "name": "Placement du bouton de montée de niveau",
+        "hint": "Où le bouton de montée de niveau apparaît : à côté du niveau du personnage ou dans l'en-tête de la fenêtre.",
         "options": {
-          "charHeaderSmall": "À côté du niveau - Petit",
-          "charHeaderLarge": "À côté du niveau - Large",
-          "windowHeader": "Barre d'outil"
+          "charHeaderSmall": "À côté du niveau (petit)",
+          "charHeaderLarge": "À côté du niveau (grand)",
+          "windowHeader": "En-tête de la fenêtre"
         }
       },
       "sortMethod": {
-        "name": "Méthode de trie de don",
-        "hint": "Choisissez comment les dons doivent être triés par défaut.",
+        "name": "Tri des dons",
+        "hint": "Comment les dons sont triés par défaut dans le sélecteur de dons.",
         "options": {
-          "levelDesc": "Par niveau (descendant)",
-          "levelAsc": "Par niveau (ascendant)",
+          "levelDesc": "Par niveau (décroissant)",
+          "levelAsc": "Par niveau (croissant)",
           "alphaAsc": "Alphabétique (A-Z)",
           "alphaDesc": "Alphabétique (Z-A)"
         }
       },
-      "featPrereqs": {
-        "name": "Afficher les prérequis des dons",
-        "hint": "Lorsque cette option est activée, cela affiche, dans la fenêtre de sélection de don, un astérisque (*) à côté des Dons qui ont des prérequis ."
+      "prerequisiteMode": {
+        "name": "Vérification des prérequis",
+        "hint": "Vérifie les prérequis des dons par rapport au personnage et marque chaque don comme rempli, non rempli ou non vérifiable. Les vérifications sont indicatives : rien n'est bloqué.",
+        "options": {
+          "show": "Vérifier et marquer les prérequis",
+          "off": "Désactivé"
+        }
+      },
+      "hideUnmetPrerequisites": {
+        "name": "Cacher les dons dont les prérequis ne sont pas remplis",
+        "hint": "Valeur par défaut du filtre « Cacher les dons dont les prérequis ne sont pas remplis » du sélecteur de dons. Les dons dont les prérequis ne peuvent pas être vérifiés restent toujours affichés."
       },
       "skillInfo": {
-        "name": " Info des amélioration de compétence",
-        "hint": "Choisissez quelles infos doivent être affichées lors du choix d'amélioration de compétence.",
+        "name": "Infos des améliorations de compétence",
+        "hint": "Quantité d'informations affichées dans le choix des compétences.",
         "options": {
-          "nameOnly": " Nom de la compétence (Nature)",
-          "nameWithMod": "Nom +Mod (Nature +12)",
-          "nameWithRank": "Nom → Rang suivant (Nature → Maître)",
-          "nameWithModetRank": "Nom +Mod → Rang suivant (Nature +12 → Maître)"
+          "nameOnly": "Nom de la compétence (Nature)",
+          "nameWithMod": "Nom et modificateur (Nature +12)",
+          "nameWithRank": "Nom et changement de rang (Nature (Expert → Maître))",
+          "nameWithModAndRank": "Nom, modificateur et changement de rang (Nature +12 (Expert → Maître))"
         }
       },
       "disableLevelInput": {
-        "name": "Désactiver la saisie du niveau",
-        "hint": "Lorsque cette option est activée, la saisie du niveau par défaut sur la fiche de personnage sera désactivé pour encourager l'utilisation de l'Assistant de montée de niveau pour les montée de niveau. Cette option n'a aucun effet si l'option 'Activer bouton de montée de niveau' est désactivée."
+        "name": "Verrouiller le champ de niveau",
+        "hint": "Désactive le champ de niveau sur les fiches de personnage afin que l'assistant soit le seul moyen de monter de niveau. S'applique même si le seuil d'XP n'est pas atteint."
+      },
+      "requireAllChoices": {
+        "name": "Exiger tous les choix",
+        "hint": "Si activé, chaque emplacement de don, amélioration de compétence et prime doit être choisi avant d'appliquer la montée de niveau. Désactivez pour laisser les joueurs ne rien choisir et compléter plus tard."
+      },
+      "allowPlayerUndo": {
+        "name": "Autoriser les joueurs à annuler leurs montées de niveau",
+        "hint": "Si activé, les joueurs peuvent annuler la dernière montée de niveau de leur personnage. Le MJ peut toujours l'annuler."
       },
       "sendGMWhispers": {
-        "name": "Envoyer les mise à jour manuelles en message privé au MJ",
-        "hint": "Lorsque cette option est activée, des messages privés sur les mise à jour manuelles requises (tel que les mise à jour des sorts) seront aussi envoyées au MJ en plus du joueur."
+        "name": "Envoyer les rappels en message privé au MJ",
+        "hint": "Envoie aussi au MJ, en message privé, les rappels de mises à jour manuelles (comme les emplacements de sort)."
       },
       "additionalCompendiums": {
-        "name": "Sources additionelle de don ",
-        "hint": "Spécifiez une liste de clés de compendium, séparée par des virgules, contenant les dons que vous voulez inclure dans l'assistant. Exemple: 'pf2e-playtest-data.impossible-playtest-class-feats, my-custom-compendium.feats'. Vérifier que les compendiums sont activés et accessibles."
+        "name": "Compendiums de dons supplémentaires",
+        "hint": "Les dons proviennent de tous les compendiums sélectionnés dans les paramètres du navigateur de compendiums du système. Ajoutez ici d'autres identifiants de compendium, séparés par des virgules, par ex. 'my-module.feats, world.homebrew-feats'."
       },
-      "hideUncommonFeats": {
-        "name": "Cacher les dons rares et peu communs",
-        "hint": "Lorsque cette option est activée, les dons seu communs et rares n'apparîtront pas dans la fenêtre de sélection de don."
+      "hiddenRarities": {
+        "name": "Raretés de dons cachées",
+        "hint": "Raretés de dons que les joueurs ne voient pas dans le sélecteur de dons.",
+        "options": {
+          "none": "Afficher toutes les raretés",
+          "rare": "Cacher les dons rares et uniques",
+          "uncommon": "Cacher les dons peu courants, rares et uniques"
+        }
       },
       "xpEnforcement": {
         "name": "Imposer le respect du nombre d'XP",
-        "hint": "Lorsque cette option est activée, le bouton de montée de niveau apparaît seulement si le personnage à suffisemment d'XP pour monter de niveau. Après la montée de niveau, les XP requis seront déduis du total du personnage, et tout XP restant seront reconduit."
+        "hint": "N'autorise la montée de niveau que si le personnage a assez d'XP. Les XP du niveau sont déduits et le reste est reporté."
       }
     },
     "messages": {
-      "skillIncrease": {
-        "rankName": "Rang {updatedRank}",
-        "rankIncrease": "La compétence {skill} passe au rang {rankName}."
-      },
-      "skillPotency": {
-        "newPotency": "La puissance de la compétence {skill} est passée à +1.",
-        "upgradeTo2": "La puissance de la compétence {skill} est passée à +2.",
-        "upgradeTo3": "La puissance de la compétence {skill} est passée à +3."
-      },
       "global": {
-        "header": "{actorName} est monté(e) au niveau {targetLevel}!",
-        "feats": "Dons sélectionnés :",
-        "noFeats": "Aucun don sélectionné.",
-        "skills": " Amélioration de compétence:",
-        "feat": "Don"
+        "header": "{actorName} a atteint le niveau {targetLevel} !",
+        "feats": "Dons",
+        "skills": "Compétences",
+        "boosts": "Primes d'attribut :",
+        "languages": "Langues :",
+        "potency": "Puissance de compétence :",
+        "noChoices": "Aucun nouveau choix à ce niveau."
       },
       "personal": {
-        "header": "{actorName} a des mise à jour manuelles requises",
-        "spellRank": "Nouveaux rangs et emplacements de Sort (tab d'Incantation)",
-        "spellSlots": "Nouveaux emplacements de Sort (tab d'Incantation)",
-        "intIncrease": "Sélectionnez une nouvelle langue et gagnez une amélioration de compétence grâce à la prime d'intelligence"
+        "header": "{actorName} : reste à faire",
+        "spellRank": "Les sorts de rang {rank} sont disponibles : mettez à jour les emplacements de sort et les sorts dans l'onglet Incantation.",
+        "spellSlots": "Vérifiez les emplacements de sort pour : {entries}.",
+        "featSpells": "Ces nouveaux dons mentionnent des sorts, des tours de magie ou des sorts focalisés, qui devront peut-être être ajoutés à la main : {feats}.",
+        "languages": "Vous pouvez apprendre {count} langue(s) de plus : ajoutez-les sur la fiche de personnage.",
+        "intSkill": "Votre augmentation d'Intelligence donne {count} compétence(s) formée(s) supplémentaire(s) : choisissez-les sur la fiche de personnage.",
+        "emptySlots": "Emplacements de don vides à remplir sur la fiche de personnage : {slots}."
       }
     },
     "notifications": {
-      "levelUpStart": "Mise à jour de {actorName} vers le niveau {targetLevel}...",
-      "levelUpComplete": "{actorName} a completé sa montée de niveau !",
-      "wizardStartup": "Démarrage de l'Assistant de montée de niveau...",
-      "missingClass": "L'Assistant de montée de niveau ne peut pas démarrer tant qu'aucune classe n'est sélectionnée.",
-      "companionClass": "L'assistant de mise à niveau ne prend pas en charge les compagnons ni les eidolons. Veuillez leur accorder les mêmes dons que ceux accordés manuellement.",
-      "invalidBoostSelection": "Choix de la prime non valide.",
-      "translatedDualClassError": "L'Assistant de montée de niveau ne peut pas être utilisé avec les classes doubles traduites",
+      "levelUpStart": "Mise à jour de {actorName} vers le niveau {targetLevel}…",
+      "levelUpComplete": "Montée de niveau de {actorName} terminée !",
+      "levelUpFailed": "La montée de niveau n'a pas pu être préparée. Consultez la console (F12) pour plus de détails.",
+      "levelUpRolledBack": "La montée de niveau a échoué et a été annulée. Consultez la console (F12) pour plus de détails.",
+      "featsSkipped": "Non ajoutés (choix annulé) : {feats}. Ajoutez-les depuis la fiche de personnage si nécessaire.",
+      "wizardStartup": "Démarrage de l'Assistant de montée de niveau…",
+      "missingClass": "L'Assistant de montée de niveau a besoin d'une classe sur le personnage.",
+      "companionClass": "L'Assistant de montée de niveau ne prend pas en charge les compagnons ni les eidolons. Accordez-leur leurs dons manuellement.",
+      "maxLevel": "Ce personnage est déjà au niveau 20.",
+      "incomplete": "Faites d'abord tous les choix requis.",
+      "levelChanged": "Le niveau du personnage a changé pendant que l'assistant était ouvert. Rouvrez l'assistant.",
+      "nothingToUndo": "Il n'y a aucune montée de niveau à annuler.",
+      "cannotUndo": "Seule la dernière montée de niveau peut être annulée, et uniquement tant que le personnage est encore au niveau {level}.",
+      "undone": "Montée de niveau annulée pour {actorName}.",
+      "settingsMigrated": "Paramètres migrés depuis la version précédente.",
       "additionalCompendiums": {
-        "failedToLoad": "Échec du chargement du compendium {key}. Assurez-vous que ce soit un compendium de dons valide.",
-        "compendiumNotFound": "Compendium {key} non trouvé. Assurez-vous d'avoir bien écrit et qu'il soit bien activé dans les paramètres de la partie."
-      }
+        "failedToLoad": "Impossible de charger le compendium {key}. Assurez-vous qu'il s'agit d'un compendium d'Objets valide.",
+        "compendiumNotFound": "Compendium {key} introuvable. Vérifiez l'orthographe dans les paramètres de l'Assistant de montée de niveau."
+      },
+      "openFailed": "Impossible d'ouvrir l'assistant de montée de niveau. Voir la console (F12) pour les détails."
     }
   }
 }

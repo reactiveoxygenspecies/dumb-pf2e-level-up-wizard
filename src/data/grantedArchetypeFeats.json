@@ -1,294 +1,433 @@
 {
-  "avenger": [
-    "twin-takedown",
-    "twin-parry",
-    "twin-riposte",
-    "second-sting",
-    "improved-twin-riposte"
+  "alkenstar-agent-dedication": [
+    { "slug": "plant-evidence", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.eww9tuiXPnZFZ3DU" },
+    { "slug": "quick-draw", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.qFt6zyWVX1njJf1l" },
+    { "slug": "reactive-pursuit", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.VVsYBmVi2E1u9E5Z" },
+    { "slug": "running-reload", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.meQJfsKVar9tm6c9" },
+    { "slug": "snap-shot", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.0UdHPOv3DX8TY9yb" },
+    { "slug": "instant-opening", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.9zH7IOsmhRBEqXAV" }
   ],
-  "battleHarbinger": [
-    "vicious-swing",
-    "intimidating-strike",
-    "bespell-strikes"
+  "archaeologist-dedication": [
+    { "slug": "trap-finder", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.oA866uVEFu1OrAX0" },
+    { "slug": "delay-trap", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.Ar6W97iun6yYI8Df" }
   ],
-  "bloodrager": ["split-shot", "bespell-strikes", "energy-ward"],
-  "elementalist": [
-    "familiar",
-    "current-spell",
-    "enhanced-familier",
-    "water-step"
+  "archer-dedication": [
+    { "slug": "assisting-shot", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.UiQbjeqBUFjUtgUR" },
+    { "slug": "crossbow-ace", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.CpjN7v1QN8TQFcvI" },
+    { "slug": "point-blank-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.Yl2wYv24v5kw95aS" },
+    { "slug": "double-shot", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.PwcmmJOLY8C9JHau" },
+    { "slug": "parting-shot", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.4PvmSnyp3URIqJUM" },
+    { "slug": "running-reload", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.meQJfsKVar9tm6c9" },
+    { "slug": "triple-shot", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.hkdP5tsTAoqJDR8v" },
+    { "slug": "mobile-shot-stance", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.rByA8NDI6ZtNgBeT" },
+    { "slug": "multishot-stance", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.RzhnxgiAopWILCvs" },
+    { "slug": "impossible-volley", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.NY2AkQscVIHEC8hQ" }
   ],
-  "runelord": ["tattoo-artist"],
-  "seneschal": ["martyr", "premonition-of-clarity", "inviolable"],
-  "spellshot": [
-    "basic-arcana",
-    "basic-wizard-spellcasting",
-    "advanced-arcana",
-    "arcane-breadth",
-    "expert-wizard-spellcasting"
+  "assassin-dedication": [
+    { "slug": "poison-resistance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.0lieFKdwgNVXep7u" },
+    { "slug": "poison-weapon", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.ALbosSUygdq4T1Yk" },
+    { "slug": "improved-poison-weapon", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.9Eufa07qvXG41QmG" }
   ],
-  "vindicator": [
-    "domain-initiate",
-    "instructive-strike",
-    "ongoing-investigation",
-    "thorough-research",
-    "advanced-domain"
+  "avenger-dedication": [
+    { "slug": "twin-takedown", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.Gw0wGXikhAhiGoud" },
+    { "slug": "twin-parry", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.Y8LHfkzGyOhPlUou" },
+    { "slug": "twin-riposte", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.GJIAecRq1bD2r8O0" },
+    { "slug": "second-sting", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.COe0bYyVCyC78rzP" },
+    { "slug": "improved-twin-riposte-ranger", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.Cgk4By6gEomD2bJ0" }
   ],
-  "warriorOfLegend": ["clear-the-way", "unbalanced-sweep"],
-  "wellspringMage": [
-    "energetic-resonance",
-    "spell-relay",
-    "surging-might",
-    "scintillating-spell",
-    "echoing-spell"
+  "bastion-dedication": [
+    { "slug": "shielded-stride", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.tHqlcgcxHXzqLHPZ" },
+    { "slug": "reflexive-shield", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.dHUoQVzDa9Cf4QCG" },
+    { "slug": "shield-warden", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.5vXc2s2siR1ihpBT" },
+    { "slug": "quick-shield-block", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.pRqcm5P2ZFihSpVI" },
+    { "slug": "mirror-shield", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.kQEIPYoKTt69yXxV" },
+    { "slug": "shield-salvation", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.4bB3N36DmqllGJNx" }
   ],
-  "ghoul": ["guarded-movement", "reactive-pursuit", "wall-run"],
-  "lich": ["magic-sense"],
-  "zombie": ["bashing-charge", "combat-grab", "crushing-grab", "corpse-stench"],
-  "alkenstarAgent": [
-    "plant-evidence",
-    "quick-draw",
-    "reactive-pursuit",
-    "running-reload",
-    "snap-shot",
-    "instant-opening"
+  "battle-harbinger-dedication": [
+    { "slug": "vicious-swing", "level": 2, "uuid": "Compendium.pf2e.feats-srd.Item.2xk4jdwcCfmasYfT" },
+    { "slug": "intimidating-strike", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.lkcM4V3VDAtjlR9P" },
+    { "slug": "bespell-strikes", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.tWBK7Zbt80JlPryC" }
   ],
-  "archaeologist": ["trap-finder", "delay-trap"],
-  "archer": [
-    "assisting-shot",
-    "crossbow-ace",
-    "point-blank-shot",
-    "double-shot",
-    "parting-shot",
-    "running-reload",
-    "triple-shot",
-    "mobile-shot-stance",
-    "multishot-stance",
-    "impossible-volley"
+  "beastmaster-dedication": [
+    { "slug": "animal-empathy-ranger", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.54BhwBHyp2jp3e26" },
+    { "slug": "initiate-warden", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.iT39wlCEC1aWaSx7" },
+    { "slug": "advanced-warden", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.it2i6OXfGIizokpg" },
+    { "slug": "companions-cry", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.TORYSZMLMAGgsSEW" },
+    { "slug": "side-by-side-ranger", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.5YcnoTYKvEtkWiHh" }
   ],
-  "assassin": [
-    "poison-resistance",
-    "poison-weapon",
-    "sneak-attacker",
-    "improved-poison-weapon"
+  "blackjacket-dedication": [
+    { "slug": "intimidating-strike", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.lkcM4V3VDAtjlR9P" },
+    { "slug": "shatter-defenses", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.zbxqYhmn7KbqR2Sb" }
   ],
-  "bastion": [
-    "shielded-stride",
-    "reflexive-shield",
-    "shield-warden",
-    "quick-shield-block",
-    "mirror-shield"
+  "blessed-one-dedication": [
+    { "slug": "mercy", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.zilwynzk8lIujgZo" },
+    { "slug": "greater-mercy", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.kZdcoaTD849QalR9" },
+    { "slug": "affliction-mercy", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.nsFnOLqYSkGWFhLD" },
+    { "slug": "rejuvenating-touch", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.xZrTjUub7V09sXZF" },
+    { "slug": "ultimate-mercy", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.Rb16bcCiovwRqVgN" }
   ],
-  "beastGunner": ["call-gun"],
-  "beastMaster": [
-    "animal-empathy-ranger",
-    "initiate-warden",
-    "advanced-warden",
-    "companions-cry",
-    "side-by-side"
+  "bloodrager-dedication": [
+    { "slug": "split-shot", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.DS0XlHfi3ztb3ET7" },
+    { "slug": "bespell-strikes", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.tWBK7Zbt80JlPryC" },
+    { "slug": "energy-ward", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.lG4dYrnkE42IgnGG" }
   ],
-  "blessedOne": [
-    "mercy",
-    "greater-mercy",
-    "affliction-mercy",
-    "rejuvenating-touch",
-    "ultimate-mercy"
+  "bounty-hunter-dedication": [
+    { "slug": "monster-hunter", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.YTTJqRKH8QZl6al2" },
+    { "slug": "double-prey", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.pbD4lfAPkK1NNag0" }
   ],
-  "bountyHunter": ["monster-hunter", "double-prey"],
-  "bulletDancer": [
-    "pistol-twirl",
-    "qi-spells",
-    "black-powder-boost",
-    "snap-shot",
-    "trick-shot",
-    "ricochet-shot",
-    "showstopper",
-    "two-weapon-fusillade"
+  "bullet-dancer-dedication": [
+    { "slug": "pistol-twirl", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.A2EBy2L4acrehiAA" },
+    { "slug": "qi-spells", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.yA9tsWT9uzL2REnw" },
+    { "slug": "black-powder-boost", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.vPZxFpq7XkRmE3Uc" },
+    { "slug": "snap-shot", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.0UdHPOv3DX8TY9yb" },
+    { "slug": "trick-shot", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.ySr510TkpUO3N6Ty" },
+    { "slug": "ricochet-shot", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.c7mCj6wUdb47rrnw" },
+    { "slug": "showstopper", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.UZpBsHE57rmS0x6S" },
+    { "slug": "two-weapon-fusillade", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.VW0Tp5rJDRjaJuSn" }
   ],
-  "butterflyBlade": [
-    "clever-gambit",
-    "combat-assessment",
-    "quick-draw",
-    "dread-striker"
+  "butterfly-blade-dedication": [
+    { "slug": "clever-gambit", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.D1o7GUraoFFzjaub" },
+    { "slug": "combat-assessment", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.5FyvwI24mnROzh61" },
+    { "slug": "quick-draw", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.qFt6zyWVX1njJf1l" },
+    { "slug": "dread-striker", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.9SYnbjFgyucjhN5e" }
   ],
-  "drowShootist": ["poison-weapon", "running-reload", "skirmish-strike"],
-  "dualWeaponWarrior": [
-    "quick-draw",
-    "dual-weapon-reload",
-    "twin-parry",
-    "twin-riposte",
-    "improved-twin-riposte",
-    "two-weapon-flurry",
-    "twinned-defense"
+  "campfire-chronicler-dedication": [
+    { "slug": "advanced-domain", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.uR44wELN9OlU68cL" }
   ],
-  "duelist": [
-    "dueling-parry",
-    "disarming-stance",
-    "dueling-riposte",
-    "disarming-twist",
-    "dueling-dance",
-    "improved-dueling-riposte",
-    "guiding-riposte"
+  "dual-weapon-warrior-dedication": [
+    { "slug": "quick-draw", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.qFt6zyWVX1njJf1l" },
+    { "slug": "dual-weapon-reload", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.sjChYEuEWPqndCSK" },
+    { "slug": "twin-parry", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.Y8LHfkzGyOhPlUou" },
+    { "slug": "twin-riposte", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.GJIAecRq1bD2r8O0" },
+    { "slug": "improved-twin-riposte-fighter", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.w2v5LZmpJy0MBxo5" },
+    { "slug": "two-weapon-flurry", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.1SvBUzVH5tp0lmn5" },
+    { "slug": "twinned-defense-fighter", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.xjLbabfyQzBNT4y1" }
   ],
-  "eldritchArcher": ["running-reload", "impossible-volley-eldritch-archer"],
-  "exorcist": ["spiritual-sense", "blind-fight", "sense-the-unseen"],
-  "familiarMaster": ["enhanced-familiar"],
-  "gameHunter": ["hunters-aim", "running-reload", "double-prey"],
-  "horizonWalker": ["blind-fight", "terrain-master", "wardens-step"],
-  "loremaster": [
-    "loremasters-etude",
-    "assured-knowledge",
-    "enigmas-knowledge",
-    "true-hypercognition"
+  "duelist-dedication": [
+    { "slug": "dueling-parry", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.n7nQQR940OvFbw7T" },
+    { "slug": "disarming-stance", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.1p5ErCp33nGOzEsk" },
+    { "slug": "dueling-riposte", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.mf2cdCRV8uowOMOm" },
+    { "slug": "disarming-twist", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.4VbfFPuFpbGLMMKF" },
+    { "slug": "dueling-dance-fighter", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.FYz5eQeTox9IDkSd" },
+    { "slug": "improved-dueling-riposte", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.mgs7vxq6d3hQoswa" },
+    { "slug": "guiding-riposte", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.1DaSVLJEdJWYOWek" }
   ],
-  "mammothLord": [
-    "animal-empathy-ranger",
-    "quick-mount",
-    "companions-cry",
-    "trampling-charge",
-    "legendary-rider"
+  "eagle-knight-dedication": [
+    { "slug": "quick-draw", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.qFt6zyWVX1njJf1l" },
+    { "slug": "blind-fight", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.y2XeMe1F18lIyo59" },
+    { "slug": "hazard-finder", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.16MOW7deoOoDwE9z" },
+    { "slug": "tactical-reflexes", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.rzaoi5Roef9zO22G" },
+    { "slug": "determination", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.wdkbfWKEjAFXAxto" }
   ],
-  "marshal": ["reactive-strike"],
-  "martialArtist": [
-    "brawling-focus",
-    "crane-stance",
-    "dragon-stance",
-    "gorilla-stance",
-    "mountain-stance",
-    "stumbling-stance",
-    "rushing-goat-stance",
-    "tiger-stance",
-    "twisting-petal-stance",
-    "wolf-stance",
-    "advanced-monastic-weaponry",
-    "crane-flutter",
-    "dragon-roar",
-    "gorilla-pound",
-    "momentous-charge",
-    "mountain-stronghold",
-    "stumbling-feint",
-    "tiger-slash",
-    "wolf-drag",
-    "scattering-in-spring",
-    "five-gods-ram",
-    "whirling-in-the-summer-storm",
-    "mountain-quake"
+  "eldritch-archer-dedication": [
+    { "slug": "running-reload", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.meQJfsKVar9tm6c9" },
+    { "slug": "impossible-volley", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.NY2AkQscVIHEC8hQ" }
   ],
-  "mauler": [
-    "slam-down",
-    "vicious-swing",
-    "crashing-slam",
-    "brutal-finish",
-    "unbalancing-sweep"
+  "elementalist-dedication": [
+    { "slug": "familiar", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.bcxIg7wi8ZAhvhOD" },
+    { "slug": "enhanced-familiar", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.N7dTFxpjXGn4ddq8" },
+    { "slug": "water-step", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.6gLWr3xghsHSFwxc" },
+    { "slug": "current-spell", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.ajesR7y0jWzqjAgc" }
   ],
-  "mortalHerald": [
-    "premonition-of-clarity",
-    "eternal-bane",
-    "eternal-blessing",
-    "resurrectionist",
-    "divine-apex",
-    "shared-clarity"
+  "exorcist-dedication": [
+    { "slug": "spiritual-sense", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.HB0jvWCdim1p91q1" },
+    { "slug": "blind-fight", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.y2XeMe1F18lIyo59" },
+    { "slug": "sense-the-unseen", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.DM9rjXZrmx2MFX7k" }
   ],
-  "pirate": ["antagonize", "youre-next"],
-  "poisoner": [
-    "blowgun-poisoner",
-    "poison-resistance",
-    "poison-weapon",
-    "tenacious-toxins",
-    "sticky-poison",
-    "improved-poison-weapon",
-    "pinpoint-poisoner"
+  "familiar-master-dedication": [
+    { "slug": "enhanced-familiar", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.N7dTFxpjXGn4ddq8" }
   ],
-  "reanimator": [
-    "undying-conviction",
-    "necromancers-visage",
-    "sepulchral-sublimation"
+  "game-hunter-dedication": [
+    { "slug": "hunters-aim", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.GFtNQvpzuqtsdOTG" },
+    { "slug": "running-reload", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.meQJfsKVar9tm6c9" },
+    { "slug": "double-prey", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.pbD4lfAPkK1NNag0" }
   ],
-  "redMantisAssassin": [
-    "twin-feint",
-    "quick-draw",
-    "underhanded-assault",
-    "poison-weapon",
-    "twin-distraction",
-    "gang-up",
-    "advanced-spell-school",
-    "improved-poison-weapon",
-    "opportune-backstab"
+  "ghoul-dedication": [
+    { "slug": "guarded-movement", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.fO1vRDEfl9pysfLU" },
+    { "slug": "reactive-pursuit", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.VVsYBmVi2E1u9E5Z" },
+    { "slug": "wall-run", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.7IsHNime3WneCan6" }
   ],
-  "rivethunEmissary": ["enhanced-familiar", "incredible-familiar"],
-  "rivethunInvoker": [
-    "barreling-charge",
-    "slam-down",
-    "crashing-slam",
-    "overpowering-charge"
+  "golden-legionnaire-dedication": [
+    { "slug": "reactive-strike", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.NMWXHGWUcZGoLDKb" },
+    { "slug": "reflexive-shield", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.dHUoQVzDa9Cf4QCG" },
+    { "slug": "shield-warden", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.5vXc2s2siR1ihpBT" },
+    { "slug": "improved-reflexive-shield", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.fEfEabn53bubYVVT" },
+    { "slug": "shield-of-grace", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.7IDFHh2ZJLaB1y59" }
   ],
-  "rivethunInvolutionish": ["mature-animal-companion", "incredible-companion"],
-  "scout": ["camouflage"],
-  "shadowcaster": [
-    "familiar",
-    "enhanced-familiar",
-    "shadow-magic",
-    "additional-shadow-magic",
-    "shadow-illusion",
-    "shadow-power"
+  "guerrilla-dedication": [
+    { "slug": "blowgun-poisoner", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.QZ00D2xdJnbWFzml" }
   ],
-  "shadowdancer": [
-    "uncanny-dodge",
-    "spring-from-the-shadows",
-    "sense-the-unseen",
-    "cognitive-loophole"
+  "hellbreaker-dedication": [
+    { "slug": "combat-assessment", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.5FyvwI24mnROzh61" },
+    { "slug": "lightning-swap", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.657SMUB2N9VZOgYp" },
+    { "slug": "blind-fight", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.y2XeMe1F18lIyo59" },
+    { "slug": "felling-strike", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.Ad0XBuETAkMD6doj" }
   ],
-  "snipingDuo": [
-    "assisting-shot",
-    "cover-fire",
-    "deflecting-shot",
-    "redirecting-shot"
+  "hellknight-dedication": [
+    { "slug": "shatter-defenses", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.zbxqYhmn7KbqR2Sb" },
+    { "slug": "steady-spellcasting", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.uiGsVmvRfujQQRlK" },
+    { "slug": "fearsome-brute", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.1k3H7cnARIzAVCsm" }
   ],
-  "soulWarden": [
-    "domain-initiate",
-    "expanded-domain-initiate",
-    "advanced-domain"
+  "horizon-walker-dedication": [
+    { "slug": "blind-fight", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.y2XeMe1F18lIyo59" },
+    { "slug": "terrain-master", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.VKNxblSUxYXQYlLr" },
+    { "slug": "wardens-step", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.oD4JyvTJj4kwe5vb" }
   ],
-  "thlipitContestant": ["lunge", "slam-down", "crashing-slam"],
-  "timeMage": [
-    "read-disaster",
-    "quickened-casting",
-    "plot-the-future",
-    "echoing-spell"
+  "lepidstadt-surgeon-dedication": [
+    { "slug": "no-no-i-created-you", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.XHy9inDi3oGZNd43" }
   ],
-  "undeadMaster": [
-    "additional-companion",
-    "mature-beastmaster-companion",
-    "companions-cry",
-    "incredible-beastmaster-companion",
-    "specialized-beastmaster-companion",
-    "lead-the-pack"
+  "lich-dedication": [
+    { "slug": "magic-sense", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.AXy4A7zTYk1JAiOV" }
   ],
-  "verduranShadow": [
-    "fleeting-shadow",
-    "sneak-attacker",
-    "scouts-pounce",
-    "camouflage",
-    "sneak-adept"
+  "loremaster-dedication": [
+    { "slug": "loremasters-etude", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.VToVEOxiyy53AcEp" },
+    { "slug": "assured-knowledge", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.c6CS97Zs0DPmInaI" },
+    { "slug": "enigmas-knowledge", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.8cbSVw8RnVzy5USe" },
+    { "slug": "true-hypercognition", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.Xk9inG3pln4UKbs3" }
   ],
-  "vigilante": ["quick-draw"],
-  "viking": ["reactive-shield", "shielded-strike", "quick-shield-block"],
-  "wildMimic": [
-    "animal-empathy",
-    "crane-stance",
-    "gorilla-stance",
-    "tiger-stance",
-    "wolf-stance",
-    "crane-flutter",
-    "gorilla-pound",
-    "tiger-slash",
-    "wolf-drag"
+  "mammoth-lord-dedication": [
+    { "slug": "animal-empathy-ranger", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.54BhwBHyp2jp3e26" },
+    { "slug": "companions-cry", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.TORYSZMLMAGgsSEW" }
   ],
-  "wrestler": [
-    "combat-grab",
-    "crushing-grab",
-    "snagging-strike",
-    "whirling-throw",
-    "godbreaker"
+  "marshal-dedication": [
+    { "slug": "reactive-strike", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.NMWXHGWUcZGoLDKb" }
+  ],
+  "martial-artist-dedication": [
+    { "slug": "brawling-focus", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.VeVHWTrzE3aDm3rx" },
+    { "slug": "crane-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.bf7NCeKqDClaqhTR" },
+    { "slug": "dragon-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.8sy3sHwOHS4ImwvJ" },
+    { "slug": "gorilla-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.DqD7htz8Sd1dh3BT" },
+    { "slug": "mountain-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.ZL5UU9quCTvcWzfY" },
+    { "slug": "stumbling-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.7FRYyKXDKjGoANYj" },
+    { "slug": "rushing-goat-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.BQWGOK0lVmljCunm" },
+    { "slug": "tiger-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.VCjAlOvjNvFJOsG5" },
+    { "slug": "twisting-petal-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.VN6Cws7BBta81AQ9" },
+    { "slug": "wolf-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.AN9jY1JVcU20Qdw6" },
+    { "slug": "advanced-monastic-weaponry", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.Sebm8u9jyKPRguNf" },
+    { "slug": "crane-flutter", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.S14S52HjszTgIy4l" },
+    { "slug": "dragon-roar", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.SELSj1vvVLx5cP72" },
+    { "slug": "gorilla-pound", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.nRjyyDulHnP5OewA" },
+    { "slug": "momentous-charge", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.QlBQEkFqiYsU2Y3x" },
+    { "slug": "mountain-stronghold", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.n2hawNmzW7DBn1Lm" },
+    { "slug": "stumbling-feint", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.kYA6LkDw4AzKI156" },
+    { "slug": "tiger-slash", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.6J2ZSGNsXPKPcJGV" },
+    { "slug": "wolf-drag", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.uJpghjJtNbqKUxRd" },
+    { "slug": "scattering-in-spring", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.qbNo5NLm1eXHkOMI" },
+    { "slug": "five-gods-ram", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.gq1gGsJDLQuQDrhW" },
+    { "slug": "whirling-in-the-summer-storm", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.EqNhUXGFjk99QzCg" },
+    { "slug": "mountain-quake", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.hO4sKslTrSQMLbGx" }
+  ],
+  "mauler-dedication": [
+    { "slug": "slam-down", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.39CqlOzlHjEhh0E4" },
+    { "slug": "vicious-swing", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.2xk4jdwcCfmasYfT" },
+    { "slug": "crashing-slam", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.yTh9QwAf0hadP91j" },
+    { "slug": "brutal-finish", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.tGXJU6yx7bYuyLvd" },
+    { "slug": "unbalancing-sweep", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.pmz1itHp13JtcrjW" }
+  ],
+  "mortal-herald-dedication": [
+    { "slug": "premonition-of-clarity", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.2h8a6pKhXTXwpJjP" },
+    { "slug": "eternal-bane", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.pzmob1HqVKZfL0BY" },
+    { "slug": "eternal-blessing", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.kMLvQnx2vY7F3bjI" },
+    { "slug": "resurrectionist", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.Dr6h8WRW6xnLRfxr" },
+    { "slug": "divine-apex", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.BAAXa4xR9mvuo7lt" },
+    { "slug": "shared-clarity", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.ybrx1nsg5J0L8d3j" }
+  ],
+  "nidalese-horselord-dedication": [
+    { "slug": "favored-terrain", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.sgo7J9BVofBqwlsF" },
+    { "slug": "mature-animal-companion-druid", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.yozSCfdLFHVBbTxj" },
+    { "slug": "incredible-companion-druid", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.qgW8uHJXJGl3DKBS" },
+    { "slug": "penetrating-shot", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.otBBb0ndASgPdAXW" },
+    { "slug": "sense-the-unseen", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.DM9rjXZrmx2MFX7k" },
+    { "slug": "specialized-companion-druid", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.3r5rg0BCqSh5RBNS" }
+  ],
+  "oatia-skysage-dedication": [
+    { "slug": "know-it-all", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.1qJCMbs3zcPMWDux" }
+  ],
+  "palatine-detective-dedication": [
+    { "slug": "thaumaturgic-ritualist", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.yMj9WfPctWQC7be2" }
+  ],
+  "pirate-dedication": [
+    { "slug": "antagonize", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.Wx12NUjqTOjFrEoW" },
+    { "slug": "youre-next", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.gjec0ts3wkFbjvHN" }
+  ],
+  "poisoner-dedication": [
+    { "slug": "blowgun-poisoner", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.QZ00D2xdJnbWFzml" },
+    { "slug": "poison-resistance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.0lieFKdwgNVXep7u" },
+    { "slug": "poison-weapon", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.ALbosSUygdq4T1Yk" },
+    { "slug": "tenacious-toxins", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.FdP21jbjHHGpHut1" },
+    { "slug": "sticky-poison", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.b7isszc8C75V3okn" },
+    { "slug": "improved-poison-weapon", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.9Eufa07qvXG41QmG" },
+    { "slug": "pinpoint-poisoner", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.XtIPmZ3Ihq5NJHP2" }
+  ],
+  "pure-legion-enforcer-dedication": [
+    { "slug": "godless-healing", "level": 2, "uuid": "Compendium.pf2e.feats-srd.Item.tnzZvaJ97t0N9g6y" },
+    { "slug": "mortal-healing", "level": 2, "uuid": "Compendium.pf2e.feats-srd.Item.mEk2POFNU1Q0TQg2" },
+    { "slug": "paragon-battle-medicine", "level": 7, "uuid": "Compendium.pf2e.feats-srd.Item.xOMwuKCf02aFzyp3" }
+  ],
+  "reanimator-dedication": [
+    { "slug": "undying-conviction", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.xSYkYRKlSyLzPrH1" },
+    { "slug": "necromancers-visage", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.PxBQ4JdaPS2KTAG7" },
+    { "slug": "sepulchral-sublimation", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.wnrlBkwVr8BSVAZt" }
+  ],
+  "red-mantis-assassin-dedication": [
+    { "slug": "twin-feint", "level": 2, "uuid": "Compendium.pf2e.feats-srd.Item.9XALeVNcmlIxf3tJ" },
+    { "slug": "quick-draw", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.qFt6zyWVX1njJf1l" },
+    { "slug": "underhanded-assault", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.eoDDjIGAA67Z7rQt" },
+    { "slug": "poison-weapon", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.ALbosSUygdq4T1Yk" },
+    { "slug": "twin-distraction", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.eXuCYDzj0UJOxNu9" },
+    { "slug": "gang-up", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.XRahcvEPEAEdGUn8" },
+    { "slug": "advanced-school-spell", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.5hUj7glY8YnO5sBI" },
+    { "slug": "improved-poison-weapon", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.9Eufa07qvXG41QmG" },
+    { "slug": "opportune-backstab", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.PuyvasWeofGMrhpu" }
+  ],
+  "rivethun-emissary-dedication": [
+    { "slug": "enhanced-familiar", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.N7dTFxpjXGn4ddq8" },
+    { "slug": "incredible-familiar", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.Joy1e6pdqx6fN9mH" }
+  ],
+  "rivethun-invoker-dedication": [
+    { "slug": "barreling-charge", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.to6s7QanfhHukW5r" },
+    { "slug": "slam-down", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.39CqlOzlHjEhh0E4" },
+    { "slug": "crashing-slam", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.yTh9QwAf0hadP91j" },
+    { "slug": "overpowering-charge", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.C0ozuEhrKh9A1wMO" }
+  ],
+  "rivethun-involutionist-dedication": [
+    { "slug": "mature-animal-companion-ranger", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.tpkJXDpSuGznfzGJ" },
+    { "slug": "incredible-companion-druid", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.qgW8uHJXJGl3DKBS" }
+  ],
+  "rose-warden-dedication": [
+    { "slug": "quick-draw", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.qFt6zyWVX1njJf1l" },
+    { "slug": "reactive-pursuit", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.VVsYBmVi2E1u9E5Z" },
+    { "slug": "light-step", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.4o9g5g12yyrfZ3Xd" },
+    { "slug": "spring-from-the-shadows", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.emjWa77ltL5FytvA" }
+  ],
+  "runelord-dedication": [
+    { "slug": "tattoo-artist", "level": 2, "uuid": "Compendium.pf2e.feats-srd.Item.z0HX5L7bOOrKi0dD" }
+  ],
+  "scout-dedication": [
+    { "slug": "camouflage", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.qqe5VmcO1s8iTOfd" }
+  ],
+  "seneschal-witch-dedication": [
+    { "slug": "martyr", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.fFfRsvDavUsTBDF2" },
+    { "slug": "premonition-of-clarity", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.2h8a6pKhXTXwpJjP" },
+    { "slug": "inviolable", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.jtstZYC8S4YmAbIE" }
+  ],
+  "shadowcaster-dedication": [
+    { "slug": "familiar", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.bcxIg7wi8ZAhvhOD" },
+    { "slug": "enhanced-familiar", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.N7dTFxpjXGn4ddq8" }
+  ],
+  "shadowdancer-dedication": [
+    { "slug": "spring-from-the-shadows", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.emjWa77ltL5FytvA" },
+    { "slug": "sense-the-unseen", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.DM9rjXZrmx2MFX7k" },
+    { "slug": "cognitive-loophole", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.wPJFEUOXwf7y5jN3" }
+  ],
+  "sister-of-the-golden-erinys-dedication": [
+    { "slug": "fuse-stance", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.kceciNwoldkzAMbq" }
+  ],
+  "sniping-duo-dedication": [
+    { "slug": "assisting-shot", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.UiQbjeqBUFjUtgUR" },
+    { "slug": "cover-fire", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.IzkL60LlKzbKIhY1" },
+    { "slug": "deflecting-shot", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.ToZw6ZjB0JhWwMeR" },
+    { "slug": "redirecting-shot", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.HKNOA5WGBWGEpdmH" }
+  ],
+  "soul-warden-dedication": [
+    { "slug": "domain-initiate", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.hT4INKGtly4QY8KN" },
+    { "slug": "familiar", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.bcxIg7wi8ZAhvhOD" },
+    { "slug": "expanded-domain-initiate", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.vQ4DNfpktmaqdgdM" },
+    { "slug": "advanced-domain", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.uR44wELN9OlU68cL" }
+  ],
+  "steel-falcon-dedication": [
+    { "slug": "favored-terrain", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.sgo7J9BVofBqwlsF" },
+    { "slug": "evangelize", "level": 7, "uuid": "Compendium.pf2e.feats-srd.Item.YgbcLfAEdi4xxvX5" },
+    { "slug": "terrain-master", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.VKNxblSUxYXQYlLr" },
+    { "slug": "sense-the-unseen", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.DM9rjXZrmx2MFX7k" }
+  ],
+  "thlipit-contestant-dedication": [
+    { "slug": "lunge", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.rTkr1EqpAN6YtnAh" },
+    { "slug": "slam-down", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.39CqlOzlHjEhh0E4" },
+    { "slug": "crashing-slam", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.yTh9QwAf0hadP91j" }
+  ],
+  "time-mage-dedication": [
+    { "slug": "read-disaster", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.HLC9g1pwluDl6vy7" },
+    { "slug": "quickened-casting", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.z2ptq23nNBOeEI7H" },
+    { "slug": "plot-the-future", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.N7CM5CmHuZ1cylV9" },
+    { "slug": "echoing-spell", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.NvEYf0jIETEu2LtP" }
+  ],
+  "twilight-talon-dedication": [
+    { "slug": "plant-evidence", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.eww9tuiXPnZFZ3DU" },
+    { "slug": "sabotage", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.vDeG0N4kzTBDTC2b" },
+    { "slug": "predictive-purchase-investigator", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.QSuwyX84U26OLzZI" },
+    { "slug": "blank-slate", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.05k4nkjazjjEUoGu" },
+    { "slug": "implausible-purchase-investigator", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.RqccUKf8DCPnsYXJ" }
+  ],
+  "ulfen-guard-dedication": [
+    { "slug": "guardians-deflection-fighter", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.JdCRxwgtdQkJ1Ha6" },
+    { "slug": "shield-warden", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.5vXc2s2siR1ihpBT" }
+  ],
+  "undead-master-dedication": [
+    { "slug": "companions-cry", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.TORYSZMLMAGgsSEW" }
+  ],
+  "unexpected-sharpshooter-dedication": [
+    { "slug": "hit-the-dirt", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.6LFBPpPPJjDq07fg" },
+    { "slug": "risky-reload", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.BmAk6o14CutgnIOG" },
+    { "slug": "trick-shot", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.ySr510TkpUO3N6Ty" }
+  ],
+  "verduran-shadow-dedication": [
+    { "slug": "camouflage", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.qqe5VmcO1s8iTOfd" },
+    { "slug": "sneak-adept", "level": 12, "uuid": "Compendium.pf2e.feats-srd.Item.2Nu4ZdKQM8hx8x5D" }
+  ],
+  "vigilante-dedication": [
+    { "slug": "quick-draw", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.qFt6zyWVX1njJf1l" }
+  ],
+  "viking-dedication": [
+    { "slug": "reactive-shield", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.w8Ycgeq2zfyshtoS" },
+    { "slug": "shielded-stride", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.tHqlcgcxHXzqLHPZ" },
+    { "slug": "quick-shield-block", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.pRqcm5P2ZFihSpVI" }
+  ],
+  "vindicator-dedication": [
+    { "slug": "domain-initiate", "level": 1, "uuid": "Compendium.pf2e.feats-srd.Item.hT4INKGtly4QY8KN" },
+    { "slug": "instructive-strike", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.6TlBZSPr18Y8WiNk" },
+    { "slug": "ongoing-investigation", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.KWXoo738KuddWMOB" },
+    { "slug": "thorough-research", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.WjEwsu4kkexNvDcN" },
+    { "slug": "advanced-domain", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.uR44wELN9OlU68cL" }
+  ],
+  "warrior-of-legend-dedication": [
+    { "slug": "unbalancing-sweep", "level": 14, "uuid": "Compendium.pf2e.feats-srd.Item.pmz1itHp13JtcrjW" }
+  ],
+  "wellspring-mage-dedication": [
+    { "slug": "energetic-resonance", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.yUpZcrQHrz4mflKQ" },
+    { "slug": "spell-relay", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.zwEaXGKqnlBTllfE" },
+    { "slug": "surging-might", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.YV4X9u5Yuf0xvoCh" },
+    { "slug": "scintillating-spell", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.DSmYJvCHMvZCP0aD" },
+    { "slug": "echoing-spell", "level": 18, "uuid": "Compendium.pf2e.feats-srd.Item.NvEYf0jIETEu2LtP" }
+  ],
+  "wild-mimic-dedication": [
+    { "slug": "animal-empathy", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.cg816q76S5otM7yD" },
+    { "slug": "crane-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.bf7NCeKqDClaqhTR" },
+    { "slug": "gorilla-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.DqD7htz8Sd1dh3BT" },
+    { "slug": "tiger-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.VCjAlOvjNvFJOsG5" },
+    { "slug": "wolf-stance", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.AN9jY1JVcU20Qdw6" },
+    { "slug": "crane-flutter", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.S14S52HjszTgIy4l" },
+    { "slug": "gorilla-pound", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.nRjyyDulHnP5OewA" },
+    { "slug": "tiger-slash", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.6J2ZSGNsXPKPcJGV" },
+    { "slug": "wolf-drag", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.uJpghjJtNbqKUxRd" }
+  ],
+  "wrestler-dedication": [
+    { "slug": "combat-grab", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.dF1HR6TqyMz03o6F" },
+    { "slug": "crushing-grab", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.hGjmbTNBUiJqYvsE" },
+    { "slug": "snagging-strike", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.mWCiu9Hl1WxajSLa" },
+    { "slug": "whirling-throw", "level": 8, "uuid": "Compendium.pf2e.feats-srd.Item.w0nSRBNwexM5Dh0D" },
+    { "slug": "godbreaker", "level": 20, "uuid": "Compendium.pf2e.feats-srd.Item.07TYbc4cOQi5tduT" }
+  ],
+  "wylderheart-dedication": [
+    { "slug": "barreling-charge", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.to6s7QanfhHukW5r" },
+    { "slug": "mature-animal-companion-druid", "level": 6, "uuid": "Compendium.pf2e.feats-srd.Item.yozSCfdLFHVBbTxj" },
+    { "slug": "incredible-companion-druid", "level": 10, "uuid": "Compendium.pf2e.feats-srd.Item.qgW8uHJXJGl3DKBS" },
+    { "slug": "whirlwind-strike", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.AGydz5DKJ2KHSO4S" },
+    { "slug": "specialized-companion-druid", "level": 16, "uuid": "Compendium.pf2e.feats-srd.Item.3r5rg0BCqSh5RBNS" }
+  ],
+  "zombie-dedication": [
+    { "slug": "bashing-charge", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.A4sV0cRU9I8ztbHY" },
+    { "slug": "combat-grab", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.dF1HR6TqyMz03o6F" },
+    { "slug": "crushing-grab", "level": 4, "uuid": "Compendium.pf2e.feats-srd.Item.hGjmbTNBUiJqYvsE" }
   ]
 }

@@ -1,0 +1,44 @@
+<section class="feat-details">
+  {{#if feat}}
+    <header>
+      <img src="{{feat.img}}" alt="" loading="lazy">
+      <h2>
+        <a class="content-link" draggable="true" data-link data-uuid="{{feat.uuid}}" data-type="Item">{{feat.name}}</a>
+      </h2>
+      <span class="feat-level">{{localize 'PF2E_LEVEL_UP_WIZARD.selector.level' level=feat.effectiveLevel}}</span>
+    </header>
+    <div class="tags paizo-style">
+      {{#if rarityLabel}}<span class="tag rarity {{feat.rarity}}">{{rarityLabel}}</span>{{/if}}
+      {{#each traitLabels}}<span class="tag">{{this}}</span>{{/each}}
+    </div>
+    {{#if feat.grantedBy}}
+      <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.selector.grantedBy' dedication=feat.grantedByName}}</p>
+    {{/if}}
+    {{#if feat.prerequisites.length}}
+      <div class="prerequisites">
+        <strong>{{localize 'PF2E_LEVEL_UP_WIZARD.selector.prerequisites'}}</strong>
+        <ul>
+          {{#if prereqLines.length}}
+            {{#each prereqLines}}
+              <li class="prereq-line {{status}}"><i class="prereq {{status}} {{icon}}"></i> {{text}}</li>
+            {{/each}}
+          {{else}}
+            {{#each feat.prerequisites}}<li>{{this}}</li>{{/each}}
+          {{/if}}
+        </ul>
+      </div>
+    {{/if}}
+    <div class="description">{{{description}}}</div>
+    {{#if feat.publication}}<p class="publication">{{feat.publication}}</p>{{/if}}
+    <footer>
+      <button type="button" data-action="select" data-uuid="{{feat.uuid}}" {{#if featTakenElsewhere}}disabled{{/if}}>
+        <i class="fa-solid fa-check"></i> {{localize 'PF2E_LEVEL_UP_WIZARD.selector.choose'}}
+      </button>
+    </footer>
+  {{else}}
+    <p class="placeholder">
+      <i class="fa-solid fa-hand-pointer"></i>
+      {{localize 'PF2E_LEVEL_UP_WIZARD.selector.pickHint'}}
+    </p>
+  {{/if}}
+</section>

@@ -1,205 +1,259 @@
 {
   "PF2E_LEVEL_UP_WIZARD": {
     "button-tooltip": "Level Up!",
+    "button": {
+      "needXp": "Not enough XP to level up ({needed} more needed)",
+      "levelLocked": "Use the Level-Up Wizard to change your level",
+      "toolbarLabel": "Level Up",
+      "historyLabel": "Level-Up History",
+      "historyHint": "Right-click for the level-up history"
+    },
     "menu": {
-      "title": "Level-Up Wizard",
+      "windowTitle": "Level-Up Wizard: {actorName} (Level {targetLevel})",
       "header": {
-        "name": "{actorName} leveled up to {targetLevel}!",
-        "description": "Here's an overview of your new features. Please make selections where prompted!"
+        "name": "{actorName} is reaching level {targetLevel}!",
+        "description": "Here's what you gain. Make your choices below, then apply the level-up.",
+        "levelJump": "The level was raised from {previousLevel} to {targetLevel} in one step. Choices for every level in between are shown together."
       },
-      "close": "Close",
+      "nothingToChoose": "There are no choices to make at this level. Review your new class features below and apply the level-up.",
       "notes": {
-        "note": "Note:",
-        "featsPrereq": "Feats with prerequisites are marked with an asterisk (*)",
         "classJournal": "Learn more about your class:"
       },
       "dropdown": {
-        "placeholder": "Make a Selection"
+        "placeholder": "Make a selection"
       },
-      "classFeats": {
-        "header": "{className} Class Feats",
-        "label": "New Class Feat Available:",
-        "checkbox": "Include Archetype Feats"
-      },
-      "freeArchetypeFeats": {
-        "header": "Free Archetype Feats",
-        "label": "New Free Archetype Feat Available:"
-      },
-      "mythicFeats": {
-        "header": "Mythic Feats",
-        "label": "New Mythic Feat Available:"
-      },
-      "mythicDestiny": {
-        "header": "Mythic Destiny",
-        "label": "New Mythic Destiny Available:"
-      },
-      "ancestryFeats": {
-        "header": "Ancestry Feats",
-        "label": "New Ancestry Feat Available:"
-      },
-      "ancestryParagonFeats": {
-        "header": "Ancestry Paragon Feats",
-        "label": "New Ancestry Paragon Feat Available:"
-      },
-      "skillFeats": {
-        "header": "Skill Feats",
-        "label": "New Skill Feat Available:"
-      },
-      "generalFeats": {
-        "header": "General Feats",
-        "label": "New General Feat Available:"
+      "feats": {
+        "header": "Feats",
+        "missedHeader": "Empty feat slots from earlier levels ({count})",
+        "missedHint": "These slots were never filled. They're optional: fill any you like now.",
+        "slotLevel": "Slot level",
+        "change": "Change feat",
+        "clear": "Clear selection"
       },
       "skillIncreases": {
-        "header": "Skill Increases",
-        "label": "Skill Increase Available:"
+        "header": "Skill Increase",
+        "label": "Increase",
+        "hint": "Raise one skill by one rank. At this level a skill can reach {rank}."
       },
       "skillPotency": {
-        "header": "Skill Potency (ABP)",
-        "newPotency": "New Skill Potency Available (+1):",
-        "upgradeTo2": "Skill Potency Upgrade Available (+2):",
-        "upgradeTo3": "Skill Potency Upgrade Available (+3):"
+        "header": "Skill Potency (Automatic Bonus Progression)",
+        "current": "Current:",
+        "newBoost": "New skill potency (+1)",
+        "upgradeTo2": "Upgrade a skill potency to +2",
+        "upgradeTo3": "Upgrade a skill potency to +3",
+        "modifierLabel": "Skill Potency"
       },
       "attributeBoosts": {
         "header": "Attribute Boosts",
-        "label": "Select four different Attributes to boost:",
-        "gradualBoostLabel": "Select one Attribute to boost:",
-        "boost": "BOOST",
-        "partial": "PARTIAL"
+        "label": "Boost {count} different attributes.",
+        "gradualLabel": "Gradual boosts: boost {count} attribute(s) from the level {set} set.",
+        "boost": "Boost",
+        "partial": "Partial",
+        "partialHint": "This attribute is already +4 or higher, so this boost only counts as half. A second boost later raises the modifier.",
+        "alreadyBoosted": "Already boosted in this set",
+        "manual": "This character uses manually entered attribute modifiers, so the wizard skips attribute boosts. Update them on the character sheet."
+      },
+      "intBonus": {
+        "header": "Intelligence Increase",
+        "hint": "Your Intelligence modifier went up: become trained in one additional skill (and learn one more language below).",
+        "skill": "Additional trained skill"
+      },
+      "languages": {
+        "header": "Languages",
+        "hint": "You can learn more languages. Pick them now or later on the character sheet.",
+        "label": "Language",
+        "later": "Choose later"
       },
       "features": {
         "class": {
           "header": "New Class Features",
-          "noAction": "No action required"
-        },
-        "manual": {
-          "update": "Update this manually on the",
-          "spellcasting": "Spellcasting",
-          "sheet": "tab of your character sheet."
+          "hint": "These are added to your character automatically."
         },
         "spellcasting": {
-          "rank": "New Spell Rank & Slots Available:",
-          "slots": "New Spell Slots:"
+          "header": "Spellcasting",
+          "rank": "Rank {rank} spells are now available.",
+          "slots": "Spell slots and repertoires aren't automated. Review them on the Spellcasting tab for:"
         }
+      },
+      "footer": {
+        "missing": "Still to choose:",
+        "submit": "Apply level {targetLevel}",
+        "applying": "Applying…"
       },
       "confirmDialog": {
-        "title": "Confirm Changes",
-        "content": "Are you sure you want to apply these level-up changes?"
+        "title": "Confirm Level-Up",
+        "content": "Apply these changes to {actorName} and level up to {targetLevel}?",
+        "skipped": "These choices are left empty and can be filled in later on the character sheet:"
       },
       "filters": {
-        "orderBy": "Order by:",
+        "orderBy": "Order by",
         "level": "Level",
         "name": "Name",
-        "skills": "Filter by Skills",
-        "archetypeFeats": "Archetype Feats",
-        "hideSkillFeats": "Hide Skill Feats",
+        "rarity": "Rarity",
+        "skills": "Filter by skills",
+        "archetypeFeats": "Show archetype feats",
+        "hideSkillFeats": "Hide skill feats",
+        "hideUnmet": "Hide feats with unmet prerequisites",
+        "toggleOrder": "Toggle sort direction",
+        "reset": "Reset filters",
         "placeholder": {
-          "nameSearch": "Search by Name",
-          "minLevel": "Min Level",
-          "maxLevel": "Max Level",
-          "dedicationSearch": "Search by Dedication"
+          "nameSearch": "Search by name",
+          "minLevel": "Min",
+          "maxLevel": "Max",
+          "dedicationSearch": "Search by archetype"
         }
       },
-      "featButtonContent": "{name} | {level}",
       "tooltips": {
-        "viewFeat": "View Feat",
-        "selectFeat": "Select Feat"
+        "selectFeat": "Choose this feat",
+        "sendToChat": "Post to chat"
       }
+    },
+    "selector": {
+      "title": "{group}: Level {level}",
+      "count": "{count} of {total} feats",
+      "noResults": "No feats match these filters.",
+      "level": "Level {level}",
+      "prerequisites": "Prerequisites",
+      "pickHint": "Pick a feat on the left to read it here. Double-click a feat to choose it straight away.",
+      "choose": "Choose",
+      "takenElsewhere": "Chosen in another slot",
+      "grantedBy": "Available through {dedication}."
+    },
+    "prerequisites": {
+      "met": "Prerequisites met",
+      "unmet": "Prerequisites not met",
+      "unknown": "Some prerequisites can't be checked automatically"
+    },
+    "history": {
+      "title": "Level-Up History",
+      "windowTitle": "Level-Up History: {actorName}",
+      "level": "Level {levels}",
+      "empty": "No level-ups recorded yet.",
+      "undoButton": "Undo last level-up",
+      "undoTitle": "Undo Level-Up",
+      "undoConfirm": "Undo the last level-up of {actorName}? The feats it added are removed and the level goes back from {fromLevel} to {toLevel}. Skill ranks, attribute boosts, languages and XP are restored."
     },
     "settings": {
       "showButton": {
         "name": "Enable Level-Up Button",
-        "hint": "When enabled, display a Level-Up button on character sheets. When disabled, the Level-Up Wizard will activate automatically after manually updating a character's level."
+        "hint": "Show a Level-Up button on character sheets. When disabled, the wizard opens automatically after a character's level is raised manually."
       },
       "buttonPlacement": {
         "name": "Level-Up Button Placement",
-        "hint": "Select where the Level-Up button appears: either next to the character's level or in the toolbar at the top of the character sheet.",
+        "hint": "Where the Level-Up button appears: next to the character's level, or in the window's header.",
         "options": {
-          "charHeaderSmall": "Next to Level - Small",
-          "charHeaderLarge": "Next to Level - Large",
-          "windowHeader": "Toolbar"
+          "charHeaderSmall": "Next to level (small)",
+          "charHeaderLarge": "Next to level (large)",
+          "windowHeader": "Window header"
         }
       },
       "sortMethod": {
-        "name": "Feat Sorting Method",
-        "hint": "Choose how feats should be sorted by default.",
+        "name": "Feat Sorting",
+        "hint": "How feats are sorted by default in the feat picker.",
         "options": {
-          "levelDesc": "By Level (High to Low)",
-          "levelAsc": "By Level (Low to High)",
+          "levelDesc": "By level (high to low)",
+          "levelAsc": "By level (low to high)",
           "alphaAsc": "Alphabetical (A-Z)",
           "alphaDesc": "Alphabetical (Z-A)"
         }
       },
-      "featPrereqs": {
-        "name": "Display Feat Prerequisites",
-        "hint": "When enabled, display an asterisk (*) next to Feats with prerequisites in Feat Selection windows."
+      "prerequisiteMode": {
+        "name": "Prerequisite Checking",
+        "hint": "Check feat prerequisites against the character and mark each feat as met, not met, or not checkable. Checks are a guide only: nothing is blocked.",
+        "options": {
+          "show": "Check and mark prerequisites",
+          "off": "Off"
+        }
+      },
+      "hideUnmetPrerequisites": {
+        "name": "Hide Feats with Unmet Prerequisites",
+        "hint": "Default for the feat picker's \"hide unmet prerequisites\" filter. Feats whose prerequisites can't be checked are always shown."
       },
       "skillInfo": {
         "name": "Skill Increase Info",
-        "hint": "Select how much info to show in Skill Increase selections.",
+        "hint": "How much information to show in skill selections.",
         "options": {
-          "nameOnly": "Skill Name (Nature)",
-          "nameWithMod": "Name +Mod (Nature +12)",
-          "nameWithRank": "Name → Next Rank (Nature → Master)",
-          "nameWithModAndRank": "Name +Mod → Next Rank (Nature +12 → Master)"
+          "nameOnly": "Skill name (Nature)",
+          "nameWithMod": "Name and modifier (Nature +12)",
+          "nameWithRank": "Name and rank change (Nature (Expert → Master))",
+          "nameWithModAndRank": "Name, modifier and rank change (Nature +12 (Expert → Master))"
         }
       },
       "disableLevelInput": {
-        "name": "Disable Level Input",
-        "hint": "When enabled, the default level input on the character sheet will be disabled to encourage the use of the Level-Up Wizard for leveling up. This setting has no effect if the 'Enable Level-Up Button' setting is disabled."
+        "name": "Lock Level Field",
+        "hint": "Disable the level field on character sheets so the wizard is the way to level up. Applies even when the XP requirement isn't met."
+      },
+      "requireAllChoices": {
+        "name": "Require All Choices",
+        "hint": "When enabled, every feat slot, skill increase and boost must be chosen before applying a level-up. Disable to let players leave choices empty and fill them in later."
+      },
+      "allowPlayerUndo": {
+        "name": "Allow Players to Undo Level-Ups",
+        "hint": "When enabled, players can undo their character's most recent level-up. The GM can always undo."
       },
       "sendGMWhispers": {
-        "name": "Send Manual Update Whispers to GM",
-        "hint": "When enabled, whispers about required manual updates (such as spell updates) will also be sent to the GM in addition to the player."
+        "name": "Send Reminder Whispers to GM",
+        "hint": "Also whisper the reminders about manual updates (such as spell slots) to the GM."
       },
       "additionalCompendiums": {
-        "name": "Additional Feat Sources",
-        "hint": "Specify a comma-separated list of compendium keys containing feats you would like included in the wizard. Example: 'pf2e-playtest-data.impossible-playtest-class-feats, my-custom-compendium.feats'. Ensure the compendiums are enabled and accessible."
+        "name": "Additional Feat Compendiums",
+        "hint": "Feats come from every compendium selected in the system's Compendium Browser settings. Add other compendium IDs here as a comma-separated list, e.g. 'my-module.feats, world.homebrew-feats'."
       },
-      "hideUncommonFeats": {
-        "name": "Hide Rare and Uncommon Feats",
-        "hint": "When enabled, Uncommon and Rare Feats will be hidden in Feat Selection window."
+      "hiddenRarities": {
+        "name": "Hidden Feat Rarities",
+        "hint": "Feat rarities that players can't see in the feat picker.",
+        "options": {
+          "none": "Show all rarities",
+          "rare": "Hide rare and unique feats",
+          "uncommon": "Hide uncommon, rare and unique feats"
+        }
       },
       "xpEnforcement": {
         "name": "Enforce XP Requirements",
-        "hint": "When enabled, the Level-Up button will only appear if the character has enough XP to level up. After leveling up, the required XP will be deducted from the character's total, and any remaining XP will be carried over."
+        "hint": "Only allow leveling up once the character has enough XP. The XP for the level is deducted and the rest carries over."
       }
     },
     "messages": {
-      "skillIncrease": {
-        "rankName": "Rank {updatedRank}",
-        "rankIncrease": "{skill} skill rank increased to {rankName}."
-      },
-      "skillPotency": {
-        "newPotency": "{skill} Potency upgraded to +1.",
-        "upgradeTo2": "{skill} Potency upgraded to +2.",
-        "upgradeTo3": "{skill} Potency upgraded to +3."
-      },
       "global": {
-        "header": "{actorName} has leveled up to level {targetLevel}!",
-        "feats": "Selected Feats:",
-        "noFeats": "No Feats selected.",
-        "skills": "Skill Increase:",
-        "feat": "Feat"
+        "header": "{actorName} reached level {targetLevel}!",
+        "feats": "Feats",
+        "skills": "Skills",
+        "boosts": "Attribute boosts:",
+        "languages": "Languages:",
+        "potency": "Skill potency:",
+        "noChoices": "No new choices at this level."
       },
       "personal": {
-        "header": "{actorName} Manual Updates Needed",
-        "spellRank": "New Spell Rank & Slots (Spellcasting tab)",
-        "spellSlots": "New Spell Slots (Spellcasting tab)",
-        "intIncrease": "Select a new Language and gain a Skill Increase from Intelligence Boost"
+        "header": "{actorName}: still to do",
+        "spellRank": "Rank {rank} spells are available: update spell slots and spells on the Spellcasting tab.",
+        "spellSlots": "Review spell slots for: {entries}.",
+        "featSpells": "These new feats mention spells, cantrips or focus spells, which may need to be added by hand: {feats}.",
+        "languages": "You can learn {count} more language(s): add them on the character sheet.",
+        "intSkill": "Your Intelligence increase grants {count} additional trained skill(s): choose on the character sheet.",
+        "emptySlots": "Empty feat slots to fill on the character sheet: {slots}."
       }
     },
     "notifications": {
-      "levelUpStart": "Updating {actorName} to level {targetLevel}...",
-      "levelUpComplete": "{actorName} level up complete!",
-      "wizardStartup": "Starting up Level-Up Wizard...",
-      "missingClass": "Level-Up Wizard cannot start until a class is selected.",
-      "companionClass": "Level-Up Wizard does not support Companions or Eidolons. Please grant your Companion or Eidolon any feats that would be granted to them manually.",
-      "invalidBoostSelection": "Invalid boost selections.",
-      "translatedDualClassError": "Level-Up Wizard cannot be used with translated dual classes",
+      "levelUpStart": "Updating {actorName} to level {targetLevel}…",
+      "levelUpComplete": "{actorName} level-up complete!",
+      "levelUpFailed": "The level-up could not be prepared. See the console (F12) for details.",
+      "levelUpRolledBack": "The level-up failed and was rolled back. See the console (F12) for details.",
+      "featsSkipped": "Not added (choice cancelled): {feats}. Add them from the character sheet if needed.",
+      "wizardStartup": "Starting the Level-Up Wizard…",
+      "missingClass": "The Level-Up Wizard needs a class on the character.",
+      "companionClass": "The Level-Up Wizard doesn't support companions or eidolons. Grant their feats manually.",
+      "maxLevel": "This character is already level 20.",
+      "incomplete": "Make all the required choices first.",
+      "levelChanged": "The character's level changed while the wizard was open. Open the wizard again.",
+      "nothingToUndo": "There's no level-up to undo.",
+      "cannotUndo": "Only the most recent level-up can be undone, and only while the character is still level {level}.",
+      "undone": "Level-up undone for {actorName}.",
+      "settingsMigrated": "Settings migrated from the previous version.",
       "additionalCompendiums": {
-        "failedToLoad": "Failed to load compendium {key}. Ensure it is a valid feats compendium.",
-        "compendiumNotFound": "Compendium {key} not found. Ensure it is correctly spelled and enabled in your game settings."
-      }
+        "failedToLoad": "Could not load compendium {key}. Make sure it is a valid Item compendium.",
+        "compendiumNotFound": "Compendium {key} not found. Check the spelling in the Level-Up Wizard settings."
+      },
+      "openFailed": "The Level-Up Wizard could not open. See the console (F12) for details."
     }
   }
 }

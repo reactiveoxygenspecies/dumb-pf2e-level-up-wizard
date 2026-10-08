@@ -1,51 +1,52 @@
-import { renderLevelUpButton, renderWizardOnLevelUp } from './actor.js';
-import { registerSettings } from './settings.js';
+import { MODULE_ID, SUPPORTED_SYSTEMS, TEMPLATE_PATH } from './constants.js';
+import { migrateSettings, registerSettings } from './settings.js';
+import { registerFeatIndexHooks } from './data/featIndex.js';
+import { getHistory, undoLastLevelUp } from './data/apply.js';
+import {
+  onGetHeaderButtons,
+  onGetHeaderControls,
+  onPreUpdateActor,
+  onRenderCharacterSheet,
+  onUpdateActor,
+  openHistory,
+  renderWizard
+} from './sheetButton.js';
 
-export const module_name = 'pf2e-level-up-wizard';
-
-Hooks.on('init', async () => {
-  console.log('PF2e Level-Up Wizard | Module Initialized');
+Hooks.once('init', () => {
+  if (!SUPPORTED_SYSTEMS.includes(game.system.id)) return;
   registerSettings();
+  registerFeatIndexHooks();
 
-  Handlebars.registerHelper('notEqual', (a, b) => a !== b);
-  Handlebars.registerHelper('eq', (a, b) => a === b);
-  Handlebars.registerHelper('or', (...args) => {
-    const options = args.pop();
-    return args.some(Boolean);
+  foundry.applications.handlebars.loadTemplates({
+    lvlupFeatSlot: `${TEMPLATE_PATH}/partials/feat-slot.hbs`
   });
+
+  const helpers = {
+    lvlupEq: (a, b) => a === b,
+    lvlupSigned: (n) => (n >= 0 ? `+${n}` : `${n}`)
+  };
+  for (const [name, fn] of Object.entries(helpers)) Handlebars.registerHelper(name, fn);
+
+  game.modules.get(MODULE_ID).api = {
+    /** Open the wizard for an actor (respects the same checks as the sheet button) */
+    open: (actor) => renderWizard(actor),
+    /** Show the level-up history of an actor */
+    history: (actor) => openHistory(actor),
+    getHistory,
+    undoLastLevelUp
+  };
 });
 
-Hooks.on('ready', () => {
-  const showButton = game.settings.get(module_name, 'show-level-up-button');
-  const hook = showButton ? 'renderCharacterSheetPF2e' : 'updateActor';
-  const handler = showButton ? renderLevelUpButton : renderWizardOnLevelUp;
+Hooks.once('ready', () => {
+  if (!SUPPORTED_SYSTEMS.includes(game.system.id)) return;
+  migrateSettings();
 
-  Hooks.on(hook, handler);
-});
-
-document.addEventListener('change', (event) => {
-  if (
-    event.target.matches([
-      '#skills',
-      '#newPotency',
-      '#upgradePotencyTo2',
-      '#upgradePotencyTo3'
-    ])
-  ) {
-    const selectElement = event.target;
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    const selectedClass = selectedOption.className;
-
-    selectElement.classList.remove(
-      'skill-option-untrained',
-      'skill-option-trained',
-      'skill-option-expert',
-      'skill-option-master',
-      'skill-option-legendary'
-    );
-
-    if (selectedClass) {
-      selectElement.classList.add(selectedClass);
-    }
+  if (game.settings.get(MODULE_ID, 'show-level-up-button')) {
+    Hooks.on('renderCharacterSheetPF2e', onRenderCharacterSheet);
+    Hooks.on('getCharacterSheetPF2eHeaderButtons', onGetHeaderButtons);
+    Hooks.on('getHeaderControlsCharacterSheetPF2e', onGetHeaderControls);
+  } else {
+    Hooks.on('preUpdateActor', onPreUpdateActor);
+    Hooks.on('updateActor', onUpdateActor);
   }
 });

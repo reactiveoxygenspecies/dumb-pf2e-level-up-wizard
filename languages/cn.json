@@ -1,127 +1,155 @@
 {
   "PF2E_LEVEL_UP_WIZARD": {
     "button-tooltip": "升级！",
+    "button": {
+      "needXp": "经验值不足，无法升级（还需要 {needed}）",
+      "levelLocked": "请使用升级向导来更改等级",
+      "toolbarLabel": "升级",
+      "historyLabel": "升级历史",
+      "historyHint": "右键查看升级历史"
+    },
     "menu": {
-      "title": "升级向导",
+      "windowTitle": "升级向导：{actorName}（{targetLevel} 级）",
       "header": {
-        "name": "{actorName} 升到了 {targetLevel} 级！",
-        "description": "以下是你的新特性概览。请在需要时进行选择！"
+        "name": "{actorName} 即将升到 {targetLevel} 级！",
+        "description": "以下是你获得的内容。请在下方做出选择，然后应用升级。",
+        "levelJump": "等级已一次性从 {previousLevel} 级提升到 {targetLevel} 级。中间每个等级的选择会一并显示。"
       },
-      "close": "关闭",
+      "nothingToChoose": "这一等级没有需要做出的选择。请查看下方的新职业特性，然后应用升级。",
       "notes": {
-        "note": "注意：",
-        "featsPrereq": "带有先决条件的专长标有星号（*）",
         "classJournal": "了解更多关于你的职业："
       },
       "dropdown": {
         "placeholder": "进行选择"
       },
-      "classFeats": {
-        "header": "{className} 职业专长",
-        "label": "可选新职业专长：",
-        "checkbox": "包含双职业专长"
-      },
-      "freeArchetypeFeats": {
-        "header": "免费变体专长",
-        "label": "可选新免费变体专长："
-      },
-      "mythicFeats": {
-        "header": "神话专长",
-        "label": "可选新神话专长："
-      },
-      "mythicDestiny": {
-        "header": "神话道途",
-        "label": "可选新神话道途："
-      },
-      "ancestryFeats": {
-        "header": "族裔专长",
-        "label": "可选新族裔专长："
-      },
-      "ancestryParagonFeats": {
-        "header": "族裔典范专长",
-        "label": "可选新族裔典范专长："
-      },
-      "skillFeats": {
-        "header": "技能专长",
-        "label": "可选新技能专长："
-      },
-      "generalFeats": {
-        "header": "通用专长",
-        "label": "可选新通用专长："
+      "feats": {
+        "header": "专长",
+        "missedHeader": "之前等级遗留的空专长位（{count}）",
+        "missedHint": "这些专长位一直没有填写。它们是可选的：现在可以随意填写。",
+        "slotLevel": "专长位等级",
+        "change": "更换专长",
+        "clear": "清除选择"
       },
       "skillIncreases": {
         "header": "技能提升",
-        "label": "可选技能提升："
+        "label": "提升",
+        "hint": "将一项技能的熟练度提升一级。在这个等级，技能最高可达：{rank}。"
       },
       "skillPotency": {
-        "header": "技能潜能 (ABP)",
-        "newPotency": "可选新技能潜能 (+1)：",
-        "upgradeTo2": "可选技能潜能升级 (+2)：",
-        "upgradeTo3": "可选技能潜能升级 (+3)："
+        "header": "技能潜能（自动加值进阶）",
+        "current": "当前：",
+        "newBoost": "新技能潜能 (+1)",
+        "upgradeTo2": "将一项技能潜能升级至 +2",
+        "upgradeTo3": "将一项技能潜能升级至 +3",
+        "modifierLabel": "技能潜能"
       },
       "attributeBoosts": {
         "header": "属性提升",
-        "label": "选择四个不同的属性进行提升：",
-        "gradualBoostLabel": "选择一个属性进行提升：",
+        "label": "提升 {count} 个不同的属性。",
+        "gradualLabel": "渐进提升：从 {set} 级的属性组中提升 {count} 个属性。",
         "boost": "提升",
-        "partial": "部分提升"
+        "partial": "部分",
+        "partialHint": "该属性已经是 +4 或更高，因此这次提升只算一半。之后再提升一次才会提高调整值。",
+        "alreadyBoosted": "此属性组中已提升",
+        "manual": "该角色使用手动输入的属性调整值，因此向导会跳过属性提升。请在角色卡上自行更新。"
+      },
+      "intBonus": {
+        "header": "智力提升",
+        "hint": "你的智力调整值提高了：额外获得一项受训技能（并在下方多学一门语言）。",
+        "skill": "额外的受训技能"
+      },
+      "languages": {
+        "header": "语言",
+        "hint": "你可以学习更多语言。可以现在选择，也可以稍后在角色卡上选择。",
+        "label": "语言",
+        "later": "稍后选择"
       },
       "features": {
         "class": {
           "header": "新职业特性",
-          "noAction": "无需操作"
-        },
-        "manual": {
-          "update": "请在角色卡",
-          "spellcasting": "【法术】",
-          "sheet": "分页手动更新此项。"
+          "hint": "这些会自动添加到你的角色上。"
         },
         "spellcasting": {
-          "rank": "获得新法术环阶 & 法术位：",
-          "slots": "获得新法术位："
+          "header": "施法",
+          "rank": "现在可以使用 {rank} 环法术。",
+          "slots": "法术位和法术库不会自动处理。请在法术分页中检查以下项目："
         }
+      },
+      "footer": {
+        "missing": "尚待选择：",
+        "submit": "应用 {targetLevel} 级",
+        "applying": "正在应用…"
       },
       "confirmDialog": {
-        "title": "确认变更",
-        "content": "你确定要应用这些升级变更吗？"
+        "title": "确认升级",
+        "content": "将这些变更应用到 {actorName} 并升至 {targetLevel} 级？",
+        "skipped": "以下选择仍为空，可稍后在角色卡上补充："
       },
       "filters": {
-        "orderBy": "排序方式：",
+        "orderBy": "排序方式",
         "level": "等级",
         "name": "名称",
+        "rarity": "稀有度",
         "skills": "按技能筛选",
-        "archetypeFeats": "变体专长",
+        "archetypeFeats": "显示变体专长",
         "hideSkillFeats": "隐藏技能专长",
+        "hideUnmet": "隐藏未满足先决条件的专长",
+        "toggleOrder": "切换排序方向",
+        "reset": "重置筛选",
         "placeholder": {
           "nameSearch": "按名称搜索",
-          "minLevel": "最低等级",
-          "maxLevel": "最高等级",
-          "dedicationSearch": "按入门专长搜索"
+          "minLevel": "最低",
+          "maxLevel": "最高",
+          "dedicationSearch": "按变体搜索"
         }
       },
-      "featButtonContent": "{name} | {level}",
       "tooltips": {
-        "viewFeat": "查看专长",
-        "selectFeat": "选择专长"
+        "selectFeat": "选择此专长",
+        "sendToChat": "发送到聊天"
       }
+    },
+    "selector": {
+      "title": "{group}：{level} 级",
+      "count": "{total} 个专长中的 {count} 个",
+      "noResults": "没有符合这些筛选条件的专长。",
+      "level": "{level} 级",
+      "prerequisites": "先决条件",
+      "pickHint": "在左侧选择一个专长即可在此阅读。双击专长可直接选择。",
+      "choose": "选择",
+      "takenElsewhere": "已在其他专长位选择",
+      "grantedBy": "可通过 {dedication} 获得。"
+    },
+    "prerequisites": {
+      "met": "已满足先决条件",
+      "unmet": "未满足先决条件",
+      "unknown": "部分先决条件无法自动检查"
+    },
+    "history": {
+      "title": "升级历史",
+      "windowTitle": "升级历史：{actorName}",
+      "level": "{levels} 级",
+      "empty": "尚无升级记录。",
+      "undoButton": "撤销上一次升级",
+      "undoTitle": "撤销升级",
+      "undoConfirm": "撤销 {actorName} 的上一次升级？它添加的专长将被移除，等级将从 {fromLevel} 级回到 {toLevel} 级。技能熟练度、属性提升、语言和经验值将被恢复。"
     },
     "settings": {
       "showButton": {
         "name": "启用升级按钮",
-        "hint": "启用后，在角色卡上显示一个升级按钮。禁用后，在手动更新角色等级后，升级向导将自动激活。"
+        "hint": "在角色卡上显示升级按钮。禁用后，手动提升角色等级时升级向导会自动打开。"
       },
       "buttonPlacement": {
         "name": "升级按钮位置",
-        "hint": "选择升级按钮显示的位置：在角色等级旁边或在角色卡顶部的工具栏中。",
+        "hint": "升级按钮显示的位置：在角色等级旁边，或在窗口标题栏中。",
         "options": {
-          "charHeaderSmall": "等级旁边 - 小",
-          "charHeaderLarge": "等级旁边 - 大",
-          "windowHeader": "工具栏"
+          "charHeaderSmall": "等级旁边（小）",
+          "charHeaderLarge": "等级旁边（大）",
+          "windowHeader": "窗口标题栏"
         }
       },
       "sortMethod": {
-        "name": "专长排序方式",
-        "hint": "选择默认情况下专长的排序方式。",
+        "name": "专长排序",
+        "hint": "专长选择器中专长的默认排序方式。",
         "options": {
           "levelDesc": "按等级（高到低）",
           "levelAsc": "按等级（低到高）",
@@ -129,77 +157,103 @@
           "alphaDesc": "按字母顺序（Z-A）"
         }
       },
-      "featPrereqs": {
-        "name": "显示专长先决条件",
-        "hint": "启用后，在专长选择窗口中，带有先决条件的专长旁边会显示一个星号（*）。"
+      "prerequisiteMode": {
+        "name": "先决条件检查",
+        "hint": "根据角色检查专长的先决条件，并将每个专长标记为已满足、未满足或无法检查。检查结果仅供参考：不会阻止任何选择。",
+        "options": {
+          "show": "检查并标记先决条件",
+          "off": "关闭"
+        }
+      },
+      "hideUnmetPrerequisites": {
+        "name": "隐藏未满足先决条件的专长",
+        "hint": "专长选择器中“隐藏未满足先决条件”筛选的默认值。无法检查先决条件的专长始终会显示。"
       },
       "skillInfo": {
         "name": "技能提升信息",
-        "hint": "选择在技能提升选项中显示多少信息。",
+        "hint": "选择技能时显示多少信息。",
         "options": {
           "nameOnly": "技能名称（自然）",
-          "nameWithMod": "名称 +调整值（自然 +12）",
-          "nameWithRank": "名称 → 下一级熟练度（自然 → 大师）",
-          "nameWithModAndRank": "名称 +调整值 → 下一级熟练度（自然 +12 → 大师）"
+          "nameWithMod": "名称和调整值（自然 +12）",
+          "nameWithRank": "名称和熟练度变化（自然（专家 → 大师））",
+          "nameWithModAndRank": "名称、调整值和熟练度变化（自然 +12（专家 → 大师））"
         }
       },
       "disableLevelInput": {
-        "name": "禁用等级输入框",
-        "hint": "启用后，角色卡上默认的等级输入框将被禁用，以鼓励使用升级向导进行升级。如果“启用升级按钮”设置被禁用，则此设置无效。"
+        "name": "锁定等级字段",
+        "hint": "禁用角色卡上的等级字段，使升级向导成为唯一的升级方式。即使未满足经验值要求也会生效。"
+      },
+      "requireAllChoices": {
+        "name": "要求完成所有选择",
+        "hint": "启用后，应用升级前必须选择每个专长位、技能提升和属性提升。禁用后，玩家可以先留空，稍后再补充。"
+      },
+      "allowPlayerUndo": {
+        "name": "允许玩家撤销升级",
+        "hint": "启用后，玩家可以撤销自己角色最近一次的升级。GM 始终可以撤销。"
       },
       "sendGMWhispers": {
-        "name": "向 GM 发送手动更新提醒",
-        "hint": "启用后，关于需要手动更新（例如法术更新）的提醒信息，除了发送给玩家外，也会同时发送给 GM。"
+        "name": "向 GM 发送提醒悄悄话",
+        "hint": "同时将手动更新的提醒（例如法术位）以悄悄话发送给 GM。"
       },
       "additionalCompendiums": {
-        "name": "额外专长来源",
-        "hint": "指定一个逗号分隔的合集包uuid列表，其中包含你希望包含在向导中的专长。示例：'pf2e-playtest-data.impossible-playtest-class-feats, my-custom-compendium.feats'。请确保这些合集包已启用且可访问。"
+        "name": "额外专长合集包",
+        "hint": "专长来自系统合集包浏览器设置中选中的所有合集包。可在此添加其他合集包 ID，用逗号分隔，例如 'my-module.feats, world.homebrew-feats'。"
       },
-      "hideUncommonFeats": {
-        "name": "隐藏稀有和罕见专长",
-        "hint": "启用后，罕见（Uncommon）和稀有（Rare）专长将在专长选择窗口中隐藏。"
+      "hiddenRarities": {
+        "name": "隐藏的专长稀有度",
+        "hint": "玩家在专长选择器中看不到的专长稀有度。",
+        "options": {
+          "none": "显示所有稀有度",
+          "rare": "隐藏稀有和独一无二的专长",
+          "uncommon": "隐藏罕见、稀有和独一无二的专长"
+        }
       },
       "xpEnforcement": {
         "name": "强制执行经验值需求",
-        "hint": "启用后，只有当角色拥有足够的经验值（XP）升级时，升级按钮才会出现。升级后，所需的经验值将从角色总经验中扣除，剩余的经验值将保留。"
+        "hint": "只有当角色拥有足够经验值时才允许升级。升级所需的经验值会被扣除，剩余部分将保留。"
       }
     },
     "messages": {
-      "skillIncrease": {
-        "rankName": "{updatedRank}级熟练度",
-        "rankIncrease": "{skill} 技能熟练度提升至 {rankName}。"
-      },
-      "skillPotency": {
-        "newPotency": "{skill} 潜能提升至 +1。",
-        "upgradeTo2": "{skill} 潜能提升至 +2。",
-        "upgradeTo3": "{skill} 潜能提升至 +3。"
-      },
       "global": {
         "header": "{actorName} 已升至 {targetLevel} 级！",
-        "feats": "已选专长：",
-        "noFeats": "未选择专长。",
-        "skills": "技能提升：",
-        "feat": "专长"
+        "feats": "专长",
+        "skills": "技能",
+        "boosts": "属性提升：",
+        "languages": "语言：",
+        "potency": "技能潜能：",
+        "noChoices": "这一等级没有新的选择。"
       },
       "personal": {
-        "header": "{actorName} 需要手动更新",
-        "spellRank": "新法术环阶 & 法术位（法术分页）",
-        "spellSlots": "新法术位（法术分页）",
-        "intIncrease": "选择一门新语言，并从智力提升中获得一次技能提升"
+        "header": "{actorName}：待办事项",
+        "spellRank": "现在可以使用 {rank} 环法术：请在法术分页中更新法术位和法术。",
+        "spellSlots": "请检查以下施法的法术位：{entries}。",
+        "featSpells": "这些新专长提到了法术、戏法或聚焦法术，可能需要手动添加：{feats}。",
+        "languages": "你还可以学习 {count} 门语言：请在角色卡上添加。",
+        "intSkill": "你的智力提升额外提供 {count} 项受训技能：请在角色卡上选择。",
+        "emptySlots": "需要在角色卡上补充的空专长位：{slots}。"
       }
     },
     "notifications": {
-      "levelUpStart": "正在将 {actorName} 更新至 {targetLevel} 级...",
+      "levelUpStart": "正在将 {actorName} 更新至 {targetLevel} 级…",
       "levelUpComplete": "{actorName} 升级完成！",
-      "wizardStartup": "正在启动升级向导...",
-      "missingClass": "必须先选择一个职业，才能启动升级向导。",
-      "companionClass": "升级向导不支持同伴或幻灵。请手动为您的同伴或幻灵授予所有可用的专长。",
-      "invalidBoostSelection": "无效的属性提升选择。",
-      "translatedDualClassError": "升级向导无法用于翻译后的双职业角色",
+      "levelUpFailed": "无法准备升级。详情请查看控制台（F12）。",
+      "levelUpRolledBack": "升级失败，已回滚。详情请查看控制台（F12）。",
+      "featsSkipped": "未添加（选择已取消）：{feats}。如有需要，请在角色卡上手动添加。",
+      "wizardStartup": "正在启动升级向导…",
+      "missingClass": "升级向导需要角色拥有一个职业。",
+      "companionClass": "升级向导不支持同伴或幻灵。请手动为它们授予专长。",
+      "maxLevel": "该角色已经是 20 级。",
+      "incomplete": "请先完成所有必需的选择。",
+      "levelChanged": "向导打开期间角色的等级发生了变化。请重新打开向导。",
+      "nothingToUndo": "没有可撤销的升级。",
+      "cannotUndo": "只能撤销最近一次升级，且仅限角色仍为 {level} 级时。",
+      "undone": "已撤销 {actorName} 的升级。",
+      "settingsMigrated": "已从旧版本迁移设置。",
       "additionalCompendiums": {
-        "failedToLoad": "加载合集包 {key} 失败。请确保它是一个有效的专长合集包。",
-        "compendiumNotFound": "未找到合集包 {key}。请确保拼写正确并在游戏设置中启用。"
-      }
+        "failedToLoad": "无法加载合集包 {key}。请确保它是有效的物品合集包。",
+        "compendiumNotFound": "未找到合集包 {key}。请在升级向导设置中检查拼写。"
+      },
+      "openFailed": "无法打开升级向导。详情请查看控制台（F12）。"
     }
   }
 }

@@ -1,127 +1,155 @@
 {
   "PF2E_LEVEL_UP_WIZARD": {
     "button-tooltip": "Awans!",
+    "button": {
+      "needXp": "Za mało PD, aby awansować (brakuje {needed})",
+      "levelLocked": "Użyj Level-Up Wizard, aby zmienić poziom",
+      "toolbarLabel": "Awans",
+      "historyLabel": "Historia awansów",
+      "historyHint": "Kliknij prawym przyciskiem, aby zobaczyć historię awansów"
+    },
     "menu": {
-      "title": "Level-Up Wizard",
+      "windowTitle": "Level-Up Wizard: {actorName} (poziom {targetLevel})",
       "header": {
-        "name": "{actorName} awansował na {targetLevel}!",
-        "description": "Oto przegląd nowych funkcji. Dokonaj wyboru tam, gdzie jest to wymagane!"
+        "name": "{actorName} osiąga poziom {targetLevel}!",
+        "description": "Oto, co zyskujesz. Dokonaj wyborów poniżej, a następnie zastosuj awans.",
+        "levelJump": "Poziom został podniesiony z {previousLevel} do {targetLevel} w jednym kroku. Wybory dla wszystkich pośrednich poziomów są pokazane razem."
       },
-      "close": "Zamknij",
+      "nothingToChoose": "Na tym poziomie nie ma żadnych wyborów. Przejrzyj poniżej nowe zdolności klasowe i zastosuj awans.",
       "notes": {
-        "note": "Uwaga:",
-        "featsPrereq": "Atuty z wymaganiami wstępnymi są oznaczone gwiazdką (*)",
         "classJournal": "Dowiedz się więcej o swojej klasie:"
       },
       "dropdown": {
         "placeholder": "Dokonaj wyboru"
       },
-      "classFeats": {
-        "header": "Atuty klasowe {className}",
-        "label": "Dostępny jest nowy atut klasy:",
-        "checkbox": "Dołącz atuty archetypu"
-      },
-      "freeArchetypeFeats": {
-        "header": "Darmowe atuty archetypu",
-        "label": "Dostępny jest nowy darmowy atut archetypu:"
-      },
-      "mythicFeats": {
-        "header": "Atuty Mityczne",
-        "label": "Dostępny jest nowy mityczny atut:"
-      },
-      "mythicDestiny": {
-        "header": "Mityczne Przeznaczenie",
-        "label": "Dostępne jest nowe mityczne przeznaczenie:"
-      },
-      "ancestryFeats": {
-        "header": "Atuty pochodzenia",
-        "label": "Dostępny jest nowy atut pochodzenia:"
-      },
-      "ancestryParagonFeats": {
-        "header": "Atuty wzorcowe pochodzenia",
-        "label": "Dostępny jest nowy atut wzorcowy pochodzenia:"
-      },
-      "skillFeats": {
-        "header": "Atuty umiejętności",
-        "label": "Dostępny jest nowy atut umiejętności:"
-      },
-      "generalFeats": {
-        "header": "Atuty ogólne",
-        "label": "Dostępny jest nowy atut ogólny:"
+      "feats": {
+        "header": "Atuty",
+        "missedHeader": "Puste miejsca na atuty z wcześniejszych poziomów ({count})",
+        "missedHint": "Te miejsca nigdy nie zostały wypełnione. Są opcjonalne: wypełnij teraz te, które chcesz.",
+        "slotLevel": "Poziom miejsca",
+        "change": "Zmień atut",
+        "clear": "Wyczyść wybór"
       },
       "skillIncreases": {
         "header": "Zwiększenie umiejętności",
-        "label": "Dostępne zwiększenie umiejętności:"
+        "label": "Zwiększenie",
+        "hint": "Zwiększ jedną umiejętność o jedną rangę. Na tym poziomie umiejętność może osiągnąć: {rank}."
       },
       "skillPotency": {
-        "header": "Potencjał umiejętności (APB)",
-        "newPotency": "Dostępna nowy potencjał umiejętności (+1):",
-        "upgradeTo2": "Dostępne ulepszenie potencjału umiejętności (+2):",
-        "upgradeTo3": "Dostępne ulepszenie potencjału umiejętności (+3):"
+        "header": "Potencjał umiejętności (Automatyczna progresja premii)",
+        "current": "Obecnie:",
+        "newBoost": "Nowy potencjał umiejętności (+1)",
+        "upgradeTo2": "Ulepsz potencjał umiejętności do +2",
+        "upgradeTo3": "Ulepsz potencjał umiejętności do +3",
+        "modifierLabel": "Potencjał umiejętności"
       },
       "attributeBoosts": {
         "header": "Wzmocnienia atrybutów",
-        "label": "Wybierz cztery różne atrybuty do wzmocnienia:",
-        "gradualBoostLabel": "Wybierz jeden atrybut do wzmocnienia:",
-        "boost": "PRZYROST",
-        "partial": "CZĘŚĆ"
+        "label": "Wzmocnij różne atrybuty. Liczba wzmocnień: {count}.",
+        "gradualLabel": "Stopniowe wzmocnienia: wzmocnij atrybuty z zestawu poziomu {set} (liczba: {count}).",
+        "boost": "Wzmocnij",
+        "partial": "Częściowe",
+        "partialHint": "Ten atrybut ma już +4 lub więcej, więc to wzmocnienie liczy się tylko jako połowa. Drugie wzmocnienie później podniesie modyfikator.",
+        "alreadyBoosted": "Już wzmocniony w tym zestawie",
+        "manual": "Ta postać używa ręcznie wpisanych modyfikatorów atrybutów, więc kreator pomija wzmocnienia atrybutów. Zaktualizuj je na karcie postaci."
+      },
+      "intBonus": {
+        "header": "Zwiększenie Inteligencji",
+        "hint": "Twój modyfikator Inteligencji wzrósł: zostań wyszkolony w jednej dodatkowej umiejętności (i naucz się jeszcze jednego języka poniżej).",
+        "skill": "Dodatkowa wyszkolona umiejętność"
+      },
+      "languages": {
+        "header": "Języki",
+        "hint": "Możesz nauczyć się kolejnych języków. Wybierz je teraz lub później na karcie postaci.",
+        "label": "Język",
+        "later": "Wybierz później"
       },
       "features": {
         "class": {
-          "header": "Nowe klasowe zdolności",
-          "noAction": "Nie są wymagane żadne działania"
-        },
-        "manual": {
-          "update": "Zaktualizuj to ręcznie w",
-          "spellcasting": "Rzucanie zaklęć",
-          "sheet": "na karcie twojej postaci."
+          "header": "Nowe zdolności klasowe",
+          "hint": "Są one dodawane do postaci automatycznie."
         },
         "spellcasting": {
-          "rank": "Dostępna nowa Ranga i miejsca na zaklęcia:",
-          "slots": "Nowe miejsca na zaklęcia:"
+          "header": "Rzucanie zaklęć",
+          "rank": "Dostępne są teraz zaklęcia rangi {rank}.",
+          "slots": "Miejsca na zaklęcia i repertuary nie są zautomatyzowane. Sprawdź je w zakładce Rzucanie zaklęć dla:"
         }
+      },
+      "footer": {
+        "missing": "Pozostało do wyboru:",
+        "submit": "Zastosuj poziom {targetLevel}",
+        "applying": "Stosowanie…"
       },
       "confirmDialog": {
-        "title": "Potwierdź zmiany",
-        "content": "Czy na pewno chcesz zastosować te zmiany?"
+        "title": "Potwierdź awans",
+        "content": "Zastosować te zmiany dla {actorName} i awansować na poziom {targetLevel}?",
+        "skipped": "Te wybory pozostają puste i można je uzupełnić później na karcie postaci:"
       },
       "filters": {
-        "orderBy": "Sortuj według:",
+        "orderBy": "Sortuj według",
         "level": "Poziom",
         "name": "Nazwa",
+        "rarity": "Rzadkość",
         "skills": "Filtruj według umiejętności",
-        "archetypeFeats": "Atuty archetypu",
+        "archetypeFeats": "Pokaż atuty archetypu",
         "hideSkillFeats": "Ukryj atuty umiejętności",
+        "hideUnmet": "Ukryj atuty z niespełnionymi wymaganiami wstępnymi",
+        "toggleOrder": "Zmień kierunek sortowania",
+        "reset": "Resetuj filtry",
         "placeholder": {
           "nameSearch": "Szukaj według nazwy",
-          "minLevel": "Poziom min.",
-          "maxLevel": "Poziom maks.",
-          "dedicationSearch": "Wyszukiwanie według archetypu"
+          "minLevel": "Min",
+          "maxLevel": "Maks",
+          "dedicationSearch": "Szukaj według archetypu"
         }
       },
-      "featButtonContent": "{name} | {level}",
       "tooltips": {
-        "viewFeat": "Zobacz atut",
-        "selectFeat": "Wybierz atut"
+        "selectFeat": "Wybierz ten atut",
+        "sendToChat": "Wyślij na czat"
       }
+    },
+    "selector": {
+      "title": "{group}: poziom {level}",
+      "count": "{count} z {total} atutów",
+      "noResults": "Żaden atut nie pasuje do tych filtrów.",
+      "level": "Poziom {level}",
+      "prerequisites": "Wymagania wstępne",
+      "pickHint": "Wybierz atut po lewej, aby przeczytać go tutaj. Kliknij atut dwukrotnie, aby od razu go wybrać.",
+      "choose": "Wybierz",
+      "takenElsewhere": "Wybrany w innym miejscu",
+      "grantedBy": "Dostępny dzięki archetypowi {dedication}."
+    },
+    "prerequisites": {
+      "met": "Wymagania wstępne spełnione",
+      "unmet": "Wymagania wstępne niespełnione",
+      "unknown": "Niektórych wymagań wstępnych nie można sprawdzić automatycznie"
+    },
+    "history": {
+      "title": "Historia awansów",
+      "windowTitle": "Historia awansów: {actorName}",
+      "level": "Poziom {levels}",
+      "empty": "Nie zapisano jeszcze żadnych awansów.",
+      "undoButton": "Cofnij ostatni awans",
+      "undoTitle": "Cofnij awans",
+      "undoConfirm": "Cofnąć ostatni awans postaci {actorName}? Dodane atuty zostaną usunięte, a poziom wróci z {fromLevel} do {toLevel}. Rangi umiejętności, wzmocnienia atrybutów, języki i PD zostaną przywrócone."
     },
     "settings": {
       "showButton": {
-        "name": "Włącz przycisk zwiększania poziomu",
-        "hint": "Gdy opcja ta jest włączona, na kartach postaci wyświetlany jest przycisk podnoszenia poziomu. Gdy jest wyłączony, kreator podnoszenia poziomu aktywuje się automatycznie po ręcznym zaktualizowaniu poziomu postaci."
+        "name": "Włącz przycisk awansu",
+        "hint": "Wyświetla przycisk awansu na kartach postaci. Gdy opcja jest wyłączona, kreator uruchamia się automatycznie po ręcznym podniesieniu poziomu postaci."
       },
       "buttonPlacement": {
-        "name": "Rozmieszczenie przycisku zwiększania poziomu",
-        "hint": "Wybierz miejsce, w którym pojawi się przycisk podnoszenia poziomu: obok poziomu postaci lub na pasku tytułowym u góry karty postaci.",
+        "name": "Położenie przycisku awansu",
+        "hint": "Gdzie pojawia się przycisk awansu: obok poziomu postaci lub w nagłówku okna.",
         "options": {
-          "charHeaderSmall": "Obok poziomu - Mały",
-          "charHeaderLarge": "Obok poziomu - Duży",
-          "windowHeader": "Pasek tytułowy"
+          "charHeaderSmall": "Obok poziomu (mały)",
+          "charHeaderLarge": "Obok poziomu (duży)",
+          "windowHeader": "Nagłówek okna"
         }
       },
       "sortMethod": {
-        "name": "Metoda sortowania atutów",
-        "hint": "Wybierz domyślny sposób sortowania atutów.",
+        "name": "Sortowanie atutów",
+        "hint": "Domyślny sposób sortowania atutów w oknie wyboru atutu.",
         "options": {
           "levelDesc": "Według poziomu (od wysokiego do niskiego)",
           "levelAsc": "Według poziomu (od niskiego do wysokiego)",
@@ -129,77 +157,103 @@
           "alphaDesc": "Alfabetycznie (Z-A)"
         }
       },
-      "featPrereqs": {
-        "name": "Wyświetlanie wymagań wstępnych atutu",
-        "hint": "Gdy opcja ta jest włączona, wyświetla gwiazdkę (*) obok atutów z wymaganiami wstępnymi w oknach wyboru atutów."
+      "prerequisiteMode": {
+        "name": "Sprawdzanie wymagań wstępnych",
+        "hint": "Sprawdza wymagania wstępne atutów względem postaci i oznacza każdy atut jako spełniony, niespełniony lub niemożliwy do sprawdzenia. Sprawdzenia są tylko wskazówką: nic nie jest blokowane.",
+        "options": {
+          "show": "Sprawdzaj i oznaczaj wymagania wstępne",
+          "off": "Wyłączone"
+        }
+      },
+      "hideUnmetPrerequisites": {
+        "name": "Ukryj atuty z niespełnionymi wymaganiami wstępnymi",
+        "hint": "Domyślna wartość filtra „Ukryj atuty z niespełnionymi wymaganiami wstępnymi” w oknie wyboru atutu. Atuty, których wymagań nie da się sprawdzić, są zawsze pokazywane."
       },
       "skillInfo": {
         "name": "Informacje o zwiększeniu umiejętności",
-        "hint": "Wybierz, ile informacji ma być wyświetlanych w opcjach zwiększania umiejętności.",
+        "hint": "Ile informacji pokazywać przy wyborze umiejętności.",
         "options": {
           "nameOnly": "Nazwa umiejętności (Natura)",
-          "nameWithMod": "Nazwa +Mod (Natura +12)",
-          "nameWithRank": "Nazwa → Następna ranga (Natura → Mistrzowski)",
-          "nameWithModAndRank": "Nazwa +Mod → Następna ranga (Natura +12 → Mistrzowski)"
+          "nameWithMod": "Nazwa i modyfikator (Natura +12)",
+          "nameWithRank": "Nazwa i zmiana rangi (Natura (Ekspert → Mistrz))",
+          "nameWithModAndRank": "Nazwa, modyfikator i zmiana rangi (Natura +12 (Ekspert → Mistrz))"
         }
       },
       "disableLevelInput": {
-        "name": "Wyłączenie ręcznej edycji poziomu",
-        "hint": "Po włączeniu tej opcji, domyślne wprowadzanie poziomu na karcie postaci zostanie wyłączone, aby zachęcić do korzystania z kreatora Level-Up. To ustawienie nie ma wpływu, jeśli opcja „Włącz przycisk podnoszenia poziomu” jest wyłączona."
+        "name": "Zablokuj pole poziomu",
+        "hint": "Wyłącza pole poziomu na kartach postaci, aby awansować można było tylko przez kreator. Działa nawet wtedy, gdy wymaganie PD nie jest spełnione."
+      },
+      "requireAllChoices": {
+        "name": "Wymagaj wszystkich wyborów",
+        "hint": "Po włączeniu każde miejsce na atut, zwiększenie umiejętności i wzmocnienie musi zostać wybrane przed zastosowaniem awansu. Wyłącz, aby gracze mogli zostawić wybory puste i uzupełnić je później."
+      },
+      "allowPlayerUndo": {
+        "name": "Pozwól graczom cofać awanse",
+        "hint": "Po włączeniu gracze mogą cofnąć ostatni awans swojej postaci. MG zawsze może go cofnąć."
       },
       "sendGMWhispers": {
-        "name": "Wysyłanie szeptów aktualizacji do MG",
-        "hint": "Po włączeniu tej opcji, szepty o wymaganych ręcznych aktualizacjach (takich jak aktualizacje zaklęć) będą również wysyłane do MG oprócz gracza."
+        "name": "Wysyłaj przypomnienia szeptem do MG",
+        "hint": "Wysyła do MG również szeptem przypomnienia o ręcznych aktualizacjach (takich jak miejsca na zaklęcia)."
       },
       "additionalCompendiums": {
-        "name": "Dodatkowe źródła atutów",
-        "hint": "Określ rozdzielaną przecinkami listę kluczy kompendium zawierających atuty, które mają zostać uwzględnione w kreatorze. Przykład: „pf2e-playtest-data.impossible-playtest-class-feats, my-custom-compendium.feats”. Upewnij się, że kompendia są włączone i dostępne."
+        "name": "Dodatkowe kompendia atutów",
+        "hint": "Atuty pochodzą ze wszystkich kompendiów wybranych w ustawieniach przeglądarki kompendiów systemu. Dodaj tutaj inne identyfikatory kompendiów jako listę oddzieloną przecinkami, np. 'my-module.feats, world.homebrew-feats'."
       },
-      "hideUncommonFeats": {
-        "name": "Ukryj rzadkie i niepospolite atuty",
-        "hint": "Po włączeniu tej opcji atuty niepospolite i rzadkie będą ukryte w oknie wyboru atutów."
+      "hiddenRarities": {
+        "name": "Ukryte rzadkości atutów",
+        "hint": "Rzadkości atutów, których gracze nie widzą w oknie wyboru atutu.",
+        "options": {
+          "none": "Pokaż wszystkie rzadkości",
+          "rare": "Ukryj atuty rzadkie i unikatowe",
+          "uncommon": "Ukryj atuty niepospolite, rzadkie i unikatowe"
+        }
       },
       "xpEnforcement": {
         "name": "Wymuszenie wymagań PD",
-        "hint": "Po włączeniu przycisk awansowania na wyższy poziom pojawi się tylko wtedy, gdy postać ma wystarczającą liczbę PD, aby awansować na wyższy poziom. Po podniesieniu poziomu wymagane PD zostaną odjęte od sumy PD postaci, a wszelkie pozostałe PD zostaną przeniesione."
+        "hint": "Pozwala awansować tylko wtedy, gdy postać ma wystarczająco PD. PD za poziom są odejmowane, a reszta zostaje przeniesiona."
       }
     },
     "messages": {
-      "skillIncrease": {
-        "rankName": "Ranga {updatedRank}",
-        "rankIncrease": "Biegłość umiejętności {skill} została zwiększona do {rankName}."
-      },
-      "skillPotency": {
-        "newPotency": "Zwiększono potencjał {skill} do +1.",
-        "upgradeTo2": "Zwiększono potencjał {skill} do +2.",
-        "upgradeTo3": "Zwiększono potencjał {skill} do +3."
-      },
       "global": {
-        "header": "{actorName} awansował na poziom {targetLevel}!",
-        "feats": "Wybrane atuty:",
-        "noFeats": "Nie wybrano żadnych atutów.",
-        "skills": "Zwiększenie umiejętności:",
-        "feat": "Atut"
+        "header": "{actorName} osiągnął(-ęła) poziom {targetLevel}!",
+        "feats": "Atuty",
+        "skills": "Umiejętności",
+        "boosts": "Wzmocnienia atrybutów:",
+        "languages": "Języki:",
+        "potency": "Potencjał umiejętności:",
+        "noChoices": "Brak nowych wyborów na tym poziomie."
       },
       "personal": {
-        "header": "{actorName} wymaga ręcznej aktualizacji",
-        "spellRank": "Nowa ranga i miejsca na zaklęcia (zakładka Rzucanie zaklęć)",
-        "spellSlots": "Nowe miejsca na zaklęcia (zakładka Rzucanie zaklęć)",
-        "intIncrease": "Wybierz nowy język i zyskaj zwiększenie umiejętności dzięki premii do Inteligencji."
+        "header": "{actorName}: do zrobienia",
+        "spellRank": "Dostępne są zaklęcia rangi {rank}: zaktualizuj miejsca na zaklęcia i zaklęcia w zakładce Rzucanie zaklęć.",
+        "spellSlots": "Sprawdź miejsca na zaklęcia dla: {entries}.",
+        "featSpells": "Te nowe atuty wspominają o zaklęciach, sztuczkach lub zaklęciach skupienia, które może być trzeba dodać ręcznie: {feats}.",
+        "languages": "Możesz nauczyć się jeszcze języków: {count}. Dodaj je na karcie postaci.",
+        "intSkill": "Zwiększenie Inteligencji daje dodatkowe wyszkolone umiejętności: {count}. Wybierz je na karcie postaci.",
+        "emptySlots": "Puste miejsca na atuty do wypełnienia na karcie postaci: {slots}."
       }
     },
     "notifications": {
-      "levelUpStart": "Aktualizacja {actorName} do poziomu {targetLevel}...",
-      "levelUpComplete": "Aktualizacja poziomu {actorName} zakończona!",
-      "wizardStartup": "Uruchamianie Level-Up Wizard...",
-      "missingClass": "Level-Up Wizard nie może zostać uruchomiony, dopóki nie zostanie wybrana klasa.",
-      "companionClass": "Level-Up Wizard nie obsługuje Towarzyszy ani Eidolonów. Proszę przyznać Towarzyszowi lub Eidolonowi wszystkie atuty, które zostałyby mu przyznane ręcznie.",
-      "invalidBoostSelection": "Nieprawidłowy wybór doładowania.",
-      "translatedDualClassError": "Level-Up Wizard nie może być używany z przetłumaczonymi podwójnymi klasami",
+      "levelUpStart": "Aktualizacja {actorName} do poziomu {targetLevel}…",
+      "levelUpComplete": "Awans postaci {actorName} zakończony!",
+      "levelUpFailed": "Nie udało się przygotować awansu. Szczegóły w konsoli (F12).",
+      "levelUpRolledBack": "Awans się nie powiódł i został wycofany. Szczegóły w konsoli (F12).",
+      "featsSkipped": "Nie dodano (wybór anulowany): {feats}. W razie potrzeby dodaj je z karty postaci.",
+      "wizardStartup": "Uruchamianie Level-Up Wizard…",
+      "missingClass": "Level-Up Wizard wymaga, aby postać miała klasę.",
+      "companionClass": "Level-Up Wizard nie obsługuje towarzyszy ani eidolonów. Przyznaj im atuty ręcznie.",
+      "maxLevel": "Ta postać ma już poziom 20.",
+      "incomplete": "Najpierw dokonaj wszystkich wymaganych wyborów.",
+      "levelChanged": "Poziom postaci zmienił się, gdy kreator był otwarty. Otwórz kreator ponownie.",
+      "nothingToUndo": "Nie ma awansu do cofnięcia.",
+      "cannotUndo": "Można cofnąć tylko ostatni awans i tylko dopóki postać ma jeszcze poziom {level}.",
+      "undone": "Awans postaci {actorName} został cofnięty.",
+      "settingsMigrated": "Ustawienia zostały przeniesione z poprzedniej wersji.",
       "additionalCompendiums": {
-        "failedToLoad": "Nie udało się załadować kompendium {key}. Upewnij się, że jest to prawidłowe kompendium atutów.",
-        "compendiumNotFound": "Nie znaleziono kompendium {key}. Upewnij się, że jest poprawnie napisany i włączony w ustawieniach gry."
-      }
+        "failedToLoad": "Nie udało się załadować kompendium {key}. Upewnij się, że jest to prawidłowe kompendium przedmiotów.",
+        "compendiumNotFound": "Nie znaleziono kompendium {key}. Sprawdź pisownię w ustawieniach Level-Up Wizard."
+      },
+      "openFailed": "Nie udało się otworzyć kreatora awansu. Szczegóły w konsoli (F12)."
     }
   }
 }
