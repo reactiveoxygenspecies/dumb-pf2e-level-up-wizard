@@ -69,7 +69,10 @@ api.undoLastLevelUp(actor); // undo the most recent one (asks for confirmation)
 npm install
 npm run lint
 npm test
+npm run build   # copies the files Foundry needs into dist/pf2e-level-up-wizard/
 ```
+
+To install on a server, upload `dist/pf2e-level-up-wizard/` into the server's `Data/modules/` folder, replacing any existing `pf2e-level-up-wizard` folder.
 
 `npm test` runs the unit tests (prerequisite parser, slot matching and boost math against real PF2e data) and checks that every localization key exists. The data tests read a PF2e source checkout; pass its path with `PF2E_SOURCE=/path/to/pf2e`. `tests/prereq-coverage.mjs <pf2e-path>` reports how many real prerequisite lines the parser understands.
 
