@@ -3,6 +3,7 @@ import {
   buildIndexLookups,
   createPreviewActor,
   getCandidatesForSlot,
+  getDedicationProgress,
   getDedications,
   getFeatSlots,
   getOwnedFeatKeys,
@@ -208,6 +209,26 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     }
   }
 
+  /**
+   * Prerequisite verdict for a feat: its own prerequisite lines, plus the archetype rule that a new
+   * dedication needs two other feats from each archetype the character already has.
+   * @param {string} [excludeSlot] slot whose own pick should not count
+   */
+  evaluateFeat(entry, ctx, excludeSlot) {
+    const result = evaluatePrerequisites(entry.prerequisites, ctx);
+    if (!entry.traits?.includes('dedication')) return result;
+    const pending = Object.entries(this.selection.feats)
+      .filter(([key, pick]) => pick && key !== excludeSlot)
+      .map(([, pick]) => pick);
+    const incomplete = getDedicationProgress(this.actor, pending).filter((d) => d.count < 2);
+    if (!incomplete.length) return result;
+    const lines = incomplete.map((d) => ({
+      text: localize('prerequisites.dedicationRule', { dedication: d.name, count: d.count }),
+      status: 'unmet'
+    }));
+    return { status: 'unmet', results: [...(result.results ?? []), ...lines] };
+  }
+
   /** Attributes whose modifier rises from the chosen boosts (partial boosts don't count) */
   #nonPartialBoosts() {
     const plan = this.plan;
@@ -250,7 +271,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       const pick = sel.feats[slot.key] ?? null;
       let prereq = null;
       if (pick && prereqCtx && prereqMode !== 'off') {
-        prereq = evaluatePrerequisites(pick.prerequisites, prereqCtx);
+        prereq = this.evaluateFeat(pick, prereqCtx, slot.key);
       }
       return {
         ...slot,

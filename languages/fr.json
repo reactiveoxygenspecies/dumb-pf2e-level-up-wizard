@@ -122,7 +122,8 @@
     "prerequisites": {
       "met": "Prérequis remplis",
       "unmet": "Prérequis non remplis",
-      "unknown": "Certains prérequis ne peuvent pas être vérifiés automatiquement"
+      "unknown": "Certains prérequis ne peuvent pas être vérifiés automatiquement",
+      "dedicationRule": "D'abord deux autres dons de votre archétype {dedication} (vous en avez {count})"
     },
     "history": {
       "title": "Historique des montées de niveau",
@@ -131,7 +132,8 @@
       "empty": "Aucune montée de niveau enregistrée pour l'instant.",
       "undoButton": "Annuler la dernière montée de niveau",
       "undoTitle": "Annuler la montée de niveau",
-      "undoConfirm": "Annuler la dernière montée de niveau de {actorName} ? Les dons ajoutés sont retirés et le niveau repasse de {fromLevel} à {toLevel}. Les rangs de compétence, les primes d'attribut, les langues et les XP sont restaurés."
+      "undoConfirm": "Annuler la dernière montée de niveau de {actorName} ? Les dons ajoutés sont retirés et le niveau repasse de {fromLevel} à {toLevel}. Les rangs de compétence, les primes d'attribut, les langues et les XP sont restaurés.",
+      "undoConfirmManual": "Annuler la dernière montée de niveau de {actorName} ? Les dons ajoutés sont retirés et les rangs de compétence, primes d'attribut, langues et PX sont restaurés. Le niveau reste à {fromLevel}, car il a été modifié manuellement."
     },
     "settings": {
       "showButton": {

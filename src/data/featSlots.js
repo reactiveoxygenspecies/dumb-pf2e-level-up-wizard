@@ -75,9 +75,11 @@ export const getFeatSlots = (preview, targetLevel, previousLevel) => {
         slotId: slot.id,
         level: slot.level,
         label: game.i18n.localize(String(slot.label ?? slot.level)),
-        placeholder: slot.placeholder
-          ? game.i18n.localize(slot.placeholder)
-          : null,
+        // Keep specific prompts (e.g. mythic destiny) but not the system's generic "Empty Slot"
+        placeholder:
+          slot.placeholder && slot.placeholder !== 'PF2E.EmptySlot'
+            ? game.i18n.localize(slot.placeholder)
+            : null,
         filter,
         supported: group.supported ?? []
       };
@@ -263,6 +265,46 @@ export const getDedications = (actor, pendingEntries = []) => {
     if (entry?.traits?.includes('dedication')) slugs.add(entry.slug);
   }
   return slugs;
+};
+
+/**
+ * Progress towards the archetype rule "you can't take another dedication feat until you have gained two
+ * other feats from your archetype". Archetype feats name their dedication as a prerequisite, and feats
+ * an archetype unlocks from other classes are listed in the granted-feats data.
+ * @param {object[]} pending feats picked earlier in this level-up
+ * @returns {{ name: string, count: number }[]} one entry per owned dedication
+ */
+export const getDedicationProgress = (actor, pending = []) => {
+  const granted = getGrantedArchetypeFeats();
+  const feats = actor.itemTypes?.feat ?? [];
+  const prereqText = (f) =>
+    (f.system?.prerequisites?.value ?? f.prerequisites ?? [])
+      .map((p) => (typeof p === 'string' ? p : p?.value ?? ''))
+      .join(' ')
+      .toLowerCase();
+  const others = [
+    ...feats.map((f) => ({ id: f.id, slug: f.slug ?? sluggify(f.name), text: prereqText(f) })),
+    ...pending.map((p) => ({ id: p.uuid, slug: p.slug, text: prereqText(p) }))
+  ];
+
+  return feats
+    .filter((f) => f.system?.traits?.value?.includes('dedication'))
+    .map((dedication) => {
+      const slug = dedication.slug ?? sluggify(dedication.name);
+      const names = [dedication.name, dedication.flags?.babele?.originalName]
+        .filter(Boolean)
+        .map((n) => n.toLowerCase());
+      const unlocked = new Set((granted[slug] ?? []).map((g) => g.slug));
+      const count = others.filter(
+        (o) =>
+          o.id !== dedication.id &&
+          (names.some((n) => o.text.includes(n)) || unlocked.has(o.slug))
+      ).length;
+      // 'Fighter Dedication' -> 'Fighter' for messages about the archetype
+      const archetype =
+        dedication.name.replace(/\s*\bdedication\b\s*/i, ' ').trim() || dedication.name;
+      return { name: archetype, count };
+    });
 };
 
 export const buildIndexLookups = (index) => ({

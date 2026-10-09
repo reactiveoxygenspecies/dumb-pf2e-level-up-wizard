@@ -122,7 +122,8 @@
     "prerequisites": {
       "met": "Wymagania wstępne spełnione",
       "unmet": "Wymagania wstępne niespełnione",
-      "unknown": "Niektórych wymagań wstępnych nie można sprawdzić automatycznie"
+      "unknown": "Niektórych wymagań wstępnych nie można sprawdzić automatycznie",
+      "dedicationRule": "Najpierw dwa inne atuty z archetypu {dedication} (masz: {count})"
     },
     "history": {
       "title": "Historia awansów",
@@ -131,7 +132,8 @@
       "empty": "Nie zapisano jeszcze żadnych awansów.",
       "undoButton": "Cofnij ostatni awans",
       "undoTitle": "Cofnij awans",
-      "undoConfirm": "Cofnąć ostatni awans postaci {actorName}? Dodane atuty zostaną usunięte, a poziom wróci z {fromLevel} do {toLevel}. Rangi umiejętności, wzmocnienia atrybutów, języki i PD zostaną przywrócone."
+      "undoConfirm": "Cofnąć ostatni awans postaci {actorName}? Dodane atuty zostaną usunięte, a poziom wróci z {fromLevel} do {toLevel}. Rangi umiejętności, wzmocnienia atrybutów, języki i PD zostaną przywrócone.",
+      "undoConfirmManual": "Cofnąć ostatni awans postaci {actorName}? Dodane atuty zostaną usunięte, a biegłości, wzmocnienia atrybutów, języki i PD przywrócone. Poziom pozostaje {fromLevel}, ponieważ zmieniono go ręcznie."
     },
     "settings": {
       "showButton": {

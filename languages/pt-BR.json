@@ -122,7 +122,8 @@
     "prerequisites": {
       "met": "Pré-requisitos cumpridos",
       "unmet": "Pré-requisitos não cumpridos",
-      "unknown": "Alguns pré-requisitos não podem ser verificados automaticamente"
+      "unknown": "Alguns pré-requisitos não podem ser verificados automaticamente",
+      "dedicationRule": "Antes, dois outros talentos do seu arquétipo {dedication} (você tem {count})"
     },
     "history": {
       "title": "Histórico de Avanços de Nível",
@@ -131,7 +132,8 @@
       "empty": "Nenhum avanço de nível registrado ainda.",
       "undoButton": "Desfazer último avanço de nível",
       "undoTitle": "Desfazer Avanço de Nível",
-      "undoConfirm": "Desfazer o último avanço de nível de {actorName}? Os talentos adicionados serão removidos e o nível voltará de {fromLevel} para {toLevel}. Graduações de perícia, melhorias de atributo, idiomas e XP serão restaurados."
+      "undoConfirm": "Desfazer o último avanço de nível de {actorName}? Os talentos adicionados serão removidos e o nível voltará de {fromLevel} para {toLevel}. Graduações de perícia, melhorias de atributo, idiomas e XP serão restaurados.",
+      "undoConfirmManual": "Desfazer a última subida de nível de {actorName}? Os talentos adicionados são removidos e graduações de perícia, melhorias de atributo, idiomas e XP são restaurados. O nível permanece {fromLevel} porque foi alterado manualmente."
     },
     "settings": {
       "showButton": {

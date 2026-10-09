@@ -122,7 +122,8 @@
     "prerequisites": {
       "met": "已满足先决条件",
       "unmet": "未满足先决条件",
-      "unknown": "部分先决条件无法自动检查"
+      "unknown": "部分先决条件无法自动检查",
+      "dedicationRule": "需先获得{dedication}变体的另外两个专长（当前：{count}）"
     },
     "history": {
       "title": "升级历史",
@@ -131,7 +132,8 @@
       "empty": "尚无升级记录。",
       "undoButton": "撤销上一次升级",
       "undoTitle": "撤销升级",
-      "undoConfirm": "撤销 {actorName} 的上一次升级？它添加的专长将被移除，等级将从 {fromLevel} 级回到 {toLevel} 级。技能熟练度、属性提升、语言和经验值将被恢复。"
+      "undoConfirm": "撤销 {actorName} 的上一次升级？它添加的专长将被移除，等级将从 {fromLevel} 级回到 {toLevel} 级。技能熟练度、属性提升、语言和经验值将被恢复。",
+      "undoConfirmManual": "撤销{actorName}的上次升级？将移除新增的专长，并恢复技能熟练度、属性提升、语言和经验值。等级保持为{fromLevel}，因为它是手动更改的。"
     },
     "settings": {
       "showButton": {

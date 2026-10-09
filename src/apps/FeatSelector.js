@@ -1,5 +1,4 @@
 import { MODULE_ID, TEMPLATE_PATH } from '../constants.js';
-import { evaluatePrerequisites } from '../helpers/prerequisites.js';
 import { sendFeatToChat } from '../helpers/chat.js';
 import { enrichHTML, escapeHTML, localize } from '../helpers/utility.js';
 
@@ -48,7 +47,7 @@ export class FeatSelector extends HandlebarsApplicationMixin(ApplicationV2) {
       const text = c.prerequisites.join(' ').toLocaleLowerCase();
       const prereq =
         prereqMode !== 'off' && this.prereqContext
-          ? evaluatePrerequisites(c.prerequisites, this.prereqContext)
+          ? wizard.evaluateFeat(c, this.prereqContext, slot.key)
           : null;
       return {
         ...c,

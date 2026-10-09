@@ -122,7 +122,8 @@
     "prerequisites": {
       "met": "Prerequisites met",
       "unmet": "Prerequisites not met",
-      "unknown": "Some prerequisites can't be checked automatically"
+      "unknown": "Some prerequisites can't be checked automatically",
+      "dedicationRule": "Two other feats from your {dedication} archetype first (you have {count})"
     },
     "history": {
       "title": "Level-Up History",
@@ -131,7 +132,8 @@
       "empty": "No level-ups recorded yet.",
       "undoButton": "Undo last level-up",
       "undoTitle": "Undo Level-Up",
-      "undoConfirm": "Undo the last level-up of {actorName}? The feats it added are removed and the level goes back from {fromLevel} to {toLevel}. Skill ranks, attribute boosts, languages and XP are restored."
+      "undoConfirm": "Undo the last level-up of {actorName}? The feats it added are removed and the level goes back from {fromLevel} to {toLevel}. Skill ranks, attribute boosts, languages and XP are restored.",
+      "undoConfirmManual": "Undo the last level-up of {actorName}? The feats it added are removed, and skill ranks, attribute boosts, languages and XP are restored. The level stays at {fromLevel} because it was changed by hand."
     },
     "settings": {
       "showButton": {

@@ -333,7 +333,7 @@ export const undoLastLevelUp = async (actor, { windowId } = {}) => {
 
   const confirmed = await foundry.applications.api.DialogV2.confirm({
     window: { title: localize('history.undoTitle'), icon: 'fa-solid fa-rotate-left' },
-    content: `<p>${localize('history.undoConfirm', {
+    content: `<p>${localize(last.levelChanged ? 'history.undoConfirm' : 'history.undoConfirmManual', {
       actorName: foundry.utils.escapeHTML(actor.name),
       fromLevel: last.toLevel,
       toLevel: last.levelChanged ? last.fromLevel : last.toLevel

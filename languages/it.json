@@ -122,7 +122,8 @@
     "prerequisites": {
       "met": "Prerequisiti soddisfatti",
       "unmet": "Prerequisiti non soddisfatti",
-      "unknown": "Alcuni prerequisiti non possono essere verificati automaticamente"
+      "unknown": "Alcuni prerequisiti non possono essere verificati automaticamente",
+      "dedicationRule": "Prima due altri talenti dell'archetipo {dedication} (ne hai {count})"
     },
     "history": {
       "title": "Cronologia degli avanzamenti di livello",
@@ -131,7 +132,8 @@
       "empty": "Nessun avanzamento di livello registrato finora.",
       "undoButton": "Annulla l'ultimo avanzamento di livello",
       "undoTitle": "Annulla avanzamento di livello",
-      "undoConfirm": "Annullare l'ultimo avanzamento di livello di {actorName}? I talenti aggiunti vengono rimossi e il livello torna da {fromLevel} a {toLevel}. Gradi di competenza delle abilità, potenziamenti di attributo, lingue e PE vengono ripristinati."
+      "undoConfirm": "Annullare l'ultimo avanzamento di livello di {actorName}? I talenti aggiunti vengono rimossi e il livello torna da {fromLevel} a {toLevel}. Gradi di competenza delle abilità, potenziamenti di attributo, lingue e PE vengono ripristinati.",
+      "undoConfirmManual": "Annullare l'ultimo avanzamento di livello di {actorName}? I talenti aggiunti vengono rimossi e gradi di competenza, potenziamenti di attributo, lingue e PE vengono ripristinati. Il livello resta {fromLevel} perché è stato cambiato a mano."
     },
     "settings": {
       "showButton": {
