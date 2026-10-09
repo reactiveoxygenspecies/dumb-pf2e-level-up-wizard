@@ -1,0 +1,77 @@
+/* ------------------------------------------ */
+/*  Design tokens: "parchment field manual"   */
+/*  Shared by every window of the module.     */
+/*  Fonts: Eczar ships with PF2e (--serif),   */
+/*  Signika ships with Foundry core.          */
+/* ------------------------------------------ */
+
+.next-pf2e-level-up-wizard {
+  /* Surfaces */
+  --lvl-parchment: #f1eadb;
+  --lvl-paper: #fbf8f1;
+  --lvl-rail: #e8dfcc;
+  --lvl-sunken: #f7f2e7;
+  --lvl-white: #ffffff;
+  --lvl-bar: #1c1714;
+  --lvl-bar-text: #f1eadb;
+
+  /* Ink */
+  --lvl-ink: #221b16;
+  --lvl-ink-soft: #3d342c;
+  --lvl-ink-muted: #5c5148;
+  --lvl-ink-faint: #7a6e62;
+
+  /* Lines */
+  --lvl-hairline: #d8cdb8;
+  --lvl-hairline-soft: #e3d9c6;
+  --lvl-border: #bfaf94;
+  --lvl-border-strong: #9a8b72;
+
+  /* Action */
+  --lvl-crimson: #7b1e1a;
+  --lvl-crimson-hover: #5e1612;
+  --lvl-crimson-tint: #f3e1dc;
+  --lvl-gilt: #e7c27d;
+  --lvl-disabled-bg: #c9b9a9;
+  --lvl-disabled-ink: #4a3f36;
+
+  /* Status (text on tint) */
+  --lvl-met: #24572a;
+  --lvl-met-solid: #2e6b34;
+  --lvl-met-bg: #e2eedd;
+  --lvl-unmet: #8a2219;
+  --lvl-unmet-bg: #f6e0dc;
+  --lvl-unknown: #6b4e0e;
+  --lvl-unknown-bg: #f3e9cf;
+
+  /* Feat group colours (white text on these) */
+  --lvl-type-ancestry: #2f5d3a;
+  --lvl-type-class: #7b1e1a;
+  --lvl-type-archetype: #55307a;
+  --lvl-type-skill: #1f4e79;
+  --lvl-type-general: #4f463e;
+  --lvl-type-mythic: #6b4e0e;
+  --lvl-type-other: #4f463e;
+
+  /* PF2e proficiency rank colours */
+  --lvl-rank-0: #6b625a;
+  --lvl-rank-1: #171f69;
+  --lvl-rank-2: #3c005e;
+  --lvl-rank-3: #664400;
+  --lvl-rank-4: #5e0000;
+
+  /* Type */
+  --lvl-font-display: var(--serif, Eczar, Georgia, serif);
+  --lvl-font-body: 'Signika', var(--font-primary, sans-serif);
+  --lvl-font-actions: 'Pathfinder2eActions', sans-serif;
+
+  /* Shape */
+  --lvl-radius-s: 6px;
+  --lvl-radius: 8px;
+  --lvl-radius-l: 12px;
+  --lvl-target: 44px;
+
+  color-scheme: light;
+  color: var(--lvl-ink);
+  font-family: var(--lvl-font-body);
+}

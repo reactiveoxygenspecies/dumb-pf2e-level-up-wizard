@@ -32,7 +32,9 @@
     "src/main.js"
   ],
   "styles": [
-    "styles/main.css"
+    "styles/tokens.css",
+    "styles/main.css",
+    "styles/builder.css"
   ],
   "languages": [
     {
