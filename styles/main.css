@@ -1272,6 +1272,7 @@
   color: var(--lvl-met);
   font-size: 13px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .lvlup-wizard .skill-sub,
