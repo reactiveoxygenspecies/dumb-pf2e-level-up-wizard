@@ -169,15 +169,15 @@ const RULES = {
     familiar: null,
     extraSlots: ({ slots }) => ({
       label: 'Divine font',
-      restriction: 'Only heal (healing font) or harm (harmful font), depending on the deity / choice. Slots are at the cleric\'s highest rank of spell slot (1st-9th).',
+      restriction: 'Only heal (healing font) or harm (harmful font), depending on the deity / choice. Slots are at the cleric\'s highest rank of spell slot, 10th rank included at 19th-20th level as the table shows.',
       highestRankOnly: true,
       cantrips: null,
       slots: Object.fromEntries(
         RANKS.map((r) => [
           String(r),
           levelArray((lvl) => {
-            // highest rank 1-9 the cleric has slots in at this level
-            const highest = Math.max(0, ...RANKS.filter((k) => k <= 9 && slotAt(slots, k, lvl) > 0));
+            // highest rank the cleric has slots in at this level (the table marks 10th rank at 19th-20th)
+            const highest = Math.max(0, ...RANKS.filter((k) => slotAt(slots, k, lvl) > 0));
             if (r !== highest) return 0;
             return lvl >= 15 ? 6 : lvl >= 5 ? 5 : 4;
           }),
@@ -186,7 +186,7 @@ const RULES = {
       note:
         'Divine Font: "You gain 4 additional spell slots each day at your highest rank of cleric spell slots ... At 5th level, the number of additional slots increases to 5, and at 15th level, the total number of additional slots increases to 6." ' +
         'Table footnote: "Your divine font gives you additional heal or harm spells of this rank. The number is 4 at 1st level, 5 at 5th level, and 6 at 15th level." ' +
-        'The table puts the "*" marker on the 10th-rank cell at 19th-20th level as well; the Divine Font and Miraculous Spell text say 10th-rank slots cannot be used with abilities that add slots, so the font is kept at 9th rank at 19th-20th level here (INTERPRETATION).',
+        'The table puts the "*" marker on the 10th-rank cell at 19th-20th level, so the font moves to 10th rank there (following the table).',
     }),
     notes:
       'The "*" on a rank in the table marks the rank that receives the divine font slots. Table footnote: "The miraculous spell class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots." ' +
@@ -532,10 +532,10 @@ for (const [slug, rule] of Object.entries(RULES)) {
   out[slug] = entry;
 }
 
-// Cleric: the "*" markers must sit on the rank that receives the divine font slots (levels 1-18).
+// Cleric: the "*" markers must sit on the rank that receives the divine font slots.
 {
   const cleric = out.cleric;
-  for (let lvl = 1; lvl <= 18; lvl++) {
+  for (let lvl = 1; lvl <= 20; lvl++) {
     for (const r of RANKS) {
       const marked = (cleric.marks[String(r)]?.[String(lvl)] ?? '').includes('*');
       const font = cleric.extraSlots.slots[String(r)][lvl - 1] > 0;

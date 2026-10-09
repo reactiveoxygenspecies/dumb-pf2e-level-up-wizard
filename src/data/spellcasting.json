@@ -91,7 +91,7 @@
     "signatureSpells": null,
     "extraSlots": {
       "label": "Divine font",
-      "restriction": "Only heal (healing font) or harm (harmful font), depending on the deity / choice. Slots are at the cleric's highest rank of spell slot (1st-9th).",
+      "restriction": "Only heal (healing font) or harm (harmful font), depending on the deity / choice. Slots are at the cleric's highest rank of spell slot, 10th rank included at 19th-20th level as the table shows.",
       "highestRankOnly": true,
       "cantrips": null,
       "slots": {
@@ -103,10 +103,10 @@
         "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0],
         "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0],
         "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0],
-        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6],
-        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6]
       },
-      "note": "Divine Font: \"You gain 4 additional spell slots each day at your highest rank of cleric spell slots ... At 5th level, the number of additional slots increases to 5, and at 15th level, the total number of additional slots increases to 6.\" Table footnote: \"Your divine font gives you additional heal or harm spells of this rank. The number is 4 at 1st level, 5 at 5th level, and 6 at 15th level.\" The table puts the \"*\" marker on the 10th-rank cell at 19th-20th level as well; the Divine Font and Miraculous Spell text say 10th-rank slots cannot be used with abilities that add slots, so the font is kept at 9th rank at 19th-20th level here (INTERPRETATION)."
+      "note": "Divine Font: \"You gain 4 additional spell slots each day at your highest rank of cleric spell slots ... At 5th level, the number of additional slots increases to 5, and at 15th level, the total number of additional slots increases to 6.\" Table footnote: \"Your divine font gives you additional heal or harm spells of this rank. The number is 4 at 1st level, 5 at 5th level, and 6 at 15th level.\" The table puts the \"*\" marker on the 10th-rank cell at 19th-20th level, so the font moves to 10th rank there (following the table)."
     },
     "repertoire": null,
     "spellbook": null,

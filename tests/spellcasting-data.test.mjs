@@ -138,7 +138,10 @@ test('spot checks against the journal tables', () => {
   assert.equal(data.cleric.extraSlots.slots['1'][0], 4);
   assert.equal(data.cleric.extraSlots.slots['3'][4], 5);
   assert.equal(data.cleric.extraSlots.slots['8'][14], 6);
-  assert.equal(data.cleric.extraSlots.slots['9'][18], 6);
+  assert.equal(data.cleric.extraSlots.slots['9'][16], 6);
+  // the table marks 10th rank at 19th-20th level, so the font follows it there
+  assert.equal(data.cleric.extraSlots.slots['9'][18], 0);
+  assert.equal(data.cleric.extraSlots.slots['10'][18], 6);
   // sorcerer / oracle: 3 first-rank slots at level 1
   assert.equal(data.sorcerer.slots['1'][0], 3);
   assert.equal(data.oracle.slots['1'][0], 3);
