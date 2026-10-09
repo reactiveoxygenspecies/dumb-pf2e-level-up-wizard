@@ -74,6 +74,7 @@ import {
   prereqTooltip,
   rankDots
 } from './wizardView.js';
+import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -84,7 +85,7 @@ const PARTIALS = ['rail', 'review', 'skill-grid'].map(
 const POTENCY_KEYS = ['newBoost', 'upgradeTo2', 'upgradeTo3'];
 const POTENCY_VALUES = { newBoost: 1, upgradeTo2: 2, upgradeTo3: 3 };
 
-export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
+export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(ApplicationV2)) {
   /**
    * @param {object} options
    * @param {Actor} options.actor

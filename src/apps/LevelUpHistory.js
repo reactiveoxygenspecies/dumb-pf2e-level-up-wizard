@@ -2,11 +2,12 @@ import { MODULE_ID, TEMPLATE_PATH } from '../constants.js';
 import { canUndo, getHistory, undoLastLevelUp } from '../data/apply.js';
 import { localize } from '../helpers/utility.js';
 import { dayLabel } from './wizardView.js';
+import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /** Read-only list of the level-ups the wizard applied to an actor, with undo for the latest one */
-export class LevelUpHistory extends HandlebarsApplicationMixin(ApplicationV2) {
+export class LevelUpHistory extends LightThemeMixin(HandlebarsApplicationMixin(ApplicationV2)) {
   constructor(options = {}) {
     super({
       ...options,

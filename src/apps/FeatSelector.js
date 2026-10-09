@@ -2,6 +2,7 @@ import { MODULE_ID, TEMPLATE_PATH } from '../constants.js';
 import { sendFeatToChat } from '../helpers/chat.js';
 import { enrichHTML, escapeHTML, localize } from '../helpers/utility.js';
 import { glyphView, prereqPill, prereqTooltip } from './wizardView.js';
+import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -41,7 +42,7 @@ const SORTS = {
  * Feat picker for one slot. The host (`wizard`) only needs `id`, `actor`, `selection.feats`,
  * `selectFeat(slotKey, pick)` and `evaluateFeat(entry, ctx, slotKey)`.
  */
-export class FeatSelector extends HandlebarsApplicationMixin(ApplicationV2) {
+export class FeatSelector extends LightThemeMixin(HandlebarsApplicationMixin(ApplicationV2)) {
   /**
    * @param {object} options
    * @param {LevelUpWizard} options.wizard

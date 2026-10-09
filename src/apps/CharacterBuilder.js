@@ -50,6 +50,7 @@ import {
 } from '../helpers/prerequisites.js';
 import { attributeLabel, enrichHTML, localize, signedNumber, sluggify } from '../helpers/utility.js';
 import { FeatSelector } from './FeatSelector.js';
+import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -79,7 +80,7 @@ const hiddenRarities = () => {
  * Step-by-step creation of a level-1 character. The character is previewed in memory after every
  * choice (the system prepares it like the real actor), and nothing is written until "Create".
  */
-export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
+export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin(ApplicationV2)) {
   constructor(options = {}) {
     const { actor, ...rest } = options;
     super({ ...rest, id: `${MODULE_ID}-builder-${actor.uuid.replace(/\./g, '-')}` });
