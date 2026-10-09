@@ -180,6 +180,7 @@
       }
     },
     "selector": {
+      "readFeat": "Read {name}",
       "title": "{group} · level {level} · {actorName}",
       "count": "{count} of {total} feats",
       "unmetShown": "unmet ones are shown dimmed",

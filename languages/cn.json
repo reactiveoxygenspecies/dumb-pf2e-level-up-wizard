@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "查看{name}",
       "title": "{group}：{level} 级",
       "count": "{total} 个专长中的 {count} 个",
       "noResults": "没有符合这些筛选条件的专长。",

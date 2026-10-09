@@ -1,5 +1,5 @@
 import { traitRequirements, worstStatus } from '../helpers/prerequisites.js';
-import { localize } from '../helpers/utility.js';
+import { localize, sluggify } from '../helpers/utility.js';
 
 /* -------------------------------------------- */
 /*  Layout: single page or steps                */
@@ -155,6 +155,61 @@ export const gmApprovalPill = (rarity) =>
         icon: 'fa-dice-d20'
       }
     : null;
+
+/* -------------------------------------------- */
+/*  Prerequisite links                          */
+/* -------------------------------------------- */
+
+/** "Assurance (Athletics)" and "Assurance" are the same feat for a link */
+const linkKey = (name) => sluggify(String(name ?? '').replace(/\s*\(.*\)\s*$/, ''));
+
+const lookups = new WeakMap();
+
+/** Feat index entries by name, original (untranslated) name and slug; built once per index */
+export const featLinkLookup = (index) => {
+  let map = lookups.get(index);
+  if (map) return map;
+  map = new Map();
+  for (const entry of index) {
+    for (const key of [linkKey(entry.name), linkKey(entry.originalName), entry.slug]) {
+      if (key && !map.has(key)) map.set(key, entry);
+    }
+  }
+  lookups.set(index, map);
+  return map;
+};
+
+/**
+ * Feats a prerequisite line names, to link to: the whole line ("Fey Influence"), or each
+ * name in a list ("Power Attack or Sudden Charge"). Only exact feat names count.
+ * @returns {Array<{uuid: string, name: string, tooltip: string}>}
+ */
+export const prereqFeatLinks = (text, lookup) => {
+  const clean = (part) =>
+    part
+      .trim()
+      .replace(/[.;]+$/, '')
+      .replace(/^the\s+/i, '')
+      .replace(/\s+feat$/i, '');
+  const whole = lookup.get(linkKey(clean(String(text ?? ''))));
+  const parts = String(text ?? '')
+    .split(/[,;()]|\bor\b|\band\b/i)
+    .map(clean)
+    .filter(Boolean);
+  // "Celebrity or Dandy Dedication" names Celebrity Dedication too
+  const suffix = parts.at(-1)?.match(/\s(dedication)$/i)?.[1];
+  const find = (part) =>
+    // In a list, "Orc Lore" after "trained in" is a skill, not the feat of that name
+    /\slore$/i.test(part)
+      ? null
+      : (lookup.get(linkKey(part)) ?? (suffix ? lookup.get(linkKey(`${part} ${suffix}`)) : null));
+  const entries = whole ? [whole] : parts.map(find).filter(Boolean);
+  return [...new Map(entries.map((e) => [e.uuid, e])).values()].map((e) => ({
+    uuid: e.uuid,
+    name: e.name,
+    tooltip: localize('selector.readFeat', { name: e.name })
+  }));
+};
 
 /** HTML tooltip listing every prerequisite with its verdict; `esc` escapes the lines */
 export const prereqTooltip = (verdict, esc) => {

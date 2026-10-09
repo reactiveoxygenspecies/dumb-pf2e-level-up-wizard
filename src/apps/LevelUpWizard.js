@@ -1445,7 +1445,8 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       slot,
       candidates: this.candidatesFor(slot),
       prereqContext: this.prereqContext(slot.key),
-      currentPick: this.selection.feats[slot.key] ?? null
+      currentPick: this.selection.feats[slot.key] ?? null,
+      featIndex: this.plan.index
     });
     if (typeof this.renderChild === 'function') await this.renderChild(selector);
     else await selector.render({ force: true });

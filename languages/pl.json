@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "Czytaj: {name}",
       "title": "{group}: poziom {level}",
       "count": "{count} z {total} atutów",
       "noResults": "Żaden atut nie pasuje do tych filtrów.",

@@ -10,7 +10,7 @@ globalThis.game = {
   }
 };
 
-const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips, withTraitRequirements, gmApprovalPill } =
+const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips, withTraitRequirements, gmApprovalPill, featLinkLookup, prereqFeatLinks } =
   await import('../src/apps/wizardView.js');
 
 test('a level with two feats stays on one page', () => {
@@ -110,4 +110,22 @@ test('uncommon, rare and unique feats get an Ask GM pill beside the fit pill', (
     assert.equal(pill.status, 'gm');
     assert.equal(pill.text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.askGm');
   }
+});
+
+test('prerequisites that name feats link to them', () => {
+  const feat = (name) => ({ uuid: `uuid-${name}`, name, slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-') });
+  const lookup = featLinkLookup(
+    ['Fey Influence', 'Assurance', 'Power Attack', 'Sudden Charge', 'Celebrity Dedication', 'Dandy Dedication', 'Orc Lore', 'Ironblood Stance'].map(feat)
+  );
+  const names = (text) => prereqFeatLinks(text, lookup).map((l) => l.name);
+  assert.deepEqual(names('Fey Influence'), ['Fey Influence']);
+  assert.deepEqual(names('Assurance (Athletics)'), ['Assurance']);
+  assert.deepEqual(names('Power Attack or Sudden Charge'), ['Power Attack', 'Sudden Charge']);
+  assert.deepEqual(names('Celebrity or Dandy Dedication'), ['Celebrity Dedication', 'Dandy Dedication']);
+  assert.deepEqual(names('two stances (Ironblood Stance or another)'), ['Ironblood Stance']);
+  // a Lore skill in a list is not the ancestry feat of the same name; the feat on its own is
+  assert.deepEqual(names('trained in Belkzen Lore or Orc Lore'), []);
+  assert.deepEqual(names('Orc Lore'), ['Orc Lore']);
+  assert.deepEqual(names('trained in Athletics'), []);
+  assert.equal(prereqFeatLinks('Fey Influence', lookup)[0].uuid, 'uuid-Fey Influence');
 });

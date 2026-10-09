@@ -1,7 +1,14 @@
 import { MODULE_ID, TEMPLATE_PATH } from '../constants.js';
 import { sendFeatToChat } from '../helpers/chat.js';
 import { enrichHTML, escapeHTML, localize } from '../helpers/utility.js';
-import { glyphView, gmApprovalPill, prereqPill, prereqTooltip } from './wizardView.js';
+import {
+  featLinkLookup,
+  glyphView,
+  gmApprovalPill,
+  prereqFeatLinks,
+  prereqPill,
+  prereqTooltip
+} from './wizardView.js';
 import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
@@ -50,13 +57,15 @@ export class FeatSelector extends LightThemeMixin(HandlebarsApplicationMixin(App
    * @param {object[]} options.candidates
    * @param {object|null} options.prereqContext
    * @param {object|null} options.currentPick
+   * @param {object[]} [options.featIndex] every feat, for links from prerequisites
    */
   constructor(options = {}) {
     // Keep the large data out of the application options, which core deep-clones
-    const { wizard, slot, candidates, prereqContext, currentPick, ...rest } =
+    const { wizard, slot, candidates, prereqContext, currentPick, featIndex, ...rest } =
       options;
     super({ ...rest, id: `${wizard.id}-feats` });
     this.wizard = wizard;
+    this.featLookup = featLinkLookup(featIndex ?? candidates);
     this.slot = slot;
     this.prereqContext = prereqContext;
     this.highlighted = currentPick?.uuid ?? null;
@@ -353,10 +362,14 @@ export class FeatSelector extends LightThemeMixin(HandlebarsApplicationMixin(App
           : null;
         context.prereqStatus = pill?.status ?? null;
         context.gmPill = gmApprovalPill(feat.rarity);
+        const links = (text) =>
+          prereqFeatLinks(text, this.featLookup).filter((l) => l.uuid !== feat.uuid);
         context.prereqLines = (feat.prereq?.results ?? []).map((r) => ({
           ...r,
-          icon: this.#statusIcon(r.status)
+          icon: this.#statusIcon(r.status),
+          links: links(r.text)
         }));
+        context.plainPrereqs = feat.prerequisites.map((text) => ({ text, links: links(text) }));
         context.rarityLabel =
           feat.rarity !== 'common'
             ? game.i18n.localize(CONFIG.PF2E.rarityTraits?.[feat.rarity] ?? feat.rarity)

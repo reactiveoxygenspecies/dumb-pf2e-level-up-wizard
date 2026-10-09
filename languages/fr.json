@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "Lire {name}",
       "title": "{group} : niveau {level}",
       "count": "{count} dons sur {total}",
       "noResults": "Aucun don ne correspond à ces filtres.",

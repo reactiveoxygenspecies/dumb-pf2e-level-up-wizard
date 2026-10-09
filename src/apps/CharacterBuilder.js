@@ -984,7 +984,8 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       slot,
       candidates,
       prereqContext: this.#prereqContext(slot.key),
-      currentPick: this.build.feats[slot.key] ?? null
+      currentPick: this.build.feats[slot.key] ?? null,
+      featIndex: this.data.feats
     });
     if (typeof this.renderChild === 'function') await this.renderChild(selector);
     else await selector.render({ force: true });

@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "Ler {name}",
       "title": "{group}: Nível {level}",
       "count": "{count} de {total} talentos",
       "noResults": "Nenhum talento corresponde a estes filtros.",

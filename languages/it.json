@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "Leggi {name}",
       "title": "{group}: livello {level}",
       "count": "{count} talenti su {total}",
       "noResults": "Nessun talento corrisponde a questi filtri.",

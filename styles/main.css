@@ -2068,6 +2068,27 @@
   width: 1.1em;
 }
 
+/* Book after a prerequisite that names a feat: opens that feat */
+.lvlup-feat-selector .prereq-line a.prereq-link {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 2px;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.lvlup-feat-selector .prereq-line a.prereq-link:hover,
+.lvlup-feat-selector .prereq-line a.prereq-link:focus-visible {
+  color: var(--lvl-crimson);
+  opacity: 1;
+}
+
+.lvlup-feat-selector .prereq-line a.prereq-link > i {
+  width: auto;
+  margin: 0;
+}
+
 .lvlup-feat-selector .description {
   color: var(--lvl-ink-soft);
 }

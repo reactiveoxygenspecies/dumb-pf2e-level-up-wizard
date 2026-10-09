@@ -34,12 +34,12 @@
               {{#each prereqLines}}
                 <li class="prereq-line {{status}}">
                   <i class="fa-solid {{icon}}" aria-hidden="true"></i>
-                  <span>{{text}}</span>
+                  <span>{{text}}{{#each links}}<a class="content-link prereq-link" draggable="true" data-link data-uuid="{{uuid}}" data-type="Item" data-tooltip="{{tooltip}}" aria-label="{{tooltip}}"><i class="fa-solid fa-book-open" aria-hidden="true"></i></a>{{/each}}</span>
                   <span class="sr-only">{{#if (lvlupEq status 'met')}}{{localize 'DUMB_LEVEL_UP_WIZARD.prerequisites.met'}}{{else if (lvlupEq status 'unmet')}}{{localize 'DUMB_LEVEL_UP_WIZARD.prerequisites.unmet'}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.prerequisites.check'}}{{/if}}</span>
                 </li>
               {{/each}}
             {{else}}
-              {{#each feat.prerequisites}}<li class="prereq-line"><span>{{this}}</span></li>{{/each}}
+              {{#each plainPrereqs}}<li class="prereq-line"><span>{{text}}{{#each links}}<a class="content-link prereq-link" draggable="true" data-link data-uuid="{{uuid}}" data-type="Item" data-tooltip="{{tooltip}}" aria-label="{{tooltip}}"><i class="fa-solid fa-book-open" aria-hidden="true"></i></a>{{/each}}</span></li>{{/each}}
             {{/if}}
           </ul>
         </div>
