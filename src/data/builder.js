@@ -81,8 +81,11 @@ export const assignSlots = (slots, picks) => {
   return place(0) ? result : null;
 };
 
+// Older ancestries (Kitsune, for example) keep an empty boost slot; it gives no boost
 const slotsOf = (boosts) =>
-  Object.entries(boosts ?? {}).map(([key, b]) => ({ key, options: b.value ?? [] }));
+  Object.entries(boosts ?? {})
+    .map(([key, b]) => ({ key, options: b.value ?? [] }))
+    .filter((s) => s.options.length > 0);
 
 /** Number of picks a row takes */
 export const openSlotCount = (boosts) => slotsOf(boosts).filter((s) => s.options.length > 1).length;

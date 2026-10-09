@@ -185,11 +185,13 @@ export const getCandidatesForSlot = (slot, index, context) => {
     if (entry.level > maxLevel) continue;
 
     let matches = matchesFilter(entry, filter);
-    // Universal ancestry feats have no ancestry trait, so a trait filter alone never finds them
+    // Universal ancestry feats have no ancestry trait, so a trait filter alone never finds them.
+    // Feats with no traits at all are data gaps for one specific group, not universal feats.
     if (
       !matches &&
       isAncestrySlot &&
       entry.category === 'ancestry' &&
+      entry.traits.length > 0 &&
       !entry.traits.some((t) => creatures.has(t))
     ) {
       matches = true;

@@ -479,9 +479,17 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const pick of pending) {
       for (const id of [pick.uuid, pick.slug]) ownedKeys.set(id, (ownedKeys.get(id) ?? 0) + 1);
     }
-    return getCandidatesForSlot(slot, plan.index, {
+    // PF2e opens dedication-only slots to archetype feats once a dedication is on the sheet; a
+    // dedication picked elsewhere in this level-up counts too
+    const pendingDedication = pending.some((pick) => pick.traits?.includes('dedication'));
+    const traits = slot.filter?.traits;
+    const opened =
+      pendingDedication && Array.isArray(traits) && traits.includes('dedication')
+        ? { ...slot, filter: { ...slot.filter, traits: traits.map((t) => (t === 'dedication' ? 'archetype' : t)) } }
+        : slot;
+    return getCandidatesForSlot(opened, plan.index, {
       ownedKeys,
-      dedications: getDedications(this.actor),
+      dedications: getDedications(this.actor, pending),
       ...plan.lookups
     });
   }

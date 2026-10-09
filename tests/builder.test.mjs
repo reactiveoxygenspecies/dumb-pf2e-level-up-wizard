@@ -70,3 +70,11 @@ test('partial rows assign what they can', () => {
   assert.deepEqual(assignSlots(slots(human), ['str']), { 0: 'str' });
   assert.deepEqual(assignSlots(slots(human), []), {});
 });
+
+test('an empty boost slot (older ancestries such as Kitsune) needs no pick', async () => {
+  const { ancestryBoostSlots } = await import('../src/data/builder.js');
+  const kitsune = { system: { boosts: { 0: { value: ['cha'] }, 1: { value: [] }, 2: { value: ALL } } } };
+  assert.equal(openSlotCount(kitsune.system.boosts), 1);
+  const slots = ancestryBoostSlots(kitsune, { ancestryPicks: ['int'] });
+  assert.deepEqual(slots.map((s) => s.selected), ['cha', 'int']);
+});
