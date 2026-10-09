@@ -2,6 +2,7 @@ import { MODULE_ID, SUPPORTED_SYSTEMS, TEMPLATE_PATH } from './constants.js';
 import { migrateSettings, registerSettings, warnIfOriginalActive } from './settings.js';
 import { registerFeatIndexHooks } from './data/featIndex.js';
 import { registerAbcIndexHooks } from './data/abcIndex.js';
+import { registerSpellIndexHooks } from './data/spellIndex.js';
 import { getHistory, undoLastLevelUp } from './data/apply.js';
 import {
   onGetHeaderButtons,
@@ -19,9 +20,11 @@ Hooks.once('init', () => {
   registerSettings();
   registerFeatIndexHooks();
   registerAbcIndexHooks();
+  registerSpellIndexHooks();
 
   foundry.applications.handlebars.loadTemplates({
-    lvlupFeatSlot: `${TEMPLATE_PATH}/partials/feat-slot.hbs`
+    lvlupFeatSlot: `${TEMPLATE_PATH}/partials/feat-slot.hbs`,
+    lvlupSpellPicker: `${TEMPLATE_PATH}/partials/spell-picker.hbs`
   });
 
   const helpers = {

@@ -150,6 +150,31 @@
     {{/if}}
     {{#if noFeatSlots}}<p class="lvlb-note">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.feats.empty'}}</p>{{/if}}
 
+    {{! Spells }}
+    {{#if spellStep}}
+      {{#if traditionChoice}}
+        <section class="lvlb-section">
+          <h2><label for="{{appId}}-tradition">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.spells.tradition'}}</label></h2>
+          <p class="lvlb-hint">{{traditionChoice.hint}}</p>
+          <select id="{{appId}}-tradition" class="lvlb-select" data-spell-tradition>
+            <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.spells.chooseTradition'}}</option>
+            {{#each traditionChoice.options}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+          </select>
+        </section>
+      {{/if}}
+      {{#if slotChips.length}}
+        <section class="lvlb-section">
+          <h2>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.spells.slots'}}</h2>
+          <div class="lvl-spell-slots">
+            {{#each slotChips}}<span class="lvl-spell-slot">{{label}}: <strong>{{count}}</strong></span>{{/each}}
+          </div>
+          <p class="lvlb-hint">{{slotNote}}</p>
+        </section>
+      {{/if}}
+      {{#if preparedNote}}<p class="lvlb-note">{{preparedNote}}</p>{{/if}}
+      {{#unless needTradition}}{{> lvlupSpellPicker}}{{/unless}}
+    {{/if}}
+
     {{! Languages and deity }}
     {{#if languageStep}}
       <section class="lvlb-section">

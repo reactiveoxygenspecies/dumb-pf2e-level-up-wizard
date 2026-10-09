@@ -1,0 +1,695 @@
+{
+  "wizard": {
+    "name": "Wizard",
+    "automate": true,
+    "tradition": "arcane",
+    "traditionSource": null,
+    "preparation": "prepared",
+    "keyAbility": [
+      "int"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "4": [0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+    },
+    "signatureSpells": null,
+    "extraSlots": {
+      "perRank": 1,
+      "fromLevel": 1,
+      "label": "Curriculum slot",
+      "restriction": "Only spells from the arcane school curriculum of that rank (cantrips: a curriculum cantrip).",
+      "cantrips": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "slots": {
+        "1": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "2": [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "3": [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "4": [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      "note": "\"Each day, you can prepare an extra cantrip from your curriculum. You also gain an extra spell slot at each spell rank for which you have wizard spell slots. You can prepare only spells from your school's curriculum in these extra slots.\" Does NOT apply to the School of Unified Magical Theory (\"No Curriculum\"). Not applied to the 10th-rank slot (Archwizard's Spellcraft: \"you can't use 10th-rank slots with abilities that give you more spell slots\")."
+    },
+    "repertoire": null,
+    "spellbook": {
+      "cantrips": 10,
+      "firstRank": 5,
+      "perLevel": 2,
+      "curriculum": {
+        "firstRank": 2,
+        "perNewRank": 1,
+        "exceptSchool": "School of Unified Magical Theory"
+      },
+      "note": "Spellbook \"contains your choice of 10 arcane cantrips and five 1st-rank arcane spells.\" Plus \"two 1st-rank spells from the curriculum of your arcane school (except ... the school of unified magical theory)\". \"Each time you gain a level, you add two arcane spells to your spellbook, of any spell rank for which you have spell slots.\" \"When you gain spell slots of a new rank, you also add an additional spell from your school's curriculum (unless it's the school of unified magical theory).\" The School of Unified Magical Theory instead adds one 1st-rank spell of the player's choice to the spellbook."
+    },
+    "familiar": null,
+    "footnotes": [],
+    "marks": {
+      "10": {
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "Arcane thesis \"Spell Blending\" lets the wizard trade two slots of one rank for a bonus slot up to two ranks higher (and slots for cantrips) during daily preparation; not modelled. The 10th-rank slot (table footnote) comes from Archwizard's Spellcraft at 19th level: \"You gain a single 10th-rank spell slot ... You don't gain more 10th-rank spells as you level up, but you can take the Archwizard's Might feat to gain a second slot.\" Table footnote: \"The Archwizard's Spellcraft class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots.\""
+  },
+  "cleric": {
+    "name": "Cleric",
+    "automate": true,
+    "tradition": "divine",
+    "traditionSource": null,
+    "preparation": "prepared",
+    "keyAbility": [
+      "wis"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "4": [0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+    },
+    "signatureSpells": null,
+    "extraSlots": {
+      "label": "Divine font",
+      "restriction": "Only heal (healing font) or harm (harmful font), depending on the deity / choice. Slots are at the cleric's highest rank of spell slot (1st-9th).",
+      "highestRankOnly": true,
+      "cantrips": null,
+      "slots": {
+        "1": [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "2": [0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "3": [0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "4": [0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      "note": "Divine Font: \"You gain 4 additional spell slots each day at your highest rank of cleric spell slots ... At 5th level, the number of additional slots increases to 5, and at 15th level, the total number of additional slots increases to 6.\" Table footnote: \"Your divine font gives you additional heal or harm spells of this rank. The number is 4 at 1st level, 5 at 5th level, and 6 at 15th level.\" The table puts the \"*\" marker on the 10th-rank cell at 19th-20th level as well; the Divine Font and Miraculous Spell text say 10th-rank slots cannot be used with abilities that add slots, so the font is kept at 9th rank at 19th-20th level here (INTERPRETATION)."
+    },
+    "repertoire": null,
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [
+      "* Your divine font gives you additional heal or harm spells of this rank. The number is 4 at 1st level, 5 at 5th level, and 6 at 15th level.",
+      "† The miraculous spell class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots."
+    ],
+    "marks": {
+      "1": {
+        "1": "*",
+        "2": "*"
+      },
+      "2": {
+        "3": "*",
+        "4": "*"
+      },
+      "3": {
+        "5": "*",
+        "6": "*"
+      },
+      "4": {
+        "7": "*",
+        "8": "*"
+      },
+      "5": {
+        "9": "*",
+        "10": "*"
+      },
+      "6": {
+        "11": "*",
+        "12": "*"
+      },
+      "7": {
+        "13": "*",
+        "14": "*"
+      },
+      "8": {
+        "15": "*",
+        "16": "*"
+      },
+      "9": {
+        "17": "*",
+        "18": "*"
+      },
+      "10": {
+        "19": "*†",
+        "20": "*†"
+      }
+    },
+    "notes": "The \"*\" on a rank in the table marks the rank that receives the divine font slots. Table footnote: \"The miraculous spell class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots.\" Miraculous Spell: \"You gain a single 10th-rank spell slot and can prepare a spell in that slot using cleric spellcasting ... You don't gain more 10th-rank spells as you level up, but you can take the Maker of Miracles feat to gain a second slot.\""
+  },
+  "druid": {
+    "name": "Druid",
+    "automate": true,
+    "tradition": "primal",
+    "traditionSource": null,
+    "preparation": "prepared",
+    "keyAbility": [
+      "wis"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "4": [0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+    },
+    "signatureSpells": null,
+    "extraSlots": null,
+    "repertoire": null,
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [],
+    "marks": {
+      "10": {
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "\"At 1st level, you can prepare two 1st-rank spells and five cantrips each morning from the common spells on the primal spell list, or from other primal spells to which you gain access and learn via Learn a Spell.\" Table footnote: \"The primal hierophant class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots.\" (A second slot needs the Hierophant's Power feat.) Druidic order spells are focus spells and not modelled."
+  },
+  "bard": {
+    "name": "Bard",
+    "automate": true,
+    "tradition": "occult",
+    "traditionSource": null,
+    "preparation": "spontaneous",
+    "keyAbility": [
+      "cha"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "4": [0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+    },
+    "signatureSpells": {
+      "fromLevel": 3,
+      "mode": "onePerRank"
+    },
+    "extraSlots": null,
+    "repertoire": {
+      "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "ranks": {
+        "1": [2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4": [0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2]
+      },
+      "granted": null,
+      "note": "\"At 1st level, you learn two 1st-rank occult spells of your choice and five occult cantrips of your choice ... Each time you get a spell slot ... you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select two 2nd-rank spells, and so on.\" So known spells per rank equal the slots per rank. 10th rank: Magnum Opus says \"Add two common 10th-rank occult spells to your repertoire. You gain a single 10th-rank spell slot\", hence 2 known and 1 slot."
+    },
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [],
+    "marks": {
+      "10": {
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "Table footnote: \"The magnum opus class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots.\" Spell slots and repertoire are separate (\"If a feat or other ability adds a spell to your spell repertoire, it wouldn't give you another spell slot\"). Signature Spells at 3rd level: \"For each spell rank you have access to, choose one spell of that rank to be a signature spell.\" Composition (focus) spells are not modelled."
+  },
+  "sorcerer": {
+    "name": "Sorcerer",
+    "automate": true,
+    "tradition": null,
+    "traditionSource": "bloodline",
+    "preparation": "spontaneous",
+    "keyAbility": [
+      "cha"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "2": [0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "3": [0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "4": [0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+    },
+    "signatureSpells": {
+      "fromLevel": 3,
+      "mode": "onePerRank"
+    },
+    "extraSlots": null,
+    "repertoire": {
+      "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "ranks": {
+        "1": [3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2": [0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "3": [0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "4": [0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2]
+      },
+      "granted": {
+        "cantrips": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "ranks": {
+          "1": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "2": [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "3": [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "4": [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+          "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+          "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+          "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
+      },
+      "note": "\"At 1st level, you learn two 1st-rank spells of your choice and four cantrips of your choice, as well as an additional spell and cantrip from your bloodline ... Each time you get a spell slot ... you add a spell to your spell repertoire of the same rank. When you gain a new rank of spells, your first new spell is always the sorcerous gift spell for that rank that's listed in your bloodline ... At 2nd level, you select another 1st-rank spell; at 3rd level, you gain a new spell from your bloodline and two other 2nd-rank spells.\" Totals per rank therefore equal the slots (3 first-rank spells at 1st level = 2 chosen + 1 bloodline); `granted` is the bloodline part of those totals. Cantrips: 4 chosen + 1 bloodline = 5. 10th rank: Bloodline Paragon says \"Add two common 10th-rank spells of your tradition to your repertoire. You gain a single 10th-rank spell slot\"."
+    },
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [],
+    "marks": {
+      "10": {
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "The tradition is set by the bloodline (\"The tradition from which your spells come is determined by your bloodline\"); the bloodline item picks arcane, divine, occult or primal (e.g. draconic = arcane, per the Bloodline list on the page). Table footnote: \"The bloodline paragon class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots.\" Bloodline (focus) spells are not modelled."
+  },
+  "oracle": {
+    "name": "Oracle",
+    "automate": true,
+    "tradition": "divine",
+    "traditionSource": null,
+    "preparation": "spontaneous",
+    "keyAbility": [
+      "cha"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "2": [0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "3": [0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "4": [0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+    },
+    "signatureSpells": {
+      "fromLevel": 3,
+      "mode": "onePerRank"
+    },
+    "extraSlots": null,
+    "repertoire": {
+      "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "ranks": {
+        "1": [3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "2": [0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "3": [0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "4": [0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4, 4, 4],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4, 4, 4],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 4, 4],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2]
+      },
+      "granted": null,
+      "note": "The page's repertoire text (re-en.json SpecificRule.ClassFeatures.SpellRepertoire.oracle): \"At 1st level, you learn three 1st-rank divine spells of your choice and five divine cantrips of your choice ... Each time you get a spell slot ... you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select three 2nd-rank spells, and so on.\" Known spells per rank equal the slots per rank. 10th rank: Oracular Clarity says \"Add two common 10th-rank divine spells to your repertoire. You gain a single 10th-rank spell slot\". NOTE: the separate class-feature item \"Spell Repertoire (Oracle)\" (spell-repertoire-oracle.json) says \"two 1st-rank divine spells\" and \"two 2nd-rank spells\"; it is not what the journal page shows and contradicts the 3 slots per rank in the table, so the journal text was followed."
+    },
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [],
+    "marks": {
+      "10": {
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "Table footnote: \"The oracular clarity class feature gives you a 10th-rank spell slot that works differently from other spell slots.\" Mystery and cursebound (focus spells, curse stages) are not modelled."
+  },
+  "psychic": {
+    "name": "Psychic",
+    "automate": true,
+    "tradition": "occult",
+    "traditionSource": null,
+    "preparation": "spontaneous",
+    "keyAbility": [],
+    "dropsLowerRanks": false,
+    "cantrips": [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+    "slots": {
+      "1": [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "2": [0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "3": [0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "4": [0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2]
+    },
+    "signatureSpells": {
+      "fromLevel": 3,
+      "mode": "onePerRank"
+    },
+    "extraSlots": null,
+    "repertoire": {
+      "cantrips": [6, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+      "ranks": {
+        "1": [2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "4": [0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2]
+      },
+      "granted": {
+        "cantrips": [3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+        "ranks": {
+          "1": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "2": [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "3": [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "4": [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+          "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+          "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+          "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        }
+      },
+      "note": "\"At 1st level, you learn one 1st-rank occult spell of your choice and three occult cantrips of your choice ... Your choice of conscious mind also grants you additional spells in your repertoire, starting with an additional 1st-rank spell and two cantrips listed in your conscious mind, which you cast as psi cantrips. Each time you get a spell slot, you add a spell to your spell repertoire of the same rank. At 2nd level, you select another 1st-rank spell; at 3rd level, you select one 2nd-rank spell\". Conscious Mind: \"At 1st level, you gain a 1st-rank spell, and you learn the other spells on the list as soon as you gain the ability to cast psychic spells of that rank, learning the 2nd-rank spell at 3rd level, the 3rd-rank spell at 5th level, and so on\"; cantrips: two standard psi cantrips + the unique surface psi cantrip at 1st level, \"the deeper psi cantrip at 6th level, and ... the deepest psi cantrip at 10th level\". Totals = chosen (= slots) + `granted` (INTERPRETATION: the conscious mind grants exactly one spell per rank 1st-9th and 3/4/5 psi cantrips at levels 1/6/10; the table's \"3*\" cantrips are the three chosen cantrips). 10th rank: Infinite Mind says \"Add two common 10th-rank occult spells to your repertoire\"."
+    },
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [
+      "* Your conscious mind gives you three additional cantrips with amps. One cantrip is unique to your conscious mind.",
+      "† The infinite mind class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots."
+    ],
+    "marks": {
+      "10": {
+        "19": "†",
+        "20": "†"
+      },
+      "cantrips": {
+        "1": "*",
+        "2": "*",
+        "3": "*",
+        "4": "*",
+        "5": "*",
+        "6": "*",
+        "7": "*",
+        "8": "*",
+        "9": "*",
+        "10": "*",
+        "11": "*",
+        "12": "*",
+        "13": "*",
+        "14": "*",
+        "15": "*",
+        "16": "*",
+        "17": "*",
+        "18": "*",
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "Key attribute depends on the subconscious mind (Cha or Int), not the class item (keyAbility is empty). Table footnotes: \"* Your conscious mind gives you three additional cantrips with amps. One cantrip is unique to your conscious mind.\" and \"The infinite mind class feature gives you a 10th-rank spell slot\". The journal table shows 2 tenth-rank slots at level 20 (1 at level 19), but Infinite Mind itself only grants \"a single 10th-rank spell slot\" (the Mind Over Matter feat gives a second): the table value is kept as printed, which looks like a source inconsistency (UNCERTAIN, may over-count by 1 at level 20 for characters without Mind Over Matter)."
+  },
+  "summoner": {
+    "name": "Summoner",
+    "automate": true,
+    "tradition": null,
+    "traditionSource": "eidolon",
+    "preparation": "spontaneous",
+    "keyAbility": [
+      "cha"
+    ],
+    "dropsLowerRanks": true,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "2": [0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "3": [0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "4": [0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    "signatureSpells": {
+      "fromLevel": 3,
+      "mode": "all"
+    },
+    "extraSlots": null,
+    "repertoire": {
+      "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "ranks": null,
+      "total": [2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "granted": null,
+      "note": "\"At 1st level, you learn two 1st-level spells of your choice and five cantrips of your choice ... At 2nd level, you select another 1st-level spell. At 3rd level, you add the first 2nd-level spell to your repertoire. At 4th level you gain your second and your spell repertoire reaches its maximum size of five spells.\" \"At 5th level, in addition to adding two 3rd-level spells to your repertoire, you lose your lowest level of spell slots. Any time you lose a level of spell slots, you lose two spells in your repertoire as well.\" Total size = 2, 3, 4, then 5 from 4th level on. The split per rank is the player's choice (only constraint: \"you must keep at least one spell you can cast with your lowest rank of spell slots\"), so `ranks` is null. INTERPRETATION: the maximum of five is taken to hold at every later level (each new rank adds two spells and drops two)."
+    },
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [],
+    "marks": {},
+    "notes": "The tradition is determined by the eidolon (\"your eidolon determines the type of spells you cast and the spell list you choose from\"). The class loses lower-rank slots as it levels: \"Because of the way you draw magic from your eidolon, you begin to lose lower-rank spell slots once you reach 5th level. The maximum number of spell slots you get from the summoner class is four, starting when you reach 4th level.\" Slot counts per rank therefore go up and then back to 0; \"For anything that requires the ability to cast spells of a certain rank that's lower than the highest slots you have, you still qualify even if you no longer have spell slots at those ranks.\" Unlimited Signature Spells at 3rd level: \"All of your spells are signature spells.\" Link spells (focus) are not modelled. The table has no 10th-rank column entries (no 10th-rank slot)."
+  },
+  "magus": {
+    "name": "Magus",
+    "automate": true,
+    "tradition": "arcane",
+    "traditionSource": null,
+    "preparation": "prepared",
+    "keyAbility": [
+      "dex",
+      "str"
+    ],
+    "dropsLowerRanks": true,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "2": [0, 0, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "3": [0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "4": [0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    "signatureSpells": null,
+    "extraSlots": {
+      "label": "Studious spell slot",
+      "restriction": "Only for the studious spells: gecko grip, sure strike, water breathing, haste (11th+), fly (13th+) and the spell(s) given by the hybrid study; they are added to the spellbook.",
+      "cantrips": null,
+      "slots": {
+        "1": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "2": [0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "3": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+        "4": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      },
+      "note": "Studious Spells (7th level): \"You gain two special 2nd-rank studious spell slots ... At 11th level, the extra slots increase to 3rd-rank ... At 13th level, the extra slots increase to 4th-rank\". Matches the \"-*\" cells of the table (footnote: \"The studious spells class feature gives you extra slots of this rank for specific spells\")."
+    },
+    "repertoire": null,
+    "spellbook": {
+      "cantrips": 8,
+      "firstRank": 4,
+      "perLevel": 2,
+      "curriculum": null,
+      "note": "Spellbook: \"The spellbook contains your choice of eight arcane cantrips and four 1st-rank arcane spells.\" \"Each time you gain a level, you add two more arcane spells to your spellbook, of any rank of spell you can cast.\" \"Though you lose some lower spell slots as you increase in level, you keep the spells in your spellbook and can prepare them in your higher-rank slots as normal.\""
+    },
+    "familiar": null,
+    "footnotes": [],
+    "marks": {
+      "2": {
+        "7": "*",
+        "8": "*",
+        "9": "*",
+        "10": "*"
+      },
+      "3": {
+        "11": "*",
+        "12": "*"
+      },
+      "4": {
+        "13": "*",
+        "14": "*",
+        "15": "*",
+        "16": "*",
+        "17": "*",
+        "18": "*",
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "\"At 1st level, you can prepare one 1st-rank spell and five cantrips each morning from the spells in your spellbook.\" \"Because you split your focus between physical training and magical scholarship, you have no more than two spell slots of your highest rank and, if you can cast 2nd-rank spells or higher, two spell slots of 1 rank lower than your highest spell rank.\" Hence lower ranks drop to 0 as the magus levels (1st rank is gone at 5th level) while the highest two ranks keep 2 slots each. Spellstrike, Arcane Cascade and conflux (focus) spells are not modelled. The table has no 10th-rank slots."
+  },
+  "witch": {
+    "name": "Witch",
+    "automate": true,
+    "tradition": null,
+    "traditionSource": "patron",
+    "preparation": "prepared",
+    "keyAbility": [
+      "int"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+    "slots": {
+      "1": [2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "4": [0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 3, 3],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+    },
+    "signatureSpells": null,
+    "extraSlots": null,
+    "repertoire": null,
+    "spellbook": null,
+    "familiar": {
+      "cantrips": 10,
+      "firstRank": 5,
+      "perLevel": 2,
+      "patronLesson": 1,
+      "note": "Familiar (Witch): \"Your familiar starts off knowing 10 cantrips, five 1st-rank spells, and one additional spell determined by your patron's initial lesson. You choose these spells from the common spells of the tradition determined by your patron ... Each time you gain a level, your patron teaches your familiar two new spells of any rank for which you have spell slots, chosen from common spells of your tradition or others you gain access to.\""
+    },
+    "footnotes": [],
+    "marks": {
+      "10": {
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "\"At 1st level, you can prepare up to two 1st-rank spells and five cantrips each morning from the spells your familiar knows.\" The tradition is set by the patron (\"choose your patron, which determines your spellcasting tradition\"). Table footnote: \"The patron conduit class feature gives you a 10th-rank spell slot that works a bit differently from other spell slots.\" (Patron's Gift, 19th level; a second slot needs the Patron's Truth feat.) Hexes and lessons (focus spells) are not modelled."
+  },
+  "animist": {
+    "name": "Animist",
+    "automate": false,
+    "tradition": "divine",
+    "traditionSource": null,
+    "preparation": "prepared",
+    "keyAbility": [
+      "wis"
+    ],
+    "dropsLowerRanks": false,
+    "cantrips": [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    "slots": {
+      "1": [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "2": [0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "3": [0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "4": [0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2],
+      "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2],
+      "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2],
+      "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    "secondary": {
+      "preparation": "spontaneous",
+      "source": "apparitions",
+      "cantrips": [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4],
+      "slots": {
+        "1": [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        "2": [0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        "3": [0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        "4": [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+        "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2],
+        "6": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+        "7": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2],
+        "8": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2],
+        "9": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+        "10": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+      }
+    },
+    "signatureSpells": {
+      "fromLevel": 1,
+      "mode": "apparitionSpellsOnly"
+    },
+    "extraSlots": null,
+    "repertoire": null,
+    "spellbook": null,
+    "familiar": null,
+    "footnotes": [
+      "The number before a plus sign indicates your spell slots via animist spellcasting, and the number after it indicates your spell slots from apparition spellcasting. For instance, a 2nd-level animist has \"2+1\" 1st-rank spell slots, meaning they can prepare two 1st-rank spells via animist spellcasting, and they also have one spell slot to spontaneously cast an apparition spell.",
+      "* The supreme apparition class feature gives you a 10th-rank apparition slot that works a bit differently from other spells."
+    ],
+    "marks": {
+      "10": {
+        "19": "*",
+        "20": "*"
+      }
+    },
+    "notes": "NOT AUTOMATED: the animist has two separate casting sources that cannot share slots (\"you can't cast your animist spells using your apparition spell slots or vice versa\"). `cantrips` and `slots` hold the first number of each table cell (animist spellcasting, PREPARED: \"Each day, you can prepare one 1st-rank spell and 2 cantrips from among the common spells on the divine spell list\"); `secondary` holds the number after the plus sign (apparition spellcasting, SPONTANEOUS: \"You gain additional spontaneous spell slots and a spell repertoire from your attuned apparitions. At first level, you can cast two apparition cantrips and one 1st-rank apparition spell per day\"). Table note: \"The number before a plus sign indicates your spell slots via animist spellcasting, and the number after it indicates your spell slots from apparition spellcasting.\" The apparition repertoire is not a class number: it is \"a collection of spells granted to you by all your attuned apparitions\" (two apparitions, three at 7th level, four at 15th), so its size depends on the apparition entries and is not in the journal. \"All your apparition spells are signature spells.\" Table footnote: \"The supreme apparition class feature gives you a 10th-rank apparition slot that works a bit differently from other spells.\" (Supreme Incarnation, 19th level.) Vessel spells (focus) are not modelled."
+  }
+}

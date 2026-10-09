@@ -10,6 +10,17 @@ import {
   loadGrantedArchetypeFeats
 } from '../data/featSlots.js';
 import { getFeatIndex } from '../data/featIndex.js';
+import { getSpellIndex } from '../data/spellIndex.js';
+import {
+  TRADITIONS,
+  classRules,
+  detectTradition,
+  findClassEntry,
+  loadSpellcastingData,
+  slotChanges,
+  spellPicks
+} from '../data/spellcasting.js';
+import { bindSpellSearch, spellPickerView, toggleSpell, trimSpellSelection } from './spellPickerView.js';
 import {
   SPELL_HINT_PATTERN,
   describeBoosts,
@@ -32,7 +43,14 @@ import {
   buildPrereqContext,
   evaluatePrerequisites
 } from '../helpers/prerequisites.js';
-import { attributeLabel, escapeHTML, localize, rankLabel, signedNumber } from '../helpers/utility.js';
+import {
+  attributeLabel,
+  escapeHTML,
+  localize,
+  rankLabel,
+  signedNumber,
+  sluggify
+} from '../helpers/utility.js';
 import { FeatSelector, hiddenRarities } from './FeatSelector.js';
 import { LevelUpHistory } from './LevelUpHistory.js';
 import {
@@ -83,8 +101,12 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       intSkills: [],
       languages: [],
       boosts: {},
-      potency: {}
+      potency: {},
+      spells: {},
+      spellTradition: null,
+      spellSetup: false
     };
+    this.spellSearch = {};
     this.showMissed = false;
     this.showAllLanguages = false;
     this.submitting = false;
@@ -123,6 +145,8 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       toggleLanguage: LevelUpWizard.#onToggleLanguage,
       clearLanguages: LevelUpWizard.#onClearLanguages,
       toggleAllLanguages: LevelUpWizard.#onToggleAllLanguages,
+      toggleSpell: LevelUpWizard.#onToggleSpell,
+      toggleSpellSetup: LevelUpWizard.#onToggleSpellSetup,
       goStep: LevelUpWizard.#onGoStep,
       nextStep: LevelUpWizard.#onNextStep,
       prevStep: LevelUpWizard.#onPrevStep,
@@ -173,7 +197,11 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     const { previousLevel, targetLevel } = this;
     const preview = createPreviewActor(actor, targetLevel);
 
-    const [index] = await Promise.all([getFeatIndex(), loadGrantedArchetypeFeats()]);
+    const [index] = await Promise.all([
+      getFeatIndex(),
+      loadGrantedArchetypeFeats(),
+      loadSpellcastingData()
+    ]);
     const slots = getFeatSlots(preview, targetLevel, previousLevel);
 
     const skillOptions = getSkillOptions(actor);
@@ -221,8 +249,10 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       classJournals,
       prereqBase,
       xpEnforcement: game.settings.get(MODULE_ID, 'xp-enforcement'),
-      languageSlots: 0
+      languageSlots: 0,
+      spells: this.#planSpells(actor, previousLevel, targetLevel)
     };
+    if (plan.spells) plan.spellIndex = await getSpellIndex();
 
     // The layout is decided once from what the level asks for, so it doesn't jump while choosing
     const maxRank = plan.maxSkillRank;
@@ -237,10 +267,93 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       potency: potencyLists.length,
       potencyOptions: Math.max(0, ...potencyLists.map((l) => l.length))
     }).layout;
+    // Spell lists are long: a level-up with spells to pick always uses steps
+    if (plan.spells?.picks.length) plan.layout = 'steps';
 
     this.selection.skillIncreases = new Array(plan.skillIncreaseCount).fill('');
     for (const { set } of boostSets) this.selection.boosts[set] = [];
     return plan;
+  }
+
+  /**
+   * Class spellcasting this module can automate: the entry it manages (or an existing one of the class's
+   * kind), the slot changes for the new level and the spells to pick. Null for non-casters.
+   */
+  #planSpells(actor, previousLevel, targetLevel) {
+    const cls = actor.class;
+    if (!cls) return null;
+    const slug = cls.slug ?? sluggify(cls.name);
+    const rules = classRules(slug);
+    if (!rules) return null;
+    const found = findClassEntry(actor, rules, slug);
+    const entry = found?.entry ?? null;
+    const known = new Set(
+      entry ? [...(entry.spells ?? [])].flatMap((s) => [s.sourceId, s.slug].filter(Boolean)) : []
+    );
+    return {
+      rules,
+      slug,
+      entry,
+      adopted: !!found?.adopted,
+      tradition: entry?.system?.tradition?.value || detectTradition(actor, rules, slug),
+      picks: spellPicks(rules, entry, entry ? previousLevel : 0, targetLevel),
+      slotChanges: slotChanges(rules, entry, targetLevel),
+      known,
+      className: cls.name,
+      attribute: cls.system?.keyAbility?.selected ?? null
+    };
+  }
+
+  /** Spells are handled when the class entry exists, or when the player chose to set it up now */
+  #spellsActive() {
+    const sp = this.plan?.spells;
+    return !!sp && (!!sp.entry || this.selection.spellSetup);
+  }
+
+  #spellTradition() {
+    const sp = this.plan?.spells;
+    return sp?.tradition || this.selection.spellTradition || null;
+  }
+
+  /** View data for the Spells section */
+  #spells() {
+    const sp = this.plan.spells;
+    if (!sp) return null;
+    const active = this.#spellsActive();
+    const tradition = this.#spellTradition();
+    if (active) this.selection.spells = trimSpellSelection(this.selection.spells, sp.picks);
+    const chosen = sp.picks.reduce((n, p) => n + (this.selection.spells[p.key]?.length ?? 0), 0);
+    const total = sp.picks.reduce((n, p) => n + p.count, 0);
+    return {
+      active,
+      setup: !sp.entry,
+      adopted: sp.adopted,
+      entryName: sp.entry?.name ?? null,
+      className: sp.className,
+      needTradition: active && !tradition,
+      traditionOptions: TRADITIONS.map((t) => ({
+        value: t,
+        label: game.i18n.localize(CONFIG.PF2E.magicTraditions?.[t] ?? t),
+        selected: t === tradition
+      })),
+      slotChanges: sp.slotChanges.map((c) => ({ ...c, gained: c.to > c.from })),
+      groups:
+        active && tradition
+          ? spellPickerView({
+              picks: sp.picks,
+              index: this.plan.spellIndex ?? [],
+              selection: this.selection.spells,
+              tradition,
+              known: sp.known,
+              hiddenRarities: hiddenRarities(),
+              search: this.spellSearch
+            })
+          : [],
+      chosen,
+      total,
+      complete: !active || (!!tradition && chosen === total),
+      noPicks: sp.picks.length === 0
+    };
   }
 
   /**
@@ -428,6 +541,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
 
     const languages = this.#languages();
     const potency = this.#potency();
+    const spells = this.#spells();
 
     // What is still open
     const missing = [];
@@ -438,6 +552,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     }
     if (potency?.selects.some((s) => !s.value)) missing.push(localize('menu.skillPotency.header'));
     if (sel.intSkills.some((s) => !s)) missing.push(localize('menu.intBonus.skill'));
+    if (spells && !spells.complete) missing.push(localize('menu.steps.spells'));
 
     const missingGroups = [
       ...new Set([
@@ -445,7 +560,8 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
         ...(sel.skillIncreases.some((s) => !s) ? [localize('menu.steps.skills')] : []),
         ...((boosts?.sets ?? []).some((s) => !s.complete) ? [localize('menu.steps.boosts')] : []),
         ...(sel.intSkills.some((s) => !s) ? [localize('menu.intBonus.skill')] : []),
-        ...(potency?.selects.some((s) => !s.value) ? [localize('menu.steps.potency')] : [])
+        ...(potency?.selects.some((s) => !s.value) ? [localize('menu.steps.potency')] : []),
+        ...(spells && !spells.complete ? [localize('menu.steps.spells')] : [])
       ])
     ];
     const choicesLeft =
@@ -453,10 +569,11 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       sel.skillIncreases.filter((s) => !s).length +
       (boosts?.sets ?? []).reduce((n, s) => n + (s.remaining - s.chosen), 0) +
       sel.intSkills.filter((s) => !s).length +
-      (potency?.selects.filter((s) => !s.value).length ?? 0);
+      (potency?.selects.filter((s) => !s.value).length ?? 0) +
+      (spells?.active ? spells.total - spells.chosen + (spells.needTradition ? 1 : 0) : 0);
 
     // Steps
-    const sections = this.#sections({ featSlots, missedSlots, boosts, intSkills, languages, potency });
+    const sections = this.#sections({ featSlots, missedSlots, boosts, intSkills, languages, potency, spells });
     const stepped = plan.layout === 'steps';
     const choiceKeys = stepped ? sections.map((s) => s.key) : ['choices'];
     this.stepKeys = [...choiceKeys, 'review'];
@@ -465,7 +582,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     const reviewing = this.step === 'review';
     this.reviewBlocked = requireAll && missing.length > 0;
     const show = Object.fromEntries(
-      ['feats', 'skills', 'boosts', 'extras'].map((key) => [
+      ['feats', 'skills', 'boosts', 'extras', 'spells'].map((key) => [
         key,
         sections.some((s) => s.key === key) && (!stepped || this.step === key)
       ])
@@ -552,6 +669,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       intSkills,
       languages,
       potency,
+      spells,
       classFeatures: plan.classFeatures,
       manual: { items: manualStatic, empty: !manualStatic.length },
       hasNothingToChoose,
@@ -585,7 +703,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   /** The choice groups that have content, in step order */
-  #sections({ featSlots, missedSlots, boosts, intSkills, languages, potency }) {
+  #sections({ featSlots, missedSlots, boosts, intSkills, languages, potency, spells }) {
     const sel = this.selection;
     const sections = [];
     if (featSlots.length || missedSlots.length) {
@@ -622,6 +740,14 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
         label: localize('menu.steps.extras'),
         done,
         total: required
+      });
+    }
+    if (spells && (spells.setup || spells.total || spells.slotChanges.length)) {
+      sections.push({
+        key: 'spells',
+        label: localize('menu.steps.spells'),
+        done: spells.active ? spells.chosen : 0,
+        total: spells.active ? spells.total : 0
       });
     }
     return sections;
@@ -978,7 +1104,13 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     const plan = this.plan;
     const items = [];
     if (plan.manualAttributes) items.push(localize('menu.attributeBoosts.manual'));
-    const spellcasting = plan.spellcasting;
+    const managed = this.#spellsActive() ? plan.spells.entry?.id ?? 'new' : null;
+    const spellcasting = managed
+      ? {
+          newRank: null,
+          entries: (plan.spellcasting?.entries ?? []).filter((e) => e.id !== managed)
+        }
+      : plan.spellcasting;
     if (spellcasting?.newRank) {
       items.push(localize('messages.personal.spellRank', { rank: spellcasting.newRank }));
     }
@@ -1077,6 +1209,18 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       }))
     );
 
+    if (this.#spellsActive()) {
+      const sp = plan.spells;
+      const names = new Map((plan.spellIndex ?? []).map((s) => [s.uuid, s.name]));
+      row('spells', [
+        ...(sp.entry ? [] : [{ plus: true, label: localize('menu.spells.newEntry', { className: sp.className }) }]),
+        ...sp.slotChanges.map((c) => ({ label: c.label, from: c.from, to: c.to })),
+        ...Object.values(sel.spells)
+          .flat()
+          .map((uuid) => ({ plus: true, label: names.get(uuid) ?? uuid }))
+      ]);
+    }
+
     if (plan.xpEnforcement && !plan.levelAlreadyApplied) {
       const { value, max } = xpInfo(this.actor);
       const after = Math.max(0, value - max * (plan.targetLevel - plan.previousLevel));
@@ -1142,6 +1286,17 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     this.selection[key] = Array.from({ length }, (_, i) => current[i] ?? '');
   }
 
+  _attachPartListeners(partId, htmlElement, options) {
+    super._attachPartListeners(partId, htmlElement, options);
+    if (partId !== 'body') return;
+    bindSpellSearch(htmlElement, this.spellSearch);
+    htmlElement.querySelector('[data-spell-tradition]')?.addEventListener('change', (event) => {
+      this.selection.spellTradition = event.currentTarget.value || null;
+      this.selection.spells = {};
+      this.render();
+    });
+  }
+
   _onRender(context, options) {
     super._onRender(context, options);
     if (!options.parts || options.parts.includes('body')) {
@@ -1185,6 +1340,18 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     });
     if (typeof this.renderChild === 'function') await this.renderChild(selector);
     else await selector.render({ force: true });
+  }
+
+  static #onToggleSpell(event, target) {
+    const picks = this.plan?.spells?.picks ?? [];
+    this.selection.spells = toggleSpell(this.selection.spells, picks, target.dataset.pick, target.dataset.uuid);
+    this.render();
+  }
+
+  static #onToggleSpellSetup() {
+    this.selection.spellSetup = !this.selection.spellSetup;
+    if (!this.selection.spellSetup) this.selection.spells = {};
+    this.render();
   }
 
   static #onClearFeat(event, target) {
@@ -1333,8 +1500,28 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
 
     this.submitting = true;
     await this.render({ parts: ['footer'] });
+    const sp = this.plan.spells;
+    if (this.#spellsActive()) {
+      // The managed entry is updated for the player; only other entries still need a reminder
+      const managed = sp.entry?.id ?? null;
+      this.plan.spellcasting = {
+        newRank: null,
+        entries: (this.plan.spellcasting?.entries ?? []).filter((e) => e.id !== managed)
+      };
+    }
     const selection = {
       ...this.selection,
+      spellPlan: this.#spellsActive()
+        ? {
+            rules: sp.rules,
+            slug: sp.slug,
+            entry: sp.entry,
+            tradition: this.#spellTradition(),
+            className: sp.className,
+            attribute: sp.attribute,
+            selection: this.selection.spells
+          }
+        : null,
       feats: Object.fromEntries(
         Object.entries(this.selection.feats)
           .filter(([, pick]) => pick)

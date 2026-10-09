@@ -2,6 +2,7 @@ import { MODULE_ID } from '../constants.js';
 import { attributeLabel, localize, rankLabel } from '../helpers/utility.js';
 import { buildPotencyModifier, SPELL_HINT_PATTERN, xpInfo } from './plan.js';
 import { postLevelUpMessages } from '../helpers/chat.js';
+import { entrySlotSnapshot, entrySlotUpdate, entrySource, spellSource } from './spellcasting.js';
 
 const HISTORY_LIMIT = 10;
 const HISTORY_PATH = `flags.${MODULE_ID}.history`;
@@ -62,7 +63,8 @@ export const buildChanges = async (actor, plan, selection) => {
     skills: [],
     boosts: [],
     languages: [],
-    potency: []
+    potency: [],
+    spells: []
   };
 
   if (!plan.levelAlreadyApplied) {
@@ -135,7 +137,55 @@ export const buildChanges = async (actor, plan, selection) => {
     });
   }
 
-  return { update, itemUpdates, feats, summary };
+  const spells = await spellChanges(actor, plan, selection.spellPlan);
+  if (spells) {
+    summary.spells = spells.sources.map((s) => ({ name: s.name, uuid: s._stats?.compendiumSource }));
+  }
+
+  return { update, itemUpdates, feats, spells, summary };
+};
+
+/**
+ * The class spellcasting entry for the new level: a slot update for the managed entry, or a new
+ * entry, plus the picked spells (placed in the entry once it exists).
+ */
+const spellChanges = async (actor, plan, spellPlan) => {
+  if (!spellPlan?.rules || !spellPlan.tradition) return null;
+  const { rules, slug, entry } = spellPlan;
+  const uuids = Object.values(spellPlan.selection ?? {}).flat();
+  const sources = await Promise.all(uuids.map((uuid) => spellSource(uuid, entry?.id ?? null)));
+  if (entry) {
+    const entryUpdate = entrySlotUpdate(rules, entry, slug, plan.targetLevel);
+    if (!entry.system?.tradition?.value) entryUpdate['system.tradition.value'] = spellPlan.tradition;
+    return { entryUpdate, newEntry: null, sources };
+  }
+  const newEntry = entrySource(rules, {
+    slug,
+    className: spellPlan.className,
+    tradition: spellPlan.tradition,
+    attribute: spellPlan.attribute,
+    level: plan.targetLevel
+  });
+  return { entryUpdate: null, newEntry, sources };
+};
+
+/** Create or update the class entry and add the picked spells; returns the created items */
+const applySpells = async (actor, spells, created) => {
+  let entryId = spells.entryUpdate?._id ?? null;
+  if (spells.newEntry) {
+    const [entry] = await actor.createEmbeddedDocuments('Item', [spells.newEntry]);
+    created.push(entry);
+    entryId = entry.id;
+  } else if (spells.entryUpdate) {
+    await actor.updateEmbeddedDocuments('Item', [spells.entryUpdate]);
+  }
+  if (!spells.sources.length) return;
+  const sources = spells.sources.map((source) => {
+    const copy = foundry.utils.deepClone(source);
+    copy.system.location = { value: entryId };
+    return copy;
+  });
+  created.push(...(await actor.createEmbeddedDocuments('Item', sources)));
 };
 
 const snapshot = (actor, plan, selection, changes) => {
@@ -160,7 +210,16 @@ const snapshot = (actor, plan, selection, changes) => {
     boosts[set] = [...(sourceSystem.build?.attributes?.boosts?.[set] ?? [])];
   }
 
+  const spellEntry = selection.spellPlan?.entry ?? null;
   return {
+    spellEntry: spellEntry
+      ? {
+          id: spellEntry.id,
+          slots: entrySlotSnapshot(spellEntry),
+          flag: spellEntry.flags?.[MODULE_ID]?.classEntry ?? null,
+          tradition: spellEntry.system?.tradition?.value ?? ''
+        }
+      : null,
     level: plan.previousLevel,
     xp: sourceSystem.details?.xp?.value ?? 0,
     skills,
@@ -195,6 +254,17 @@ const revertTo = async (actor, entry, { keepHistory = false } = {}) => {
     update[HISTORY_PATH] = getHistory(actor).filter((h) => h.id !== entry.id);
   }
   await actor.update(update, { [MODULE_ID]: { undo: true } });
+
+  const spellEntry = before.spellEntry;
+  if (spellEntry && actor.items.has(spellEntry.id)) {
+    const entryUpdate = { _id: spellEntry.id, 'system.tradition.value': spellEntry.tradition };
+    for (const [rank, { max, value }] of Object.entries(spellEntry.slots)) {
+      entryUpdate[`system.slots.slot${rank}.max`] = max;
+      entryUpdate[`system.slots.slot${rank}.value`] = value;
+    }
+    entryUpdate[`flags.${MODULE_ID}.classEntry`] = spellEntry.flag;
+    await actor.updateEmbeddedDocuments('Item', [entryUpdate]);
+  }
 
   const loreUpdates = Object.entries(before.lores ?? {})
     .filter(([id]) => actor.items.has(id))
@@ -241,7 +311,10 @@ export const applyLevelUp = async (actor, plan, selection) => {
   }
 
   const itemsBefore = new Set(actor.items.map((i) => i.id));
-  const pickedSources = new Set(changes.feats.map((f) => f.doc.uuid));
+  const pickedSources = new Set([
+    ...changes.feats.map((f) => f.doc.uuid),
+    ...(changes.spells?.sources ?? []).map((s) => s._stats?.compendiumSource)
+  ]);
   let created = [];
   try {
     await actor.update(changes.update, { [MODULE_ID]: { levelUp: true } });
@@ -254,11 +327,14 @@ export const applyLevelUp = async (actor, plan, selection) => {
         changes.feats.map((f) => f.source)
       );
     }
+    if (changes.spells) await applySpells(actor, changes.spells, created);
   } catch (error) {
     console.error(`${MODULE_ID} | Level-up failed, rolling back`, error);
     // Creation may fail after some items were stored; remove any new copy of a picked feat
     const strays = actor.items.filter(
-      (i) => !itemsBefore.has(i.id) && pickedSources.has(i.sourceId)
+      (i) =>
+        !itemsBefore.has(i.id) &&
+        (pickedSources.has(i.sourceId) || (i.type === 'spellcastingEntry' && i.flags?.[MODULE_ID]?.classEntry))
     );
     entry.createdItemIds = topLevelIds([...new Set([...created, ...strays])]);
     try {

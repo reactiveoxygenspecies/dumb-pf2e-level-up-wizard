@@ -43,6 +43,12 @@ export const postLevelUpMessages = async (actor, plan, selection, summary, spell
         .join(', ')}</p>`
     );
   }
+  if (summary.spells?.length) {
+    sections.push(
+      `<p><strong>${localize('messages.global.spells')}</strong></p>`,
+      list(summary.spells.map((s) => (s.uuid ? `@UUID[${s.uuid}]{${escapeHTML(s.name)}}` : escapeHTML(s.name))))
+    );
+  }
   if (!sections.length) {
     sections.push(`<p>${localize('messages.global.noChoices')}</p>`);
   }

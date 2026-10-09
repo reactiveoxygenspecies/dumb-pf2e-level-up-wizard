@@ -3,6 +3,7 @@ import { attributeLabel, escapeHTML, localize, rankLabel } from '../helpers/util
 import { getFeatSlots } from './featSlots.js';
 import { loadDocument } from './abcIndex.js';
 import { getHistory } from './apply.js';
+import { entrySource, spellSource } from './spellcasting.js';
 
 export const ATTRIBUTES = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 const ABC_ORDER = ['ancestry', 'heritage', 'background', 'deity', 'class'];
@@ -40,7 +41,9 @@ export const createBuildState = (actor) => {
     level1: [...(build.boosts?.[1] ?? [])],
     skills: [],
     languages: [],
-    feats: {}
+    feats: {},
+    spellTradition: null,
+    spells: {}
   };
 };
 
@@ -358,7 +361,7 @@ const topLevelIds = (items) => {
  * On failure everything created so far is removed and the actor is restored.
  * @returns {Promise<boolean>}
  */
-export const applyBuild = async (actor, state, featPicks) => {
+export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
   const sources = await buildSources(state);
   const sourceSystem = actor._source.system;
   const before = {
@@ -399,6 +402,23 @@ export const applyBuild = async (actor, state, featPicks) => {
     await create([sources.ancestry, sources.heritage, sources.background, sources.deity]);
     await create([sources.class]);
     await create(await Promise.all(Object.values(featPicks).map(featSource)));
+    // The class spellcasting entry, its slots and the starting spells
+    if (spellPlan?.rules && spellPlan.tradition) {
+      const [entry] = await actor.createEmbeddedDocuments('Item', [
+        entrySource(spellPlan.rules, {
+          slug: spellPlan.slug,
+          className: spellPlan.className,
+          tradition: spellPlan.tradition,
+          attribute: spellPlan.attribute,
+          level: 1
+        })
+      ]);
+      created.push(entry);
+      const uuids = Object.values(spellPlan.selection ?? {}).flat();
+      if (uuids.length) {
+        await create(await Promise.all(uuids.map((uuid) => spellSource(uuid, entry.id))));
+      }
+    }
   } catch (error) {
     console.error(`${MODULE_ID} | Character build failed, rolling back`, error);
     try {
@@ -435,7 +455,8 @@ export const applyBuild = async (actor, state, featPicks) => {
       game.i18n.localize(CONFIG.PF2E.languages?.[l] ?? l)
     ),
     potency: [],
-    build: ABC_ORDER.map((t) => created.find((i) => i.type === t)?.name).filter(Boolean)
+    build: ABC_ORDER.map((t) => created.find((i) => i.type === t)?.name).filter(Boolean),
+    spells: created.filter((i) => i.type === 'spell').map((i) => i.name)
   };
 
   const entry = {

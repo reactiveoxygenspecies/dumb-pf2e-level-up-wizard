@@ -19,6 +19,15 @@ import {
   skillChoices
 } from '../data/builder.js';
 import { getFeatIndex } from '../data/featIndex.js';
+import { getSpellIndex } from '../data/spellIndex.js';
+import {
+  TRADITIONS,
+  classRules,
+  loadSpellcastingData,
+  slotsAt,
+  spellPicks
+} from '../data/spellcasting.js';
+import { bindSpellSearch, spellPickerView, toggleSpell, trimSpellSelection } from './spellPickerView.js';
 import {
   buildIndexLookups,
   getCandidatesForSlot,
@@ -32,7 +41,7 @@ import {
   buildPrereqContext,
   evaluatePrerequisites
 } from '../helpers/prerequisites.js';
-import { attributeLabel, enrichHTML, localize, signedNumber } from '../helpers/utility.js';
+import { attributeLabel, enrichHTML, localize, signedNumber, sluggify } from '../helpers/utility.js';
 import { FeatSelector } from './FeatSelector.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
@@ -45,6 +54,7 @@ export const BUILDER_STEPS = [
   'boosts',
   'skills',
   'feats',
+  'spells',
   'languages',
   'review'
 ];
@@ -69,7 +79,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     this.actor = actor;
     this.build = createBuildState(actor);
     this.step = this.build.class ? 'boosts' : 'ancestry';
-    this.filters = { search: {}, rarities: ['common'] };
+    this.filters = { search: {}, rarities: ['common'], spellSearch: {} };
     this.descriptions = new Map();
     this.view = null;
     this.busy = false;
@@ -91,6 +101,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       backgroundSkill: CharacterBuilder.#onBackgroundSkill,
       language: CharacterBuilder.#onLanguage,
       openFeatSelector: CharacterBuilder.#onOpenFeatSelector,
+      toggleSpell: CharacterBuilder.#onToggleSpell,
       clearFeat: CharacterBuilder.#onClearFeat,
       apply: CharacterBuilder.#onApply,
       cancel: CharacterBuilder.#onCancel
@@ -113,14 +124,17 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
 
   async #load() {
     if (this.data) return this.data;
-    const [abc, feats] = await Promise.all([
+    const [abc, feats, , , spells] = await Promise.all([
       getAbcIndex(),
       getFeatIndex(),
-      loadGrantedArchetypeFeats()
+      loadGrantedArchetypeFeats(),
+      loadSpellcastingData(),
+      getSpellIndex()
     ]);
     this.data = {
       abc,
       feats,
+      spells,
       lookups: buildIndexLookups(feats),
       languages: getLanguageOptions(this.actor),
       knownNames: [
@@ -161,7 +175,22 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       console.warn(`${MODULE_ID} | Prerequisite context failed`, error);
     }
 
-    this.view = { sources, preview, skills, languages, slots, prereq };
+    // Spellcasting for caster classes the module can automate
+    const classSlug = sources.class
+      ? (sources.class.system.slug || sluggify(sources.class.name))
+      : null;
+    const rules = classSlug ? classRules(classSlug) : null;
+    let spells = null;
+    if (rules) {
+      const tradition = rules.tradition ?? this.build.spellTradition;
+      const picks = spellPicks(rules, null, 0, 1);
+      this.build.spells = trimSpellSelection(this.build.spells, picks);
+      spells = { rules, slug: classSlug, tradition, picks };
+    } else {
+      this.build.spells = {};
+    }
+
+    this.view = { sources, preview, skills, languages, slots, prereq, spells };
     return this.view;
   }
 
@@ -199,6 +228,11 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   /*  Steps                                       */
   /* -------------------------------------------- */
 
+  /** Steps for this build: Spells only for caster classes the module automates */
+  #steps() {
+    return BUILDER_STEPS.filter((st) => st !== 'spells' || !!this.view?.spells);
+  }
+
   #isComplete(step) {
     const s = this.build;
     const v = this.view;
@@ -229,14 +263,20 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
         const deityOk = !DEITY_CLASSES.includes(v?.sources.class?.system.slug) || !!s.deity;
         return !!v && !!s.ancestry && !!s.class && deityOk;
       }
+      case 'spells': {
+        const sp = v?.spells;
+        if (!sp) return true;
+        return !!sp.tradition && sp.picks.every((p) => (s.spells[p.key]?.length ?? 0) === p.count);
+      }
       case 'review':
-        return BUILDER_STEPS.slice(0, -1).every((st) => this.#isComplete(st));
+        return this.#steps().slice(0, -1).every((st) => this.#isComplete(st));
     }
     return false;
   }
 
   #missing() {
-    return BUILDER_STEPS.slice(0, -1)
+    return this.#steps()
+      .slice(0, -1)
       .filter((st) => !this.#isComplete(st))
       .map((st) => localize(`builder.steps.${st}`));
   }
@@ -252,7 +292,9 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     const { preview, sources } = this.view;
     const index = this.step;
 
-    const nav = BUILDER_STEPS.map((id, i) => ({
+    const steps = this.#steps();
+    if (!steps.includes(this.step)) this.step = steps[steps.indexOf('feats') + 1] ?? 'review';
+    const nav = steps.map((id, i) => ({
       id,
       number: i + 1,
       label: localize(`builder.steps.${id}`),
@@ -283,11 +325,11 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     return Object.assign(context, {
       appId: this.id,
       step: index,
-      stepNumber: BUILDER_STEPS.indexOf(index) + 1,
-      stepCount: BUILDER_STEPS.length,
+      stepNumber: steps.indexOf(index) + 1,
+      stepCount: steps.length,
       nav,
       summary,
-      isFirst: index === BUILDER_STEPS[0],
+      isFirst: index === steps[0],
       isReview: index === 'review',
       canApply: this.#isComplete('review') && !this.busy,
       busy: this.busy,
@@ -296,7 +338,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
         index === 'review'
           ? null
           : localize('builder.next', {
-              step: localize(`builder.steps.${BUILDER_STEPS[BUILDER_STEPS.indexOf(index) + 1]}`)
+              step: localize(`builder.steps.${steps[steps.indexOf(index) + 1]}`)
             }),
       ...(await this.#stepContext(index))
     });
@@ -503,6 +545,9 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
           noFeatSlots: slots.length === 0
         };
 
+      case 'spells':
+        return this.#spellContext();
+
       case 'languages': {
         const classSlug = sources.class?.system.slug;
         const deities = abc.deity
@@ -645,6 +690,50 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     };
   }
 
+  #spellContext() {
+    const sp = this.view.spells;
+    if (!sp) return { spellStep: true, heading: localize('builder.spells.heading') };
+    const slots = slotsAt(sp.rules, 1);
+    const slotChips = Object.entries(slots)
+      .filter(([, n]) => n > 0)
+      .map(([rank, n]) => ({
+        label: Number(rank) === 0 ? localize('spells.cantrips') : localize('spells.rank', { rank }),
+        count: n
+      }));
+    const known = new Set();
+    return {
+      spellStep: true,
+      heading: localize('builder.spells.heading'),
+      hint: localize(`builder.spells.hint.${sp.rules.preparation}`, { className: this.view.sources.class.name }),
+      traditionChoice: sp.rules.tradition
+        ? null
+        : {
+            source: sp.rules.traditionSource ?? 'other',
+            hint: localize('builder.spells.traditionHint', { className: this.view.sources.class.name }),
+            options: TRADITIONS.map((t) => ({
+              value: t,
+              label: game.i18n.localize(CONFIG.PF2E.magicTraditions?.[t] ?? t),
+              selected: t === sp.tradition
+            }))
+          },
+      slotChips,
+      slotNote: localize('builder.spells.slotNote'),
+      preparedNote: sp.picks.length === 0 ? localize('builder.spells.preparedNote') : null,
+      needTradition: !sp.tradition,
+      spellGroups: sp.tradition
+        ? spellPickerView({
+            picks: sp.picks,
+            index: this.data.spells,
+            selection: this.build.spells,
+            tradition: sp.tradition,
+            known,
+            hiddenRarities: hiddenRarities(),
+            search: this.filters.spellSearch
+          })
+        : []
+    };
+  }
+
   #reviewContext(sources, preview) {
     const s = this.build;
     const rows = [
@@ -670,6 +759,19 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
         label: localize('builder.review.feats'),
         value: Object.values(s.feats).map((f) => f.name).join(', ') || '—'
       },
+      ...(this.view.spells?.tradition
+        ? [
+            {
+              label: localize('builder.review.spells'),
+              value:
+                Object.values(this.build.spells)
+                  .flat()
+                  .map((uuid) => this.data.spells.find((x) => x.uuid === uuid)?.name)
+                  .filter(Boolean)
+                  .join(', ') || localize('builder.review.spellsPrepared')
+            }
+          ]
+        : []),
       {
         label: localize('builder.review.languages'),
         value: (preview.system.details?.languages?.value ?? [])
@@ -705,6 +807,12 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       this.build.name = event.currentTarget.value.trim();
       this.render({ parts: ['body'] });
     });
+    bindSpellSearch(htmlElement, this.filters.spellSearch);
+    htmlElement.querySelector('[data-spell-tradition]')?.addEventListener('change', (event) => {
+      this.build.spellTradition = event.currentTarget.value || null;
+      this.build.spells = {};
+      this.render();
+    });
     htmlElement.querySelector('[data-builder-deity]')?.addEventListener('change', (event) => {
       this.build.deity = event.currentTarget.value || null;
       this.render();
@@ -716,7 +824,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   /* -------------------------------------------- */
 
   #go(step) {
-    if (!BUILDER_STEPS.includes(step)) return;
+    if (!this.#steps().includes(step)) return;
     this.step = step;
     this.render();
   }
@@ -726,11 +834,13 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   }
 
   static #onNext() {
-    this.#go(BUILDER_STEPS[BUILDER_STEPS.indexOf(this.step) + 1]);
+    const steps = this.#steps();
+    this.#go(steps[steps.indexOf(this.step) + 1]);
   }
 
   static #onBack() {
-    this.#go(BUILDER_STEPS[BUILDER_STEPS.indexOf(this.step) - 1]);
+    const steps = this.#steps();
+    this.#go(steps[steps.indexOf(this.step) - 1]);
   }
 
   static #onPick(event, target) {
@@ -754,6 +864,8 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       s.keyAttribute = null;
       s.skills = [];
       s.feats = {};
+      s.spells = {};
+      s.spellTradition = null;
     }
     this.render();
   }
@@ -861,6 +973,12 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     else await selector.render({ force: true });
   }
 
+  static #onToggleSpell(event, target) {
+    const picks = this.view?.spells?.picks ?? [];
+    this.build.spells = toggleSpell(this.build.spells, picks, target.dataset.pick, target.dataset.uuid);
+    this.render({ parts: ['body', 'nav', 'footer'] });
+  }
+
   static #onClearFeat(event, target) {
     delete this.build.feats[target.dataset.slotKey];
     this.render();
@@ -874,7 +992,18 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       const picks = Object.fromEntries(
         Object.entries(this.build.feats).filter(([, pick]) => pick)
       );
-      const done = await applyBuild(this.actor, this.build, picks);
+      const sp = this.view?.spells;
+      const spellPlan = sp
+        ? {
+            rules: sp.rules,
+            slug: sp.slug,
+            tradition: sp.tradition,
+            className: this.view.sources.class?.name,
+            attribute: this.view.sources.class?.system.keyAbility?.selected,
+            selection: this.build.spells
+          }
+        : null;
+      const done = await applyBuild(this.actor, this.build, picks, spellPlan);
       if (done) {
         await this.close();
         this.actor.sheet?.render(true);

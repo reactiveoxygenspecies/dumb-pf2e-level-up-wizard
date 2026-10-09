@@ -33,7 +33,8 @@
         "potency": "Skill potency",
         "review": "Review",
         "complete": "complete",
-        "optional": "optional"
+        "optional": "optional",
+        "spells": "Spells"
       },
       "rail": {
         "label": "Level-up summary",
@@ -162,6 +163,16 @@
       },
       "tooltips": {
         "sendToChat": "Post to chat"
+      },
+      "spells": {
+        "header": "Spells",
+        "managed": "Slots and spells are kept up to date in {entry}.",
+        "setupHint": "{className} spellcasting isn't set up by the module yet. Set it up to get the entry, its slots and your spells added automatically.",
+        "setup": "Set up spellcasting",
+        "tradition": "Spell tradition",
+        "slots": "Spell slot changes",
+        "noPicks": "No spells to choose at this level: you prepare from the full list each day.",
+        "newEntry": "{className} spellcasting entry"
       }
     },
     "selector": {
@@ -240,7 +251,8 @@
       "byHandHint": "The same list is whispered to you in chat after applying.",
       "safe": "Safe to apply",
       "safeHint": "Everything is applied in one step. Changed your mind later? Undo it from the level-up history.",
-      "chat": "Chat will show"
+      "chat": "Chat will show",
+      "spells": "Spells"
     },
     "settings": {
       "showButton": {
@@ -330,7 +342,8 @@
         "boosts": "Attribute boosts:",
         "languages": "Languages:",
         "potency": "Skill potency:",
-        "noChoices": "No new choices at this level."
+        "noChoices": "No new choices at this level.",
+        "spells": "New spells:"
       },
       "personal": {
         "header": "{actorName}: still to do",
@@ -378,7 +391,8 @@
         "feats": "Feats",
         "languages": "Languages",
         "review": "Review",
-        "deity": "Deity"
+        "deity": "Deity",
+        "spells": "Spells"
       },
       "next": "Next: {step}",
       "back": "Back",
@@ -490,7 +504,9 @@
         "replaces": "These items already on the sheet will be replaced:",
         "levelNote": "The character is level {level}. Creating sets it to level 1; use the level-up wizard afterwards.",
         "prompts": "The system may ask a few follow-up questions while the character is created, such as your background's skill or your class's specialisation.",
-        "undo": "You can undo this from the level-up history."
+        "undo": "You can undo this from the level-up history.",
+        "spells": "Spells",
+        "spellsPrepared": "Prepared daily from the full list"
       },
       "notifications": {
         "failed": "The character could not be created and the changes were undone. See the console (F12) for details.",
@@ -498,7 +514,33 @@
       },
       "chat": {
         "header": "{actorName} has joined the adventure!"
+      },
+      "spells": {
+        "heading": "Spells",
+        "hint": {
+          "prepared": "As a {className} you prepare spells. Pick the spells you start with; you prepare from them each day.",
+          "spontaneous": "As a {className} you cast spontaneously from your repertoire. Pick the spells you know."
+        },
+        "tradition": "Spell tradition",
+        "traditionHint": "A {className}'s tradition comes from a level-1 choice. Pick the one that matches it.",
+        "chooseTradition": "Choose a tradition",
+        "slots": "Spell slots at level 1",
+        "slotNote": "The spellcasting entry and its slots are added to the sheet for you, and kept up to date at each level-up.",
+        "preparedNote": "You prepare from every common spell of your tradition each day, so there is nothing to pick now. The entry and its slots are added for you."
       }
+    },
+    "spells": {
+      "cantrips": "Cantrips",
+      "cantrip": "Cantrip",
+      "rank": "Rank {rank}",
+      "rankShort": "Rank {rank}",
+      "anyRank": "Spells of any rank up to {rank}",
+      "counter": "{chosen} of {count}",
+      "search": "Search spells",
+      "none": "No spells match. Check the tradition or the compendium settings.",
+      "read": "Read the spell",
+      "entryName": "{className} Spells",
+      "rankRange": "Spells of rank {min} to {max}"
     }
   }
 }

@@ -1,0 +1,41 @@
+<div class="lvl-spells">
+  {{#each spellGroups}}
+    <details class="lvl-spell-group {{#if complete}}complete{{/if}}" data-spell-group="{{key}}" data-sync="spells-{{key}}" {{#unless complete}}open{{/unless}}>
+      <summary>
+        <span class="lvl-spell-group-name">{{label}}</span>
+        <span class="lvl-spell-counter {{#if complete}}done{{/if}}">
+          {{#if complete}}<i class="fa-solid fa-check" aria-hidden="true"></i>{{/if}}
+          {{localize 'NEXT_LEVEL_UP_WIZARD.spells.counter' chosen=chosenCount count=count}}
+        </span>
+      </summary>
+      <label class="lvl-spell-search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input type="search" data-spell-search="{{key}}" value="{{search}}"
+          placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.search'}}"
+          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.search'}}">
+      </label>
+      {{#if empty}}
+        <p class="lvl-spell-empty">{{localize 'NEXT_LEVEL_UP_WIZARD.spells.none'}}</p>
+      {{else}}
+        <ul class="lvl-spell-list">
+          {{#each rows}}
+            <li class="lvl-spell-row {{#if chosen}}chosen{{/if}}" data-spell-row data-search="{{searchText}}" {{#if hidden}}hidden{{/if}}>
+              <button type="button" class="lvl-spell-toggle" data-action="toggleSpell" data-pick="{{../key}}" data-uuid="{{uuid}}"
+                aria-pressed="{{#if chosen}}true{{else}}false{{/if}}" {{#if disabled}}disabled{{/if}}>
+                <span class="lvl-spell-check" aria-hidden="true">{{#if chosen}}<i class="fa-solid fa-check"></i>{{/if}}</span>
+                <img src="{{img}}" alt="" loading="lazy">
+                <span class="lvl-spell-name">{{name}}</span>
+                {{#if rarityLabel}}<span class="lvl-spell-rarity {{rarity}}">{{rarityLabel}}</span>{{/if}}
+                <span class="lvl-spell-rank">{{rankLabel}}</span>
+              </button>
+              <a class="lvl-spell-open content-link" data-link data-uuid="{{uuid}}" data-type="Item"
+                data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.read'}}" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.read'}}: {{name}}">
+                <i class="fa-solid fa-book-open"></i>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </details>
+  {{/each}}
+</div>

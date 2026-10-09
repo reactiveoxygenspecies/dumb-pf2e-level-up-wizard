@@ -50,7 +50,10 @@ export class LevelUpHistory extends HandlebarsApplicationMixin(ApplicationV2) {
             label: localize('history.boost', { attribute: b })
           })),
           ...(summary.languages ?? []).map((l) => ({ label: l })),
-          ...(summary.potency ?? []).map((p) => ({ label: `${p.label} +${p.value}` }))
+          ...(summary.potency ?? []).map((p) => ({ label: `${p.label} +${p.value}` })),
+          ...(summary.spells ?? []).map((s) =>
+            typeof s === 'string' ? { label: s } : { label: s.name, uuid: s.uuid }
+          )
         ];
         return {
           id: entry.id,
