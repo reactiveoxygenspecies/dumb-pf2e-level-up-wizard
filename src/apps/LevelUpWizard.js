@@ -66,6 +66,7 @@ import {
   chooseLayout,
   formatNumber,
   glyphView,
+  gmApprovalPill,
   groupType,
   joinList,
   languageChips,
@@ -853,6 +854,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       browse: localize('menu.feats.browse', { group: slot.groupLabel })
     };
     if (pick) {
+      row.gmPill = gmApprovalPill(pick.rarity);
       row.glyph = glyphView(pick.actionType, pick.actions);
       row.traits = (pick.traits ?? []).slice(0, 3).map((t) =>
         game.i18n.localize(CONFIG.PF2E.featTraits?.[t] ?? t)

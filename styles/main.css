@@ -561,6 +561,20 @@
   color: var(--lvl-unknown);
 }
 
+.dumb-pf2e-level-up-wizard .lvl-pill.status-gm {
+  background: var(--lvl-crimson-tint);
+  color: var(--lvl-crimson);
+}
+
+/* A prerequisite pill and an "Ask GM" pill side by side */
+.dumb-pf2e-level-up-wizard .pill-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
+}
+
 .dumb-pf2e-level-up-wizard .lvl-pill i {
   flex: none;
   font-size: 0.85em;
@@ -1916,10 +1930,13 @@
   font-size: 13px;
 }
 
-.lvlup-feat-selector .feat-row .lvl-pill {
+.lvlup-feat-selector .feat-row .pill-group {
   flex: 0 1 auto;
-  min-width: 0;
   max-width: 55%;
+}
+
+.lvlup-feat-selector .feat-row .lvl-pill {
+  min-width: 0;
   font-size: 13px;
 }
 
@@ -1984,6 +2001,16 @@
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 8px;
+}
+
+.lvlup-feat-selector .feat-details .gm-note {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 10px 0 0;
+  color: var(--lvl-ink-muted);
+  font-size: 13px;
 }
 
 .lvlup-feat-selector .prereq-box {

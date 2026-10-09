@@ -125,7 +125,9 @@
       "unknown": "Niektórych wymagań wstępnych nie można sprawdzić automatycznie",
       "dedicationRule": "Najpierw dwa inne atuty z archetypu {dedication} (masz: {count})",
       "reincarnated": "Tylko dla postaci, która przynajmniej raz się reinkarnowała",
-      "noAncestry": "Niezwiązany z żadnym pochodzeniem: sprawdź, kto może go wziąć"
+      "noAncestry": "Niezwiązany z żadnym pochodzeniem: sprawdź, kto może go wziąć",
+      "askGm": "Zapytaj MG",
+      "askGmHint": "Atuty rzadkie i niepowszechne wymagają zgody MG"
     },
     "history": {
       "title": "Historia awansów",

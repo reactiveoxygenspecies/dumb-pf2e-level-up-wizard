@@ -125,7 +125,9 @@
       "unknown": "部分先决条件无法自动检查",
       "dedicationRule": "需先获得{dedication}变体的另外两个专长（当前：{count}）",
       "reincarnated": "仅限至少转世过一次的角色",
-      "noAncestry": "未绑定任何族裔：请确认谁可以选择"
+      "noAncestry": "未绑定任何族裔：请确认谁可以选择",
+      "askGm": "询问GM",
+      "askGmHint": "非常见和稀有专长需要GM批准"
     },
     "history": {
       "title": "升级历史",

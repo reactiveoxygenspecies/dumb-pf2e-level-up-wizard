@@ -1,7 +1,7 @@
 import { MODULE_ID, TEMPLATE_PATH } from '../constants.js';
 import { sendFeatToChat } from '../helpers/chat.js';
 import { enrichHTML, escapeHTML, localize } from '../helpers/utility.js';
-import { glyphView, prereqPill, prereqTooltip } from './wizardView.js';
+import { glyphView, gmApprovalPill, prereqPill, prereqTooltip } from './wizardView.js';
 import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
@@ -324,6 +324,7 @@ export class FeatSelector extends LightThemeMixin(HandlebarsApplicationMixin(App
           subtitle: this.#subtitle(c),
           glyph: glyphView(c.actionType, c.actions),
           pill,
+          gmPill: gmApprovalPill(c.rarity),
           unmet: c.prereq?.status === 'unmet',
           pillTooltip: pill ? prereqTooltip(c.prereq, escapeHTML) : ''
         };
@@ -351,6 +352,7 @@ export class FeatSelector extends LightThemeMixin(HandlebarsApplicationMixin(App
           ? prereqPill(feat.prereq, feat.prerequisites)
           : null;
         context.prereqStatus = pill?.status ?? null;
+        context.gmPill = gmApprovalPill(feat.rarity);
         context.prereqLines = (feat.prereq?.results ?? []).map((r) => ({
           ...r,
           icon: this.#statusIcon(r.status)

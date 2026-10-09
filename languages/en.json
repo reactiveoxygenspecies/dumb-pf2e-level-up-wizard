@@ -218,7 +218,9 @@
       "check": "Check yourself",
       "dedicationRule": "Two other feats from your {dedication} archetype first (you have {count})",
       "reincarnated": "Only for a character who has reincarnated at least once",
-      "noAncestry": "Not tied to an ancestry: check who can take it"
+      "noAncestry": "Not tied to an ancestry: check who can take it",
+      "askGm": "Ask GM",
+      "askGmHint": "Uncommon and rare feats need your GM's approval"
     },
     "history": {
       "title": "Level-Up History",

@@ -145,6 +145,17 @@ export const prereqPill = (verdict, prerequisites = [], short = false) => {
   return { status, text, icon: STATUS_ICONS[status] ?? STATUS_ICONS.unknown };
 };
 
+/** "Ask GM" pill for an uncommon, rare or unique feat; shown beside the prerequisite pill */
+export const gmApprovalPill = (rarity) =>
+  rarity && rarity !== 'common'
+    ? {
+        status: 'gm',
+        text: localize('prerequisites.askGm'),
+        tooltip: localize('prerequisites.askGmHint'),
+        icon: 'fa-dice-d20'
+      }
+    : null;
+
 /** HTML tooltip listing every prerequisite with its verdict; `esc` escapes the lines */
 export const prereqTooltip = (verdict, esc) => {
   if (!verdict) return '';

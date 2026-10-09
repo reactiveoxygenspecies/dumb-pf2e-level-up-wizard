@@ -10,7 +10,7 @@ globalThis.game = {
   }
 };
 
-const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips, withTraitRequirements } =
+const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips, withTraitRequirements, gmApprovalPill } =
   await import('../src/apps/wizardView.js');
 
 test('a level with two feats stays on one page', () => {
@@ -100,4 +100,14 @@ test('an ancestry feat with no traits is a check only when nothing else can be c
   assert.equal(withTraitRequirements(unmet, untraited, ctx), unmet);
   // a general feat without traits is not an ancestry question
   assert.equal(withTraitRequirements(none, { category: 'general', traits: [] }, ctx), none);
+});
+
+test('uncommon, rare and unique feats get an Ask GM pill beside the fit pill', () => {
+  assert.equal(gmApprovalPill('common'), null);
+  assert.equal(gmApprovalPill(undefined), null);
+  for (const rarity of ['uncommon', 'rare', 'unique']) {
+    const pill = gmApprovalPill(rarity);
+    assert.equal(pill.status, 'gm');
+    assert.equal(pill.text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.askGm');
+  }
 });

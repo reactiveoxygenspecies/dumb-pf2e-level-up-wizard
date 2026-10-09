@@ -2,12 +2,20 @@
   <div class="slot-top">
     <span class="lvl-pill type-{{type}}">{{slotTitle}}</span>
     {{#if pick}}
-      {{#if prereq}}
-        <span class="lvl-pill status-{{prereq.status}}" data-tooltip="{{prereq.tooltip}}">
-          <i class="fa-solid {{prereq.icon}}" aria-hidden="true"></i>
-          <span class="pill-text">{{prereq.text}}</span>
-        </span>
-      {{/if}}
+      <span class="pill-group">
+        {{#if prereq}}
+          <span class="lvl-pill status-{{prereq.status}}" data-tooltip="{{prereq.tooltip}}">
+            <i class="fa-solid {{prereq.icon}}" aria-hidden="true"></i>
+            <span class="pill-text">{{prereq.text}}</span>
+          </span>
+        {{/if}}
+        {{#if gmPill}}
+          <span class="lvl-pill status-gm" data-tooltip="{{gmPill.tooltip}}">
+            <i class="fa-solid {{gmPill.icon}}" aria-hidden="true"></i>
+            <span class="pill-text">{{gmPill.text}}</span>
+          </span>
+        {{/if}}
+      </span>
     {{/if}}
   </div>
   {{#if pick}}
