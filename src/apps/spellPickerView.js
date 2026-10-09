@@ -69,6 +69,38 @@ export const trimSpellSelection = (selection, picks) =>
       .map((p) => [p.key, selection[p.key].slice(0, p.count)])
   );
 
+/**
+ * Scroll offsets of each group's list and the focused spell button. The app only keeps the scroll of
+ * its main pane, so without this a pick sends every list back to the top.
+ */
+export const captureSpellScroll = (root) => {
+  if (!root) return null;
+  const lists = {};
+  root.querySelectorAll('[data-spell-group]').forEach((group) => {
+    const list = group.querySelector('.lvl-spell-list');
+    if (list) lists[group.dataset.spellGroup] = list.scrollTop;
+  });
+  const active = root.ownerDocument.activeElement;
+  const focus = active?.matches?.('[data-action="toggleSpell"]') && root.contains(active)
+    ? { pick: active.dataset.pick, uuid: active.dataset.uuid }
+    : null;
+  return { lists, focus };
+};
+
+export const restoreSpellScroll = (root, saved) => {
+  if (!root || !saved) return;
+  for (const [key, top] of Object.entries(saved.lists)) {
+    const list = root.querySelector(`[data-spell-group="${CSS.escape(key)}"] .lvl-spell-list`);
+    if (list) list.scrollTop = top;
+  }
+  if (saved.focus) {
+    const { pick, uuid } = saved.focus;
+    root
+      .querySelector(`[data-action="toggleSpell"][data-pick="${CSS.escape(pick)}"][data-uuid="${CSS.escape(uuid)}"]`)
+      ?.focus({ preventScroll: true });
+  }
+};
+
 /** Attach search filtering to a rendered picker; filtering only hides rows, no re-render */
 export const bindSpellSearch = (root, searchState) => {
   root.querySelectorAll('[data-spell-search]').forEach((input) => {

@@ -20,7 +20,14 @@ import {
   slotChanges,
   spellPicks
 } from '../data/spellcasting.js';
-import { bindSpellSearch, spellPickerView, toggleSpell, trimSpellSelection } from './spellPickerView.js';
+import {
+  bindSpellSearch,
+  captureSpellScroll,
+  restoreSpellScroll,
+  spellPickerView,
+  toggleSpell,
+  trimSpellSelection
+} from './spellPickerView.js';
 import {
   SPELL_HINT_PATTERN,
   describeBoosts,
@@ -1286,9 +1293,15 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     this.selection[key] = Array.from({ length }, (_, i) => current[i] ?? '');
   }
 
+  async _preRender(context, options) {
+    await super._preRender(context, options);
+    this.spellScroll = captureSpellScroll(this.element);
+  }
+
   _attachPartListeners(partId, htmlElement, options) {
     super._attachPartListeners(partId, htmlElement, options);
     if (partId !== 'body') return;
+    restoreSpellScroll(htmlElement, this.spellScroll);
     bindSpellSearch(htmlElement, this.spellSearch);
     htmlElement.querySelector('[data-spell-tradition]')?.addEventListener('change', (event) => {
       this.selection.spellTradition = event.currentTarget.value || null;

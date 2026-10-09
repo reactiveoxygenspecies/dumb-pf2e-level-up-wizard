@@ -27,7 +27,14 @@ import {
   slotsAt,
   spellPicks
 } from '../data/spellcasting.js';
-import { bindSpellSearch, spellPickerView, toggleSpell, trimSpellSelection } from './spellPickerView.js';
+import {
+  bindSpellSearch,
+  captureSpellScroll,
+  restoreSpellScroll,
+  spellPickerView,
+  toggleSpell,
+  trimSpellSelection
+} from './spellPickerView.js';
 import {
   buildIndexLookups,
   getCandidatesForSlot,
@@ -790,9 +797,15 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     };
   }
 
+  async _preRender(context, options) {
+    await super._preRender(context, options);
+    this.spellScroll = captureSpellScroll(this.element);
+  }
+
   _attachPartListeners(partId, htmlElement, options) {
     super._attachPartListeners(partId, htmlElement, options);
     if (partId !== 'body') return;
+    restoreSpellScroll(htmlElement, this.spellScroll);
     const search = htmlElement.querySelector('[data-builder-search]');
     search?.addEventListener('input', (event) => {
       const kind = event.currentTarget.dataset.builderSearch;
