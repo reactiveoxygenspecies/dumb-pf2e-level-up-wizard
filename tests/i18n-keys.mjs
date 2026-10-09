@@ -32,6 +32,13 @@ for (const file of walk(join(root, 'src')).filter((f) => f.endsWith('.js'))) {
   }
   for (const m of text.matchAll(/['"`](NEXT_LEVEL_UP_WIZARD\.[\w.-]+)['"`]/g)) used.add(m[1]);
 }
+// Keys picked indirectly (stored in a variable first): any string literal that is exactly a defined key
+for (const file of walk(join(root, 'src')).filter((f) => f.endsWith('.js'))) {
+  const text = readFileSync(file, 'utf8');
+  for (const m of text.matchAll(/'([a-z][\w-]*(?:\.[\w-]+)+)'/g)) {
+    if (defined.has(`${PREFIX}.${m[1]}`)) used.add(`${PREFIX}.${m[1]}`);
+  }
+}
 for (const file of walk(join(root, 'templates'))) {
   const text = readFileSync(file, 'utf8');
   for (const m of text.matchAll(/'(NEXT_LEVEL_UP_WIZARD\.[\w.-]+)'/g)) used.add(m[1]);

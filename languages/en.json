@@ -215,7 +215,8 @@
       "undoTitle": "Undo Level-Up",
       "undoConfirm": "Undo the last level-up of {actorName}? The feats it added are removed and the level goes back from {fromLevel} to {toLevel}. Skill ranks, attribute boosts, languages and XP are restored.",
       "undoConfirmManual": "Undo the last level-up of {actorName}? The feats it added are removed, and skill ranks, attribute boosts, languages and XP are restored. The level stays at {fromLevel} because it was changed by hand.",
-      "built": "Character created"
+      "built": "Character created",
+      "undoConfirmBuild": "Undo the character build of {actorName}? Everything the builder added is removed: ancestry, heritage, background, class, deity, feats, trained skills, boosts and languages."
     },
     "review": {
       "title": "Review level {level}",
@@ -451,7 +452,8 @@
           "class": "from class",
           "background": "from background",
           "other": "already trained"
-        }
+        },
+        "backgroundChoice": "{background} trains one of these skills: choose it first"
       },
       "feats": {
         "heading": "Level-1 feats",

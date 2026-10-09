@@ -98,6 +98,17 @@
     {{/if}}
 
     {{! Skills }}
+    {{#if backgroundChoice}}
+      <section class="lvlb-section lvlb-background-skill {{#unless backgroundChoice.chosen}}open{{/unless}}">
+        <h2>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.skills.backgroundChoice' background=backgroundChoice.name}}</h2>
+        <div class="lvlb-chips">
+          {{#each backgroundChoice.options}}
+            <button type="button" class="lvlb-chip" data-action="backgroundSkill" data-skill="{{slug}}"
+              aria-pressed="{{#if selected}}true{{else}}false{{/if}}">{{label}}</button>
+          {{/each}}
+        </div>
+      </section>
+    {{/if}}
     {{#if skillGrid}}
       <p class="lvlb-counter">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.skills.counter' chosen=skillChosen count=skillCount}}</p>
       {{#if overlapNote}}<p class="lvlb-note">{{overlapNote}}</p>{{/if}}
@@ -111,7 +122,7 @@
           </button>
         {{/each}}
       </div>
-      <p class="lvlb-hint">{{backgroundNote}}</p>
+      {{#if backgroundNote}}<p class="lvlb-hint">{{backgroundNote}}</p>{{/if}}
     {{/if}}
 
     {{! Feats }}

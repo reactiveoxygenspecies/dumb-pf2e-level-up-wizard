@@ -35,6 +35,7 @@ export const createBuildState = (actor) => {
     ancestryPicks: existingPicks(actor.ancestry, 'system.boosts'),
     alternateBoosts: [...(actor.ancestry?._source.system.alternateAncestryBoosts ?? [])],
     backgroundPicks: existingPicks(actor.background, 'system.boosts'),
+    backgroundSkill: null,
     keyAttribute: actor.class?._source.system.keyAbility?.selected ?? null,
     level1: [...(build.boosts?.[1] ?? [])],
     skills: [],
@@ -137,7 +138,14 @@ export const buildSources = async (state) => {
       flaw.selected = flaw.value?.length === 1 ? flaw.value[0] : null;
     }
   }
-  if (sources.background) applyBoostChoices(sources.background.system.boosts, state.backgroundPicks);
+  if (sources.background) {
+    applyBoostChoices(sources.background.system.boosts, state.backgroundPicks);
+    // A pre-filled choice makes the system skip its prompt (and carries over to granted feats)
+    const choice = backgroundSkillChoice(sources.background);
+    if (choice && choice.options.includes(state.backgroundSkill)) {
+      sources.background.system.rules[choice.index].selection = state.backgroundSkill;
+    }
+  }
   if (sources.class) {
     const key = sources.class.system.keyAbility ?? {};
     key.selected = key.value?.length === 1 ? key.value[0] : (state.keyAttribute ?? null);
@@ -205,10 +213,31 @@ export const ancestryFlaws = (ancestrySource) =>
 export const backgroundBoostSlots = (backgroundSource, state) =>
   describeSlots(backgroundSource?.system.boosts, state.backgroundPicks);
 
+/**
+ * A background whose trained skill is a choice ("Arcana, Nature, Occultism or Religion"), made through a
+ * ChoiceSet rule. Returns the rule's index and the skill slugs it offers, or null.
+ */
+export const backgroundSkillChoice = (backgroundSource) => {
+  const skillSlugs = Object.keys(CONFIG.PF2E?.skills ?? {});
+  const rules = backgroundSource?.system?.rules ?? [];
+  const index = rules.findIndex(
+    (r) =>
+      r?.key === 'ChoiceSet' &&
+      Array.isArray(r.choices) &&
+      r.choices.length > 0 &&
+      r.choices.every((c) => skillSlugs.includes(c?.value))
+  );
+  if (index === -1) return null;
+  return { index, options: rules[index].choices.map((c) => c.value) };
+};
+
 /** Skills the class and background train on their own, and how many more the player picks */
 export const skillChoices = (preview, sources, state) => {
   const classSkills = sources.class?.system.trainedSkills?.value ?? [];
-  const backgroundSkills = sources.background?.system.trainedSkills?.value ?? [];
+  const backgroundSkills = [
+    ...(sources.background?.system.trainedSkills?.value ?? []),
+    ...(state.backgroundSkill ? [state.backgroundSkill] : [])
+  ];
   const overlap = classSkills.filter((s) => backgroundSkills.includes(s)).length;
   const additional = sources.class?.system.trainedSkills?.additional ?? 0;
   const intMod = preview.system.abilities?.int?.mod ?? 0;

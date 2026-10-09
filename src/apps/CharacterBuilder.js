@@ -7,6 +7,7 @@ import {
   ancestryFlaws,
   applyBuild,
   backgroundBoostSlots,
+  backgroundSkillChoice,
   boostProblems,
   buildPreview,
   buildSources,
@@ -87,6 +88,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       ancestryMode: CharacterBuilder.#onAncestryMode,
       boost: CharacterBuilder.#onBoost,
       skill: CharacterBuilder.#onSkill,
+      backgroundSkill: CharacterBuilder.#onBackgroundSkill,
       language: CharacterBuilder.#onLanguage,
       openFeatSelector: CharacterBuilder.#onOpenFeatSelector,
       clearFeat: CharacterBuilder.#onClearFeat,
@@ -211,13 +213,21 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
         return !!s.class;
       case 'boosts':
         return !!v && !!s.ancestry && !!s.background && !!s.class && boostProblems(s, v.sources).length === 0;
-      case 'skills':
-        return !!v && !!s.class && s.skills.length === v.skills.count;
+      case 'skills': {
+        const needsBackgroundSkill = !!backgroundSkillChoice(v?.sources.background);
+        return (
+          !!v &&
+          !!s.class &&
+          s.skills.length === v.skills.count &&
+          (!needsBackgroundSkill || !!s.backgroundSkill)
+        );
+      }
+      // Nothing to choose yet is not the same as done: these depend on earlier picks
       case 'feats':
-        return !!v && v.slots.every((slot) => s.feats[slot.key]);
+        return !!v && !!s.ancestry && !!s.class && v.slots.every((slot) => s.feats[slot.key]);
       case 'languages': {
         const deityOk = !DEITY_CLASSES.includes(v?.sources.class?.system.slug) || !!s.deity;
-        return !!v && deityOk;
+        return !!v && !!s.ancestry && !!s.class && deityOk;
       }
       case 'review':
         return BUILDER_STEPS.slice(0, -1).every((st) => this.#isComplete(st));
@@ -448,8 +458,20 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       case 'boosts':
         return this.#boostContext(sources, preview);
 
-      case 'skills':
+      case 'skills': {
+        const choice = backgroundSkillChoice(sources.background);
         return {
+          backgroundChoice: choice
+            ? {
+                name: sources.background.name,
+                chosen: !!s.backgroundSkill,
+                options: choice.options.map((slug) => ({
+                  slug,
+                  label: game.i18n.localize(CONFIG.PF2E.skills?.[slug]?.label ?? slug),
+                  selected: slug === s.backgroundSkill
+                }))
+              }
+            : null,
           heading: localize('builder.skills.heading'),
           hint: localize('builder.skills.hint', {
             count: skills.count,
@@ -465,8 +487,9 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
             fromLabel: sk.from ? localize(`builder.skills.from.${sk.from}`) : null,
             disabled: sk.locked || (!sk.chosen && s.skills.length >= skills.count)
           })),
-          backgroundNote: localize('builder.skills.backgroundNote')
+          backgroundNote: choice ? null : localize('builder.skills.backgroundNote')
         };
+      }
 
       case 'feats':
         return {
@@ -725,6 +748,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       s.feats = {};
     } else if (kind === 'background') {
       s.backgroundPicks = [];
+      s.backgroundSkill = null;
       s.skills = [];
     } else if (kind === 'class') {
       s.keyAttribute = null;
@@ -780,6 +804,15 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     } else if (row === 'level1') {
       s.level1 = toggle(s.level1, 4);
     }
+    this.render();
+  }
+
+  static #onBackgroundSkill(event, target) {
+    const slug = target.dataset.skill;
+    const s = this.build;
+    s.backgroundSkill = s.backgroundSkill === slug ? null : slug;
+    // The background now trains it, so it can't also be one of the extra picks
+    s.skills = s.skills.filter((x) => x !== s.backgroundSkill);
     this.render();
   }
 
