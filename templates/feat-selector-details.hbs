@@ -1,44 +1,55 @@
-<section class="feat-details">
+<aside class="feat-details" aria-label="{{#if feat}}{{feat.name}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.selector.detailsLabel'}}{{/if}}">
   {{#if feat}}
-    <header>
-      <img src="{{feat.img}}" alt="" loading="lazy">
-      <h2>
-        <a class="content-link" draggable="true" data-link data-uuid="{{feat.uuid}}" data-type="Item">{{feat.name}}</a>
-      </h2>
-      <span class="feat-level">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.level' level=feat.effectiveLevel}}</span>
-    </header>
-    <div class="tags paizo-style">
-      {{#if rarityLabel}}<span class="tag rarity {{feat.rarity}}">{{rarityLabel}}</span>{{/if}}
-      {{#each traitLabels}}<span class="tag">{{this}}</span>{{/each}}
+    <div class="details-scroll">
+      <header>
+        <div class="title-row">
+          <h2>
+            <a class="content-link" draggable="true" data-link data-uuid="{{feat.uuid}}" data-type="Item">{{feat.name}}</a>
+            {{#if glyph}}<span class="lvl-glyph" role="img" aria-label="{{glyph.label}}">{{glyph.char}}</span>{{/if}}
+          </h2>
+          <span class="feat-level">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.featLevel' level=feat.effectiveLevel}}</span>
+        </div>
+        <div class="trait-row">
+          {{#if rarityLabel}}<span class="lvl-chip rarity {{feat.rarity}}">{{rarityLabel}}</span>{{/if}}
+          {{#each traitLabels}}<span class="lvl-chip">{{this}}</span>{{/each}}
+        </div>
+      </header>
+      {{#if feat.grantedBy}}
+        <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.grantedBy' dedication=feat.grantedByName}}</p>
+      {{/if}}
+      {{#if feat.prerequisites.length}}
+        <div class="prereq-box status-{{#if prereqStatus}}{{prereqStatus}}{{else}}plain{{/if}}">
+          <div class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.prerequisites'}}</div>
+          <ul>
+            {{#if prereqLines.length}}
+              {{#each prereqLines}}
+                <li class="prereq-line {{status}}">
+                  <i class="fa-solid {{icon}}" aria-hidden="true"></i>
+                  <span>{{text}}</span>
+                  <span class="sr-only">{{#if (lvlupEq status 'met')}}{{localize 'NEXT_LEVEL_UP_WIZARD.prerequisites.met'}}{{else if (lvlupEq status 'unmet')}}{{localize 'NEXT_LEVEL_UP_WIZARD.prerequisites.unmet'}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.prerequisites.check'}}{{/if}}</span>
+                </li>
+              {{/each}}
+            {{else}}
+              {{#each feat.prerequisites}}<li class="prereq-line"><span>{{this}}</span></li>{{/each}}
+            {{/if}}
+          </ul>
+        </div>
+      {{/if}}
+      <div class="description">{{{description}}}</div>
+      {{#if feat.publication}}<p class="publication">{{feat.publication}}</p>{{/if}}
     </div>
-    {{#if feat.grantedBy}}
-      <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.grantedBy' dedication=feat.grantedByName}}</p>
-    {{/if}}
-    {{#if feat.prerequisites.length}}
-      <div class="prerequisites">
-        <strong>{{localize 'NEXT_LEVEL_UP_WIZARD.selector.prerequisites'}}</strong>
-        <ul>
-          {{#if prereqLines.length}}
-            {{#each prereqLines}}
-              <li class="prereq-line {{status}}"><i class="prereq {{status}} {{icon}}"></i> {{text}}</li>
-            {{/each}}
-          {{else}}
-            {{#each feat.prerequisites}}<li>{{this}}</li>{{/each}}
-          {{/if}}
-        </ul>
-      </div>
-    {{/if}}
-    <div class="description">{{{description}}}</div>
-    {{#if feat.publication}}<p class="publication">{{feat.publication}}</p>{{/if}}
-    <footer>
-      <button type="button" data-action="select" data-uuid="{{feat.uuid}}" {{#if featTakenElsewhere}}disabled{{/if}}>
-        <i class="fa-solid fa-check"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.selector.choose'}}
+    <footer class="details-actions">
+      <button type="button" name="choose" class="lvl-btn primary large" data-action="select" data-uuid="{{feat.uuid}}" {{#if featTakenElsewhere}}disabled{{/if}}>
+        {{localize 'NEXT_LEVEL_UP_WIZARD.selector.chooseNamed' name=feat.name}}
+      </button>
+      <button type="button" name="chat" class="lvl-btn" data-action="sendToChat" data-uuid="{{feat.uuid}}">
+        {{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}
       </button>
     </footer>
   {{else}}
     <p class="placeholder">
-      <i class="fa-solid fa-hand-pointer"></i>
+      <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
       {{localize 'NEXT_LEVEL_UP_WIZARD.selector.pickHint'}}
     </p>
   {{/if}}
-</section>
+</aside>

@@ -11,6 +11,7 @@ import {
 } from '../data/featSlots.js';
 import { getFeatIndex } from '../data/featIndex.js';
 import {
+  SPELL_HINT_PATTERN,
   describeBoosts,
   describeSkillOption,
   getBoostSets,
@@ -22,7 +23,8 @@ import {
   getSkillOptions,
   getSkillPotency,
   getSpellcastingReminders,
-  maxSkillRankForLevel
+  maxSkillRankForLevel,
+  xpInfo
 } from '../data/plan.js';
 import { applyLevelUp, canUndo, getHistory, undoLastLevelUp } from '../data/apply.js';
 import {
@@ -30,13 +32,30 @@ import {
   buildPrereqContext,
   evaluatePrerequisites
 } from '../helpers/prerequisites.js';
-import { escapeHTML, localize, rankLabel } from '../helpers/utility.js';
-import { FeatSelector } from './FeatSelector.js';
+import { attributeLabel, escapeHTML, localize, rankLabel, signedNumber } from '../helpers/utility.js';
+import { FeatSelector, hiddenRarities } from './FeatSelector.js';
 import { LevelUpHistory } from './LevelUpHistory.js';
+import {
+  chooseLayout,
+  formatNumber,
+  glyphView,
+  groupType,
+  joinList,
+  languageChips,
+  mergeSkillChanges,
+  prereqPill,
+  prereqTooltip,
+  rankDots
+} from './wizardView.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
-const RANK_CLASSES = ['untrained', 'trained', 'expert', 'master', 'legendary'];
+const PARTIALS = ['rail', 'review', 'skill-grid'].map(
+  (name) => `${TEMPLATE_PATH}/partials/wizard-${name}.hbs`
+);
+
+const POTENCY_KEYS = ['newBoost', 'upgradeTo2', 'upgradeTo3'];
+const POTENCY_VALUES = { newBoost: 1, upgradeTo2: 2, upgradeTo3: 3 };
 
 export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
   /**
@@ -67,8 +86,20 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       potency: {}
     };
     this.showMissed = false;
+    this.showAllLanguages = false;
     this.submitting = false;
+    /** Current step: 'choices' (single page), a step key (stepped layout) or 'review' */
+    this.step = null;
+    this.stepKeys = [];
+    this.lastChoiceStep = null;
+    this.reviewBlocked = false;
+    this.#cache = { fit: new Map(), fitQueued: new Set(), hp: null, spellHints: new Map() };
   }
+
+  /** Derived values that are expensive to compute and only change with the selection */
+  #cache;
+  #pendingFit = new Set();
+  #stepChanged = false;
 
   static DEFAULT_OPTIONS = {
     classes: [MODULE_ID, 'lvlup-wizard'],
@@ -77,7 +108,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       icon: 'fa-solid fa-hat-wizard',
       resizable: true
     },
-    position: { width: 660, height: 'auto' },
+    position: { width: 960, height: 780 },
     form: {
       handler: LevelUpWizard.#onSubmit,
       submitOnChange: false,
@@ -88,15 +119,25 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       clearFeat: LevelUpWizard.#onClearFeat,
       toggleBoost: LevelUpWizard.#onToggleBoost,
       toggleMissed: LevelUpWizard.#onToggleMissed,
+      pickSkill: LevelUpWizard.#onPickSkill,
+      toggleLanguage: LevelUpWizard.#onToggleLanguage,
+      clearLanguages: LevelUpWizard.#onClearLanguages,
+      toggleAllLanguages: LevelUpWizard.#onToggleAllLanguages,
+      goStep: LevelUpWizard.#onGoStep,
+      nextStep: LevelUpWizard.#onNextStep,
+      prevStep: LevelUpWizard.#onPrevStep,
+      review: LevelUpWizard.#onReview,
+      backToChoices: LevelUpWizard.#onBackToChoices,
       openHistory: LevelUpWizard.#onOpenHistory,
       undo: LevelUpWizard.#onUndo
     }
   };
 
   static PARTS = {
-    form: {
+    body: {
       template: `${TEMPLATE_PATH}/level-up-wizard.hbs`,
-      scrollable: ['']
+      templates: PARTIALS,
+      scrollable: ['.wizard-main', '.wizard-rail']
     },
     footer: {
       template: `${TEMPLATE_PATH}/level-up-wizard-footer.hbs`
@@ -110,15 +151,16 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
-  _getHeaderControls() {
-    const controls = super._getHeaderControls();
-    controls.push({
-      icon: 'fa-solid fa-clock-rotate-left',
-      label: 'NEXT_LEVEL_UP_WIZARD.history.title',
-      action: 'openHistory',
-      visible: () => getHistory(this.actor).length > 0
-    });
-    return controls;
+  /** The history button sits in the title bar (the controls menu is only for rarely used entries) */
+  _getFrameButtons() {
+    if (!getHistory(this.actor).length) return [];
+    return [
+      {
+        icon: 'fa-solid fa-clock-rotate-left',
+        label: 'NEXT_LEVEL_UP_WIZARD.history.title',
+        action: 'openHistory'
+      }
+    ];
   }
 
   /* -------------------------------------------- */
@@ -181,6 +223,20 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       xpEnforcement: game.settings.get(MODULE_ID, 'xp-enforcement'),
       languageSlots: 0
     };
+
+    // The layout is decided once from what the level asks for, so it doesn't jump while choosing
+    const maxRank = plan.maxSkillRank;
+    const potencyLists = plan.potency ? POTENCY_KEYS.map((k) => plan.potency[k]).filter(Boolean) : [];
+    plan.layout = chooseLayout({
+      feats: slots.current.length,
+      optionalFeats: slots.missed.length > 0,
+      skillIncreases: plan.skillIncreaseCount,
+      skillOptions: skillOptions.filter((s) => s.rank < maxRank).length,
+      boostSets: boostSets.length,
+      languages: getOpenLanguageSlots(actor, 0),
+      potency: potencyLists.length,
+      potencyOptions: Math.max(0, ...potencyLists.map((l) => l.length))
+    }).layout;
 
     this.selection.skillIncreases = new Array(plan.skillIncreaseCount).fill('');
     for (const { set } of boostSets) this.selection.boosts[set] = [];
@@ -254,6 +310,75 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   /* -------------------------------------------- */
+  /*  "N of M feats fit" (computed after render)  */
+  /* -------------------------------------------- */
+
+  /** Changes whenever a choice that feeds prerequisites or availability changes */
+  #choiceKey(slotKey) {
+    const sel = this.selection;
+    return JSON.stringify([
+      Object.entries(sel.feats)
+        .filter(([key, pick]) => pick && key !== slotKey)
+        .map(([key, pick]) => [key, pick.uuid]),
+      sel.skillIncreases,
+      sel.intSkills,
+      sel.boosts
+    ]);
+  }
+
+  /** The cached count for a slot; `stale` once a choice changed and a new count is on its way */
+  #fitFor(slot) {
+    const entry = this.#cache.fit.get(slot.key);
+    if (!entry) return null;
+    return { ...entry, stale: entry.key !== this.#choiceKey(slot.key) };
+  }
+
+  #fitText(fit) {
+    if (!fit) return localize('menu.feats.fitPending');
+    if (!fit.checked) return localize('menu.feats.available', { total: fit.total });
+    return localize('menu.feats.fitCount', {
+      fit: fit.fit,
+      total: fit.total,
+      actorName: this.actor.name
+    });
+  }
+
+  #computeFit(slot) {
+    const hidden = hiddenRarities();
+    let candidates = this.candidatesFor(slot).filter((c) => !hidden.includes(c.rarity));
+    // The picker hides archetype feats in class slots by default, so they don't count here either
+    if (candidates.some((c) => !c.isArchetype)) candidates = candidates.filter((c) => !c.isArchetype);
+    const ctx = this.prereqContext(slot.key);
+    const checked = !!ctx && game.settings.get(MODULE_ID, 'prerequisite-mode') !== 'off';
+    const fit = checked
+      ? candidates.filter((c) => this.evaluateFeat(c, ctx, slot.key).status !== 'unmet').length
+      : candidates.length;
+    return { key: this.#choiceKey(slot.key), fit, total: candidates.length, checked };
+  }
+
+  /** Computes the count off the render path so opening the wizard stays quick */
+  #queueFit(slot) {
+    const { fitQueued, fit } = this.#cache;
+    if (fitQueued.has(slot.key)) return;
+    fitQueued.add(slot.key);
+    setTimeout(() => {
+      fitQueued.delete(slot.key);
+      if (!this.rendered || !this.plan) return;
+      let entry;
+      try {
+        entry = this.#computeFit(slot);
+      } catch (error) {
+        console.warn(`${MODULE_ID} | Could not count the feats that fit`, error);
+        entry = { key: this.#choiceKey(slot.key), fit: 0, total: 0, checked: false };
+      }
+      fit.set(slot.key, entry);
+      for (const el of this.element.querySelectorAll('[data-fit-slot]')) {
+        if (el.dataset.fitSlot === slot.key) el.textContent = this.#fitText(entry);
+      }
+    }, 0);
+  }
+
+  /* -------------------------------------------- */
   /*  Rendering                                   */
   /* -------------------------------------------- */
 
@@ -265,26 +390,13 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     const requireAll = game.settings.get(MODULE_ID, 'require-all-choices');
     const prereqCtx = this.prereqContext();
     const prereqMode = game.settings.get(MODULE_ID, 'prerequisite-mode');
+    const lang = game.i18n.lang;
 
     // Feats
-    const featRow = (slot, required) => {
-      const pick = sel.feats[slot.key] ?? null;
-      let prereq = null;
-      if (pick && prereqCtx && prereqMode !== 'off') {
-        prereq = this.evaluateFeat(pick, prereqCtx, slot.key);
-      }
-      return {
-        ...slot,
-        required,
-        pick,
-        prereq: prereq ? this.#prereqBadge(prereq) : null,
-        placeholder: slot.placeholder ?? localize('menu.dropdown.placeholder')
-      };
-    };
-    const featSlots = plan.slots.current.map((s) => featRow(s, true));
-    const missedSlots = plan.slots.missed.map((s) => featRow(s, false));
+    const featSlots = plan.slots.current.map((s) => this.#featRow(s, true, prereqCtx, prereqMode));
+    const missedSlots = plan.slots.missed.map((s) => this.#featRow(s, false, prereqCtx, prereqMode));
 
-    // Attribute boosts
+    // Attribute boosts, and the Intelligence skills and languages they open up
     const boosts = plan.boostSets.length
       ? describeBoosts(this.actor, plan.boostSets, sel.boosts)
       : null;
@@ -292,67 +404,32 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#syncArray('intSkills', intGain);
     plan.languageSlots = getOpenLanguageSlots(this.actor, intGain);
     this.#syncArray('languages', plan.languageSlots);
+    const boostSets = boosts ? this.#boostSets(boosts) : [];
 
     // Skills
-    const skillRow = (value, index, { forTraining = false } = {}) => {
-      const taken = new Set(
-        [...sel.skillIncreases, ...sel.intSkills].filter((s) => s && s !== value)
-      );
-      const options = plan.skillOptions
-        .filter((s) =>
-          forTraining ? s.rank === 0 && !s.isLore : s.rank < plan.maxSkillRank
-        )
-        .map((s) => ({
-          value: s.slug,
-          label: describeSkillOption(s),
-          rankClass: `rank-${RANK_CLASSES[s.rank]}`,
-          disabled: taken.has(s.slug),
-          selected: s.slug === value
-        }));
-      return { index, value, options };
-    };
-    const skillIncreases = sel.skillIncreases.map((v, i) => skillRow(v, i));
-    const intSkills = sel.intSkills.map((v, i) => skillRow(v, i, { forTraining: true }));
-
-    const languages = sel.languages.map((value, index) => ({
+    const skillIncreases = sel.skillIncreases.map((value, index) => ({
+      index,
+      number: index + 1,
+      title:
+        sel.skillIncreases.length > 1
+          ? localize('menu.skillIncreases.numbered', {
+              number: index + 1,
+              total: sel.skillIncreases.length
+            })
+          : localize('menu.skillIncreases.header'),
+      value,
+      grid: this.#skillGrid('skillIncrease', index, value, localize('menu.skillIncreases.label'))
+    }));
+    const intSkills = sel.intSkills.map((value, index) => ({
       index,
       value,
-      options: plan.languageOptions.map((l) => ({
-        value: l.slug,
-        label: l.rarity === 'common' ? l.label : `${l.label} (${game.i18n.localize(CONFIG.PF2E.rarityTraits?.[l.rarity] ?? l.rarity)})`,
-        disabled: sel.languages.includes(l.slug) && l.slug !== value,
-        selected: l.slug === value
-      }))
+      grid: this.#skillGrid('intSkill', index, value, localize('menu.intBonus.skill'), true)
     }));
 
-    // Skill potency (ABP)
-    let potency = null;
-    if (plan.potency) {
-      const select = (key, list) =>
-        list
-          ? {
-              key,
-              label: localize(`menu.skillPotency.${key}`),
-              value: sel.potency[key] ?? '',
-              options: list.map((s) => ({
-                value: s.slug,
-                label: describeSkillOption(s, 0),
-                selected: s.slug === sel.potency[key],
-                disabled: Object.entries(sel.potency).some(([k, v]) => k !== key && v === s.slug)
-              }))
-            }
-          : null;
-      potency = {
-        current: plan.potency.current,
-        selects: [
-          select('newBoost', plan.potency.newBoost),
-          select('upgradeTo2', plan.potency.upgradeTo2),
-          select('upgradeTo3', plan.potency.upgradeTo3)
-        ].filter(Boolean)
-      };
-    }
+    const languages = this.#languages();
+    const potency = this.#potency();
 
-    // Validation
+    // What is still open
     const missing = [];
     for (const slot of featSlots) if (!slot.pick) missing.push(`${slot.groupLabel} (${slot.label})`);
     if (sel.skillIncreases.some((s) => !s)) missing.push(localize('menu.skillIncreases.header'));
@@ -362,8 +439,89 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     if (potency?.selects.some((s) => !s.value)) missing.push(localize('menu.skillPotency.header'));
     if (sel.intSkills.some((s) => !s)) missing.push(localize('menu.intBonus.skill'));
 
-    const canSubmit = !this.submitting && (!requireAll || missing.length === 0);
+    const missingGroups = [
+      ...new Set([
+        ...featSlots.filter((s) => !s.pick).map((s) => s.groupLabel),
+        ...(sel.skillIncreases.some((s) => !s) ? [localize('menu.steps.skills')] : []),
+        ...((boosts?.sets ?? []).some((s) => !s.complete) ? [localize('menu.steps.boosts')] : []),
+        ...(sel.intSkills.some((s) => !s) ? [localize('menu.intBonus.skill')] : []),
+        ...(potency?.selects.some((s) => !s.value) ? [localize('menu.steps.potency')] : [])
+      ])
+    ];
+    const choicesLeft =
+      featSlots.filter((s) => !s.pick).length +
+      sel.skillIncreases.filter((s) => !s).length +
+      (boosts?.sets ?? []).reduce((n, s) => n + (s.remaining - s.chosen), 0) +
+      sel.intSkills.filter((s) => !s).length +
+      (potency?.selects.filter((s) => !s.value).length ?? 0);
 
+    // Steps
+    const sections = this.#sections({ featSlots, missedSlots, boosts, intSkills, languages, potency });
+    const stepped = plan.layout === 'steps';
+    const choiceKeys = stepped ? sections.map((s) => s.key) : ['choices'];
+    this.stepKeys = [...choiceKeys, 'review'];
+    if (!this.stepKeys.includes(this.step)) this.step = this.stepKeys[0];
+    if (this.step !== 'review') this.lastChoiceStep = this.step;
+    const reviewing = this.step === 'review';
+    this.reviewBlocked = requireAll && missing.length > 0;
+    const show = Object.fromEntries(
+      ['feats', 'skills', 'boosts', 'extras'].map((key) => [
+        key,
+        sections.some((s) => s.key === key) && (!stepped || this.step === key)
+      ])
+    );
+    const steps = stepped
+      ? [
+          ...sections.map((s) => ({
+            key: s.key,
+            label: s.label,
+            current: this.step === s.key,
+            done: s.total > 0 && s.done >= s.total,
+            count: s.total ? `${s.done}/${s.total}` : null,
+            optional: !s.total
+          })),
+          {
+            key: 'review',
+            label: localize('menu.steps.review'),
+            current: reviewing,
+            done: false,
+            count: null,
+            optional: false,
+            blocked: this.reviewBlocked
+          }
+        ]
+      : [];
+
+    const hp = this.#hp();
+    const stepIndex = this.stepKeys.indexOf(this.step);
+    const nextKey = this.stepKeys[stepIndex + 1] ?? null;
+    const hasNothingToChoose = !sections.length;
+    const manualStatic = this.#manualUpdates();
+
+    const review = reviewing
+      ? await this.#review({ boosts, featSlots, missedSlots, missing, hp })
+      : null;
+
+    const featsOnly =
+      featSlots.length > 0 && !skillIncreases.length && !boostSets.length && !potency && !languages && !intSkills.length;
+    const title = hasNothingToChoose
+      ? localize('menu.single.titleNone', { level: plan.targetLevel })
+      : featsOnly
+        ? localize('menu.single.titleFeats', { level: plan.targetLevel })
+        : localize('menu.single.title', { level: plan.targetLevel });
+    const gains = [
+      ...new Set(featSlots.map((s) => s.groupLabel.toLocaleLowerCase(lang))),
+      ...(skillIncreases.length ? [localize('menu.steps.skills').toLocaleLowerCase(lang)] : []),
+      ...(boostSets.length ? [localize('menu.steps.boosts').toLocaleLowerCase(lang)] : []),
+      ...(intSkills.length ? [localize('menu.intBonus.skill').toLocaleLowerCase(lang)] : []),
+      ...(potency ? [localize('menu.steps.potency').toLocaleLowerCase(lang)] : []),
+      ...(languages ? [localize('menu.languages.header').toLocaleLowerCase(lang)] : [])
+    ];
+    const subtitle = hasNothingToChoose
+      ? localize('menu.nothingToChoose')
+      : localize('menu.single.subtitle', { list: joinList(gains, lang) });
+
+    const xp = xpInfo(this.actor);
     return Object.assign(context, {
       actor: this.actor,
       actorName: this.actor.name,
@@ -371,42 +529,609 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       previousLevel: plan.previousLevel,
       levelJump: plan.levelAlreadyApplied && plan.targetLevel - plan.previousLevel > 1,
       classJournals: plan.classJournals,
+      layout: plan.layout,
+      stepped,
+      reviewing,
+      step: this.step,
+      steps,
+      show,
+      title,
+      subtitle,
+      showRail: !stepped && !reviewing,
+      rail: this.#rail({ featSlots, skillIncreases, boostSets, intSkills, languages, potency, hp, xp }),
       featSlots,
       missedSlots,
+      missedCount: missedSlots.length,
+      missedList: missedSlots.map((s) => s.slotTitle).join(', '),
       showMissed: this.showMissed,
       skillIncreases,
       maxSkillRankLabel: rankLabel(plan.maxSkillRank),
-      boosts,
+      boostSets,
       manualAttributes: plan.manualAttributes,
       gradualBoosts: !!game.pf2e?.settings?.variants?.gab,
       intSkills,
       languages,
       potency,
       classFeatures: plan.classFeatures,
-      spellcasting: plan.spellcasting,
+      manual: { items: manualStatic, empty: !manualStatic.length },
+      hasNothingToChoose,
+      review,
       missing: [...new Set(missing)],
       requireAll,
-      canSubmit,
+      reviewBlocked: this.reviewBlocked,
+      canSubmit: !this.submitting && !this.reviewBlocked,
       canUndo: canUndo(this.actor),
       submitting: this.submitting,
-      hasNothingToChoose:
-        !featSlots.length &&
-        !skillIncreases.length &&
-        !boosts?.sets.length &&
-        !potency &&
-        !languages.length
+      footer: {
+        choicesLeft,
+        left:
+          choicesLeft === 0
+            ? null
+            : localize(choicesLeft === 1 ? 'menu.footer.choiceLeft' : 'menu.footer.choicesLeft', {
+                count: choicesLeft
+              }),
+        leftDetail: missingGroups.join(', '),
+        allChosen: choicesLeft === 0,
+        levels: `${plan.previousLevel} → ${plan.targetLevel}`,
+        canGoBack: stepped && !reviewing && stepIndex > 0,
+        nextIsReview: nextKey === 'review',
+        nextLabel:
+          nextKey === 'review'
+            ? localize('menu.footer.review', { targetLevel: plan.targetLevel })
+            : localize('menu.footer.next'),
+        reviewLabel: localize('menu.footer.review', { targetLevel: plan.targetLevel })
+      }
     });
   }
 
-  #prereqBadge(result) {
-    const icons = { met: 'fa-circle-check', unmet: 'fa-circle-xmark', unknown: 'fa-circle-question' };
-    const lines = (result.results ?? [])
-      .map((r) => `${r.status === 'met' ? '✓' : r.status === 'unmet' ? '✗' : '?'} ${escapeHTML(r.text)}`)
-      .join('<br>');
+  /** The choice groups that have content, in step order */
+  #sections({ featSlots, missedSlots, boosts, intSkills, languages, potency }) {
+    const sel = this.selection;
+    const sections = [];
+    if (featSlots.length || missedSlots.length) {
+      sections.push({
+        key: 'feats',
+        label: localize('menu.steps.feats'),
+        done: featSlots.filter((s) => s.pick).length,
+        total: featSlots.length
+      });
+    }
+    if (sel.skillIncreases.length) {
+      sections.push({
+        key: 'skills',
+        label: localize('menu.steps.skills'),
+        done: sel.skillIncreases.filter(Boolean).length,
+        total: sel.skillIncreases.length
+      });
+    }
+    if (boosts?.sets.length) {
+      sections.push({
+        key: 'boosts',
+        label: localize('menu.steps.boosts'),
+        done: boosts.sets.reduce((n, s) => n + s.chosen, 0),
+        total: boosts.sets.reduce((n, s) => n + s.remaining, 0)
+      });
+    }
+    if (intSkills.length || languages || potency) {
+      const required = intSkills.length + (potency?.selects.length ?? 0);
+      const done =
+        sel.intSkills.filter(Boolean).length +
+        (potency?.selects.filter((s) => s.value).length ?? 0);
+      sections.push({
+        key: 'extras',
+        label: localize('menu.steps.extras'),
+        done,
+        total: required
+      });
+    }
+    return sections;
+  }
+
+  /** One feat slot card */
+  #featRow(slot, required, prereqCtx, prereqMode) {
+    const pick = this.selection.feats[slot.key] ?? null;
+    let prereq = null;
+    if (pick && prereqCtx && prereqMode !== 'off') {
+      const verdict = this.evaluateFeat(pick, prereqCtx, slot.key);
+      const pill = prereqPill(verdict, pick.prerequisites ?? []);
+      prereq = { ...pill, tooltip: prereqTooltip(verdict, escapeHTML) };
+    }
+    const type = groupType(slot.groupId);
+    const numeric = /^\d+$/.test(String(slot.label));
+    const slotTitle = numeric
+      ? localize('menu.feats.chip', { group: slot.groupLabel, level: slot.level })
+      : `${slot.groupLabel} · ${slot.label}`;
+    const row = {
+      ...slot,
+      required,
+      pick,
+      prereq,
+      type,
+      slotTitle,
+      placeholder: slot.placeholder ?? null,
+      browse: localize('menu.feats.browse', { group: slot.groupLabel })
+    };
+    if (pick) {
+      row.glyph = glyphView(pick.actionType, pick.actions);
+      row.traits = (pick.traits ?? []).slice(0, 3).map((t) =>
+        game.i18n.localize(CONFIG.PF2E.featTraits?.[t] ?? t)
+      );
+    } else {
+      const fit = this.#fitFor(slot);
+      row.fitText = this.#fitText(fit);
+      // Slots tucked away in the collapsed "Optional" row are counted once they are opened
+      if ((!fit || fit.stale) && (required || this.showMissed)) this.#pendingFit.add(slot);
+    }
+    return row;
+  }
+
+  /* -------------------------------------------- */
+
+  /** Grid of skill buttons for one skill increase, Intelligence training or potency choice */
+  #skillGrid(choice, index, value, label, forTraining = false) {
+    const plan = this.plan;
+    const sel = this.selection;
+    const mode = game.settings.get(MODULE_ID, 'skill-increase-info');
+    const showMod = mode.includes('MOD');
+    const showRank = mode.includes('RANK');
+    const taken = new Set([...sel.skillIncreases, ...sel.intSkills].filter((s) => s && s !== value));
+    const items = plan.skillOptions
+      .filter((s) => (forTraining ? s.rank === 0 && !s.isLore : true))
+      .map((s) => {
+        const capped = !forTraining && s.rank >= plan.maxSkillRank;
+        const isTaken = taken.has(s.slug);
+        const selected = s.slug === value;
+        const next = Math.min(s.rank + 1, 4);
+        const shown = selected || !capped ? next : s.rank;
+        const rankText = `${rankLabel(s.rank)} → ${rankLabel(next)}`;
+        return {
+          slug: s.slug,
+          label: s.label,
+          selected,
+          disabled: capped || isTaken,
+          state: capped ? 'capped' : isTaken ? 'taken' : null,
+          stateLabel: capped
+            ? localize('menu.skillIncreases.maxed', { rank: rankLabel(s.rank) })
+            : isTaken
+              ? localize('menu.skillIncreases.taken')
+              : null,
+          mod: showMod ? signedNumber(s.modifier) : null,
+          sub: showRank ? (capped ? rankLabel(s.rank) : rankText) : null,
+          srText: capped ? rankLabel(s.rank) : rankText,
+          dots: rankDots(s.rank, selected ? next : s.rank),
+          rank: shown
+        };
+      });
+    return { choice, index, label, items };
+  }
+
+  #potency() {
+    const plan = this.plan;
+    if (!plan.potency) return null;
+    const sel = this.selection;
+    const mode = game.settings.get(MODULE_ID, 'skill-increase-info');
+    const selects = POTENCY_KEYS.map((key) => {
+      const list = plan.potency[key];
+      if (!list) return null;
+      const value = sel.potency[key] ?? '';
+      const label = localize(`menu.skillPotency.${key}`);
+      const takenElsewhere = new Set(
+        Object.entries(sel.potency)
+          .filter(([k, v]) => k !== key && v)
+          .map(([, v]) => v)
+      );
+      return {
+        key,
+        label,
+        value,
+        grid: {
+          choice: 'potency',
+          index: key,
+          label,
+          items: list.map((s) => {
+            const selected = s.slug === value;
+            const isTaken = takenElsewhere.has(s.slug);
+            return {
+              slug: s.slug,
+              label: s.label,
+              selected,
+              disabled: isTaken,
+              state: isTaken ? 'taken' : null,
+              stateLabel: isTaken ? localize('menu.skillIncreases.taken') : null,
+              mod: mode.includes('MOD') ? signedNumber(s.modifier) : null,
+              sub: `+${s.potency} → +${POTENCY_VALUES[key]}`,
+              srText: describeSkillOption(s, 0)
+            };
+          })
+        }
+      };
+    }).filter(Boolean);
+    return { current: plan.potency.current, selects };
+  }
+
+  #languages() {
+    const sel = this.selection;
+    const plan = this.plan;
+    if (!sel.languages.length) return null;
+    const chosen = sel.languages.filter(Boolean);
+    const { chips, hasMore } = languageChips(plan.languageOptions, chosen, this.showAllLanguages);
+    const full = chosen.length >= sel.languages.length;
+    const canToggle = this.showAllLanguages || hasMore;
     return {
-      status: result.status,
-      icon: icons[result.status] ?? icons.unknown,
-      tooltip: `<strong>${localize(`prerequisites.${result.status}`)}</strong>${lines ? `<br>${lines}` : ''}`
+      count: sel.languages.length,
+      chosenCount: chosen.length,
+      title:
+        sel.languages.length === 1
+          ? localize('menu.languages.one')
+          : localize('menu.languages.many', { count: sel.languages.length }),
+      showCounter: sel.languages.length > 1,
+      chips: chips.map((l) => {
+        const selected = chosen.includes(l.slug);
+        return {
+          slug: l.slug,
+          selected,
+          // With one slot a new pick replaces the old one; with several a full set has to be trimmed first
+          disabled: !selected && full && sel.languages.length > 1,
+          label: l.label,
+          rarity:
+            l.rarity === 'common'
+              ? null
+              : game.i18n.localize(CONFIG.PF2E.rarityTraits?.[l.rarity] ?? l.rarity)
+        };
+      }),
+      canToggle,
+      complete: chosen.length >= sel.languages.length,
+      expanded: this.showAllLanguages,
+      later: chosen.length === 0
+    };
+  }
+
+  /** Attribute boost sets as tiles */
+  #boostSets(boosts) {
+    const gradual = !!game.pf2e?.settings?.variants?.gab;
+    return boosts.sets.map((set) => ({
+      set: set.set,
+      remaining: set.remaining,
+      chosen: set.chosen,
+      complete: set.complete,
+      title: gradual
+        ? localize('menu.attributeBoosts.gradualLabel', { count: set.remaining, set: set.set })
+        : localize('menu.attributeBoosts.label', { count: set.remaining }),
+      tiles: set.attributes.map((a) => {
+        const mod = boosts.modifiers.find((m) => m.key === a.key);
+        const picked = a.selected && !a.locked;
+        let status = 'idle';
+        let line;
+        if (a.locked) {
+          status = 'locked';
+          line = localize('menu.attributeBoosts.locked');
+        } else if (picked && a.partial) {
+          status = 'half';
+          line = localize('menu.attributeBoosts.halfBoost');
+        } else if (picked && mod.current >= 4) {
+          // A full boost on a modifier that is already +4 can only be the second half of a split boost
+          status = 'completes';
+          line = localize('menu.attributeBoosts.completesHalf');
+        } else if (picked) {
+          status = 'selected';
+          line = localize('menu.attributeBoosts.was', { mod: signedNumber(mod.current) });
+        } else if (a.disabled) {
+          status = 'full';
+          line = localize('menu.attributeBoosts.setFull', { count: set.remaining });
+        } else if (a.partial) {
+          status = 'idle-half';
+          line = localize('menu.attributeBoosts.halfBoost');
+        } else {
+          line = localize('menu.attributeBoosts.boost');
+        }
+        return {
+          key: a.key,
+          label: a.label,
+          display: mod.display,
+          status,
+          line,
+          picked,
+          locked: a.locked,
+          disabled: a.disabled,
+          half: status === 'half' || status === 'idle-half',
+          pressed: a.selected
+        };
+      })
+    }));
+  }
+
+  /* -------------------------------------------- */
+  /*  Rail, review                                */
+  /* -------------------------------------------- */
+
+  #hpOf(actor) {
+    const max = actor?.system?.attributes?.hp?.max;
+    return typeof max === 'number' ? max : null;
+  }
+
+  /** Hit points before and after, with the chosen boosts applied to a preview of the new level */
+  #hp() {
+    const plan = this.plan;
+    try {
+      const cache = this.#cache;
+      if (cache.hpBefore === undefined) {
+        cache.hpBefore = this.levelAlreadyApplied
+          ? this.#hpOf(createPreviewActor(this.actor, plan.previousLevel))
+          : this.#hpOf(this.actor);
+      }
+      const changes = {};
+      for (const { set, existing } of plan.boostSets) {
+        const chosen = this.selection.boosts[set] ?? [];
+        if (chosen.length) {
+          foundry.utils.setProperty(changes, `system.build.attributes.boosts.${set}`, [
+            ...existing,
+            ...chosen
+          ]);
+        }
+      }
+      const key = JSON.stringify(changes);
+      if (cache.hp?.key !== key) {
+        const preview = key === '{}' ? plan.preview : createPreviewActor(this.actor, plan.targetLevel, changes);
+        cache.hp = { key, value: this.#hpOf(preview) };
+      }
+      const before = cache.hpBefore;
+      const after = cache.hp.value;
+      if (before === null || after === null) return null;
+      return { before, after, changed: before !== after };
+    } catch (error) {
+      console.warn(`${MODULE_ID} | Could not preview hit points`, error);
+      return null;
+    }
+  }
+
+  #rail({ featSlots, skillIncreases, boostSets, intSkills, languages, potency, hp, xp }) {
+    const plan = this.plan;
+    const sel = this.selection;
+    const actor = this.actor;
+    const lang = game.i18n.lang;
+    const pending = localize('menu.rail.toChoose');
+    const checklist = [];
+    for (const slot of featSlots) {
+      checklist.push({
+        label: slot.groupLabel,
+        detail: slot.pick?.name ?? pending,
+        done: !!slot.pick
+      });
+    }
+    for (const increase of skillIncreases) {
+      const option = plan.skillOptions.find((s) => s.slug === increase.value);
+      checklist.push({
+        label: localize('menu.skillIncreases.header'),
+        detail: option?.label ?? pending,
+        done: !!increase.value
+      });
+    }
+    for (const set of boostSets) {
+      checklist.push({
+        label: localize('menu.attributeBoosts.header'),
+        detail: set.complete
+          ? (sel.boosts[set.set] ?? []).map(attributeLabel).join(', ')
+          : `${set.chosen}/${set.remaining}`,
+        done: set.complete
+      });
+    }
+    for (const skill of intSkills) {
+      const option = plan.skillOptions.find((s) => s.slug === skill.value);
+      checklist.push({
+        label: localize('menu.intBonus.skill'),
+        detail: option?.label ?? pending,
+        done: !!skill.value
+      });
+    }
+    for (const select of potency?.selects ?? []) {
+      const option = plan.skillOptions.find((s) => s.slug === select.value);
+      checklist.push({ label: select.label, detail: option?.label ?? pending, done: !!select.value });
+    }
+    if (languages) {
+      checklist.push({
+        label: localize('menu.languages.header'),
+        detail: languages.chosenCount
+          ? sel.languages
+              .filter(Boolean)
+              .map((slug) => this.#languageLabel(slug))
+              .join(', ')
+          : localize('menu.rail.optional'),
+        done: languages.chosenCount >= languages.count,
+        optional: true
+      });
+    }
+
+    const gainsProficiency = !game.pf2e?.settings?.variants?.pwol?.enabled;
+    const features = plan.classFeatures.length
+      ? localize('menu.rail.featuresCount', { count: plan.classFeatures.length })
+      : localize('menu.rail.featuresNone', { level: plan.targetLevel });
+    return {
+      img: actor.img,
+      name: actor.name,
+      subtitle: [actor.ancestry?.name, actor.class?.name].filter(Boolean).join(' · '),
+      from: plan.previousLevel,
+      to: plan.targetLevel,
+      hp,
+      proficiency: gainsProficiency,
+      features,
+      hasFeatures: plan.classFeatures.length > 0,
+      checklist,
+      hasChecklist: checklist.length > 0,
+      xp:
+        plan.xpEnforcement && !plan.levelAlreadyApplied
+          ? localize('menu.rail.xp', {
+              xp: formatNumber(xp.value, lang),
+              level: plan.targetLevel,
+              cost: formatNumber(xp.max, lang)
+            })
+          : null
+    };
+  }
+
+  #languageLabel(slug) {
+    const label = CONFIG.PF2E.languages?.[slug];
+    return label ? game.i18n.localize(label) : slug;
+  }
+
+  /** Reminders for what the system doesn't automate and that the plan already knows */
+  #manualUpdates() {
+    const plan = this.plan;
+    const items = [];
+    if (plan.manualAttributes) items.push(localize('menu.attributeBoosts.manual'));
+    const spellcasting = plan.spellcasting;
+    if (spellcasting?.newRank) {
+      items.push(localize('messages.personal.spellRank', { rank: spellcasting.newRank }));
+    }
+    if (spellcasting?.entries?.length) {
+      items.push(
+        localize('messages.personal.spellSlots', {
+          entries: spellcasting.entries.map((e) => e.name).join(', ')
+        })
+      );
+    }
+    return items;
+  }
+
+  async #spellHints() {
+    const cache = this.#cache.spellHints;
+    const names = [];
+    for (const pick of Object.values(this.selection.feats)) {
+      if (!pick) continue;
+      if (!cache.has(pick.uuid)) {
+        const doc = await fromUuid(pick.uuid).catch(() => null);
+        cache.set(pick.uuid, SPELL_HINT_PATTERN.test(doc?.system?.description?.value ?? ''));
+      }
+      if (cache.get(pick.uuid)) names.push(pick.name);
+    }
+    return names;
+  }
+
+  /** Everything that will change, as before and after rows, plus what the table will see */
+  async #review({ boosts, featSlots, missedSlots, missing, hp }) {
+    const plan = this.plan;
+    const sel = this.selection;
+    const lang = game.i18n.lang;
+    const rows = [];
+    const row = (key, lines) => {
+      if (lines.length) rows.push({ key, label: localize(`review.${key}`), lines });
+    };
+
+    row('level', [{ from: plan.previousLevel, to: plan.targetLevel }]);
+    if (hp) row('hp', [{ from: hp.before, to: hp.after }]);
+
+    if (boosts) {
+      const lines = boosts.modifiers
+        .filter((m) => m.changed)
+        .map((m) => ({
+          label: m.label,
+          from: signedNumber(m.current),
+          to: signedNumber(m.next)
+        }));
+      for (const set of this.#boostSets(boosts)) {
+        for (const tile of set.tiles.filter((t) => t.status === 'half')) {
+          lines.push({
+            note: localize('review.halfBoost', { attribute: tile.label, mod: tile.display }),
+            muted: true
+          });
+        }
+      }
+      row('attributes', lines);
+    }
+
+    row(
+      'classFeatures',
+      plan.classFeatures.map((f) => ({ label: f.name, uuid: f.uuid }))
+    );
+
+    const picked = [...featSlots, ...missedSlots].filter((s) => s.pick);
+    row(
+      'feats',
+      picked.map((s) => ({
+        chip: localize('menu.feats.chipShort', { group: s.groupLabel, level: s.level }),
+        chipType: s.type,
+        label: s.pick.name,
+        uuid: s.pick.uuid
+      }))
+    );
+
+    row(
+      'skills',
+      mergeSkillChanges(plan.skillOptions, [...sel.skillIncreases, ...sel.intSkills]).map((c) => ({
+        label: c.label,
+        from: rankLabel(c.from),
+        to: rankLabel(c.to)
+      }))
+    );
+
+    row(
+      'languages',
+      sel.languages.filter(Boolean).map((slug) => ({ plus: true, label: this.#languageLabel(slug) }))
+    );
+
+    row(
+      'potency',
+      POTENCY_KEYS.filter((k) => sel.potency[k]).map((k) => ({
+        label: plan.skillOptions.find((s) => s.slug === sel.potency[k])?.label ?? sel.potency[k],
+        from: `+${POTENCY_VALUES[k] - 1}`,
+        to: `+${POTENCY_VALUES[k]}`
+      }))
+    );
+
+    if (plan.xpEnforcement && !plan.levelAlreadyApplied) {
+      const { value, max } = xpInfo(this.actor);
+      const after = Math.max(0, value - max * (plan.targetLevel - plan.previousLevel));
+      row('xp', [{ from: formatNumber(value, lang), to: `${formatNumber(after, lang)} XP` }]);
+    }
+
+    // What the whisper after applying will list
+    const manual = this.#manualUpdates();
+    const hints = await this.#spellHints();
+    if (hints.length) manual.push(localize('messages.personal.featSpells', { feats: hints.join(', ') }));
+    const openLanguages = plan.languageSlots - sel.languages.filter(Boolean).length;
+    if (openLanguages > 0) manual.push(localize('messages.personal.languages', { count: openLanguages }));
+    const missingSkills = sel.intSkills.filter((s) => !s).length;
+    if (missingSkills > 0) manual.push(localize('messages.personal.intSkill', { count: missingSkills }));
+    const emptySlots = featSlots.filter((s) => !s.pick);
+    if (emptySlots.length) {
+      manual.push(
+        localize('messages.personal.emptySlots', {
+          slots: emptySlots.map((s) => s.groupLabel).join(', ')
+        })
+      );
+    }
+
+    // A condensed copy of the public chat message
+    const chatLines = [];
+    if (picked.length) chatLines.push(picked.map((s) => s.pick.name).join(' · '));
+    const other = [
+      ...mergeSkillChanges(plan.skillOptions, [...sel.skillIncreases, ...sel.intSkills]).map(
+        (c) => `${c.label}: ${rankLabel(c.to)}`
+      ),
+      ...(boosts
+        ? Object.entries(boosts.gains)
+            .filter(([, n]) => n > 0)
+            .map(([attr]) => attributeLabel(attr))
+        : []),
+      ...sel.languages.filter(Boolean).map((slug) => this.#languageLabel(slug)),
+      ...POTENCY_KEYS.filter((k) => sel.potency[k]).map(
+        (k) =>
+          `${plan.skillOptions.find((s) => s.slug === sel.potency[k])?.label ?? sel.potency[k]} +${POTENCY_VALUES[k]}`
+      )
+    ];
+    if (other.length) chatLines.push(other.join(' · '));
+    if (!chatLines.length) chatLines.push(localize('messages.global.noChoices'));
+
+    return {
+      rows,
+      manual: { items: manual, empty: !manual.length },
+      skipped: [...new Set(missing)],
+      chat: {
+        header: localize('messages.global.header', {
+          actorName: this.actor.name,
+          targetLevel: plan.targetLevel
+        }),
+        lines: chatLines
+      }
     };
   }
 
@@ -417,33 +1142,18 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     this.selection[key] = Array.from({ length }, (_, i) => current[i] ?? '');
   }
 
-  _attachPartListeners(partId, htmlElement, options) {
-    super._attachPartListeners(partId, htmlElement, options);
-    if (partId !== 'form') return;
-    htmlElement.querySelectorAll('select[data-choice]').forEach((select) => {
-      select.addEventListener('change', (event) => this.#onChoiceChange(event));
-    });
-  }
-
-  #onChoiceChange(event) {
-    const { choice, index } = event.currentTarget.dataset;
-    const value = event.currentTarget.value;
-    const sel = this.selection;
-    switch (choice) {
-      case 'skillIncrease':
-        sel.skillIncreases[Number(index)] = value;
-        break;
-      case 'intSkill':
-        sel.intSkills[Number(index)] = value;
-        break;
-      case 'language':
-        sel.languages[Number(index)] = value;
-        break;
-      case 'potency':
-        sel.potency[index] = value;
-        break;
+  _onRender(context, options) {
+    super._onRender(context, options);
+    if (!options.parts || options.parts.includes('body')) {
+      const main = this.element.querySelector('.wizard-main');
+      if (this.#stepChanged && main) {
+        this.#stepChanged = false;
+        main.scrollTop = 0;
+        main.focus({ preventScroll: true });
+      }
+      for (const slot of this.#pendingFit) this.#queueFit(slot);
     }
-    this.render();
+    this.#pendingFit.clear();
   }
 
   /** Called by the feat selector */
@@ -501,6 +1211,85 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
+  /** A skill button: picking the chosen skill again clears the choice */
+  static #onPickSkill(event, target) {
+    const { choice, index, value } = target.dataset;
+    const sel = this.selection;
+    const toggle = (list, i) => {
+      list[i] = list[i] === value ? '' : value;
+    };
+    switch (choice) {
+      case 'skillIncrease':
+        toggle(sel.skillIncreases, Number(index));
+        break;
+      case 'intSkill':
+        toggle(sel.intSkills, Number(index));
+        break;
+      case 'potency':
+        sel.potency[index] = sel.potency[index] === value ? '' : value;
+        break;
+    }
+    this.render();
+  }
+
+  static #onToggleLanguage(event, target) {
+    const slug = target.dataset.value;
+    const languages = this.selection.languages;
+    const at = languages.indexOf(slug);
+    if (at >= 0) languages[at] = '';
+    else {
+      const free = languages.indexOf('');
+      if (free >= 0) languages[free] = slug;
+      else if (languages.length === 1) languages[0] = slug;
+    }
+    this.render();
+  }
+
+  static #onClearLanguages() {
+    this.selection.languages = this.selection.languages.map(() => '');
+    this.render();
+  }
+
+  static #onToggleAllLanguages() {
+    this.showAllLanguages = !this.showAllLanguages;
+    this.render();
+  }
+
+  #goTo(key) {
+    if (!this.stepKeys.includes(key)) return;
+    if (key === 'review' && this.reviewBlocked) {
+      ui.notifications.warn(localize('notifications.incomplete'));
+      return;
+    }
+    if (key === this.step) return;
+    if (this.step !== 'review') this.lastChoiceStep = this.step;
+    this.step = key;
+    this.#stepChanged = true;
+    this.render();
+  }
+
+  static #onGoStep(event, target) {
+    this.#goTo(target.dataset.step);
+  }
+
+  static #onNextStep() {
+    const next = this.stepKeys[this.stepKeys.indexOf(this.step) + 1];
+    if (next) this.#goTo(next);
+  }
+
+  static #onPrevStep() {
+    const prev = this.stepKeys[this.stepKeys.indexOf(this.step) - 1];
+    if (prev && prev !== 'review') this.#goTo(prev);
+  }
+
+  static #onReview() {
+    this.#goTo('review');
+  }
+
+  static #onBackToChoices() {
+    this.#goTo(this.lastChoiceStep ?? this.stepKeys[0]);
+  }
+
   static #onOpenHistory() {
     const app = new LevelUpHistory({ actor: this.actor });
     if (typeof this.renderChild === 'function') this.renderChild(app);
@@ -516,7 +1305,9 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
   /* -------------------------------------------- */
 
   static async #onSubmit() {
-    // Guard the whole submit, including the confirmation dialog, against double clicks
+    // Only the review step applies; a stray Enter key on another step must not
+    if (this.step !== 'review') return;
+    // Guard the whole submit against double clicks
     if (this.busy) return;
     this.busy = true;
     try {
@@ -530,27 +1321,10 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async #submit() {
     const context = await this._prepareContext({});
-    const requireAll = context.requireAll;
-    if (requireAll && context.missing.length) {
+    if (context.requireAll && context.missing.length) {
       ui.notifications.warn(localize('notifications.incomplete'));
       return;
     }
-
-    const skipped = context.missing.length
-      ? `<p>${localize('menu.confirmDialog.skipped')}</p><ul>${context.missing
-          .map((m) => `<li>${escapeHTML(m)}</li>`)
-          .join('')}</ul>`
-      : '';
-    const confirmed = await foundry.applications.api.DialogV2.confirm({
-      window: { title: localize('menu.confirmDialog.title'), icon: 'fa-solid fa-hat-wizard' },
-      content: `<p>${localize('menu.confirmDialog.content', {
-        actorName: escapeHTML(this.actor.name),
-        targetLevel: this.targetLevel
-      })}</p>${skipped}`,
-      modal: true,
-      renderOptions: { window: { windowId: this.window.windowId } }
-    });
-    if (!confirmed) return;
 
     if (!this.levelAlreadyApplied && this.actor.level !== this.previousLevel) {
       ui.notifications.error(localize('notifications.levelChanged'));

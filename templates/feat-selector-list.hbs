@@ -1,37 +1,36 @@
-<section class="feat-results">
-  <div class="result-count">
+<section class="feat-results" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.selector.listLabel'}}">
+  <div class="result-count" role="status">
     {{localize 'NEXT_LEVEL_UP_WIZARD.selector.count' count=count total=total}}
+    {{#if unmetShown}} · {{localize 'NEXT_LEVEL_UP_WIZARD.selector.unmetShown'}}{{/if}}
   </div>
   <ol class="lvlup-feat-list">
-    {{#each feats}}
-      <li class="feat-row {{#if highlighted}}highlighted{{/if}} {{#if takenElsewhere}}taken{{/if}} {{#if prereq}}prereq-{{prereq.status}}{{/if}}"
-        data-uuid="{{uuid}}" data-action="highlight">
-        <button type="button" class="feat-image" data-action="sendToChat"
-          data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}"
-          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}">
-          <img src="{{img}}" alt="" loading="lazy">
-          <i class="fa-solid fa-comment"></i>
-        </button>
-        <div class="feat-name">
-          <span class="name">{{name}}</span>
-          <span class="tags">
-            {{#if rarityLabel}}<span class="tag rarity {{rarity}}">{{rarityLabel}}</span>{{/if}}
-            {{#if isDedication}}<span class="tag archetype">{{localize 'PF2E.TraitDedication'}}</span>
-            {{else if isArchetype}}<span class="tag archetype">{{localize 'PF2E.TraitArchetype'}}</span>{{/if}}
-            {{#if takenElsewhere}}<span class="tag taken">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.takenElsewhere'}}</span>{{/if}}
-          </span>
-        </div>
-        {{#if prereqIcon}}
-          <i class="prereq {{prereq.status}} {{prereqIcon}}" data-tooltip="{{prereqTooltip}}"></i>
-        {{else if prerequisites.length}}
-          <i class="prereq unknown fa-solid fa-asterisk" data-tooltip="{{prereqTooltip}}"></i>
-        {{/if}}
-        <span class="feat-level">{{effectiveLevel}}</span>
-        <button type="button" class="select-feat icon fa-solid fa-check" data-action="select"
-          {{#if takenElsewhere}}disabled{{/if}}
-          data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.selectFeat'}}"
-          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.selectFeat'}}"></button>
-      </li>
+    {{#each groups}}
+      {{#if level}}
+        <li class="level-head"><h3>{{localize 'NEXT_LEVEL_UP_WIZARD.selector.level' level=level}}</h3></li>
+      {{/if}}
+      {{#each feats}}
+        <li class="feat-row{{#if highlighted}} highlighted{{/if}}{{#if takenElsewhere}} taken{{/if}}{{#if unmet}} is-unmet{{/if}}">
+          <button type="button" class="feat-row-btn" data-action="highlight" data-uuid="{{uuid}}"{{#if highlighted}} aria-current="true"{{/if}}>
+            <span class="feat-name">
+              <span class="name-line">
+                <span class="name">{{name}}</span>
+                {{#if glyph}}<span class="lvl-glyph" role="img" aria-label="{{glyph.label}}">{{glyph.char}}</span>{{/if}}
+                {{#if rarityLabel}}<span class="lvl-chip rarity {{rarity}}">{{rarityLabel}}</span>{{/if}}
+                {{#if isDedication}}<span class="lvl-chip archetype">{{localize 'PF2E.TraitDedication'}}</span>
+                {{else if isArchetype}}<span class="lvl-chip archetype">{{localize 'PF2E.TraitArchetype'}}</span>{{/if}}
+                {{#if takenElsewhere}}<span class="lvl-chip taken">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.takenElsewhere'}}</span>{{/if}}
+              </span>
+              {{#if subtitle}}<span class="subtitle">{{subtitle}}</span>{{/if}}
+            </span>
+            {{#if pill}}
+              <span class="lvl-pill status-{{pill.status}}" data-tooltip="{{pillTooltip}}">
+                <i class="fa-solid {{pill.icon}}" aria-hidden="true"></i>
+                <span class="pill-text">{{pill.text}}</span>
+              </span>
+            {{/if}}
+          </button>
+        </li>
+      {{/each}}
     {{else}}
       <li class="no-results">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.noResults'}}</li>
     {{/each}}

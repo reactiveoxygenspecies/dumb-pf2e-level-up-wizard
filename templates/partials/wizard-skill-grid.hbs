@@ -1,0 +1,19 @@
+<div class="skill-grid" role="group" aria-label="{{label}}">
+  {{#each items}}
+    <button type="button" name="{{../choice}}-{{../index}}-{{slug}}" class="skill-btn{{#if selected}} is-selected{{/if}}{{#if state}} is-{{state}}{{/if}}"
+      data-action="pickSkill" data-choice="{{../choice}}" data-index="{{../index}}" data-value="{{slug}}"
+      aria-pressed="{{#if selected}}true{{else}}false{{/if}}"{{#if disabled}} disabled{{/if}}>
+      <span class="skill-text">
+        <span class="skill-name">{{label}}{{#if mod}} <span class="skill-mod">{{mod}}</span>{{/if}}</span>
+        {{#if sub}}<span class="skill-sub">{{sub}}</span>{{/if}}
+        {{#if stateLabel}}<span class="skill-state">{{stateLabel}}</span>{{/if}}
+        {{#if srText}}<span class="sr-only">{{srText}}</span>{{/if}}
+      </span>
+      {{#if dots}}
+        <span class="rank-dots" aria-hidden="true">
+          {{#each dots}}<span class="dot rank-{{rank}}{{#if filled}} filled{{/if}}{{#if gained}} gained{{/if}}"></span>{{/each}}
+        </span>
+      {{/if}}
+    </button>
+  {{/each}}
+</div>

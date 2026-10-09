@@ -6,34 +6,78 @@
       "levelLocked": "Use the Level-Up Wizard to change your level",
       "toolbarLabel": "Level Up",
       "historyLabel": "Level-Up History",
-      "historyHint": "Right-click for the level-up history"
+      "historyHint": "Right-click for the level-up history",
+      "build": "Build this character"
     },
     "menu": {
-      "windowTitle": "Level-Up Wizard: {actorName} (Level {targetLevel})",
+      "windowTitle": "Level Up · {actorName}",
       "header": {
-        "name": "{actorName} is reaching level {targetLevel}!",
-        "description": "Here's what you gain. Make your choices below, then apply the level-up.",
         "levelJump": "The level was raised from {previousLevel} to {targetLevel} in one step. Choices for every level in between are shown together."
       },
-      "nothingToChoose": "There are no choices to make at this level. Review your new class features below and apply the level-up.",
+      "nothingToChoose": "There is nothing to choose at this level. Check the summary and apply the level-up.",
       "notes": {
         "classJournal": "Learn more about your class:"
       },
-      "dropdown": {
-        "placeholder": "Make a selection"
+      "single": {
+        "title": "Make your level {level} choices",
+        "titleFeats": "Choose your level {level} feats",
+        "titleNone": "Level {level} needs no choices",
+        "subtitle": "You choose {list}. Everything else is applied for you."
+      },
+      "steps": {
+        "label": "Level {level} steps",
+        "feats": "Feats",
+        "skills": "Skills",
+        "boosts": "Boosts",
+        "extras": "Extras",
+        "potency": "Skill potency",
+        "review": "Review",
+        "complete": "complete",
+        "optional": "optional"
+      },
+      "rail": {
+        "label": "Level-up summary",
+        "level": "Level",
+        "new": "New",
+        "levelFromTo": "Level {from} to {to}",
+        "gain": "What you gain",
+        "hp": "Hit Points",
+        "proficiency": "Proficiency bonus",
+        "proficiencyValue": "+1 everywhere",
+        "features": "Class features",
+        "featuresNone": "none at {level}",
+        "featuresCount": "{count} new",
+        "choices": "Your choices",
+        "toChoose": "to choose",
+        "optional": "optional",
+        "done": "done",
+        "todo": "still to choose",
+        "xp": "{xp} XP · level {level} costs {cost}"
       },
       "feats": {
         "header": "Feats",
-        "missedHeader": "Empty feat slots from earlier levels ({count})",
+        "title": "Choose your level {level} feats",
+        "chip": "{group} · level {level}",
+        "chipShort": "{group} {level}",
+        "optional": "Optional",
+        "optionalRow": "{count} empty slot(s) from earlier levels",
         "missedHint": "These slots were never filled. They're optional: fill any you like now.",
-        "slotLevel": "Slot level",
-        "change": "Change feat",
-        "clear": "Clear selection"
+        "changeLabel": "Change",
+        "clear": "Remove feat",
+        "clearNamed": "Remove {name}",
+        "none": "No feat chosen yet",
+        "browse": "Browse {group}",
+        "fitPending": "Counting the feats that fit…",
+        "fitCount": "{fit} of {total} feats fit {actorName} right now",
+        "available": "{total} feats available"
       },
       "skillIncreases": {
-        "header": "Skill Increase",
-        "label": "Increase",
-        "hint": "Raise one skill by one rank. At this level a skill can reach {rank}."
+        "header": "Skill increase",
+        "numbered": "Skill increase {number} of {total}",
+        "label": "Skill to increase",
+        "hint": "Raise one skill by one rank. At this level a skill can reach {rank}.",
+        "maxed": "Maxed at {rank}",
+        "taken": "Chosen above"
       },
       "skillPotency": {
         "header": "Skill Potency (Automatic Bonus Progression)",
@@ -45,56 +89,69 @@
       },
       "attributeBoosts": {
         "header": "Attribute Boosts",
-        "label": "Boost {count} different attributes.",
-        "gradualLabel": "Gradual boosts: boost {count} attribute(s) from the level {set} set.",
+        "label": "Boost {count} different attributes",
+        "gradualLabel": "Gradual boosts: boost {count} attribute(s) from the level {set} set",
+        "halfRule": "Already +4 or higher? A boost counts as half until the next one.",
         "boost": "Boost",
-        "partial": "Partial",
-        "partialHint": "This attribute is already +4 or higher, so this boost only counts as half. A second boost later raises the modifier.",
-        "alreadyBoosted": "Already boosted in this set",
+        "halfBoost": "Half boost",
+        "completesHalf": "Completes a half",
+        "was": "was {mod}",
+        "setFull": "{count} already chosen",
+        "locked": "Already boosted",
         "manual": "This character uses manually entered attribute modifiers, so the wizard skips attribute boosts. Update them on the character sheet."
       },
       "intBonus": {
-        "header": "Intelligence Increase",
-        "hint": "Your Intelligence modifier went up: become trained in one additional skill (and learn one more language below).",
+        "header": "Intelligence went up: train one more skill",
+        "hint": "Only untrained skills are shown. The dots show the rank ladder: trained, expert, master, legendary.",
         "skill": "Additional trained skill"
       },
       "languages": {
         "header": "Languages",
-        "hint": "You can learn more languages. Pick them now or later on the character sheet.",
-        "label": "Language",
-        "later": "Choose later"
+        "one": "One more language",
+        "many": "{count} more languages",
+        "hint": "Pick now or decide later: you can add languages on the character sheet at any time.",
+        "more": "More languages",
+        "fewer": "Fewer languages",
+        "later": "Decide later"
       },
       "features": {
         "class": {
           "header": "New Class Features",
           "hint": "These are added to your character automatically."
         },
-        "spellcasting": {
-          "header": "Spellcasting",
-          "rank": "Rank {rank} spells are now available.",
-          "slots": "Spell slots and repertoires aren't automated. Review them on the Spellcasting tab for:"
-        }
+        "byHand": "Update by hand",
+        "nothingByHand": "Nothing needs updating by hand at level {level}."
       },
       "footer": {
-        "missing": "Still to choose:",
         "submit": "Apply level {targetLevel}",
-        "applying": "Applying…"
+        "applying": "Applying…",
+        "review": "Review level {targetLevel}",
+        "next": "Next",
+        "back": "Back",
+        "cancel": "Cancel",
+        "allChosen": "Everything chosen",
+        "choiceLeft": "{count} choice left",
+        "choicesLeft": "{count} choices left"
       },
       "confirmDialog": {
-        "title": "Confirm Level-Up",
-        "content": "Apply these changes to {actorName} and level up to {targetLevel}?",
         "skipped": "These choices are left empty and can be filled in later on the character sheet:"
       },
       "filters": {
-        "orderBy": "Order by",
+        "label": "Filters",
+        "search": "Search feats",
         "level": "Level",
-        "name": "Name",
+        "all": "All",
+        "range": "Custom level range",
+        "skills": "By skill",
+        "allSkills": "All {count} skills",
+        "fewerSkills": "Fewer skills",
         "rarity": "Rarity",
-        "skills": "Filter by skills",
-        "archetypeFeats": "Show archetype feats",
+        "archetype": "Archetype",
+        "archetypeFeats": "Archetype feats",
         "hideSkillFeats": "Hide skill feats",
-        "hideUnmet": "Hide feats with unmet prerequisites",
-        "toggleOrder": "Toggle sort direction",
+        "onlyFit": "Only feats that fit",
+        "commonOnly": "Common only",
+        "sort": "Sort",
         "reset": "Reset filters",
         "placeholder": {
           "nameSearch": "Search by name",
@@ -104,36 +161,85 @@
         }
       },
       "tooltips": {
-        "selectFeat": "Choose this feat",
         "sendToChat": "Post to chat"
       }
     },
     "selector": {
-      "title": "{group}: Level {level}",
+      "title": "{group} · level {level} · {actorName}",
       "count": "{count} of {total} feats",
+      "unmetShown": "unmet ones are shown dimmed",
       "noResults": "No feats match these filters.",
       "level": "Level {level}",
+      "featLevel": "Feat {level}",
       "prerequisites": "Prerequisites",
       "pickHint": "Pick a feat on the left to read it here. Double-click a feat to choose it straight away.",
-      "choose": "Choose",
+      "chooseNamed": "Choose {name}",
+      "fits": "Fits",
       "takenElsewhere": "Chosen in another slot",
-      "grantedBy": "Available through {dedication}."
+      "grantedBy": "Available through {dedication}.",
+      "listLabel": "Feats",
+      "detailsLabel": "Feat details",
+      "hiddenNote": "The GM hides some feat rarities.",
+      "sort": {
+        "levelDesc": "Level, high first",
+        "levelAsc": "Level, low first",
+        "nameAsc": "Name A–Z",
+        "nameDesc": "Name Z–A"
+      },
+      "action": {
+        "one": "1 action",
+        "two": "2 actions",
+        "three": "3 actions",
+        "reaction": "Reaction",
+        "free": "Free action"
+      }
     },
     "prerequisites": {
       "met": "Prerequisites met",
       "unmet": "Prerequisites not met",
       "unknown": "Some prerequisites can't be checked automatically",
+      "none": "No prerequisites",
+      "needs": "Needs: {text}",
+      "check": "Check yourself",
       "dedicationRule": "Two other feats from your {dedication} archetype first (you have {count})"
     },
     "history": {
       "title": "Level-Up History",
-      "windowTitle": "Level-Up History: {actorName}",
+      "windowTitle": "Level-up history · {actorName}",
       "level": "Level {levels}",
       "empty": "No level-ups recorded yet.",
+      "boost": "{attribute} boost",
+      "by": "by {user}",
       "undoButton": "Undo last level-up",
+      "undoThis": "Undo this level-up",
       "undoTitle": "Undo Level-Up",
       "undoConfirm": "Undo the last level-up of {actorName}? The feats it added are removed and the level goes back from {fromLevel} to {toLevel}. Skill ranks, attribute boosts, languages and XP are restored.",
-      "undoConfirmManual": "Undo the last level-up of {actorName}? The feats it added are removed, and skill ranks, attribute boosts, languages and XP are restored. The level stays at {fromLevel} because it was changed by hand."
+      "undoConfirmManual": "Undo the last level-up of {actorName}? The feats it added are removed, and skill ranks, attribute boosts, languages and XP are restored. The level stays at {fromLevel} because it was changed by hand.",
+      "built": "Character created"
+    },
+    "review": {
+      "title": "Review level {level}",
+      "subtitle": "This is everything that will change on {actorName}.",
+      "level": "Level",
+      "hp": "Hit Points",
+      "attributes": "Attributes",
+      "classFeatures": "Class features",
+      "feats": "Feats",
+      "skills": "Skills",
+      "languages": "Languages",
+      "potency": "Skill potency",
+      "xp": "Experience",
+      "halfBoost": "{attribute} stays {mod} · half boost, rises with the next one",
+      "to": "to",
+      "back": "Back to choices",
+      "aside": "Before you apply",
+      "nothingByHand": "Nothing left to do by hand",
+      "nothingByHandHint": "New class features are added automatically. No spellcasting to update.",
+      "byHand": "Still to do by hand",
+      "byHandHint": "The same list is whispered to you in chat after applying.",
+      "safe": "Safe to apply",
+      "safeHint": "Everything is applied in one step. Changed your mind later? Undo it from the level-up history.",
+      "chat": "Chat will show"
     },
     "settings": {
       "showButton": {
@@ -257,6 +363,140 @@
       },
       "openFailed": "The Level-Up Wizard could not open. See the console (F12) for details.",
       "originalActive": "The original \"PF2e Level-Up Wizard\" module is also active. Disable one of the two in Manage Modules, otherwise characters get two level-up buttons."
+    },
+    "builder": {
+      "windowTitle": "Build Character: {actorName}",
+      "stepsLabel": "Build steps",
+      "steps": {
+        "ancestry": "Ancestry",
+        "heritage": "Heritage",
+        "background": "Background",
+        "class": "Class",
+        "boosts": "Boosts",
+        "skills": "Skills",
+        "feats": "Feats",
+        "languages": "Languages",
+        "review": "Review",
+        "deity": "Deity"
+      },
+      "next": "Next: {step}",
+      "back": "Back",
+      "cancel": "Cancel",
+      "create": "Create character",
+      "creating": "Creating…",
+      "stepOf": "Step {number} of {count} · nothing is saved until the last step",
+      "stillToDo": "Still to do:",
+      "ready": "Ready to create",
+      "or": " or ",
+      "freeBoosts": "{count} free",
+      "search": "Search",
+      "details": "Details",
+      "noResults": "Nothing matches. Try another search or show more rarities.",
+      "summary": "Character so far",
+      "name": "Name",
+      "toChoose": "to choose",
+      "hp": "Hit Points",
+      "sizeSpeed": "Size · Speed",
+      "needAncestry": "Choose an ancestry first.",
+      "ancestry": {
+        "heading": "Choose an ancestry",
+        "hint": "It sets your starting Hit Points, size, speed and some attribute boosts.",
+        "stats": "{hp} HP · {size} · {speed} ft",
+        "flaw": "Flaw: {flaws}"
+      },
+      "heritage": {
+        "heading": "Choose a heritage",
+        "hint": "Heritages for {ancestry}, plus versatile heritages any ancestry can take.",
+        "versatile": "Versatile"
+      },
+      "background": {
+        "heading": "Choose a background",
+        "hint": "Your background gives two attribute boosts, a trained skill and a skill feat.",
+        "trains": "Trains {skills}"
+      },
+      "class": {
+        "heading": "Choose a class",
+        "hint": "Your class decides your role, key attribute and level-1 features.",
+        "stats": "{hp} HP per level · key: {key}",
+        "caster": "Spellcaster"
+      },
+      "boosts": {
+        "heading": "Attribute boosts",
+        "hint": "Each row is one source of boosts. A row can boost each attribute only once.",
+        "source": "Source",
+        "left": "Left",
+        "flaw": "Flaw",
+        "modifiers": "Modifiers",
+        "rows": {
+          "ancestry": "Ancestry · {name}",
+          "background": "Background · {name}",
+          "class": "Class · {name}",
+          "level1": "Level 1"
+        },
+        "ancestryRule": "{fixed}, plus {count} to choose",
+        "alternateRule": "Two free boosts instead of the ancestry's usual ones",
+        "useAlternate": "Use two free boosts instead",
+        "useStandard": "Use the ancestry's usual boosts",
+        "keyRule": "Key attribute: {options}",
+        "level1Rule": "Four free boosts",
+        "keyNote": "Your key attribute, {attribute}, is at {mod}. +4 is the most a level-1 character can have."
+      },
+      "skills": {
+        "heading": "Trained skills",
+        "hint": "Choose {count} skills to become trained in: {cls} from your class and {int} from Intelligence.",
+        "overlap": "Your class and background train the same skill, so you pick {count} more instead.",
+        "counter": "{chosen} of {count} chosen",
+        "backgroundNote": "Some backgrounds let you choose their skill; the system asks when the character is created.",
+        "from": {
+          "class": "from class",
+          "background": "from background",
+          "other": "already trained"
+        }
+      },
+      "feats": {
+        "heading": "Level-1 feats",
+        "hint": "Your background's skill feat is added automatically.",
+        "none": "No feat chosen yet",
+        "browse": "Browse feats",
+        "change": "Change",
+        "remove": "Remove feat",
+        "empty": "No feats to choose at level 1 with these choices."
+      },
+      "languages": {
+        "heading": "Languages and deity",
+        "hint": "You can learn {count} more languages.",
+        "known": "You already speak",
+        "pick": "Extra languages ({chosen} of {count})",
+        "suggestedNote": "Highlighted languages are the usual picks for your ancestry. Unpicked slots can be filled later on the sheet.",
+        "short": "Languages"
+      },
+      "deity": {
+        "heading": "Deity",
+        "required": "Your class needs a deity: its level-1 features build on it.",
+        "optional": "Optional. You can follow a deity or none.",
+        "none": "No deity"
+      },
+      "review": {
+        "heading": "Review your character",
+        "hint": "This is everything that will be added to the sheet.",
+        "name": "Name",
+        "attributes": "Attributes",
+        "hp": "Hit Points",
+        "skills": "Trained skills",
+        "feats": "Feats",
+        "languages": "Languages",
+        "replaces": "These items already on the sheet will be replaced:",
+        "levelNote": "The character is level {level}. Creating sets it to level 1; use the level-up wizard afterwards.",
+        "prompts": "The system may ask a few follow-up questions while the character is created, such as your background's skill or your class's specialisation.",
+        "undo": "You can undo this from the level-up history."
+      },
+      "notifications": {
+        "failed": "The character could not be created and the changes were undone. See the console (F12) for details.",
+        "done": "{actorName} is ready!"
+      },
+      "chat": {
+        "header": "{actorName} has joined the adventure!"
+      }
     }
   }
 }

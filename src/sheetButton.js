@@ -1,5 +1,6 @@
 import { COMPANION_CLASSES, MODULE_ID } from './constants.js';
 import { openLevelUpWizard } from './apps/LevelUpWizard.js';
+import { openCharacterBuilder } from './apps/CharacterBuilder.js';
 import { xpInfo } from './data/plan.js';
 import { getHistory } from './data/apply.js';
 import { LevelUpHistory } from './apps/LevelUpHistory.js';
@@ -20,7 +21,16 @@ export const validateActor = (actor, { notify = true, levelAlreadyApplied = fals
   return true;
 };
 
+/** Characters without a class get the character builder instead of the level-up wizard */
+export const openBuilder = (actor) => {
+  if (actor?.type !== 'character' || !actor.isOwner) return null;
+  return openCharacterBuilder(actor);
+};
+
 export const renderWizard = (actor, options = {}) => {
+  if (actor?.type === 'character' && !actor.class && !options.levelAlreadyApplied) {
+    return openBuilder(actor);
+  }
   if (!validateActor(actor, { levelAlreadyApplied: options.levelAlreadyApplied })) return null;
   return openLevelUpWizard(actor, options);
 };
@@ -59,6 +69,29 @@ export const onRenderCharacterSheet = (sheet, html) => {
 
   queryAll(roots, '.level-up-wizard-button').forEach((el) => el.remove());
 
+  const buttonMode = game.settings.get(MODULE_ID, 'show-level-up-button');
+  const placement = game.settings.get(MODULE_ID, 'button-placement');
+  const level = queryAll(roots, 'section.char-level')[0];
+
+  // A character without a class gets the builder hat, in every mode
+  if (!actor.class) {
+    if (placement === 'WINDOW_HEADER' || !level) return;
+    const build = document.createElement('button');
+    build.type = 'button';
+    build.className = `level-up-wizard-button ${placement === 'CHAR_HEADER' ? 'large' : 'small'}`;
+    build.innerHTML = '<i class="fa-solid fa-hat-wizard"></i>';
+    build.dataset.tooltip = localize('button.build');
+    build.setAttribute('aria-label', localize('button.build'));
+    build.addEventListener('click', (event) => {
+      event.preventDefault();
+      openBuilder(actor);
+    });
+    level.classList.add('level-up-wizard-anchor');
+    level.prepend(build);
+    return;
+  }
+  if (!buttonMode) return;
+
   // Lock the level field regardless of XP so the wizard stays the way to level (upstream #82)
   if (game.settings.get(MODULE_ID, 'disable-level-input')) {
     for (const input of queryAll(roots, 'input[name="system.details.level.value"]')) {
@@ -67,8 +100,7 @@ export const onRenderCharacterSheet = (sheet, html) => {
     }
   }
 
-  const placement = game.settings.get(MODULE_ID, 'button-placement');
-  if (placement === 'WINDOW_HEADER' || !actor.class) return;
+  if (placement === 'WINDOW_HEADER') return;
 
   const atMax = actor.level >= 20;
   const enough = hasEnoughXP(actor);
@@ -101,7 +133,6 @@ export const onRenderCharacterSheet = (sheet, html) => {
     if (hasHistory) openHistory(actor);
   });
 
-  const level = queryAll(roots, 'section.char-level')[0];
   if (level) {
     level.classList.add('level-up-wizard-anchor');
     level.prepend(button);
@@ -115,6 +146,14 @@ export const onRenderCharacterSheet = (sheet, html) => {
 const headerEntries = (actor) => {
   if (game.settings.get(MODULE_ID, 'button-placement') !== 'WINDOW_HEADER') return [];
   if (actor?.type !== 'character' || !actor.isOwner) return [];
+  // Checked when clicked: the header is built once, before a class may be added
+  const build = {
+    key: 'build',
+    icon: 'fa-solid fa-hat-wizard',
+    run: () => (actor.class ? renderWizard(actor) : openBuilder(actor))
+  };
+  if (!game.settings.get(MODULE_ID, 'show-level-up-button')) return actor.class ? [] : [build];
+  if (!actor.class) return [build];
   return [
     {
       key: 'toolbarLabel',
@@ -173,7 +212,7 @@ export const onPreUpdateActor = (actor, changed, options) => {
 export const onUpdateActor = (actor, changed, options, userId) => {
   if (actor.type !== 'character' || game.user.id !== userId) return;
   const moduleOptions = options[MODULE_ID] ?? {};
-  if (moduleOptions.levelUp || moduleOptions.undo) return;
+  if (moduleOptions.levelUp || moduleOptions.undo || moduleOptions.build) return;
   const newLevel = changed.system?.details?.level?.value;
   const previousLevel = moduleOptions.previousLevel;
   if (typeof newLevel !== 'number' || typeof previousLevel !== 'number') return;

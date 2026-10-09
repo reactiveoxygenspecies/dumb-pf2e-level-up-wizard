@@ -1,30 +1,40 @@
 <section class="history-list">
-  {{#each entries}}
-    <article class="history-entry {{#if isLatest}}latest{{/if}}">
-      <header>
-        <h3>{{localize 'NEXT_LEVEL_UP_WIZARD.history.level' levels=levels}}</h3>
-        <span class="meta">{{date}} · {{user}}</span>
-      </header>
-      <ul>
-        {{#each summary.feats}}
-          <li><a class="content-link" data-link data-uuid="{{uuid}}" data-type="Item">{{name}}</a> <em>({{slot}})</em></li>
-        {{/each}}
-        {{#each summary.skills}}<li>{{label}}: {{rank}}</li>{{/each}}
-        {{#if summary.boosts.length}}
-          <li>{{localize 'NEXT_LEVEL_UP_WIZARD.messages.global.boosts'}} {{#each summary.boosts}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
-        {{/if}}
-        {{#if summary.languages.length}}
-          <li>{{localize 'NEXT_LEVEL_UP_WIZARD.messages.global.languages'}} {{#each summary.languages}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
-        {{/if}}
-        {{#each summary.potency}}<li>{{label}} +{{value}}</li>{{/each}}
-      </ul>
-      {{#if canUndo}}
-        <button type="button" data-action="undo">
-          <i class="fa-solid fa-rotate-left"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.history.undoButton'}}
-        </button>
-      {{/if}}
-    </article>
+  {{#if entries.length}}
+    <ol class="timeline">
+      {{#each entries}}
+        <li class="timeline-entry{{#if isLatest}} is-latest{{/if}}">
+          <div class="rail">
+            <span class="level-badge" aria-hidden="true">{{level}}</span>
+            <span class="rail-line" aria-hidden="true"></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>{{heading}}</h3>
+              <time title="{{fullDate}}">{{date}}</time>
+            </div>
+            {{#if items.length}}
+              <ul class="summary">
+                {{#each items}}
+                  <li>
+                    {{#if uuid}}<a class="content-link" data-link data-uuid="{{uuid}}" data-type="Item" data-tooltip="{{title}}">{{label}}</a>{{else}}{{label}}{{/if}}
+                  </li>
+                {{/each}}
+              </ul>
+            {{else}}
+              <p class="summary muted">{{localize 'NEXT_LEVEL_UP_WIZARD.messages.global.noChoices'}}</p>
+            {{/if}}
+            <p class="by">{{localize 'NEXT_LEVEL_UP_WIZARD.history.by' user=user}}</p>
+            {{#if canUndo}}
+              <button type="button" name="undo" class="lvl-btn undo" data-action="undo">
+                <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                {{localize 'NEXT_LEVEL_UP_WIZARD.history.undoThis'}}
+              </button>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    </ol>
   {{else}}
-    <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.history.empty'}}</p>
-  {{/each}}
+    <p class="empty">{{localize 'NEXT_LEVEL_UP_WIZARD.history.empty'}}</p>
+  {{/if}}
 </section>

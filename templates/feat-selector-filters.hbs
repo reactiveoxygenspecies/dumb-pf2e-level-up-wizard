@@ -1,84 +1,69 @@
-<aside class="lvlup-filters">
-  <input type="search" data-filter="search" value="{{filters.search}}"
-    placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}"
-    aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}">
-
+<aside class="lvlup-filters" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.label'}}">
   <div class="filter-group">
-    <label class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.orderBy'}}</label>
-    <div class="sort-row">
-      <select data-filter="sortBy">
-        <option value="level" {{#if (lvlupEq filters.sortBy 'level')}}selected{{/if}}>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.level'}}</option>
-        <option value="name" {{#if (lvlupEq filters.sortBy 'name')}}selected{{/if}}>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.name'}}</option>
-      </select>
-      <button type="button" class="icon" data-action="toggleSortOrder"
-        data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.toggleOrder'}}"
-        aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.toggleOrder'}}">
-        <i class="fa-solid {{#if (lvlupEq filters.sortOrder 'asc')}}fa-arrow-up-short-wide{{else}}fa-arrow-down-wide-short{{/if}}"></i>
-      </button>
+    <div class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.level'}}</div>
+    <div class="level-buttons">
+      <button type="button" name="level-all" class="level-btn is-all" data-action="setLevel" data-level=""
+        aria-pressed="{{#if allLevelsPressed}}true{{else}}false{{/if}}">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.all'}}</button>
+      {{#each levelButtons}}
+        <button type="button" name="level-{{level}}" class="level-btn" data-action="setLevel" data-level="{{level}}"
+          aria-pressed="{{#if pressed}}true{{else}}false{{/if}}">{{level}}</button>
+      {{/each}}
     </div>
+    <details class="range" data-sync="range" {{#if rangeActive}}open{{/if}}>
+      <summary>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.range'}}</summary>
+      <div class="range-row">
+        <input type="number" min="0" max="{{slot.level}}" data-filter="minLevel" value="{{filters.minLevel}}"
+          placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.minLevel'}}"
+          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.minLevel'}}">
+        <span aria-hidden="true">–</span>
+        <input type="number" min="0" max="{{slot.level}}" data-filter="maxLevel" value="{{filters.maxLevel}}"
+          placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.maxLevel'}}"
+          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.maxLevel'}}">
+      </div>
+    </details>
   </div>
 
-  <div class="filter-group level-range">
-    <label class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.level'}}</label>
-    <div class="range-row">
-      <input type="number" min="0" max="{{slot.level}}" data-filter="minLevel" value="{{filters.minLevel}}"
-        placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.minLevel'}}">
-      <span>–</span>
-      <input type="number" min="0" max="{{slot.level}}" data-filter="maxLevel" value="{{filters.maxLevel}}"
-        placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.maxLevel'}}">
+  {{#if showSkillFilter}}
+    <div class="filter-group">
+      <div class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.skills'}}</div>
+      {{#each skills}}
+        <label class="check-row">
+          <input type="checkbox" data-filter="skill" value="{{slug}}" {{#if checked}}checked{{/if}}>
+          <span class="check-label">{{label}}</span>
+          <span class="check-count">{{count}}</span>
+        </label>
+      {{/each}}
+      {{#if canToggleSkills}}
+        <button type="button" name="skills-more" class="lvl-link" data-action="toggleAllSkills"
+          aria-expanded="{{#if allSkills}}true{{else}}false{{/if}}">
+          {{#if allSkills}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.fewerSkills'}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.allSkills' count=skillTotal}}{{/if}}
+        </button>
+      {{/if}}
     </div>
-  </div>
+  {{/if}}
 
   <div class="filter-group">
-    <label class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.rarity'}}</label>
+    <div class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.rarity'}}</div>
     {{#each rarities}}
-      <label class="checkbox">
+      <label class="check-row">
         <input type="checkbox" data-filter="rarity" value="{{key}}" {{#if checked}}checked{{/if}}>
-        {{label}}
+        <span class="check-label">{{label}}</span>
       </label>
     {{/each}}
   </div>
 
-  {{#if prereqEnabled}}
-    <label class="checkbox">
-      <input type="checkbox" data-filter="hideUnmet" {{#if filters.hideUnmet}}checked{{/if}}>
-      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.hideUnmet'}}
-    </label>
-  {{/if}}
-
-  {{#if showArchetypeToggle}}
-    <label class="checkbox">
-      <input type="checkbox" data-filter="showArchetype" {{#if filters.showArchetype}}checked{{/if}}>
-      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.archetypeFeats'}}
-    </label>
-  {{/if}}
-
   {{#if showDedicationSearch}}
-    <input type="search" data-filter="dedicationSearch" value="{{filters.dedicationSearch}}"
-      placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}"
-      aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}">
+    <div class="filter-group">
+      <label class="eyebrow" for="{{partId}}-dedication">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.archetype'}}</label>
+      <input id="{{partId}}-dedication" type="search" data-filter="dedicationSearch" value="{{filters.dedicationSearch}}"
+        placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}">
+    </div>
   {{/if}}
 
-  {{#if showHideSkillFeats}}
-    <label class="checkbox">
-      <input type="checkbox" data-filter="hideSkillFeats" {{#if filters.hideSkillFeats}}checked{{/if}}>
-      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.hideSkillFeats'}}
-    </label>
-  {{/if}}
-
-  {{#if showSkillFilter}}
-    <details class="filter-group skills" data-sync="skills" {{#if filters.skills.length}}open{{/if}}>
-      <summary class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.skills'}}</summary>
-      {{#each skills}}
-        <label class="checkbox">
-          <input type="checkbox" data-filter="skill" value="{{slug}}" {{#if checked}}checked{{/if}}>
-          {{label}}
-        </label>
-      {{/each}}
-    </details>
-  {{/if}}
-
-  <button type="button" class="reset" data-action="resetFilters">
-    <i class="fa-solid fa-filter-circle-xmark"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.reset'}}
-  </button>
+  <div class="filter-foot">
+    {{#if hiddenNote}}<p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.hiddenNote'}}</p>{{/if}}
+    <button type="button" name="reset" class="lvl-link" data-action="resetFilters">
+      <i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.reset'}}
+    </button>
+  </div>
 </aside>

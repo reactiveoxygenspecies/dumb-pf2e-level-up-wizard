@@ -1,24 +1,63 @@
-<footer class="form-footer wizard-footer">
-  {{#if missing.length}}
-    <p class="missing {{#if requireAll}}blocking{{/if}}">
-      <i class="fa-solid {{#if requireAll}}fa-triangle-exclamation{{else}}fa-circle-info{{/if}}"></i>
-      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.missing'}}
-      {{#each missing}}<span class="tag">{{this}}</span>{{/each}}
-    </p>
-  {{/if}}
-  <div class="footer-buttons">
-    {{#if canUndo}}
-      <button type="button" data-action="undo" class="undo">
-        <i class="fa-solid fa-rotate-left"></i>
-        {{localize 'NEXT_LEVEL_UP_WIZARD.history.undoButton'}}
-      </button>
-    {{/if}}
-    <button type="submit" class="submit" {{#unless canSubmit}}disabled{{/unless}}>
-      {{#if submitting}}
-        <i class="fa-solid fa-spinner fa-spin"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.applying'}}
-      {{else}}
-        <i class="fa-solid fa-hat-wizard"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.submit' targetLevel=targetLevel}}
-      {{/if}}
+<footer class="wizard-footer">
+  {{#if reviewing}}
+    <button type="button" name="back-to-choices" class="lvl-btn" data-action="backToChoices">
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+      {{localize 'NEXT_LEVEL_UP_WIZARD.review.back'}}
     </button>
-  </div>
+    <div class="footer-actions">
+      {{#if footer.left}}
+        <span class="footer-note" role="status">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          {{footer.left}}
+        </span>
+      {{/if}}
+      <button type="submit" name="apply" class="lvl-btn primary large" {{#unless canSubmit}}disabled{{/unless}}>
+        {{#if submitting}}
+          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.applying'}}
+        {{else}}
+          <i class="fa-solid fa-hat-wizard" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.submit' targetLevel=targetLevel}}
+        {{/if}}
+      </button>
+    </div>
+  {{else}}
+    <div class="footer-status" role="status">
+      {{#if footer.allChosen}}
+        <span class="status-title is-good">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.allChosen'}}</span>
+        <span class="status-detail">{{footer.levels}}</span>
+      {{else}}
+        <span class="status-title">{{footer.left}}</span>
+        <span class="status-detail">{{footer.leftDetail}}</span>
+      {{/if}}
+    </div>
+    <div class="footer-actions">
+      {{#if canUndo}}
+        <button type="button" name="undo" class="lvl-btn ghost" data-action="undo">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+          {{localize 'NEXT_LEVEL_UP_WIZARD.history.undoButton'}}
+        </button>
+      {{/if}}
+      <button type="button" name="cancel" class="lvl-btn ghost" data-action="close">
+        {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.cancel'}}
+      </button>
+      {{#if footer.canGoBack}}
+        <button type="button" name="prev" class="lvl-btn" data-action="prevStep">
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.back'}}
+        </button>
+      {{/if}}
+      {{#if stepped}}
+        <button type="button" name="next" class="lvl-btn primary large{{#if reviewBlocked}} is-disabled{{/if}}"
+          data-action="{{#if footer.nextIsReview}}review{{else}}nextStep{{/if}}"
+          {{#if footer.nextIsReview}}{{#if reviewBlocked}}aria-disabled="true"{{/if}}{{/if}}>
+          {{footer.nextLabel}}
+          {{#unless footer.nextIsReview}}<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>{{/unless}}
+        </button>
+      {{else}}
+        <button type="button" name="review" class="lvl-btn primary large{{#if reviewBlocked}} is-disabled{{/if}}"
+          data-action="review"{{#if reviewBlocked}} aria-disabled="true"{{/if}}>
+          {{footer.reviewLabel}}
+        </button>
+      {{/if}}
+    </div>
+  {{/if}}
 </footer>

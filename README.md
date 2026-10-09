@@ -1,6 +1,6 @@
 # Next PF2e Level-Up Wizard
 
-A level-up assistant for PF2e on Foundry VTT, rebuilt for **Foundry VTT v14 (14.364)** and **PF2e 8.x**.
+A level-up assistant and level-1 character builder for PF2e on Foundry VTT, rebuilt for **Foundry VTT v14 (14.364)** and **PF2e 8.x**.
 
 It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2e-level-up-wizard) (originally by Zumanzo), released under its own module ID (`next-pf2e-level-up-wizard`) so it can be installed next to the original. If you enjoy the original module consider [buying its author a coffee](https://buymeacoffee.com/zumanzo)!
 
@@ -12,6 +12,10 @@ It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2
 
 ## What changed compared to the original
 
+- **Character builder (new, #81).** A character without a class gets a builder instead of the level-up wizard: ancestry, heritage, background, class, attribute boosts, trained skills, level-1 feats, languages and deity, then a review. The character is previewed by the system after every choice, nothing is saved until "Create character", and the build can be undone from the history like a level-up. Class archetypes that take a level-1 class feat slot (War Mage, #85) are offered in the class feat picker. Spells for casters are still chosen on the sheet.
+- **New look.** Every window uses a light "parchment" design that matches the PF2e sheet (Eczar headings from PF2e, Signika body text from Foundry; nothing is downloaded), regardless of Foundry's light or dark theme. The character sheet itself is not restyled.
+- **Single page or steps.** Small level-ups (a few feats) fit on one page with a side panel showing the level change, HP and a checklist. Bigger ones (boosts, many skills) switch to steps automatically.
+- **Review before applying.** A final step lists every change (level, HP, attributes, feats, skills, languages, XP), what's left to do by hand, and a preview of the chat message, instead of a yes/no dialog.
 - **Feat slots come from the system.** The wizard previews the character at the new level (an in-memory copy the system prepares like the real actor) and offers exactly the empty slots the character sheet would show, using the same filters as the sheet's "browse" button. Free Archetype, mythic (including variant tiers), dual-class and other module-added feat sections, versatile heritages and Adopted Ancestry (#84) all work without hard-coded level lists. Class traits come from the class slug, so translated class names work (#89).
 - **Archetype feats from other classes.** Feats an archetype unlocks from another class (Avenger's Twin Takedown, for example) are offered once the character has that dedication, at the level the archetype grants them. The data is generated from PF2e's archetype journal (`npm run build:archetype-feats`) and validated against the feat compendium.
 - **Prerequisite checking (#93, #87, #95).** Every feat is marked as met, not met, or can't be checked. Same-level choices count, so a skill increase or boost picked in the wizard can qualify a feat. Players can hide feats with unmet prerequisites. Nothing is ever blocked.
@@ -26,7 +30,7 @@ It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2
 - **Missed slots.** Empty feat slots from earlier levels are offered as optional picks. If a level was raised by several steps at once (automatic mode), every level in between is handled.
 - **Reminders.** A whisper lists what still needs manual work: spell slots for every spellcasting entry (class and archetype, #92), new spell ranks, feats that mention focus spells or cantrips (#66), open languages and empty slots.
 - **Faster feat loading.** Compendium indexes are used instead of loading every feat document, and the packs follow the system's Compendium Browser settings (homebrew compendiums included automatically).
-- **Better feat picker.** Search (including Babele original names), level range, rarity, archetype and dedication filters, skill filter, a description pane, double-click to choose, and "post to chat" with the system's own chat card.
+- **Better feat picker.** Search (including Babele original names), "only feats that fit", rarity, archetype and dedication filters, skill filter with counts, feats grouped by level with the reason a prerequisite isn't met ("Needs expert Medicine"), a description pane, double-click to choose, and "post to chat" with the system's own chat card.
 - **v14 ready.** ApplicationV2 with Handlebars parts throughout, no jQuery in the module's own windows, namespaced Foundry APIs, and the feat picker follows the wizard into v14 pop-out windows.
 - **SF2e** is recognized (#88) through the shared system API. This is untested.
 
@@ -34,18 +38,19 @@ It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2
 
 By default, a wizard hat appears next to the character's level on the character sheet (or in the window header, depending on the client setting).
 
-- **Left-click** opens the wizard for the next level.
-- **Right-click** opens the level-up history, with undo for the most recent level-up.
+- **Left-click** opens the wizard for the next level, or the **character builder** if the character has no class yet.
+- **Right-click** opens the level-up history, with undo for the most recent level-up or build.
 
 The hat is dimmed when the character can't level up yet (not enough XP, or level 20).
 
-If the GM disables the button, the wizard opens automatically after a character's level is raised manually.
+If the GM disables the button, the wizard opens automatically after a character's level is raised manually. Characters without a class still get the hat, for the builder.
 
 ### Macro API
 
 ```js
 const api = game.modules.get('next-pf2e-level-up-wizard').api;
-api.open(actor);            // open the wizard
+api.open(actor);            // open the wizard (or the builder for a character without a class)
+api.build(actor);           // open the character builder
 api.history(actor);         // show the history window
 api.getHistory(actor);      // recorded level-ups
 api.undoLastLevelUp(actor); // undo the most recent one (asks for confirmation)

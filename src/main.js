@@ -1,6 +1,7 @@
 import { MODULE_ID, SUPPORTED_SYSTEMS, TEMPLATE_PATH } from './constants.js';
 import { migrateSettings, registerSettings, warnIfOriginalActive } from './settings.js';
 import { registerFeatIndexHooks } from './data/featIndex.js';
+import { registerAbcIndexHooks } from './data/abcIndex.js';
 import { getHistory, undoLastLevelUp } from './data/apply.js';
 import {
   onGetHeaderButtons,
@@ -8,6 +9,7 @@ import {
   onPreUpdateActor,
   onRenderCharacterSheet,
   onUpdateActor,
+  openBuilder,
   openHistory,
   renderWizard
 } from './sheetButton.js';
@@ -16,6 +18,7 @@ Hooks.once('init', () => {
   if (!SUPPORTED_SYSTEMS.includes(game.system.id)) return;
   registerSettings();
   registerFeatIndexHooks();
+  registerAbcIndexHooks();
 
   foundry.applications.handlebars.loadTemplates({
     lvlupFeatSlot: `${TEMPLATE_PATH}/partials/feat-slot.hbs`
@@ -30,6 +33,8 @@ Hooks.once('init', () => {
   game.modules.get(MODULE_ID).api = {
     /** Open the wizard for an actor (respects the same checks as the sheet button) */
     open: (actor) => renderWizard(actor),
+    /** Open the character builder (level-1 creation) for an actor */
+    build: (actor) => openBuilder(actor),
     /** Show the level-up history of an actor */
     history: (actor) => openHistory(actor),
     getHistory,
@@ -47,11 +52,12 @@ Hooks.once('ready', async () => {
   }
   warnIfOriginalActive();
 
-  if (game.settings.get(MODULE_ID, 'show-level-up-button')) {
-    Hooks.on('renderCharacterSheetPF2e', onRenderCharacterSheet);
-    Hooks.on('getCharacterSheetPF2eHeaderButtons', onGetHeaderButtons);
-    Hooks.on('getHeaderControlsCharacterSheetPF2e', onGetHeaderControls);
-  } else {
+  // The sheet hooks decide per character: the level-up hat in button mode, the builder hat for
+  // characters without a class in every mode
+  Hooks.on('renderCharacterSheetPF2e', onRenderCharacterSheet);
+  Hooks.on('getCharacterSheetPF2eHeaderButtons', onGetHeaderButtons);
+  Hooks.on('getHeaderControlsCharacterSheetPF2e', onGetHeaderControls);
+  if (!game.settings.get(MODULE_ID, 'show-level-up-button')) {
     Hooks.on('preUpdateActor', onPreUpdateActor);
     Hooks.on('updateActor', onUpdateActor);
   }

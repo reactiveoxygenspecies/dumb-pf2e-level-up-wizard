@@ -1,0 +1,214 @@
+<div class="lvlb-body">
+  <main class="lvlb-main">
+    <header class="lvlb-step-head">
+      <h1>{{heading}}</h1>
+      <p class="lvlb-hint">{{hint}}</p>
+    </header>
+
+    {{! Card steps: ancestry, heritage, background, class }}
+    {{#if cardStep}}
+      <div class="lvlb-toolbar">
+        <label class="lvlb-search">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" data-builder-search="{{searchKind}}" value="{{search}}"
+            placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.builder.search'}}"
+            aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.builder.search'}}">
+        </label>
+        {{#each rarities}}
+          <button type="button" class="lvlb-chip" data-action="toggleRarity" data-rarity="{{key}}"
+            aria-pressed="{{#if on}}true{{else}}false{{/if}}">{{label}}</button>
+        {{/each}}
+      </div>
+
+      {{#if detail}}
+        <details class="lvlb-detail" open>
+          <summary>
+            {{#if detail.img}}<img src="{{detail.img}}" alt="" loading="lazy">{{/if}}
+            <span class="lvlb-detail-title">{{detail.name}}</span>
+            <span class="lvlb-detail-toggle">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.details'}}</span>
+          </summary>
+          <div class="lvlb-detail-body">{{{detail.html}}}</div>
+        </details>
+      {{/if}}
+
+      <div class="lvlb-cards">
+        {{#each cards}}
+          <button type="button" class="lvlb-card {{#if selected}}selected{{/if}}" data-action="pick"
+            data-kind="{{kind}}" data-uuid="{{uuid}}" data-search="{{search}}"
+            aria-pressed="{{#if selected}}true{{else}}false{{/if}}" {{#if hidden}}hidden{{/if}}>
+            <span class="lvlb-card-art">
+              {{#if img}}<img src="{{img}}" alt="" loading="lazy">{{/if}}
+              {{#if selected}}<span class="lvlb-card-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span>{{/if}}
+            </span>
+            <span class="lvlb-card-body">
+              <span class="lvlb-card-name">{{name}}
+                {{#if rarityLabel}}<span class="lvlb-tag rarity {{rarity}}">{{rarityLabel}}</span>{{/if}}
+                {{#if versatile}}<span class="lvlb-tag">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.heritage.versatile'}}</span>{{/if}}
+              </span>
+              {{#if line}}<span class="lvlb-card-line">{{line}}</span>{{/if}}
+              {{#if sub}}<span class="lvlb-card-sub">{{sub}}</span>{{/if}}
+            </span>
+          </button>
+        {{else}}
+          <p class="lvlb-empty">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.noResults'}}</p>
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{! Boosts }}
+    {{#if boostRows}}
+      <div class="lvlb-boosts" role="table" aria-label="{{heading}}">
+        <div class="lvlb-boost-row head" role="row">
+          <span role="columnheader">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.boosts.source'}}</span>
+          {{#each attributeHeaders}}<span role="columnheader" class="center">{{short}}</span>{{/each}}
+          <span role="columnheader" class="center">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.boosts.left'}}</span>
+        </div>
+        {{#each boostRows}}
+          <div class="lvlb-boost-row" role="row">
+            <span role="rowheader" class="lvlb-boost-source">
+              <strong>{{label}}</strong>
+              <span class="lvlb-hint">{{rule}}</span>
+              {{#if modeToggle}}<button type="button" class="lvlb-link" data-action="ancestryMode">{{modeToggle}}</button>{{/if}}
+            </span>
+            {{#each cells}}
+              <span role="cell" class="center">
+                {{#if button}}
+                  <button type="button" class="lvlb-boost {{kind}}" data-action="boost" data-row="{{../id}}" data-attr="{{attr}}"
+                    aria-pressed="{{#if pressed}}true{{else}}false{{/if}}" aria-label="{{label}}" {{#if disabled}}disabled{{/if}}>
+                    {{#if pressed}}<i class="fa-solid fa-check" aria-hidden="true"></i>{{/if}}
+                  </button>
+                {{else if (lvlupEq kind 'fixed')}}
+                  <span class="lvlb-boost fixed" aria-label="{{label}}"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                {{else if (lvlupEq kind 'key')}}
+                  <span class="lvlb-boost key" aria-label="{{label}}"><i class="fa-solid fa-key" aria-hidden="true"></i></span>
+                {{/if}}
+                {{#if flaw}}<span class="lvlb-flaw">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.boosts.flaw'}}</span>{{/if}}
+              </span>
+            {{/each}}
+            <span role="cell" class="center lvlb-left {{#if done}}done{{/if}}">{{left}}</span>
+          </div>
+        {{/each}}
+        <div class="lvlb-boost-row totals" role="row">
+          <span role="rowheader">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.boosts.modifiers'}}</span>
+          {{#each totals}}<span role="cell" class="center lvlb-total">{{value}}</span>{{/each}}
+          <span role="cell"></span>
+        </div>
+      </div>
+      {{#if keyNote}}<p class="lvlb-note {{#if boostsDone}}ok{{/if}}">{{keyNote}}</p>{{/if}}
+    {{/if}}
+
+    {{! Skills }}
+    {{#if skillGrid}}
+      <p class="lvlb-counter">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.skills.counter' chosen=skillChosen count=skillCount}}</p>
+      {{#if overlapNote}}<p class="lvlb-note">{{overlapNote}}</p>{{/if}}
+      <div class="lvlb-skill-grid">
+        {{#each skillGrid}}
+          <button type="button" class="lvlb-skill {{#if chosen}}chosen{{/if}} {{#if locked}}locked{{/if}}"
+            data-action="skill" data-skill="{{slug}}" aria-pressed="{{#if chosen}}true{{else}}false{{/if}}" {{#if disabled}}disabled{{/if}}>
+            <span class="lvlb-skill-name">{{label}}</span>
+            {{#if fromLabel}}<span class="lvlb-skill-from">{{fromLabel}}</span>{{/if}}
+            <span class="lvlb-rank-dots {{rankClass}}" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          </button>
+        {{/each}}
+      </div>
+      <p class="lvlb-hint">{{backgroundNote}}</p>
+    {{/if}}
+
+    {{! Feats }}
+    {{#if featSlots}}
+      <div class="lvlb-feat-slots">
+        {{#each featSlots}}
+          <section class="lvlb-feat-slot {{#if pick}}filled{{else}}empty{{/if}}" aria-label="{{groupLabel}} {{label}}">
+            <span class="lvlb-group {{groupClass}}">{{groupLabel}} · {{label}}</span>
+            {{#if pick}}
+              <span class="lvlb-feat-pick">
+                <img src="{{pick.img}}" alt="" loading="lazy">
+                <a class="content-link" draggable="true" data-link data-uuid="{{pick.uuid}}" data-type="Item">{{pick.name}}</a>
+              </span>
+              <span class="lvlb-feat-buttons">
+                <button type="button" class="lvlb-button secondary" data-action="openFeatSelector" data-slot-key="{{key}}">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.feats.change'}}</button>
+                <button type="button" class="lvlb-icon-button" data-action="clearFeat" data-slot-key="{{key}}" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.builder.feats.remove'}}"><i class="fa-solid fa-xmark"></i></button>
+              </span>
+            {{else}}
+              <span class="lvlb-feat-empty">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.feats.none'}}</span>
+              <button type="button" class="lvlb-button primary" data-action="openFeatSelector" data-slot-key="{{key}}"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.builder.feats.browse'}}</button>
+            {{/if}}
+          </section>
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#if noFeatSlots}}<p class="lvlb-note">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.feats.empty'}}</p>{{/if}}
+
+    {{! Languages and deity }}
+    {{#if languageStep}}
+      <section class="lvlb-section">
+        <h2>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.languages.known'}}</h2>
+        <div class="lvlb-chips">
+          {{#each granted}}<span class="lvlb-chip locked">{{label}}</span>{{else}}<span class="lvlb-hint">—</span>{{/each}}
+        </div>
+      </section>
+      <section class="lvlb-section">
+        <h2>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.languages.pick' chosen=languageChosen count=languageTotal}}</h2>
+        <div class="lvlb-chips">
+          {{#each languageOptions}}
+            <button type="button" class="lvlb-chip {{#if suggested}}suggested{{/if}}" data-action="language" data-language="{{slug}}"
+              aria-pressed="{{#if chosen}}true{{else}}false{{/if}}" {{#if disabled}}disabled{{/if}}>
+              {{label}}{{#if rarityLabel}} <span class="lvlb-chip-note">{{rarityLabel}}</span>{{/if}}
+            </button>
+          {{/each}}
+        </div>
+        <p class="lvlb-hint">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.languages.suggestedNote'}}</p>
+      </section>
+      <section class="lvlb-section">
+        <h2><label for="{{appId}}-deity">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.deity.heading'}}</label></h2>
+        <p class="lvlb-hint">{{#if deityRequired}}{{localize 'NEXT_LEVEL_UP_WIZARD.builder.deity.required'}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.builder.deity.optional'}}{{/if}}</p>
+        <select id="{{appId}}-deity" class="lvlb-select" data-builder-deity>
+          <option value="" {{#if deityNone}}selected{{/if}}>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.deity.none'}}</option>
+          {{#each deities}}<option value="{{uuid}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
+        </select>
+      </section>
+    {{/if}}
+
+    {{! Review }}
+    {{#if reviewRows}}
+      <dl class="lvlb-review">
+        {{#each reviewRows}}
+          <div class="lvlb-review-row"><dt>{{label}}</dt><dd>{{value}}</dd></div>
+        {{/each}}
+      </dl>
+      {{#if replaces.length}}
+        <p class="lvlb-note warn">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.review.replaces'}} {{#each replaces}}<span class="lvlb-tag">{{this}}</span>{{/each}}</p>
+      {{/if}}
+      {{#if levelNote}}<p class="lvlb-note warn">{{levelNote}}</p>{{/if}}
+      <p class="lvlb-note">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.review.prompts'}}</p>
+      <p class="lvlb-note ok">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.review.undo'}}</p>
+    {{/if}}
+  </main>
+
+  <aside class="lvlb-summary" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.builder.summary'}}">
+    <div class="lvlb-who">
+      <img class="lvlb-portrait" src="{{summary.img}}" alt="">
+      <label class="lvlb-name">
+        <span>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.name'}}</span>
+        <input type="text" data-builder-name value="{{summary.name}}">
+      </label>
+    </div>
+    <dl class="lvlb-picks">
+      {{#each summary.picks}}
+        <div><dt>{{label}}</dt><dd>{{#if value}}{{value}}{{else}}<span class="lvlb-faint">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.toChoose'}}</span>{{/if}}</dd></div>
+      {{/each}}
+    </dl>
+    <div class="lvlb-attr-grid">
+      {{#each summary.attributes}}
+        <div class="lvlb-attr {{#if raised}}raised{{/if}} {{#if lowered}}lowered{{/if}}">
+          <span>{{short}}</span><strong>{{mod}}</strong>
+        </div>
+      {{/each}}
+    </div>
+    <dl class="lvlb-picks">
+      <div><dt>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.hp'}}</dt><dd>{{summary.hp}}</dd></div>
+      <div><dt>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.sizeSpeed'}}</dt><dd>{{summary.size}}{{#if summary.speed}} · {{summary.speed}} ft{{/if}}</dd></div>
+      <div><dt>{{localize 'NEXT_LEVEL_UP_WIZARD.builder.languages.short'}}</dt><dd>{{#if summary.languages}}{{summary.languages}}{{else}}—{{/if}}</dd></div>
+    </dl>
+  </aside>
+</div>

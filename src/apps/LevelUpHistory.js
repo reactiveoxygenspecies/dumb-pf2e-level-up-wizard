@@ -1,6 +1,7 @@
 import { MODULE_ID, TEMPLATE_PATH } from '../constants.js';
 import { canUndo, getHistory, undoLastLevelUp } from '../data/apply.js';
 import { localize } from '../helpers/utility.js';
+import { dayLabel } from './wizardView.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -17,7 +18,7 @@ export class LevelUpHistory extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     classes: [MODULE_ID, 'lvlup-history'],
     window: { icon: 'fa-solid fa-clock-rotate-left', resizable: true },
-    position: { width: 480, height: 'auto' },
+    position: { width: 400, height: 'auto' },
     actions: {
       undo: LevelUpHistory.#onUndo
     }
@@ -35,17 +36,44 @@ export class LevelUpHistory extends HandlebarsApplicationMixin(ApplicationV2) {
     const context = await super._prepareContext(options);
     const history = getHistory(this.actor);
     const undoable = canUndo(this.actor);
+    const lang = game.i18n.lang;
+    // Newest first; each entry becomes one line of the timeline
     const entries = history
-      .map((entry, i) => ({
-        ...entry,
-        date: new Date(entry.timestamp).toLocaleString(game.i18n.lang),
-        user: game.users.get(entry.userId)?.name ?? '—',
-        levels: entry.levelChanged
-          ? `${entry.fromLevel} → ${entry.toLevel}`
-          : `${entry.toLevel}`,
-        isLatest: i === history.length - 1,
-        canUndo: undoable && i === history.length - 1
-      }))
+      .map((entry, i) => {
+        const summary = entry.summary ?? {};
+        const items = [
+          // A character build lists its ancestry, heritage, background, class and deity first
+          ...(summary.build ?? []).map((name) => ({ label: name })),
+          ...(summary.feats ?? []).map((f) => ({ label: f.name, uuid: f.uuid, title: f.slot })),
+          ...(summary.skills ?? []).map((s) => ({ label: `${s.label}: ${s.rank}` })),
+          ...(summary.boosts ?? []).map((b) => ({
+            label: localize('history.boost', { attribute: b })
+          })),
+          ...(summary.languages ?? []).map((l) => ({ label: l })),
+          ...(summary.potency ?? []).map((p) => ({ label: `${p.label} +${p.value}` }))
+        ];
+        return {
+          id: entry.id,
+          level: entry.toLevel,
+          levels: entry.levelChanged
+            ? `${entry.fromLevel} → ${entry.toLevel}`
+            : `${entry.toLevel}`,
+          heading:
+            entry.kind === 'build'
+              ? localize('history.built')
+              : localize('history.level', {
+                  levels: entry.levelChanged
+                    ? `${entry.fromLevel} → ${entry.toLevel}`
+                    : `${entry.toLevel}`
+                }),
+          date: dayLabel(entry.timestamp, lang),
+          fullDate: new Date(entry.timestamp).toLocaleString(lang),
+          user: game.users.get(entry.userId)?.name ?? '—',
+          items,
+          isLatest: i === history.length - 1,
+          canUndo: undoable && i === history.length - 1
+        };
+      })
       .reverse();
     return Object.assign(context, { entries, actorName: this.actor.name });
   }

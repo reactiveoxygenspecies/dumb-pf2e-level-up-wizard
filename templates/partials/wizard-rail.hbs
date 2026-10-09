@@ -1,0 +1,61 @@
+<aside class="wizard-rail" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.label'}}">
+  <div class="rail-id">
+    <img class="rail-portrait" src="{{img}}" alt="">
+    <div class="rail-names">
+      <div class="rail-name">{{name}}</div>
+      {{#if subtitle}}<div class="rail-sub">{{subtitle}}</div>{{/if}}
+    </div>
+  </div>
+
+  <div class="rail-level" role="group" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.levelFromTo' from=from to=to}}">
+    <div class="lv">
+      <div class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.level'}}</div>
+      <div class="lv-from">{{from}}</div>
+    </div>
+    <svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h22"></path><path d="M18 2l6 6-6 6"></path></svg>
+    <div class="lv">
+      <div class="eyebrow is-new">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.new'}}</div>
+      <div class="lv-to">{{to}}</div>
+    </div>
+  </div>
+
+  <section class="rail-gain" aria-labelledby="rail-gain-h">
+    <h2 id="rail-gain-h" class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.gain'}}</h2>
+    {{#if hp}}
+      <div class="rail-row">
+        <span>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.hp'}}</span>
+        <strong>{{hp.before}} <span aria-hidden="true">→</span><span class="sr-only">{{localize 'NEXT_LEVEL_UP_WIZARD.review.to'}}</span> {{hp.after}}</strong>
+      </div>
+    {{/if}}
+    {{#if proficiency}}
+      <div class="rail-row">
+        <span>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.proficiency'}}</span>
+        <strong>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.proficiencyValue'}}</strong>
+      </div>
+    {{/if}}
+    <div class="rail-row">
+      <span>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.features'}}</span>
+      {{#if hasFeatures}}<strong>{{features}}</strong>{{else}}<span class="muted">{{features}}</span>{{/if}}
+    </div>
+  </section>
+
+  {{#if hasChecklist}}
+    <section class="rail-choices" aria-labelledby="rail-choices-h">
+      <h2 id="rail-choices-h" class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.choices'}}</h2>
+      <ul>
+        {{#each checklist}}
+          <li class="{{#if done}}is-done{{else}}is-todo{{/if}}{{#if optional}} is-optional{{/if}}">
+            <span class="check" aria-hidden="true">{{#if done}}<i class="fa-solid fa-check"></i>{{/if}}</span>
+            <span class="ck-text">
+              <span class="ck-label">{{label}}</span>
+              {{#if detail}}<span class="ck-detail"> · {{detail}}</span>{{/if}}
+              <span class="sr-only">{{#if done}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.done'}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.rail.todo'}}{{/if}}</span>
+            </span>
+          </li>
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
+
+  {{#if xp}}<p class="rail-xp">{{xp}}</p>{{/if}}
+</aside>

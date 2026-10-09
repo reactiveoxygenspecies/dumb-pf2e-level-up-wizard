@@ -1,0 +1,34 @@
+<footer class="lvlb-footer">
+  <div class="lvlb-footer-info">
+    {{#if isReview}}
+      {{#if missing.length}}
+        <span class="lvlb-missing"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+          {{localize 'NEXT_LEVEL_UP_WIZARD.builder.stillToDo'}}
+          {{#each missing}}<span class="lvlb-tag">{{this}}</span>{{/each}}
+        </span>
+      {{else}}
+        <span class="lvlb-ready"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.builder.ready'}}</span>
+      {{/if}}
+    {{else}}
+      {{localize 'NEXT_LEVEL_UP_WIZARD.builder.stepOf' number=stepNumber count=stepCount}}
+    {{/if}}
+  </div>
+  <div class="lvlb-footer-buttons">
+    {{#if isFirst}}
+      <button type="button" class="lvlb-button secondary" data-action="cancel">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.cancel'}}</button>
+    {{else}}
+      <button type="button" class="lvlb-button secondary" data-action="back"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.builder.back'}}</button>
+    {{/if}}
+    {{#if isReview}}
+      <button type="button" class="lvlb-button primary" data-action="apply" {{#unless canApply}}disabled{{/unless}}>
+        {{#if busy}}
+          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.builder.creating'}}
+        {{else}}
+          <i class="fa-solid fa-star" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.builder.create'}}
+        {{/if}}
+      </button>
+    {{else}}
+      <button type="button" class="lvlb-button primary" data-action="next">{{nextLabel}} <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+    {{/if}}
+  </div>
+</footer>

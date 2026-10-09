@@ -1,0 +1,77 @@
+<div class="review">
+  <section class="review-changes" aria-labelledby="review-h">
+    <header class="main-head">
+      <h1 id="review-h">{{localize 'NEXT_LEVEL_UP_WIZARD.review.title' level=targetLevel}}</h1>
+      <p class="lead">{{localize 'NEXT_LEVEL_UP_WIZARD.review.subtitle' actorName=actorName}}</p>
+    </header>
+
+    {{#if skipped.length}}
+      <div class="panel warn" role="note">
+        <div class="panel-title">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+          {{localize 'NEXT_LEVEL_UP_WIZARD.menu.confirmDialog.skipped'}}
+        </div>
+        <ul>{{#each skipped}}<li>{{this}}</li>{{/each}}</ul>
+      </div>
+    {{/if}}
+
+    <div class="review-card">
+      {{#each rows}}
+        <div class="review-row row-{{key}}">
+          <span class="rk">{{label}}</span>
+          <span class="rv">
+            {{#each lines}}
+              <span class="rline{{#if muted}} is-muted{{/if}}">
+                {{#if chip}}<span class="lvl-pill small type-{{chipType}}">{{chip}}</span>{{/if}}
+                {{#if plus}}<span class="plus" aria-hidden="true">+</span>{{/if}}
+                {{#if uuid}}
+                  <a class="content-link" draggable="true" data-link data-uuid="{{uuid}}" data-type="Item">{{label}}</a>
+                {{else if label}}
+                  <span class="rlabel">{{label}}</span>
+                {{/if}}
+                {{#if to}}
+                  <strong class="change">{{from}} <span class="arrow" aria-hidden="true">→</span><span class="sr-only">{{localize 'NEXT_LEVEL_UP_WIZARD.review.to'}}</span> <span class="to">{{to}}</span></strong>
+                {{/if}}
+                {{#if note}}<span class="rnote">{{note}}</span>{{/if}}
+              </span>
+            {{/each}}
+          </span>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+
+  <aside class="review-aside" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.review.aside'}}">
+    {{#if manual.empty}}
+      <div class="panel good">
+        <div class="panel-title">
+          <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
+          {{localize 'NEXT_LEVEL_UP_WIZARD.review.nothingByHand'}}
+        </div>
+        <p>{{localize 'NEXT_LEVEL_UP_WIZARD.review.nothingByHandHint'}}</p>
+      </div>
+    {{else}}
+      <div class="panel warn">
+        <div class="panel-title">
+          <i class="fa-solid fa-hand-point-right" aria-hidden="true"></i>
+          {{localize 'NEXT_LEVEL_UP_WIZARD.review.byHand'}}
+        </div>
+        <ul>{{#each manual.items}}<li>{{this}}</li>{{/each}}</ul>
+        <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.review.byHandHint'}}</p>
+      </div>
+    {{/if}}
+
+    <div class="panel plain">
+      <div class="panel-title">{{localize 'NEXT_LEVEL_UP_WIZARD.review.safe'}}</div>
+      <p>{{localize 'NEXT_LEVEL_UP_WIZARD.review.safeHint'}}</p>
+    </div>
+
+    <div class="chat-preview">
+      <div class="chat-head">{{localize 'NEXT_LEVEL_UP_WIZARD.review.chat'}}</div>
+      <div class="chat-body">
+        <div class="chat-title">{{chat.header}}</div>
+        {{#each chat.lines}}<div class="chat-line">{{this}}</div>{{/each}}
+      </div>
+    </div>
+  </aside>
+</div>

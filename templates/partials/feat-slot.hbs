@@ -1,28 +1,47 @@
-<div class="feat-slot {{#if pick}}filled{{else}}{{#if required}}empty{{/if}}{{/if}}" data-slot-key="{{key}}">
-  <div class="slot-label">
-    <span class="group">{{groupLabel}}</span>
-    <span class="level" data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.slotLevel'}}">{{label}}</span>
+<div class="feat-slot {{#if pick}}is-filled{{else}}is-empty{{#unless required}} is-optional{{/unless}}{{/if}}" data-slot-key="{{key}}" role="group" aria-label="{{slotTitle}}">
+  <div class="slot-top">
+    <span class="lvl-pill type-{{type}}">{{slotTitle}}</span>
+    {{#if pick}}
+      {{#if prereq}}
+        <span class="lvl-pill status-{{prereq.status}}" data-tooltip="{{prereq.tooltip}}">
+          <i class="fa-solid {{prereq.icon}}" aria-hidden="true"></i>
+          <span class="pill-text">{{prereq.text}}</span>
+        </span>
+      {{/if}}
+    {{/if}}
   </div>
   {{#if pick}}
-    <div class="slot-pick">
-      <img src="{{pick.img}}" alt="" loading="lazy">
-      <a class="content-link" draggable="true" data-link data-uuid="{{pick.uuid}}" data-type="Item">{{pick.name}}</a>
-      <span class="feat-level">{{pick.effectiveLevel}}</span>
-      {{#if prereq}}
-        <i class="prereq {{prereq.status}} fa-solid {{prereq.icon}}" data-tooltip="{{prereq.tooltip}}"></i>
-      {{/if}}
-    </div>
-    <div class="slot-controls">
-      <button type="button" class="icon fa-solid fa-pen" data-action="openFeatSelector" data-slot-key="{{key}}"
-        data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.change'}}"
-        aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.change'}}"></button>
-      <button type="button" class="icon fa-solid fa-xmark" data-action="clearFeat" data-slot-key="{{key}}"
-        data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clear'}}"
-        aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clear'}}"></button>
+    <div class="slot-body">
+      <img class="slot-icon" src="{{pick.img}}" alt="" loading="lazy">
+      <div class="slot-main">
+        <div class="slot-name">
+          <a class="content-link feat-name" draggable="true" data-link data-uuid="{{pick.uuid}}" data-type="Item">{{pick.name}}</a>
+          {{#if glyph}}<span class="lvl-glyph" role="img" aria-label="{{glyph.label}}" data-tooltip="{{glyph.label}}">{{glyph.char}}</span>{{/if}}
+        </div>
+        {{#if traits.length}}
+          <div class="slot-traits">{{#each traits}}<span class="lvl-chip">{{this}}</span>{{/each}}</div>
+        {{/if}}
+      </div>
+      <div class="slot-controls">
+        <button type="button" name="change-{{key}}" class="lvl-btn" data-action="openFeatSelector" data-slot-key="{{key}}">
+          {{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.changeLabel'}}
+        </button>
+        <button type="button" name="clear-{{key}}" class="lvl-btn icon" data-action="clearFeat" data-slot-key="{{key}}"
+          data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clear'}}"
+          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clearNamed' name=pick.name}}">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
   {{else}}
-    <button type="button" class="slot-choose" data-action="openFeatSelector" data-slot-key="{{key}}">
-      <i class="fa-solid fa-magnifying-glass"></i> {{placeholder}}
-    </button>
+    <div class="slot-empty">
+      <div class="slot-empty-text">
+        <strong>{{#if placeholder}}{{placeholder}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.none'}}{{/if}}</strong>
+        <span class="muted" data-fit-slot="{{key}}">{{fitText}}</span>
+      </div>
+      <button type="button" name="browse-{{key}}" class="lvl-btn primary" data-action="openFeatSelector" data-slot-key="{{key}}">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> {{browse}}
+      </button>
+    </div>
   {{/if}}
 </div>
