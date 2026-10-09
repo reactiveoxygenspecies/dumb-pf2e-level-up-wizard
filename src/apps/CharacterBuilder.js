@@ -50,6 +50,7 @@ import {
 } from '../helpers/prerequisites.js';
 import { attributeLabel, enrichHTML, localize, signedNumber, sluggify } from '../helpers/utility.js';
 import { FeatSelector } from './FeatSelector.js';
+import { withTraitRequirements } from './wizardView.js';
 import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
@@ -216,7 +217,7 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
   }
 
   evaluateFeat(entry, ctx) {
-    return evaluatePrerequisites(entry.prerequisites, ctx);
+    return withTraitRequirements(evaluatePrerequisites(entry.prerequisites, ctx), entry.traits, ctx);
   }
 
   #prereqContext(excludeSlot) {

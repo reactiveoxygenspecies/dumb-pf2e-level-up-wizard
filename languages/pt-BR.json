@@ -123,7 +123,8 @@
       "met": "Pré-requisitos cumpridos",
       "unmet": "Pré-requisitos não cumpridos",
       "unknown": "Alguns pré-requisitos não podem ser verificados automaticamente",
-      "dedicationRule": "Antes, dois outros talentos do seu arquétipo {dedication} (você tem {count})"
+      "dedicationRule": "Antes, dois outros talentos do seu arquétipo {dedication} (você tem {count})",
+      "reincarnated": "Apenas para um personagem que reencarnou pelo menos uma vez"
     },
     "history": {
       "title": "Histórico de Avanços de Nível",

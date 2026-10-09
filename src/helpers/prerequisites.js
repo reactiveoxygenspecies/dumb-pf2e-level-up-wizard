@@ -299,8 +299,11 @@ export function buildPrereqContext(actor) {
 
   // Feats and class features (class features are `feat` items in PF2e)
   const feats = new Set();
+  // Traits of owned feats: taking a reincarnated feat shows the character has reincarnated
+  const featTraits = new Set();
   for (const item of toArray(actor?.items)) {
     if (item?.type !== 'feat') continue;
+    for (const trait of toArray(item.system?.traits?.value)) featTraits.add(norm(trait));
     const names = [
       item.name,
       item.slug,
@@ -359,6 +362,7 @@ export function buildPrereqContext(actor) {
       spells: [...spellNames]
     },
     feats: [...feats],
+    featTraits: [...featTraits],
     classSlug: actor?.class?.slug ?? null,
     ancestrySlug: actor?.ancestry?.slug ?? null,
     heritageSlug: heritage?.slug ?? null,
@@ -977,6 +981,33 @@ function evalClause(text, ctx, idx, depth = 0, structural = false) {
   return null;
 }
 
+/** Feat traits that limit who can take a feat without a prerequisite line saying so */
+const RESTRICTING_FEAT_TRAITS = ['reincarnated'];
+
+/**
+ * Requirements a feat carries in its traits: a reincarnated feat is only for a character who has
+ * reincarnated. That is backstory, so it is 'met' only when the actor or one of its feats has the
+ * trait, and 'unknown' otherwise.
+ * @param {string[]} traits the feat's traits
+ * @param {object} ctx From {@link buildPrereqContext}
+ * @returns {Array<{trait: string, status: 'met'|'unknown'}>}
+ */
+export function traitRequirements(traits, ctx) {
+  return RESTRICTING_FEAT_TRAITS.filter((trait) => toArray(traits).includes(trait)).map(
+    (trait) => ({
+      trait,
+      status:
+        toArray(ctx?.traits).includes(trait) || toArray(ctx?.featTraits).includes(trait)
+          ? 'met'
+          : 'unknown'
+    })
+  );
+}
+
+/** Overall verdict of a list of lines: any unmet, else any unknown, else met */
+export const worstStatus = (statuses) =>
+  statuses.includes('unmet') ? 'unmet' : statuses.includes('unknown') ? 'unknown' : 'met';
+
 /**
  * Evaluate a feat's prerequisites against a context.
  * @param {object|Array<{value:string}|string>|string} prereqs `system.prerequisites`, its `.value`, or strings
@@ -1006,11 +1037,5 @@ export function evaluatePrerequisites(prereqs, ctx) {
       }
       return { text, status };
     });
-  const statuses = results.map((r) => r.status);
-  const status = statuses.includes('unmet')
-    ? 'unmet'
-    : statuses.includes('unknown')
-      ? 'unknown'
-      : 'met';
-  return { status, results };
+  return { status: worstStatus(results.map((r) => r.status)), results };
 }

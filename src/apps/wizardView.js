@@ -1,3 +1,4 @@
+import { traitRequirements, worstStatus } from '../helpers/prerequisites.js';
 import { localize } from '../helpers/utility.js';
 
 /* -------------------------------------------- */
@@ -96,6 +97,24 @@ const STATUS_ICONS = {
   met: 'fa-circle-check',
   unmet: 'fa-circle-xmark',
   unknown: 'fa-circle-question'
+};
+
+const TRAIT_REQUIREMENT_TEXT = {
+  reincarnated: () => localize('prerequisites.reincarnated')
+};
+
+/**
+ * Adds the requirements a feat carries in its traits (see `traitRequirements`) to a verdict of
+ * `evaluatePrerequisites`.
+ */
+export const withTraitRequirements = (verdict, traits, ctx) => {
+  const lines = traitRequirements(traits, ctx).map(({ trait, status }) => ({
+    text: TRAIT_REQUIREMENT_TEXT[trait]?.() ?? trait,
+    status
+  }));
+  if (!lines.length) return verdict;
+  const results = [...(verdict.results ?? []), ...lines];
+  return { status: worstStatus(results.map((r) => r.status)), results };
 };
 
 /**

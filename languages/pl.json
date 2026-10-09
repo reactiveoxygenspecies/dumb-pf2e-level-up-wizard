@@ -123,7 +123,8 @@
       "met": "Wymagania wstępne spełnione",
       "unmet": "Wymagania wstępne niespełnione",
       "unknown": "Niektórych wymagań wstępnych nie można sprawdzić automatycznie",
-      "dedicationRule": "Najpierw dwa inne atuty z archetypu {dedication} (masz: {count})"
+      "dedicationRule": "Najpierw dwa inne atuty z archetypu {dedication} (masz: {count})",
+      "reincarnated": "Tylko dla postaci, która przynajmniej raz się reinkarnowała"
     },
     "history": {
       "title": "Historia awansów",

@@ -123,7 +123,8 @@
       "met": "Prérequis remplis",
       "unmet": "Prérequis non remplis",
       "unknown": "Certains prérequis ne peuvent pas être vérifiés automatiquement",
-      "dedicationRule": "D'abord deux autres dons de votre archétype {dedication} (vous en avez {count})"
+      "dedicationRule": "D'abord deux autres dons de votre archétype {dedication} (vous en avez {count})",
+      "reincarnated": "Uniquement pour un personnage qui s'est réincarné au moins une fois"
     },
     "history": {
       "title": "Historique des montées de niveau",

@@ -10,7 +10,7 @@ globalThis.game = {
   }
 };
 
-const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips } =
+const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips, withTraitRequirements } =
   await import('../src/apps/wizardView.js');
 
 test('a level with two feats stays on one page', () => {
@@ -70,4 +70,16 @@ test('language chips keep chosen uncommon languages visible', () => {
   assert.equal(chips.length, 9);
   assert.ok(chips.some((c) => c.slug === 'aklo'));
   assert.equal(hasMore, true);
+});
+
+test('a reincarnated feat with no prerequisites is a check, not a fit', () => {
+  const none = { status: 'met', results: [] };
+  const ctx = { traits: ['human'], featTraits: [] };
+  const verdict = withTraitRequirements(none, ['reincarnated'], ctx);
+  assert.equal(verdict.status, 'unknown');
+  assert.equal(verdict.results[0].text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.reincarnated');
+  assert.equal(withTraitRequirements(none, ['reincarnated'], { featTraits: ['reincarnated'] }).status, 'met');
+  assert.equal(withTraitRequirements(none, ['human'], ctx), none);
+  const unmet = { status: 'unmet', results: [{ text: 'x', status: 'unmet' }] };
+  assert.equal(withTraitRequirements(unmet, ['reincarnated'], ctx).status, 'unmet');
 });

@@ -123,7 +123,8 @@
       "met": "已满足先决条件",
       "unmet": "未满足先决条件",
       "unknown": "部分先决条件无法自动检查",
-      "dedicationRule": "需先获得{dedication}变体的另外两个专长（当前：{count}）"
+      "dedicationRule": "需先获得{dedication}变体的另外两个专长（当前：{count}）",
+      "reincarnated": "仅限至少转世过一次的角色"
     },
     "history": {
       "title": "升级历史",

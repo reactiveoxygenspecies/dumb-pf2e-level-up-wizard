@@ -72,7 +72,8 @@ import {
   mergeSkillChanges,
   prereqPill,
   prereqTooltip,
-  rankDots
+  rankDots,
+  withTraitRequirements
 } from './wizardView.js';
 import { LightThemeMixin } from './lightTheme.js';
 
@@ -449,7 +450,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
    * @param {string} [excludeSlot] slot whose own pick should not count
    */
   evaluateFeat(entry, ctx, excludeSlot) {
-    const result = evaluatePrerequisites(entry.prerequisites, ctx);
+    const result = withTraitRequirements(evaluatePrerequisites(entry.prerequisites, ctx), entry.traits, ctx);
     if (!entry.traits?.includes('dedication')) return result;
     const pending = Object.entries(this.selection.feats)
       .filter(([key, pick]) => pick && key !== excludeSlot)
