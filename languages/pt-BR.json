@@ -1,5 +1,5 @@
 {
-  "PF2E_LEVEL_UP_WIZARD": {
+  "NEXT_LEVEL_UP_WIZARD": {
     "button-tooltip": "Avançar de Nível",
     "button": {
       "needXp": "XP insuficiente para avançar de nível (faltam {needed})",
@@ -250,12 +250,13 @@
       "nothingToUndo": "Não há avanço de nível para desfazer.",
       "cannotUndo": "Só o avanço de nível mais recente pode ser desfeito, e apenas enquanto o personagem ainda estiver no nível {level}.",
       "undone": "Avanço de nível desfeito para {actorName}.",
-      "settingsMigrated": "Configurações migradas da versão anterior.",
+      "settingsMigrated": "Configurações copiadas do PF2e Level-Up Wizard original.",
       "additionalCompendiums": {
         "failedToLoad": "Falha ao carregar o compêndio {key}. Garanta que ele é um compêndio de itens válido.",
         "compendiumNotFound": "Compêndio {key} não encontrado. Verifique a grafia nas configurações do Assistente de Avanço de Nível."
       },
-      "openFailed": "Não foi possível abrir o assistente de subida de nível. Veja o console (F12) para detalhes."
+      "openFailed": "Não foi possível abrir o assistente de subida de nível. Veja o console (F12) para detalhes.",
+      "originalActive": "O módulo original “PF2e Level-Up Wizard” também está ativo. Desative um dos dois em Gerenciar Módulos, senão os personagens terão dois botões de subida de nível."
     }
   }
 }

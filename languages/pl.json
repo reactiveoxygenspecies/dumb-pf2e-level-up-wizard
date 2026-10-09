@@ -1,5 +1,5 @@
 {
-  "PF2E_LEVEL_UP_WIZARD": {
+  "NEXT_LEVEL_UP_WIZARD": {
     "button-tooltip": "Awans!",
     "button": {
       "needXp": "Za mało PD, aby awansować (brakuje {needed})",
@@ -250,12 +250,13 @@
       "nothingToUndo": "Nie ma awansu do cofnięcia.",
       "cannotUndo": "Można cofnąć tylko ostatni awans i tylko dopóki postać ma jeszcze poziom {level}.",
       "undone": "Awans postaci {actorName} został cofnięty.",
-      "settingsMigrated": "Ustawienia zostały przeniesione z poprzedniej wersji.",
+      "settingsMigrated": "Ustawienia skopiowane z oryginalnego PF2e Level-Up Wizard.",
       "additionalCompendiums": {
         "failedToLoad": "Nie udało się załadować kompendium {key}. Upewnij się, że jest to prawidłowe kompendium przedmiotów.",
         "compendiumNotFound": "Nie znaleziono kompendium {key}. Sprawdź pisownię w ustawieniach Level-Up Wizard."
       },
-      "openFailed": "Nie udało się otworzyć kreatora awansu. Szczegóły w konsoli (F12)."
+      "openFailed": "Nie udało się otworzyć kreatora awansu. Szczegóły w konsoli (F12).",
+      "originalActive": "Oryginalny moduł „PF2e Level-Up Wizard” również jest aktywny. Wyłącz jeden z nich w Zarządzaniu modułami, inaczej postacie będą miały dwa przyciski awansu."
     }
   }
 }

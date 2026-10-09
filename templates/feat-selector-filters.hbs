@@ -1,36 +1,36 @@
-<aside class="feat-filters">
+<aside class="lvlup-filters">
   <input type="search" data-filter="search" value="{{filters.search}}"
-    placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}"
-    aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}">
+    placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}"
+    aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}">
 
   <div class="filter-group">
-    <label class="filter-title">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.orderBy'}}</label>
+    <label class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.orderBy'}}</label>
     <div class="sort-row">
       <select data-filter="sortBy">
-        <option value="level" {{#if (lvlupEq filters.sortBy 'level')}}selected{{/if}}>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.level'}}</option>
-        <option value="name" {{#if (lvlupEq filters.sortBy 'name')}}selected{{/if}}>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.name'}}</option>
+        <option value="level" {{#if (lvlupEq filters.sortBy 'level')}}selected{{/if}}>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.level'}}</option>
+        <option value="name" {{#if (lvlupEq filters.sortBy 'name')}}selected{{/if}}>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.name'}}</option>
       </select>
       <button type="button" class="icon" data-action="toggleSortOrder"
-        data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.toggleOrder'}}"
-        aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.toggleOrder'}}">
+        data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.toggleOrder'}}"
+        aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.toggleOrder'}}">
         <i class="fa-solid {{#if (lvlupEq filters.sortOrder 'asc')}}fa-arrow-up-short-wide{{else}}fa-arrow-down-wide-short{{/if}}"></i>
       </button>
     </div>
   </div>
 
   <div class="filter-group level-range">
-    <label class="filter-title">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.level'}}</label>
+    <label class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.level'}}</label>
     <div class="range-row">
       <input type="number" min="0" max="{{slot.level}}" data-filter="minLevel" value="{{filters.minLevel}}"
-        placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.minLevel'}}">
+        placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.minLevel'}}">
       <span>–</span>
       <input type="number" min="0" max="{{slot.level}}" data-filter="maxLevel" value="{{filters.maxLevel}}"
-        placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.maxLevel'}}">
+        placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.maxLevel'}}">
     </div>
   </div>
 
   <div class="filter-group">
-    <label class="filter-title">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.rarity'}}</label>
+    <label class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.rarity'}}</label>
     {{#each rarities}}
       <label class="checkbox">
         <input type="checkbox" data-filter="rarity" value="{{key}}" {{#if checked}}checked{{/if}}>
@@ -42,33 +42,33 @@
   {{#if prereqEnabled}}
     <label class="checkbox">
       <input type="checkbox" data-filter="hideUnmet" {{#if filters.hideUnmet}}checked{{/if}}>
-      {{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.hideUnmet'}}
+      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.hideUnmet'}}
     </label>
   {{/if}}
 
   {{#if showArchetypeToggle}}
     <label class="checkbox">
       <input type="checkbox" data-filter="showArchetype" {{#if filters.showArchetype}}checked{{/if}}>
-      {{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.archetypeFeats'}}
+      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.archetypeFeats'}}
     </label>
   {{/if}}
 
   {{#if showDedicationSearch}}
     <input type="search" data-filter="dedicationSearch" value="{{filters.dedicationSearch}}"
-      placeholder="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}"
-      aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}">
+      placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}"
+      aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.dedicationSearch'}}">
   {{/if}}
 
   {{#if showHideSkillFeats}}
     <label class="checkbox">
       <input type="checkbox" data-filter="hideSkillFeats" {{#if filters.hideSkillFeats}}checked{{/if}}>
-      {{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.hideSkillFeats'}}
+      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.hideSkillFeats'}}
     </label>
   {{/if}}
 
   {{#if showSkillFilter}}
     <details class="filter-group skills" data-sync="skills" {{#if filters.skills.length}}open{{/if}}>
-      <summary class="filter-title">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.skills'}}</summary>
+      <summary class="filter-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.skills'}}</summary>
       {{#each skills}}
         <label class="checkbox">
           <input type="checkbox" data-filter="skill" value="{{slug}}" {{#if checked}}checked{{/if}}>
@@ -79,6 +79,6 @@
   {{/if}}
 
   <button type="button" class="reset" data-action="resetFilters">
-    <i class="fa-solid fa-filter-circle-xmark"></i> {{localize 'PF2E_LEVEL_UP_WIZARD.menu.filters.reset'}}
+    <i class="fa-solid fa-filter-circle-xmark"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.reset'}}
   </button>
 </aside>

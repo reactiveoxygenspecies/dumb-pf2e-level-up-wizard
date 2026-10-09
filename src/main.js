@@ -1,5 +1,5 @@
 import { MODULE_ID, SUPPORTED_SYSTEMS, TEMPLATE_PATH } from './constants.js';
-import { migrateSettings, registerSettings } from './settings.js';
+import { migrateSettings, registerSettings, warnIfOriginalActive } from './settings.js';
 import { registerFeatIndexHooks } from './data/featIndex.js';
 import { getHistory, undoLastLevelUp } from './data/apply.js';
 import {
@@ -37,9 +37,15 @@ Hooks.once('init', () => {
   };
 });
 
-Hooks.once('ready', () => {
+Hooks.once('ready', async () => {
   if (!SUPPORTED_SYSTEMS.includes(game.system.id)) return;
-  migrateSettings();
+  // Settings copied from the original module decide the button mode below
+  try {
+    await migrateSettings();
+  } catch (error) {
+    console.error(`${MODULE_ID} | Settings migration failed`, error);
+  }
+  warnIfOriginalActive();
 
   if (game.settings.get(MODULE_ID, 'show-level-up-button')) {
     Hooks.on('renderCharacterSheetPF2e', onRenderCharacterSheet);

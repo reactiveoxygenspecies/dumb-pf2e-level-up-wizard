@@ -153,7 +153,7 @@ export const onGetHeaderControls = (app, controls) => {
   for (const entry of headerEntries(app.actor ?? app.document).reverse()) {
     controls.unshift({
       icon: entry.icon,
-      label: `PF2E_LEVEL_UP_WIZARD.button.${entry.key}`,
+      label: `NEXT_LEVEL_UP_WIZARD.button.${entry.key}`,
       onClick: entry.run
     });
   }

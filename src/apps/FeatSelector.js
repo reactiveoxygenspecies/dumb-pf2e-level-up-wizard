@@ -81,7 +81,7 @@ export class FeatSelector extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static DEFAULT_OPTIONS = {
-    classes: [MODULE_ID, 'feat-selector'],
+    classes: [MODULE_ID, 'lvlup-feat-selector'],
     window: { icon: 'fa-solid fa-medal', resizable: true },
     position: { width: 860, height: 640 },
     actions: {
@@ -95,7 +95,7 @@ export class FeatSelector extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static PARTS = {
     filters: { template: `${TEMPLATE_PATH}/feat-selector-filters.hbs`, scrollable: [''] },
-    list: { template: `${TEMPLATE_PATH}/feat-selector-list.hbs`, scrollable: ['.feat-list'] },
+    list: { template: `${TEMPLATE_PATH}/feat-selector-list.hbs`, scrollable: ['.lvlup-feat-list'] },
     details: { template: `${TEMPLATE_PATH}/feat-selector-details.hbs`, scrollable: [''] }
   };
 

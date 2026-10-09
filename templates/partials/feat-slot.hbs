@@ -1,7 +1,7 @@
 <div class="feat-slot {{#if pick}}filled{{else}}{{#if required}}empty{{/if}}{{/if}}" data-slot-key="{{key}}">
   <div class="slot-label">
     <span class="group">{{groupLabel}}</span>
-    <span class="level" data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.slotLevel'}}">{{label}}</span>
+    <span class="level" data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.slotLevel'}}">{{label}}</span>
   </div>
   {{#if pick}}
     <div class="slot-pick">
@@ -14,11 +14,11 @@
     </div>
     <div class="slot-controls">
       <button type="button" class="icon fa-solid fa-pen" data-action="openFeatSelector" data-slot-key="{{key}}"
-        data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.change'}}"
-        aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.change'}}"></button>
+        data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.change'}}"
+        aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.change'}}"></button>
       <button type="button" class="icon fa-solid fa-xmark" data-action="clearFeat" data-slot-key="{{key}}"
-        data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.clear'}}"
-        aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.clear'}}"></button>
+        data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clear'}}"
+        aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clear'}}"></button>
     </div>
   {{else}}
     <button type="button" class="slot-choose" data-action="openFeatSelector" data-slot-key="{{key}}">

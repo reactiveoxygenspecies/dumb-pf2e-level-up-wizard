@@ -1,5 +1,5 @@
 {
-  "PF2E_LEVEL_UP_WIZARD": {
+  "NEXT_LEVEL_UP_WIZARD": {
     "button-tooltip": "Sali di livello!",
     "button": {
       "needXp": "PE insufficienti per salire di livello (ne servono ancora {needed})",
@@ -250,12 +250,13 @@
       "nothingToUndo": "Non c'è nessun avanzamento di livello da annullare.",
       "cannotUndo": "Si può annullare solo l'ultimo avanzamento di livello, e solo finché il personaggio è ancora al livello {level}.",
       "undone": "Avanzamento di livello annullato per {actorName}.",
-      "settingsMigrated": "Impostazioni migrate dalla versione precedente.",
+      "settingsMigrated": "Impostazioni copiate dal PF2e Level-Up Wizard originale.",
       "additionalCompendiums": {
         "failedToLoad": "Impossibile caricare il compendio {key}. Assicurati che sia un compendio di oggetti valido.",
         "compendiumNotFound": "Compendio {key} non trovato. Controlla l'ortografia nelle impostazioni della Procedura guidata di avanzamento."
       },
-      "openFailed": "Impossibile aprire la procedura di avanzamento. Vedi la console (F12) per i dettagli."
+      "openFailed": "Impossibile aprire la procedura di avanzamento. Vedi la console (F12) per i dettagli.",
+      "originalActive": "Anche il modulo originale «PF2e Level-Up Wizard» è attivo. Disattivane uno dei due in Gestisci moduli, altrimenti i personaggi avranno due pulsanti di avanzamento."
     }
   }
 }

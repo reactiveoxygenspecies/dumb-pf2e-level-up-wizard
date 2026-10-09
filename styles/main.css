@@ -46,7 +46,7 @@
 /*  Shared                                    */
 /* ------------------------------------------ */
 
-.pf2e-level-up-wizard {
+.next-pf2e-level-up-wizard {
   --lvlup-accent: #316549;
   --lvlup-accent-dark: #1b3c2a;
   --lvlup-warn: #b5462c;
@@ -58,8 +58,8 @@
   --lvlup-highlight: rgba(49, 101, 73, 0.2);
 }
 
-.theme-dark .pf2e-level-up-wizard,
-.pf2e-level-up-wizard.theme-dark {
+.theme-dark .next-pf2e-level-up-wizard,
+.next-pf2e-level-up-wizard.theme-dark {
   --lvlup-accent: #4b9a6f;
   --lvlup-met: #66bb6a;
   --lvlup-unmet: #ef5350;
@@ -69,13 +69,13 @@
   --lvlup-highlight: rgba(75, 154, 111, 0.25);
 }
 
-.pf2e-level-up-wizard .hint {
+.next-pf2e-level-up-wizard .hint {
   color: var(--color-form-hint, var(--color-text-secondary));
   font-size: var(--font-size-13, 0.8125rem);
   margin: 0.25rem 0;
 }
 
-.pf2e-level-up-wizard .tag {
+.next-pf2e-level-up-wizard .tag {
   display: inline-block;
   padding: 0 0.35em;
   margin: 0 0.15em;
@@ -87,43 +87,43 @@
   white-space: nowrap;
 }
 
-.pf2e-level-up-wizard .tag.rarity.uncommon {
+.next-pf2e-level-up-wizard .tag.rarity.uncommon {
   background: var(--color-rarity-uncommon, #98513d);
   color: #fff;
   border-color: transparent;
 }
 
-.pf2e-level-up-wizard .tag.rarity.rare {
+.next-pf2e-level-up-wizard .tag.rarity.rare {
   background: var(--color-rarity-rare, #002664);
   color: #fff;
   border-color: transparent;
 }
 
-.pf2e-level-up-wizard .tag.rarity.unique {
+.next-pf2e-level-up-wizard .tag.rarity.unique {
   background: var(--color-rarity-unique, #54166e);
   color: #fff;
   border-color: transparent;
 }
 
-.pf2e-level-up-wizard .tag.archetype {
+.next-pf2e-level-up-wizard .tag.archetype {
   background: var(--lvlup-accent-dark);
   color: #fff;
   border-color: transparent;
 }
 
-.pf2e-level-up-wizard .prereq.met {
+.next-pf2e-level-up-wizard .prereq.met {
   color: var(--lvlup-met);
 }
 
-.pf2e-level-up-wizard .prereq.unmet {
+.next-pf2e-level-up-wizard .prereq.unmet {
   color: var(--lvlup-unmet);
 }
 
-.pf2e-level-up-wizard .prereq.unknown {
+.next-pf2e-level-up-wizard .prereq.unknown {
   color: var(--lvlup-unknown);
 }
 
-.pf2e-level-up-wizard button.icon {
+.next-pf2e-level-up-wizard button.icon {
   flex: 0 0 1.75rem;
   width: 1.75rem;
   height: 1.75rem;
@@ -133,7 +133,7 @@
   justify-content: center;
 }
 
-.pf2e-level-up-wizard button.icon::before {
+.next-pf2e-level-up-wizard button.icon::before {
   margin: 0;
 }
 
@@ -141,18 +141,18 @@
 /*  Wizard                                    */
 /* ------------------------------------------ */
 
-.level-up-wizard {
+.lvlup-wizard {
   max-height: 85vh;
   min-height: 300px;
 }
 
-.level-up-wizard .window-content {
+.lvlup-wizard .window-content {
   padding: 0;
   gap: 0;
   overflow: hidden;
 }
 
-.level-up-wizard .wizard-body {
+.lvlup-wizard .wizard-body {
   flex: 1;
   overflow-y: auto;
   padding: 0.75rem 1rem;
@@ -161,17 +161,17 @@
   gap: 0.75rem;
 }
 
-.level-up-wizard .wizard-header h1 {
+.lvlup-wizard .wizard-header h1 {
   margin: 0 0 0.25rem;
   border: none;
   font-size: var(--font-size-24, 1.5rem);
 }
 
-.level-up-wizard .class-journals .content-link {
+.lvlup-wizard .class-journals .content-link {
   margin-right: 0.35rem;
 }
 
-.level-up-wizard .notification {
+.lvlup-wizard .notification {
   position: static;
   margin: 0.5rem 0 0;
   padding: 0.4rem 0.6rem;
@@ -179,52 +179,52 @@
   font-size: var(--font-size-13, 0.8125rem);
 }
 
-.level-up-wizard .nothing-to-choose {
+.lvlup-wizard .nothing-to-choose {
   margin: 0;
   color: var(--color-text-secondary);
 }
 
-.level-up-wizard .wizard-section {
+.lvlup-wizard .wizard-section {
   margin: 0;
   padding: 0.5rem 0.75rem 0.75rem;
   border: 1px solid var(--color-fieldset-border, var(--color-border));
   border-radius: 6px;
 }
 
-.level-up-wizard .wizard-section legend {
+.lvlup-wizard .wizard-section legend {
   padding: 0 0.35rem;
   font-weight: 600;
 }
 
-.level-up-wizard .wizard-section .form-group {
+.lvlup-wizard .wizard-section .form-group {
   margin: 0.35rem 0 0;
 }
 
-.level-up-wizard .wizard-section .form-group label {
+.lvlup-wizard .wizard-section .form-group label {
   flex: 1;
 }
 
-.level-up-wizard .wizard-section .form-group select {
+.lvlup-wizard .wizard-section .form-group select {
   flex: 2;
 }
 
-.level-up-wizard select.empty {
+.lvlup-wizard select.empty {
   outline: 1px dashed var(--lvlup-warn);
 }
 
-.level-up-wizard .inline-control {
+.lvlup-wizard .inline-control {
   all: unset;
   cursor: pointer;
   font-weight: 600;
 }
 
-.level-up-wizard .inline-control:focus-visible {
+.lvlup-wizard .inline-control:focus-visible {
   outline: 2px solid var(--color-border-highlight, #ff6400);
 }
 
 /* Feat slots */
 
-.level-up-wizard .feat-slot {
+.lvlup-wizard .feat-slot {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -232,33 +232,33 @@
   border-bottom: 1px solid var(--lvlup-row-alt);
 }
 
-.level-up-wizard .feat-slot:last-child {
+.lvlup-wizard .feat-slot:last-child {
   border-bottom: none;
 }
 
-.level-up-wizard .feat-slot .slot-label {
+.lvlup-wizard .feat-slot .slot-label {
   flex: 0 0 11rem;
   display: flex;
   gap: 0.35rem;
   align-items: baseline;
 }
 
-.level-up-wizard .feat-slot .slot-label .level {
+.lvlup-wizard .feat-slot .slot-label .level {
   font-weight: 700;
   color: var(--color-text-secondary);
 }
 
-.level-up-wizard .feat-slot .slot-choose {
+.lvlup-wizard .feat-slot .slot-choose {
   flex: 1;
   justify-content: flex-start;
 }
 
-.level-up-wizard .feat-slot.empty .slot-choose {
+.lvlup-wizard .feat-slot.empty .slot-choose {
   border-style: dashed;
   border-color: var(--lvlup-warn);
 }
 
-.level-up-wizard .feat-slot .slot-pick {
+.lvlup-wizard .feat-slot .slot-pick {
   flex: 1;
   display: flex;
   align-items: center;
@@ -266,38 +266,38 @@
   min-width: 0;
 }
 
-.level-up-wizard .feat-slot .slot-pick img {
+.lvlup-wizard .feat-slot .slot-pick img {
   width: 28px;
   height: 28px;
   border: none;
   border-radius: 3px;
 }
 
-.level-up-wizard .feat-slot .slot-pick .content-link {
+.lvlup-wizard .feat-slot .slot-pick .content-link {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.level-up-wizard .feat-slot .feat-level {
+.lvlup-wizard .feat-slot .feat-level {
   font-weight: 700;
 }
 
-.level-up-wizard .feat-slot .slot-controls {
+.lvlup-wizard .feat-slot .slot-controls {
   display: flex;
   gap: 0.25rem;
 }
 
 /* Attribute boosts */
 
-.level-up-wizard .attribute-grid {
+.lvlup-wizard .attribute-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 0.35rem;
   margin-top: 0.35rem;
 }
 
-.level-up-wizard .attribute-boost {
+.lvlup-wizard .attribute-boost {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -307,7 +307,7 @@
   line-height: 1.2;
 }
 
-.level-up-wizard .attribute-boost .attribute-name {
+.lvlup-wizard .attribute-boost .attribute-name {
   font-size: var(--font-size-12, 0.75rem);
   white-space: nowrap;
   overflow: hidden;
@@ -315,119 +315,119 @@
   max-width: 100%;
 }
 
-.level-up-wizard .attribute-boost .boost-state {
+.lvlup-wizard .attribute-boost .boost-state {
   font-size: var(--font-size-11, 0.6875rem);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   opacity: 0.7;
 }
 
-.level-up-wizard .attribute-boost.selected {
+.lvlup-wizard .attribute-boost.selected {
   background: var(--lvlup-accent);
   border-color: var(--lvlup-accent);
   color: #fff;
 }
 
-.level-up-wizard .attribute-boost.selected .boost-state {
+.lvlup-wizard .attribute-boost.selected .boost-state {
   opacity: 1;
 }
 
-.level-up-wizard .attribute-boost.selected.partial {
+.lvlup-wizard .attribute-boost.selected.partial {
   background: var(--lvlup-accent-dark);
 }
 
-.level-up-wizard .attribute-boost.locked {
+.lvlup-wizard .attribute-boost.locked {
   opacity: 0.55;
 }
 
-.level-up-wizard .attribute-boost:disabled:not(.locked) {
+.lvlup-wizard .attribute-boost:disabled:not(.locked) {
   opacity: 0.4;
 }
 
-.level-up-wizard .attribute-grid.modifiers {
+.lvlup-wizard .attribute-grid.modifiers {
   margin-top: 0.5rem;
 }
 
-.level-up-wizard .attribute-modifier {
+.lvlup-wizard .lvlup-modifier {
   text-align: center;
   font-size: var(--font-size-20, 1.25rem);
   font-weight: 700;
 }
 
-.level-up-wizard .attribute-modifier.changed {
+.lvlup-wizard .lvlup-modifier.changed {
   color: var(--lvlup-accent);
 }
 
-.level-up-wizard .counter {
+.lvlup-wizard .counter {
   float: right;
   font-weight: 700;
   color: var(--lvlup-warn);
 }
 
-.level-up-wizard .counter.complete {
+.lvlup-wizard .counter.complete {
   color: var(--lvlup-accent);
 }
 
 /* Skill rank colors in selects (PF2e proficiency palette) */
 
-.level-up-wizard option.rank-untrained {
+.lvlup-wizard option.rank-untrained {
   color: var(--color-proficiency-untrained, #424242);
 }
 
-.level-up-wizard option.rank-trained {
+.lvlup-wizard option.rank-trained {
   color: var(--color-proficiency-trained, #171f69);
 }
 
-.level-up-wizard option.rank-expert {
+.lvlup-wizard option.rank-expert {
   color: var(--color-proficiency-expert, #3c005e);
 }
 
-.level-up-wizard option.rank-master {
+.lvlup-wizard option.rank-master {
   color: var(--color-proficiency-master, #664400);
 }
 
-.level-up-wizard option.rank-legendary {
+.lvlup-wizard option.rank-legendary {
   color: var(--color-proficiency-legendary, #5e0000);
 }
 
 /* Class features */
 
-.level-up-wizard .class-feature {
+.lvlup-wizard .class-feature {
   border-bottom: 1px solid var(--lvlup-row-alt);
   padding: 0.25rem 0;
 }
 
-.level-up-wizard .class-feature summary {
+.lvlup-wizard .class-feature summary {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   cursor: pointer;
 }
 
-.level-up-wizard .class-feature summary img {
+.lvlup-wizard .class-feature summary img {
   width: 24px;
   height: 24px;
   border: none;
 }
 
-.level-up-wizard .class-feature .feature-level {
+.lvlup-wizard .class-feature .feature-level {
   margin-left: auto;
   font-weight: 700;
   color: var(--color-text-secondary);
 }
 
-.level-up-wizard .class-feature .feature-description {
+.lvlup-wizard .class-feature .feature-description {
   padding: 0.25rem 0 0.25rem 1.9rem;
 }
 
-.level-up-wizard .spellcasting-entries {
+.lvlup-wizard .spellcasting-entries {
   margin: 0.25rem 0 0;
   padding-left: 1.25rem;
 }
 
 /* Footer */
 
-.level-up-wizard .wizard-footer {
+.lvlup-wizard .wizard-footer {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -436,26 +436,26 @@
   border-top: 1px solid var(--color-border, #999);
 }
 
-.level-up-wizard .wizard-footer .missing {
+.lvlup-wizard .wizard-footer .missing {
   margin: 0;
   font-size: var(--font-size-12, 0.75rem);
   line-height: 1.6;
 }
 
-.level-up-wizard .wizard-footer .missing.blocking i {
+.lvlup-wizard .wizard-footer .missing.blocking i {
   color: var(--lvlup-warn);
 }
 
-.level-up-wizard .footer-buttons {
+.lvlup-wizard .footer-buttons {
   display: flex;
   gap: 0.5rem;
 }
 
-.level-up-wizard .footer-buttons .undo {
+.lvlup-wizard .footer-buttons .undo {
   flex: 0 0 auto;
 }
 
-.level-up-wizard .footer-buttons .submit {
+.lvlup-wizard .footer-buttons .submit {
   flex: 1;
 }
 
@@ -463,7 +463,7 @@
 /*  Feat selector                             */
 /* ------------------------------------------ */
 
-.feat-selector .window-content {
+.lvlup-feat-selector .window-content {
   padding: 0;
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr) minmax(0, 1fr);
@@ -471,7 +471,7 @@
   overflow: hidden;
 }
 
-.feat-selector .feat-filters {
+.lvlup-feat-selector .lvlup-filters {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -480,13 +480,13 @@
   border-right: 1px solid var(--color-border, #999);
 }
 
-.feat-selector .filter-group {
+.lvlup-feat-selector .filter-group {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
-.feat-selector .filter-title {
+.lvlup-feat-selector .filter-title {
   font-weight: 600;
   font-size: var(--font-size-12, 0.75rem);
   text-transform: uppercase;
@@ -494,52 +494,52 @@
   color: var(--color-text-secondary);
 }
 
-.feat-selector details.filter-group summary {
+.lvlup-feat-selector details.filter-group summary {
   cursor: pointer;
 }
 
-.feat-selector .sort-row,
-.feat-selector .range-row {
+.lvlup-feat-selector .sort-row,
+.lvlup-feat-selector .range-row {
   display: flex;
   gap: 0.25rem;
   align-items: center;
 }
 
-.feat-selector .range-row input {
+.lvlup-feat-selector .range-row input {
   min-width: 0;
   flex: 1;
 }
 
-.feat-selector label.checkbox {
+.lvlup-feat-selector label.checkbox {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   font-size: var(--font-size-13, 0.8125rem);
 }
 
-.feat-selector label.checkbox input {
+.lvlup-feat-selector label.checkbox input {
   margin: 0;
 }
 
-.feat-selector .reset {
+.lvlup-feat-selector .reset {
   margin-top: auto;
 }
 
-.feat-selector .feat-results {
+.lvlup-feat-selector .feat-results {
   display: flex;
   flex-direction: column;
   min-height: 0;
   border-right: 1px solid var(--color-border, #999);
 }
 
-.feat-selector .result-count {
+.lvlup-feat-selector .result-count {
   padding: 0.35rem 0.6rem;
   font-size: var(--font-size-12, 0.75rem);
   color: var(--color-text-secondary);
   border-bottom: 1px solid var(--lvlup-row-alt);
 }
 
-.feat-selector .feat-list {
+.lvlup-feat-selector .lvlup-feat-list {
   flex: 1;
   overflow-y: auto;
   margin: 0;
@@ -547,7 +547,7 @@
   list-style: none;
 }
 
-.feat-selector .feat-row {
+.lvlup-feat-selector .feat-row {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -555,24 +555,24 @@
   cursor: pointer;
 }
 
-.feat-selector .feat-row:nth-child(odd) {
+.lvlup-feat-selector .feat-row:nth-child(odd) {
   background: var(--lvlup-row-alt);
 }
 
-.feat-selector .feat-row:hover {
+.lvlup-feat-selector .feat-row:hover {
   background: var(--lvlup-row-hover);
 }
 
-.feat-selector .feat-row.highlighted {
+.lvlup-feat-selector .feat-row.highlighted {
   background: var(--lvlup-highlight);
   box-shadow: inset 3px 0 0 var(--lvlup-accent);
 }
 
-.feat-selector .feat-row.taken {
+.lvlup-feat-selector .feat-row.taken {
   opacity: 0.55;
 }
 
-.feat-selector .feat-image {
+.lvlup-feat-selector .feat-image {
   position: relative;
   flex: 0 0 32px;
   width: 32px;
@@ -582,14 +582,14 @@
   background: none;
 }
 
-.feat-selector .feat-image img {
+.lvlup-feat-selector .feat-image img {
   width: 32px;
   height: 32px;
   border: none;
   border-radius: 3px;
 }
 
-.feat-selector .feat-image i {
+.lvlup-feat-selector .feat-image i {
   position: absolute;
   inset: 0;
   display: flex;
@@ -603,56 +603,56 @@
   opacity: 0;
 }
 
-.feat-selector .feat-image:hover i,
-.feat-selector .feat-image:focus-visible i {
+.lvlup-feat-selector .feat-image:hover i,
+.lvlup-feat-selector .feat-image:focus-visible i {
   opacity: 1;
 }
 
-.feat-selector .feat-name {
+.lvlup-feat-selector .feat-name {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
 }
 
-.feat-selector .feat-name .name {
+.lvlup-feat-selector .feat-name .name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.feat-selector .feat-name .tags:empty {
+.lvlup-feat-selector .feat-name .tags:empty {
   display: none;
 }
 
-.feat-selector .feat-name .tags .tag:first-child {
+.lvlup-feat-selector .feat-name .tags .tag:first-child {
   margin-left: 0;
 }
 
-.feat-selector .feat-row .feat-level {
+.lvlup-feat-selector .feat-row .feat-level {
   flex: 0 0 1.6rem;
   text-align: center;
   font-weight: 800;
 }
 
-.feat-selector .feat-row .select-feat {
+.lvlup-feat-selector .feat-row .select-feat {
   visibility: hidden;
   color: var(--lvlup-accent);
 }
 
-.feat-selector .feat-row:hover .select-feat,
-.feat-selector .feat-row.highlighted .select-feat,
-.feat-selector .feat-row .select-feat:focus-visible {
+.lvlup-feat-selector .feat-row:hover .select-feat,
+.lvlup-feat-selector .feat-row.highlighted .select-feat,
+.lvlup-feat-selector .feat-row .select-feat:focus-visible {
   visibility: visible;
 }
 
-.feat-selector .no-results {
+.lvlup-feat-selector .no-results {
   padding: 1rem;
   text-align: center;
   color: var(--color-text-secondary);
 }
 
-.feat-selector .feat-details {
+.lvlup-feat-selector .feat-details {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -660,52 +660,52 @@
   overflow-y: auto;
 }
 
-.feat-selector .feat-details header {
+.lvlup-feat-selector .feat-details header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.feat-selector .feat-details header img {
+.lvlup-feat-selector .feat-details header img {
   width: 40px;
   height: 40px;
   border: none;
 }
 
-.feat-selector .feat-details header h2 {
+.lvlup-feat-selector .feat-details header h2 {
   flex: 1;
   margin: 0;
   border: none;
   font-size: var(--font-size-18, 1.125rem);
 }
 
-.feat-selector .feat-details .feat-level {
+.lvlup-feat-selector .feat-details .feat-level {
   font-weight: 700;
   white-space: nowrap;
 }
 
-.feat-selector .feat-details .prerequisites ul {
+.lvlup-feat-selector .feat-details .prerequisites ul {
   margin: 0.2rem 0 0;
   padding-left: 0;
   list-style: none;
 }
 
-.feat-selector .feat-details .prereq-line i {
+.lvlup-feat-selector .feat-details .prereq-line i {
   width: 1.1em;
 }
 
-.feat-selector .feat-details .publication {
+.lvlup-feat-selector .feat-details .publication {
   font-size: var(--font-size-11, 0.6875rem);
   color: var(--color-text-secondary);
   font-style: italic;
 }
 
-.feat-selector .feat-details footer {
+.lvlup-feat-selector .feat-details footer {
   margin-top: auto;
   padding-top: 0.5rem;
 }
 
-.feat-selector .feat-details .placeholder {
+.lvlup-feat-selector .feat-details .placeholder {
   margin: auto;
   text-align: center;
   color: var(--color-text-secondary);
@@ -715,40 +715,40 @@
 /*  History                                   */
 /* ------------------------------------------ */
 
-.level-up-history .history-list {
+.lvlup-history .history-list {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
 
-.level-up-history .history-entry {
+.lvlup-history .history-entry {
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--color-fieldset-border, var(--color-border));
   border-radius: 6px;
 }
 
-.level-up-history .history-entry.latest {
+.lvlup-history .history-entry.latest {
   border-color: var(--lvlup-accent);
 }
 
-.level-up-history .history-entry header {
+.lvlup-history .history-entry header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
 }
 
-.level-up-history .history-entry h3 {
+.lvlup-history .history-entry h3 {
   margin: 0;
   border: none;
 }
 
-.level-up-history .history-entry .meta {
+.lvlup-history .history-entry .meta {
   font-size: var(--font-size-12, 0.75rem);
   color: var(--color-text-secondary);
 }
 
-.level-up-history .history-entry ul {
+.lvlup-history .history-entry ul {
   margin: 0.35rem 0;
   padding-left: 1.2rem;
 }

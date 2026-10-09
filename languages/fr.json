@@ -1,5 +1,5 @@
 {
-  "PF2E_LEVEL_UP_WIZARD": {
+  "NEXT_LEVEL_UP_WIZARD": {
     "button-tooltip": "Monter de niveau !",
     "button": {
       "needXp": "Pas assez d'XP pour monter de niveau ({needed} de plus requis)",
@@ -250,12 +250,13 @@
       "nothingToUndo": "Il n'y a aucune montée de niveau à annuler.",
       "cannotUndo": "Seule la dernière montée de niveau peut être annulée, et uniquement tant que le personnage est encore au niveau {level}.",
       "undone": "Montée de niveau annulée pour {actorName}.",
-      "settingsMigrated": "Paramètres migrés depuis la version précédente.",
+      "settingsMigrated": "Paramètres copiés depuis le PF2e Level-Up Wizard d'origine.",
       "additionalCompendiums": {
         "failedToLoad": "Impossible de charger le compendium {key}. Assurez-vous qu'il s'agit d'un compendium d'Objets valide.",
         "compendiumNotFound": "Compendium {key} introuvable. Vérifiez l'orthographe dans les paramètres de l'Assistant de montée de niveau."
       },
-      "openFailed": "Impossible d'ouvrir l'assistant de montée de niveau. Voir la console (F12) pour les détails."
+      "openFailed": "Impossible d'ouvrir l'assistant de montée de niveau. Voir la console (F12) pour les détails.",
+      "originalActive": "Le module d'origine « PF2e Level-Up Wizard » est également actif. Désactivez l'un des deux dans Gérer les modules, sinon les personnages auront deux boutons de montée de niveau."
     }
   }
 }

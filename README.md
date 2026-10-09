@@ -1,10 +1,16 @@
-# PF2e Level Up Wizard (v14 overhaul fork)
+# Next PF2e Level-Up Wizard
 
-A module for PF2e on FoundryVTT that provides a level up assistant for players.
+A level-up assistant for PF2e on Foundry VTT, rebuilt for **Foundry VTT v14 (14.364)** and **PF2e 8.x**.
 
-This is a local fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2e-level-up-wizard) (originally by Zumanzo), rebuilt for **Foundry VTT v14 (14.364)** and **PF2e 8.x**. If you enjoy the original module consider [buying its author a coffee](https://buymeacoffee.com/zumanzo)!
+It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2e-level-up-wizard) (originally by Zumanzo), released under its own module ID (`next-pf2e-level-up-wizard`) so it can be installed next to the original. If you enjoy the original module consider [buying its author a coffee](https://buymeacoffee.com/zumanzo)!
 
-## What changed in this fork
+## Coming from the original module
+
+- Install this module and **disable the original** in Manage Modules (you can uninstall it later). With both enabled, characters get two level-up buttons; a GM warning says so.
+- Settings are copied from the original the first time this module runs: world settings when a GM logs in, and each player's display preferences in their own browser. "Hide Rare and Uncommon Feats" becomes "Hidden Feat Rarities".
+- Level-up history starts fresh; the original didn't keep one.
+
+## What changed compared to the original
 
 - **Feat slots come from the system.** The wizard previews the character at the new level (an in-memory copy the system prepares like the real actor) and offers exactly the empty slots the character sheet would show, using the same filters as the sheet's "browse" button. Free Archetype, mythic (including variant tiers), dual-class and other module-added feat sections, versatile heritages and Adopted Ancestry (#84) all work without hard-coded level lists. Class traits come from the class slug, so translated class names work (#89).
 - **Archetype feats from other classes.** Feats an archetype unlocks from another class (Avenger's Twin Takedown, for example) are offered once the character has that dedication, at the level the archetype grants them. The data is generated from PF2e's archetype journal (`npm run build:archetype-feats`) and validated against the feat compendium.
@@ -38,7 +44,7 @@ If the GM disables the button, the wizard opens automatically after a character'
 ### Macro API
 
 ```js
-const api = game.modules.get('pf2e-level-up-wizard').api;
+const api = game.modules.get('next-pf2e-level-up-wizard').api;
 api.open(actor);            // open the wizard
 api.history(actor);         // show the history window
 api.getHistory(actor);      // recorded level-ups
@@ -69,13 +75,13 @@ api.undoLastLevelUp(actor); // undo the most recent one (asks for confirmation)
 npm install
 npm run lint
 npm test
-npm run build   # copies the files Foundry needs into dist/pf2e-level-up-wizard/
+npm run build   # copies the files Foundry needs into dist/next-pf2e-level-up-wizard/
 ```
 
-To install on a server, upload `dist/pf2e-level-up-wizard/` into the server's `Data/modules/` folder, replacing any existing `pf2e-level-up-wizard` folder.
+To install on a server, upload `dist/next-pf2e-level-up-wizard/` into the server's `Data/modules/` folder (replace the folder if it's already there), restart Foundry and enable the module in the world.
 
 `npm test` runs the unit tests (prerequisite parser, slot matching and boost math against real PF2e data) and checks that every localization key exists. The data tests read a PF2e source checkout; pass its path with `PF2E_SOURCE=/path/to/pf2e`. `tests/prereq-coverage.mjs <pf2e-path>` reports how many real prerequisite lines the parser understands.
 
 ## Credits
 
-Original module by Zumanzo, maintained by BenABaron and contributors, with translations by the community. Licensed under the terms in [LICENSE](LICENSE).
+Based on the PF2e Level-Up Wizard: original module by Zumanzo, maintained by BenABaron and contributors, with translations by the community. Licensed under the terms in [LICENSE](LICENSE).

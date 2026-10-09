@@ -1,5 +1,5 @@
 {
-  "PF2E_LEVEL_UP_WIZARD": {
+  "NEXT_LEVEL_UP_WIZARD": {
     "button-tooltip": "Level Up!",
     "button": {
       "needXp": "Not enough XP to level up ({needed} more needed)",
@@ -250,12 +250,13 @@
       "nothingToUndo": "There's no level-up to undo.",
       "cannotUndo": "Only the most recent level-up can be undone, and only while the character is still level {level}.",
       "undone": "Level-up undone for {actorName}.",
-      "settingsMigrated": "Settings migrated from the previous version.",
+      "settingsMigrated": "Settings copied from the original PF2e Level-Up Wizard.",
       "additionalCompendiums": {
         "failedToLoad": "Could not load compendium {key}. Make sure it is a valid Item compendium.",
         "compendiumNotFound": "Compendium {key} not found. Check the spelling in the Level-Up Wizard settings."
       },
-      "openFailed": "The Level-Up Wizard could not open. See the console (F12) for details."
+      "openFailed": "The Level-Up Wizard could not open. See the console (F12) for details.",
+      "originalActive": "The original \"PF2e Level-Up Wizard\" module is also active. Disable one of the two in Manage Modules, otherwise characters get two level-up buttons."
     }
   }
 }

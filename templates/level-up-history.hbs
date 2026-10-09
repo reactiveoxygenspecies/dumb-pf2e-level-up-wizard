@@ -2,7 +2,7 @@
   {{#each entries}}
     <article class="history-entry {{#if isLatest}}latest{{/if}}">
       <header>
-        <h3>{{localize 'PF2E_LEVEL_UP_WIZARD.history.level' levels=levels}}</h3>
+        <h3>{{localize 'NEXT_LEVEL_UP_WIZARD.history.level' levels=levels}}</h3>
         <span class="meta">{{date}} · {{user}}</span>
       </header>
       <ul>
@@ -11,20 +11,20 @@
         {{/each}}
         {{#each summary.skills}}<li>{{label}}: {{rank}}</li>{{/each}}
         {{#if summary.boosts.length}}
-          <li>{{localize 'PF2E_LEVEL_UP_WIZARD.messages.global.boosts'}} {{#each summary.boosts}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
+          <li>{{localize 'NEXT_LEVEL_UP_WIZARD.messages.global.boosts'}} {{#each summary.boosts}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
         {{/if}}
         {{#if summary.languages.length}}
-          <li>{{localize 'PF2E_LEVEL_UP_WIZARD.messages.global.languages'}} {{#each summary.languages}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
+          <li>{{localize 'NEXT_LEVEL_UP_WIZARD.messages.global.languages'}} {{#each summary.languages}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
         {{/if}}
         {{#each summary.potency}}<li>{{label}} +{{value}}</li>{{/each}}
       </ul>
       {{#if canUndo}}
         <button type="button" data-action="undo">
-          <i class="fa-solid fa-rotate-left"></i> {{localize 'PF2E_LEVEL_UP_WIZARD.history.undoButton'}}
+          <i class="fa-solid fa-rotate-left"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.history.undoButton'}}
         </button>
       {{/if}}
     </article>
   {{else}}
-    <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.history.empty'}}</p>
+    <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.history.empty'}}</p>
   {{/each}}
 </section>

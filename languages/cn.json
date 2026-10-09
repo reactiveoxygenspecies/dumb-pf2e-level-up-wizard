@@ -1,5 +1,5 @@
 {
-  "PF2E_LEVEL_UP_WIZARD": {
+  "NEXT_LEVEL_UP_WIZARD": {
     "button-tooltip": "升级！",
     "button": {
       "needXp": "经验值不足，无法升级（还需要 {needed}）",
@@ -250,12 +250,13 @@
       "nothingToUndo": "没有可撤销的升级。",
       "cannotUndo": "只能撤销最近一次升级，且仅限角色仍为 {level} 级时。",
       "undone": "已撤销 {actorName} 的升级。",
-      "settingsMigrated": "已从旧版本迁移设置。",
+      "settingsMigrated": "已从原版 PF2e Level-Up Wizard 复制设置。",
       "additionalCompendiums": {
         "failedToLoad": "无法加载合集包 {key}。请确保它是有效的物品合集包。",
         "compendiumNotFound": "未找到合集包 {key}。请在升级向导设置中检查拼写。"
       },
-      "openFailed": "无法打开升级向导。详情请查看控制台（F12）。"
+      "openFailed": "无法打开升级向导。详情请查看控制台（F12）。",
+      "originalActive": "原版“PF2e Level-Up Wizard”模组也处于启用状态。请在“管理模组”中停用其中一个，否则角色会出现两个升级按钮。"
     }
   }
 }

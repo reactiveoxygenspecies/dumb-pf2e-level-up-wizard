@@ -1,14 +1,14 @@
 <section class="feat-results">
   <div class="result-count">
-    {{localize 'PF2E_LEVEL_UP_WIZARD.selector.count' count=count total=total}}
+    {{localize 'NEXT_LEVEL_UP_WIZARD.selector.count' count=count total=total}}
   </div>
-  <ol class="feat-list">
+  <ol class="lvlup-feat-list">
     {{#each feats}}
       <li class="feat-row {{#if highlighted}}highlighted{{/if}} {{#if takenElsewhere}}taken{{/if}} {{#if prereq}}prereq-{{prereq.status}}{{/if}}"
         data-uuid="{{uuid}}" data-action="highlight">
         <button type="button" class="feat-image" data-action="sendToChat"
-          data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}"
-          aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}">
+          data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}"
+          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}">
           <img src="{{img}}" alt="" loading="lazy">
           <i class="fa-solid fa-comment"></i>
         </button>
@@ -18,7 +18,7 @@
             {{#if rarityLabel}}<span class="tag rarity {{rarity}}">{{rarityLabel}}</span>{{/if}}
             {{#if isDedication}}<span class="tag archetype">{{localize 'PF2E.TraitDedication'}}</span>
             {{else if isArchetype}}<span class="tag archetype">{{localize 'PF2E.TraitArchetype'}}</span>{{/if}}
-            {{#if takenElsewhere}}<span class="tag taken">{{localize 'PF2E_LEVEL_UP_WIZARD.selector.takenElsewhere'}}</span>{{/if}}
+            {{#if takenElsewhere}}<span class="tag taken">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.takenElsewhere'}}</span>{{/if}}
           </span>
         </div>
         {{#if prereqIcon}}
@@ -29,11 +29,11 @@
         <span class="feat-level">{{effectiveLevel}}</span>
         <button type="button" class="select-feat icon fa-solid fa-check" data-action="select"
           {{#if takenElsewhere}}disabled{{/if}}
-          data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.tooltips.selectFeat'}}"
-          aria-label="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.tooltips.selectFeat'}}"></button>
+          data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.selectFeat'}}"
+          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.selectFeat'}}"></button>
       </li>
     {{else}}
-      <li class="no-results">{{localize 'PF2E_LEVEL_UP_WIZARD.selector.noResults'}}</li>
+      <li class="no-results">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.noResults'}}</li>
     {{/each}}
   </ol>
 </section>

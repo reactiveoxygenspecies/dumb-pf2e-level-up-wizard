@@ -1,8 +1,8 @@
 {
-  "id": "pf2e-level-up-wizard",
-  "title": "PF2e Level-Up Wizard",
-  "description": "A Wizard to assist with your level ups in PF2e! (v14 overhaul fork)",
-  "version": "2.0.0-fork.1",
+  "id": "next-pf2e-level-up-wizard",
+  "title": "Next PF2e Level-Up Wizard",
+  "description": "A level-up assistant for PF2e on Foundry VTT v14. A rebuilt fork of the PF2e Level-Up Wizard by Zumanzo and BenABaron.",
+  "version": "1.0.0",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
@@ -28,8 +28,12 @@
       }
     ]
   },
-  "esmodules": ["src/main.js"],
-  "styles": ["styles/main.css"],
+  "esmodules": [
+    "src/main.js"
+  ],
+  "styles": [
+    "styles/main.css"
+  ],
   "languages": [
     {
       "lang": "en",
@@ -62,7 +66,6 @@
       "path": "languages/it.json"
     }
   ],
-  "url": "https://github.com/BenABaron/pf2e-level-up-wizard",
   "license": "LICENSE",
   "readme": "README.md"
 }

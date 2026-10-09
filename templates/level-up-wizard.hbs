@@ -1,17 +1,17 @@
 <div class="wizard-body">
   <header class="wizard-header">
     <h1>
-      {{localize 'PF2E_LEVEL_UP_WIZARD.menu.header.name' actorName=actorName targetLevel=targetLevel}}
+      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.header.name' actorName=actorName targetLevel=targetLevel}}
     </h1>
-    <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.header.description'}}</p>
+    <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.header.description'}}</p>
     {{#if levelJump}}
       <p class="notification warning">
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.header.levelJump' previousLevel=previousLevel targetLevel=targetLevel}}
+        {{localize 'NEXT_LEVEL_UP_WIZARD.menu.header.levelJump' previousLevel=previousLevel targetLevel=targetLevel}}
       </p>
     {{/if}}
     {{#if classJournals.length}}
       <p class="class-journals">
-        {{localize 'PF2E_LEVEL_UP_WIZARD.menu.notes.classJournal'}}
+        {{localize 'NEXT_LEVEL_UP_WIZARD.menu.notes.classJournal'}}
         {{#each classJournals}}
           <a class="content-link" draggable="true" data-link data-uuid="{{uuid}}" data-type="JournalEntryPage">
             <i class="fa-solid fa-book-open"></i>{{name}}
@@ -24,14 +24,14 @@
   {{#if hasNothingToChoose}}
     <p class="nothing-to-choose">
       <i class="fa-solid fa-circle-info"></i>
-      {{localize 'PF2E_LEVEL_UP_WIZARD.menu.nothingToChoose'}}
+      {{localize 'NEXT_LEVEL_UP_WIZARD.menu.nothingToChoose'}}
     </p>
   {{/if}}
 
   {{! Feats }}
   {{#if featSlots.length}}
     <fieldset class="wizard-section feats">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.header'}}</legend>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.header'}}</legend>
       {{#each featSlots}}
         {{> lvlupFeatSlot}}
       {{/each}}
@@ -43,11 +43,11 @@
       <legend>
         <button type="button" class="inline-control" data-action="toggleMissed">
           <i class="fa-solid {{#if showMissed}}fa-chevron-down{{else}}fa-chevron-right{{/if}}"></i>
-          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.missedHeader' count=missedSlots.length}}
+          {{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.missedHeader' count=missedSlots.length}}
         </button>
       </legend>
       {{#if showMissed}}
-        <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.feats.missedHint'}}</p>
+        <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.missedHint'}}</p>
         {{#each missedSlots}}
           {{> lvlupFeatSlot}}
         {{/each}}
@@ -58,13 +58,13 @@
   {{! Skill increases }}
   {{#if skillIncreases.length}}
     <fieldset class="wizard-section skills">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillIncreases.header'}}</legend>
-      <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillIncreases.hint' rank=maxSkillRankLabel}}</p>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillIncreases.header'}}</legend>
+      <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillIncreases.hint' rank=maxSkillRankLabel}}</p>
       {{#each skillIncreases}}
         <div class="form-group">
-          <label>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillIncreases.label'}}</label>
+          <label>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillIncreases.label'}}</label>
           <select data-choice="skillIncrease" data-index="{{index}}" name="lvlup-skillIncrease-{{index}}" class="{{#unless value}}empty{{/unless}}">
-            <option value="">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'}}</option>
+            <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.dropdown.placeholder'}}</option>
             {{#each options}}
               <option value="{{value}}" class="{{rankClass}}" {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}>{{label}}</option>
             {{/each}}
@@ -76,17 +76,17 @@
 
   {{! Attribute boosts }}
   {{#if manualAttributes}}
-    <p class="notification info">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.manual'}}</p>
+    <p class="notification info">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.manual'}}</p>
   {{/if}}
   {{#if boosts.sets.length}}
     <fieldset class="wizard-section boosts">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.header'}}</legend>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.header'}}</legend>
       {{#each boosts.sets}}
         <p class="hint">
           {{#if @root.gradualBoosts}}
-            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.gradualLabel' count=remaining set=set}}
+            {{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.gradualLabel' count=remaining set=set}}
           {{else}}
-            {{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.label' count=remaining}}
+            {{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.label' count=remaining}}
           {{/if}}
           <span class="counter {{#if complete}}complete{{/if}}">{{chosen}}/{{remaining}}</span>
         </p>
@@ -96,14 +96,14 @@
               class="attribute-boost {{#if selected}}selected{{/if}} {{#if partial}}partial{{/if}} {{#if locked}}locked{{/if}}"
               data-action="toggleBoost" data-set="{{../set}}" data-attribute="{{key}}"
               {{#if disabled}}disabled{{/if}}
-              {{#if locked}}data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.alreadyBoosted'}}"{{/if}}
-              {{#if partial}}data-tooltip="{{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.partialHint'}}"{{/if}}>
+              {{#if locked}}data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.alreadyBoosted'}}"{{/if}}
+              {{#if partial}}data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.partialHint'}}"{{/if}}>
               <span class="attribute-name">{{label}}</span>
               <span class="boost-state">
                 {{#if partial}}
-                  {{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.partial'}}
+                  {{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.partial'}}
                 {{else}}
-                  {{localize 'PF2E_LEVEL_UP_WIZARD.menu.attributeBoosts.boost'}}
+                  {{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.boost'}}
                 {{/if}}
               </span>
             </button>
@@ -112,7 +112,7 @@
       {{/each}}
       <div class="attribute-grid modifiers">
         {{#each boosts.modifiers}}
-          <div class="attribute-modifier {{#if changed}}changed{{/if}}">
+          <div class="lvlup-modifier {{#if changed}}changed{{/if}}">
             {{display}}
           </div>
         {{/each}}
@@ -123,13 +123,13 @@
   {{! Intelligence bonus: one trained skill and one language per modifier increase }}
   {{#if intSkills.length}}
     <fieldset class="wizard-section int-bonus">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.intBonus.header'}}</legend>
-      <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.intBonus.hint'}}</p>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.intBonus.header'}}</legend>
+      <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.intBonus.hint'}}</p>
       {{#each intSkills}}
         <div class="form-group">
-          <label>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.intBonus.skill'}}</label>
+          <label>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.intBonus.skill'}}</label>
           <select data-choice="intSkill" data-index="{{index}}" name="lvlup-intSkill-{{index}}" class="{{#unless value}}empty{{/unless}}">
-            <option value="">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'}}</option>
+            <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.dropdown.placeholder'}}</option>
             {{#each options}}
               <option value="{{value}}" class="{{rankClass}}" {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}>{{label}}</option>
             {{/each}}
@@ -141,13 +141,13 @@
 
   {{#if languages.length}}
     <fieldset class="wizard-section languages">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.languages.header'}}</legend>
-      <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.languages.hint'}}</p>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.header'}}</legend>
+      <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.hint'}}</p>
       {{#each languages}}
         <div class="form-group">
-          <label>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.languages.label'}}</label>
+          <label>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.label'}}</label>
           <select data-choice="language" data-index="{{index}}" name="lvlup-language-{{index}}">
-            <option value="">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.languages.later'}}</option>
+            <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.later'}}</option>
             {{#each options}}
               <option value="{{value}}" {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}>{{label}}</option>
             {{/each}}
@@ -160,10 +160,10 @@
   {{! Skill potency (automatic bonus progression) }}
   {{#if potency}}
     <fieldset class="wizard-section potency">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillPotency.header'}}</legend>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillPotency.header'}}</legend>
       {{#if potency.current.length}}
         <p class="hint">
-          {{localize 'PF2E_LEVEL_UP_WIZARD.menu.skillPotency.current'}}
+          {{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillPotency.current'}}
           {{#each potency.current}}<span class="tag">{{label}} +{{potency}}</span>{{/each}}
         </p>
       {{/if}}
@@ -171,7 +171,7 @@
         <div class="form-group">
           <label>{{label}}</label>
           <select data-choice="potency" data-index="{{key}}" name="lvlup-potency-{{key}}" class="{{#unless value}}empty{{/unless}}">
-            <option value="">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.dropdown.placeholder'}}</option>
+            <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.dropdown.placeholder'}}</option>
             {{#each options}}
               <option value="{{value}}" {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}>{{label}}</option>
             {{/each}}
@@ -184,8 +184,8 @@
   {{! Class features gained }}
   {{#if classFeatures.length}}
     <fieldset class="wizard-section features">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.class.header'}}</legend>
-      <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.class.hint'}}</p>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.class.header'}}</legend>
+      <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.class.hint'}}</p>
       {{#each classFeatures}}
         <details class="class-feature" data-sync="feature-{{@index}}">
           <summary>
@@ -202,12 +202,12 @@
   {{! Spellcasting reminders }}
   {{#if spellcasting}}
     <fieldset class="wizard-section spellcasting">
-      <legend>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.header'}}</legend>
+      <legend>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.spellcasting.header'}}</legend>
       {{#if spellcasting.newRank}}
-        <p><strong>{{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.rank' rank=spellcasting.newRank}}</strong></p>
+        <p><strong>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.spellcasting.rank' rank=spellcasting.newRank}}</strong></p>
       {{/if}}
       {{#if spellcasting.entries.length}}
-        <p class="hint">{{localize 'PF2E_LEVEL_UP_WIZARD.menu.features.spellcasting.slots'}}</p>
+        <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.spellcasting.slots'}}</p>
         <ul class="spellcasting-entries">
           {{#each spellcasting.entries}}
             <li>{{name}} <span class="tag">{{type}}</span></li>

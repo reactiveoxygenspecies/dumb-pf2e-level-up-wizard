@@ -1,9 +1,12 @@
-export const MODULE_ID = 'pf2e-level-up-wizard';
+export const MODULE_ID = 'next-pf2e-level-up-wizard';
+
+/** The upstream module this one was forked from; its settings are migrated once */
+export const ORIGINAL_MODULE_ID = 'pf2e-level-up-wizard';
 
 export const TEMPLATE_PATH = `modules/${MODULE_ID}/templates`;
 
 /** Localization prefix shared by every string in languages/*.json */
-export const I18N = 'PF2E_LEVEL_UP_WIZARD';
+export const I18N = 'NEXT_LEVEL_UP_WIZARD';
 
 /** PF2e and SF2e share one code base and expose the same APIs under their own system id */
 export const SUPPORTED_SYSTEMS = ['pf2e', 'sf2e'];

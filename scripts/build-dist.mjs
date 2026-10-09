@@ -1,4 +1,4 @@
-// Copies exactly the files Foundry needs into dist/pf2e-level-up-wizard/ (upload that folder).
+// Copies exactly the files Foundry needs into dist/<module id>/ (upload that folder).
 // Run: npm run build
 import { cpSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';

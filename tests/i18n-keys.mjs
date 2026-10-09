@@ -4,7 +4,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1');
-const PREFIX = 'PF2E_LEVEL_UP_WIZARD';
+const PREFIX = 'NEXT_LEVEL_UP_WIZARD';
 
 const walk = (dir) =>
   readdirSync(dir).flatMap((name) => {
@@ -25,11 +25,16 @@ for (const file of walk(join(root, 'src')).filter((f) => f.endsWith('.js'))) {
   const text = readFileSync(file, 'utf8');
   for (const m of text.matchAll(/localize\(\s*[`'"]([\w.-]+)[`'"]/g)) used.add(`${PREFIX}.${m[1]}`);
   for (const m of text.matchAll(/localize\(\s*`([\w.-]+)\$\{/g)) used.add(`${PREFIX}.${m[1]}*`);
-  for (const m of text.matchAll(/['"`](PF2E_LEVEL_UP_WIZARD\.[\w.-]+)['"`]/g)) used.add(m[1]);
+  // localize(condition ? 'a.b' : 'c.d', ...)
+  for (const m of text.matchAll(/localize\(\s*[^'"`(),]+\?\s*'([\w.-]+)'\s*:\s*'([\w.-]+)'/g)) {
+    // System keys (PF2E.*) go through game.i18n directly and aren't ours to check
+    for (const key of [m[1], m[2]]) if (!/^[A-Z]/.test(key)) used.add(`${PREFIX}.${key}`);
+  }
+  for (const m of text.matchAll(/['"`](NEXT_LEVEL_UP_WIZARD\.[\w.-]+)['"`]/g)) used.add(m[1]);
 }
 for (const file of walk(join(root, 'templates'))) {
   const text = readFileSync(file, 'utf8');
-  for (const m of text.matchAll(/'(PF2E_LEVEL_UP_WIZARD\.[\w.-]+)'/g)) used.add(m[1]);
+  for (const m of text.matchAll(/'(NEXT_LEVEL_UP_WIZARD\.[\w.-]+)'/g)) used.add(m[1]);
 }
 
 const missing = [...used].filter((k) => {

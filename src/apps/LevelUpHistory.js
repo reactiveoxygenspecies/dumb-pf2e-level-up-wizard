@@ -15,7 +15,7 @@ export class LevelUpHistory extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static DEFAULT_OPTIONS = {
-    classes: [MODULE_ID, 'level-up-history'],
+    classes: [MODULE_ID, 'lvlup-history'],
     window: { icon: 'fa-solid fa-clock-rotate-left', resizable: true },
     position: { width: 480, height: 'auto' },
     actions: {

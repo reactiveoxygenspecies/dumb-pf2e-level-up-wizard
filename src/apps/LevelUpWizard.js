@@ -71,7 +71,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   static DEFAULT_OPTIONS = {
-    classes: [MODULE_ID, 'level-up-wizard'],
+    classes: [MODULE_ID, 'lvlup-wizard'],
     tag: 'form',
     window: {
       icon: 'fa-solid fa-hat-wizard',
@@ -114,7 +114,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     const controls = super._getHeaderControls();
     controls.push({
       icon: 'fa-solid fa-clock-rotate-left',
-      label: 'PF2E_LEVEL_UP_WIZARD.history.title',
+      label: 'NEXT_LEVEL_UP_WIZARD.history.title',
       action: 'openHistory',
       visible: () => getHistory(this.actor).length > 0
     });
