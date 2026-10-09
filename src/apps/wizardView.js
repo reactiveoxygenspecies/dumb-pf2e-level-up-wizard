@@ -104,14 +104,19 @@ const TRAIT_REQUIREMENT_TEXT = {
 };
 
 /**
- * Adds the requirements a feat carries in its traits (see `traitRequirements`) to a verdict of
- * `evaluatePrerequisites`.
+ * Adds to a verdict of `evaluatePrerequisites` what the feat's prerequisite lines leave out: the
+ * requirements it carries in its traits (see `traitRequirements`), and a check for an ancestry
+ * feat with no traits and no prerequisites, which says nothing about who can take it.
  */
-export const withTraitRequirements = (verdict, traits, ctx) => {
+export const withTraitRequirements = (verdict, entry, ctx) => {
+  const traits = entry.traits ?? [];
   const lines = traitRequirements(traits, ctx).map(({ trait, status }) => ({
     text: TRAIT_REQUIREMENT_TEXT[trait]?.() ?? trait,
     status
   }));
+  if (entry.category === 'ancestry' && !traits.length && !verdict.results?.length) {
+    lines.push({ text: localize('prerequisites.noAncestry'), status: 'unknown' });
+  }
   if (!lines.length) return verdict;
   const results = [...(verdict.results ?? []), ...lines];
   return { status: worstStatus(results.map((r) => r.status)), results };

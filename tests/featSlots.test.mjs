@@ -72,6 +72,14 @@ test('class slot: class feats plus dedications, nothing above the slot level', {
   assert.equal(list.find((c) => c.name === 'Sudden Charge').isArchetype, false);
 });
 
+test('universal ancestry feats, with or without traits, reach any ancestry slot', { skip: !haveData }, () => {
+  const list = names(candidates(slot('ancestry', 5, { categories: ['ancestry'], traits: ['human'] })));
+  assert.ok(list.includes('Fey Influence'), 'untraited universal feat missing');
+  assert.ok(list.includes('Caustic Nectar'), 'untraited universal feat missing');
+  assert.ok(list.includes('Reincarnated Ridiculer'), 'reincarnated feat missing');
+  assert.ok(!list.includes('Dwarven Lore'), 'dwarf feat leaked into human slot');
+});
+
 test('versatile heritage: ancestry slot uses countsAs traits', { skip: !haveData }, () => {
   const list = candidates(slot('ancestry', 1, { categories: ['ancestry'], traits: ['human', 'elf', 'aiuvarin'] }));
   assert.ok(names(list).includes('Natural Ambition'));

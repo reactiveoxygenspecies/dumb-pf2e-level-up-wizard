@@ -124,7 +124,8 @@
       "unmet": "Prerequisiti non soddisfatti",
       "unknown": "Alcuni prerequisiti non possono essere verificati automaticamente",
       "dedicationRule": "Prima due altri talenti dell'archetipo {dedication} (ne hai {count})",
-      "reincarnated": "Solo per un personaggio che si è reincarnato almeno una volta"
+      "reincarnated": "Solo per un personaggio che si è reincarnato almeno una volta",
+      "noAncestry": "Non legato a un'ascendenza: verifica chi può prenderlo"
     },
     "history": {
       "title": "Cronologia degli avanzamenti di livello",

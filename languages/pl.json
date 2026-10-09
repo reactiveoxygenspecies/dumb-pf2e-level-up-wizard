@@ -124,7 +124,8 @@
       "unmet": "Wymagania wstępne niespełnione",
       "unknown": "Niektórych wymagań wstępnych nie można sprawdzić automatycznie",
       "dedicationRule": "Najpierw dwa inne atuty z archetypu {dedication} (masz: {count})",
-      "reincarnated": "Tylko dla postaci, która przynajmniej raz się reinkarnowała"
+      "reincarnated": "Tylko dla postaci, która przynajmniej raz się reinkarnowała",
+      "noAncestry": "Niezwiązany z żadnym pochodzeniem: sprawdź, kto może go wziąć"
     },
     "history": {
       "title": "Historia awansów",

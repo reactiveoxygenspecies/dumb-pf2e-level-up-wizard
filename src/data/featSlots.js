@@ -186,13 +186,12 @@ export const getCandidatesForSlot = (slot, index, context) => {
 
     let matches = matchesFilter(entry, filter);
     // Universal ancestry feats have no ancestry trait, so a trait filter alone never finds them.
-    // Feats with no traits at all are data gaps for one specific group, not universal feats.
+    // Same test as PF2e's own "universal" tag; feats with no traits at all count too.
     if (
       !matches &&
       isAncestrySlot &&
       entry.category === 'ancestry' &&
-      entry.traits.length > 0 &&
-      !entry.traits.some((t) => creatures.has(t))
+      !entry.traits.some((t) => t === 'ancestry' || creatures.has(t))
     ) {
       matches = true;
     }

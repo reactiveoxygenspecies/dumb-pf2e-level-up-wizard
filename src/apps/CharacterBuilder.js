@@ -217,7 +217,7 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
   }
 
   evaluateFeat(entry, ctx) {
-    return withTraitRequirements(evaluatePrerequisites(entry.prerequisites, ctx), entry.traits, ctx);
+    return withTraitRequirements(evaluatePrerequisites(entry.prerequisites, ctx), entry, ctx);
   }
 
   #prereqContext(excludeSlot) {

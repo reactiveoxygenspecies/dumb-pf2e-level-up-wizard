@@ -450,7 +450,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
    * @param {string} [excludeSlot] slot whose own pick should not count
    */
   evaluateFeat(entry, ctx, excludeSlot) {
-    const result = withTraitRequirements(evaluatePrerequisites(entry.prerequisites, ctx), entry.traits, ctx);
+    const result = withTraitRequirements(evaluatePrerequisites(entry.prerequisites, ctx), entry, ctx);
     if (!entry.traits?.includes('dedication')) return result;
     const pending = Object.entries(this.selection.feats)
       .filter(([key, pick]) => pick && key !== excludeSlot)

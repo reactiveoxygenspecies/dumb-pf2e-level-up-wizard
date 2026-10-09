@@ -75,11 +75,29 @@ test('language chips keep chosen uncommon languages visible', () => {
 test('a reincarnated feat with no prerequisites is a check, not a fit', () => {
   const none = { status: 'met', results: [] };
   const ctx = { traits: ['human'], featTraits: [] };
-  const verdict = withTraitRequirements(none, ['reincarnated'], ctx);
+  const reincarnated = { category: 'ancestry', traits: ['reincarnated'] };
+  const verdict = withTraitRequirements(none, reincarnated, ctx);
   assert.equal(verdict.status, 'unknown');
   assert.equal(verdict.results[0].text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.reincarnated');
-  assert.equal(withTraitRequirements(none, ['reincarnated'], { featTraits: ['reincarnated'] }).status, 'met');
-  assert.equal(withTraitRequirements(none, ['human'], ctx), none);
+  assert.equal(withTraitRequirements(none, reincarnated, { featTraits: ['reincarnated'] }).status, 'met');
+  const human = { category: 'ancestry', traits: ['human'] };
+  assert.equal(withTraitRequirements(none, human, ctx), none);
   const unmet = { status: 'unmet', results: [{ text: 'x', status: 'unmet' }] };
-  assert.equal(withTraitRequirements(unmet, ['reincarnated'], ctx).status, 'unmet');
+  assert.equal(withTraitRequirements(unmet, reincarnated, ctx).status, 'unmet');
+});
+
+test('an ancestry feat with no traits is a check only when nothing else can be checked', () => {
+  const ctx = { traits: ['human'], featTraits: [] };
+  const untraited = { category: 'ancestry', traits: [] };
+  const none = { status: 'met', results: [] };
+  const verdict = withTraitRequirements(none, untraited, ctx);
+  assert.equal(verdict.status, 'unknown');
+  assert.equal(verdict.results[0].text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.noAncestry');
+  // its own prerequisites decide: "plant trait" for a leshy fits, for a human it doesn't
+  const met = { status: 'met', results: [{ text: 'plant trait', status: 'met' }] };
+  assert.equal(withTraitRequirements(met, untraited, ctx), met);
+  const unmet = { status: 'unmet', results: [{ text: 'plant trait', status: 'unmet' }] };
+  assert.equal(withTraitRequirements(unmet, untraited, ctx), unmet);
+  // a general feat without traits is not an ancestry question
+  assert.equal(withTraitRequirements(none, { category: 'general', traits: [] }, ctx), none);
 });

@@ -217,7 +217,8 @@
       "needs": "Needs: {text}",
       "check": "Check yourself",
       "dedicationRule": "Two other feats from your {dedication} archetype first (you have {count})",
-      "reincarnated": "Only for a character who has reincarnated at least once"
+      "reincarnated": "Only for a character who has reincarnated at least once",
+      "noAncestry": "Not tied to an ancestry: check who can take it"
     },
     "history": {
       "title": "Level-Up History",
