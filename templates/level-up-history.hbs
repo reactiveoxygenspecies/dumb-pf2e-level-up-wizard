@@ -21,13 +21,13 @@
                 {{/each}}
               </ul>
             {{else}}
-              <p class="summary muted">{{localize 'NEXT_LEVEL_UP_WIZARD.messages.global.noChoices'}}</p>
+              <p class="summary muted">{{localize 'DUMB_LEVEL_UP_WIZARD.messages.global.noChoices'}}</p>
             {{/if}}
-            <p class="by">{{localize 'NEXT_LEVEL_UP_WIZARD.history.by' user=user}}</p>
+            <p class="by">{{localize 'DUMB_LEVEL_UP_WIZARD.history.by' user=user}}</p>
             {{#if canUndo}}
               <button type="button" name="undo" class="lvl-btn undo" data-action="undo">
                 <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
-                {{localize 'NEXT_LEVEL_UP_WIZARD.history.undoThis'}}
+                {{localize 'DUMB_LEVEL_UP_WIZARD.history.undoThis'}}
               </button>
             {{/if}}
           </div>
@@ -35,6 +35,6 @@
       {{/each}}
     </ol>
   {{else}}
-    <p class="empty">{{localize 'NEXT_LEVEL_UP_WIZARD.history.empty'}}</p>
+    <p class="empty">{{localize 'DUMB_LEVEL_UP_WIZARD.history.empty'}}</p>
   {{/if}}
 </section>

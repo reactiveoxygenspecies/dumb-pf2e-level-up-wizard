@@ -24,11 +24,11 @@
       </div>
       <div class="slot-controls">
         <button type="button" name="change-{{key}}" class="lvl-btn" data-action="openFeatSelector" data-slot-key="{{key}}">
-          {{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.changeLabel'}}
+          {{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.changeLabel'}}
         </button>
         <button type="button" name="clear-{{key}}" class="lvl-btn icon" data-action="clearFeat" data-slot-key="{{key}}"
-          data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clear'}}"
-          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.clearNamed' name=pick.name}}">
+          data-tooltip="{{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.clear'}}"
+          aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.clearNamed' name=pick.name}}">
           <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
       </div>
@@ -36,7 +36,7 @@
   {{else}}
     <div class="slot-empty">
       <div class="slot-empty-text">
-        <strong>{{#if placeholder}}{{placeholder}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.none'}}{{/if}}</strong>
+        <strong>{{#if placeholder}}{{placeholder}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.none'}}{{/if}}</strong>
         <span class="muted" data-fit-slot="{{key}}">{{fitText}}</span>
       </div>
       <button type="button" name="browse-{{key}}" class="lvl-btn primary" data-action="openFeatSelector" data-slot-key="{{key}}">

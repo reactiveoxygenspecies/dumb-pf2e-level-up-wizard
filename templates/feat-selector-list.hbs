@@ -1,12 +1,12 @@
-<section class="feat-results" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.selector.listLabel'}}">
+<section class="feat-results" aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.selector.listLabel'}}">
   <div class="result-count" role="status">
-    {{localize 'NEXT_LEVEL_UP_WIZARD.selector.count' count=count total=total}}
-    {{#if unmetShown}} · {{localize 'NEXT_LEVEL_UP_WIZARD.selector.unmetShown'}}{{/if}}
+    {{localize 'DUMB_LEVEL_UP_WIZARD.selector.count' count=count total=total}}
+    {{#if unmetShown}} · {{localize 'DUMB_LEVEL_UP_WIZARD.selector.unmetShown'}}{{/if}}
   </div>
   <ol class="lvlup-feat-list">
     {{#each groups}}
       {{#if level}}
-        <li class="level-head"><h3>{{localize 'NEXT_LEVEL_UP_WIZARD.selector.level' level=level}}</h3></li>
+        <li class="level-head"><h3>{{localize 'DUMB_LEVEL_UP_WIZARD.selector.level' level=level}}</h3></li>
       {{/if}}
       {{#each feats}}
         <li class="feat-row{{#if highlighted}} highlighted{{/if}}{{#if takenElsewhere}} taken{{/if}}{{#if unmet}} is-unmet{{/if}}">
@@ -18,7 +18,7 @@
                 {{#if rarityLabel}}<span class="lvl-chip rarity {{rarity}}">{{rarityLabel}}</span>{{/if}}
                 {{#if isDedication}}<span class="lvl-chip archetype">{{localize 'PF2E.TraitDedication'}}</span>
                 {{else if isArchetype}}<span class="lvl-chip archetype">{{localize 'PF2E.TraitArchetype'}}</span>{{/if}}
-                {{#if takenElsewhere}}<span class="lvl-chip taken">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.takenElsewhere'}}</span>{{/if}}
+                {{#if takenElsewhere}}<span class="lvl-chip taken">{{localize 'DUMB_LEVEL_UP_WIZARD.selector.takenElsewhere'}}</span>{{/if}}
               </span>
               {{#if subtitle}}<span class="subtitle">{{subtitle}}</span>{{/if}}
             </span>
@@ -32,7 +32,7 @@
         </li>
       {{/each}}
     {{else}}
-      <li class="no-results">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.noResults'}}</li>
+      <li class="no-results">{{localize 'DUMB_LEVEL_UP_WIZARD.selector.noResults'}}</li>
     {{/each}}
   </ol>
 </section>

@@ -1,4 +1,4 @@
-<aside class="feat-details" aria-label="{{#if feat}}{{feat.name}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.selector.detailsLabel'}}{{/if}}">
+<aside class="feat-details" aria-label="{{#if feat}}{{feat.name}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.selector.detailsLabel'}}{{/if}}">
   {{#if feat}}
     <div class="details-scroll">
       <header>
@@ -7,7 +7,7 @@
             <a class="content-link" draggable="true" data-link data-uuid="{{feat.uuid}}" data-type="Item">{{feat.name}}</a>
             {{#if glyph}}<span class="lvl-glyph" role="img" aria-label="{{glyph.label}}">{{glyph.char}}</span>{{/if}}
           </h2>
-          <span class="feat-level">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.featLevel' level=feat.effectiveLevel}}</span>
+          <span class="feat-level">{{localize 'DUMB_LEVEL_UP_WIZARD.selector.featLevel' level=feat.effectiveLevel}}</span>
         </div>
         <div class="trait-row">
           {{#if rarityLabel}}<span class="lvl-chip rarity {{feat.rarity}}">{{rarityLabel}}</span>{{/if}}
@@ -15,18 +15,18 @@
         </div>
       </header>
       {{#if feat.grantedBy}}
-        <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.grantedBy' dedication=feat.grantedByName}}</p>
+        <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.selector.grantedBy' dedication=feat.grantedByName}}</p>
       {{/if}}
       {{#if feat.prerequisites.length}}
         <div class="prereq-box status-{{#if prereqStatus}}{{prereqStatus}}{{else}}plain{{/if}}">
-          <div class="eyebrow">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.prerequisites'}}</div>
+          <div class="eyebrow">{{localize 'DUMB_LEVEL_UP_WIZARD.selector.prerequisites'}}</div>
           <ul>
             {{#if prereqLines.length}}
               {{#each prereqLines}}
                 <li class="prereq-line {{status}}">
                   <i class="fa-solid {{icon}}" aria-hidden="true"></i>
                   <span>{{text}}</span>
-                  <span class="sr-only">{{#if (lvlupEq status 'met')}}{{localize 'NEXT_LEVEL_UP_WIZARD.prerequisites.met'}}{{else if (lvlupEq status 'unmet')}}{{localize 'NEXT_LEVEL_UP_WIZARD.prerequisites.unmet'}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.prerequisites.check'}}{{/if}}</span>
+                  <span class="sr-only">{{#if (lvlupEq status 'met')}}{{localize 'DUMB_LEVEL_UP_WIZARD.prerequisites.met'}}{{else if (lvlupEq status 'unmet')}}{{localize 'DUMB_LEVEL_UP_WIZARD.prerequisites.unmet'}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.prerequisites.check'}}{{/if}}</span>
                 </li>
               {{/each}}
             {{else}}
@@ -40,16 +40,16 @@
     </div>
     <footer class="details-actions">
       <button type="button" name="choose" class="lvl-btn primary large" data-action="select" data-uuid="{{feat.uuid}}" {{#if featTakenElsewhere}}disabled{{/if}}>
-        {{localize 'NEXT_LEVEL_UP_WIZARD.selector.chooseNamed' name=feat.name}}
+        {{localize 'DUMB_LEVEL_UP_WIZARD.selector.chooseNamed' name=feat.name}}
       </button>
       <button type="button" name="chat" class="lvl-btn" data-action="sendToChat" data-uuid="{{feat.uuid}}">
-        {{localize 'NEXT_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}
+        {{localize 'DUMB_LEVEL_UP_WIZARD.menu.tooltips.sendToChat'}}
       </button>
     </footer>
   {{else}}
     <p class="placeholder">
       <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
-      {{localize 'NEXT_LEVEL_UP_WIZARD.selector.pickHint'}}
+      {{localize 'DUMB_LEVEL_UP_WIZARD.selector.pickHint'}}
     </p>
   {{/if}}
 </aside>

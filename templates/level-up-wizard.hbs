@@ -1,14 +1,14 @@
 <div class="wizard-body {{#if stepped}}is-stepped{{else}}is-single{{/if}}{{#if reviewing}} is-review{{/if}}">
   {{#if stepped}}
-    <nav class="wizard-steps" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.steps.label' level=targetLevel}}">
+    <nav class="wizard-steps" aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.menu.steps.label' level=targetLevel}}">
       {{#each steps}}
         <button type="button" name="step-{{key}}" class="step{{#if current}} is-current{{/if}}{{#if done}} is-done{{/if}}"
           data-action="goStep" data-step="{{key}}"{{#if current}} aria-current="step"{{/if}}{{#if blocked}} aria-disabled="true"{{/if}}>
           <span class="step-mark" aria-hidden="true">{{#if done}}<i class="fa-solid fa-check"></i>{{/if}}</span>
           <span class="step-label">{{label}}</span>
           {{#if count}}<span class="step-count">{{count}}</span>{{/if}}
-          {{#if optional}}<span class="step-note">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.steps.optional'}}</span>{{/if}}
-          {{#if done}}<span class="sr-only">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.steps.complete'}}</span>{{/if}}
+          {{#if optional}}<span class="step-note">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.steps.optional'}}</span>{{/if}}
+          {{#if done}}<span class="sr-only">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.steps.complete'}}</span>{{/if}}
         </button>
       {{/each}}
     </nav>
@@ -16,12 +16,12 @@
 
   <div class="wizard-split">
     {{#if showRail}}
-      {{> "modules/next-pf2e-level-up-wizard/templates/partials/wizard-rail.hbs" rail}}
+      {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-rail.hbs" rail}}
     {{/if}}
 
     <div class="wizard-main" tabindex="-1">
       {{#if reviewing}}
-        {{> "modules/next-pf2e-level-up-wizard/templates/partials/wizard-review.hbs" review actorName=actorName targetLevel=targetLevel}}
+        {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-review.hbs" review actorName=actorName targetLevel=targetLevel}}
       {{else}}
         {{#unless stepped}}
           <header class="main-head">
@@ -33,15 +33,15 @@
         {{#if levelJump}}
           <p class="notice warning">
             <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-            {{localize 'NEXT_LEVEL_UP_WIZARD.menu.header.levelJump' previousLevel=previousLevel targetLevel=targetLevel}}
+            {{localize 'DUMB_LEVEL_UP_WIZARD.menu.header.levelJump' previousLevel=previousLevel targetLevel=targetLevel}}
           </p>
         {{/if}}
 
         {{! Feats }}
         {{#if show.feats}}
-          <section class="choice-block feats" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.header'}}">
+          <section class="choice-block feats" aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.header'}}">
             {{#if stepped}}
-              <h2 class="block-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.title' level=targetLevel}}</h2>
+              <h2 class="block-title">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.title' level=targetLevel}}</h2>
             {{/if}}
             {{#each featSlots}}
               {{> lvlupFeatSlot}}
@@ -51,13 +51,13 @@
                 aria-expanded="{{#if showMissed}}true{{else}}false{{/if}}">
                 <i class="fa-solid {{#if showMissed}}fa-chevron-down{{else}}fa-chevron-right{{/if}}" aria-hidden="true"></i>
                 <span>
-                  <strong>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.optional'}}</strong>
-                  · {{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.optionalRow' count=missedCount}}
+                  <strong>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.optional'}}</strong>
+                  · {{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.optionalRow' count=missedCount}}
                   <span class="muted">({{missedList}})</span>
                 </span>
               </button>
               {{#if showMissed}}
-                <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.feats.missedHint'}}</p>
+                <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.feats.missedHint'}}</p>
                 {{#each missedSlots}}
                   {{> lvlupFeatSlot}}
                 {{/each}}
@@ -73,9 +73,9 @@
               <div class="choice-card" role="group" aria-labelledby="skill-h-{{index}}">
                 <div class="card-head">
                   <h2 id="skill-h-{{index}}">{{title}}</h2>
-                  <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillIncreases.hint' rank=@root.maxSkillRankLabel}}</p>
+                  <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.skillIncreases.hint' rank=@root.maxSkillRankLabel}}</p>
                 </div>
-                {{> "modules/next-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
+                {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
               </div>
             {{/each}}
           </section>
@@ -90,7 +90,7 @@
                   <h2 id="boost-h-{{set}}">{{title}}</h2>
                   <span class="counter{{#if complete}} is-complete{{/if}}">{{chosen}}/{{remaining}}</span>
                 </div>
-                <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.attributeBoosts.halfRule'}}</p>
+                <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.attributeBoosts.halfRule'}}</p>
                 <div class="boost-grid">
                   {{#each tiles}}
                     <button type="button" name="boost-{{../set}}-{{key}}" class="boost-tile is-{{status}}"
@@ -117,11 +117,11 @@
           {{#if intSkills.length}}
             <section class="choice-card int-bonus" aria-labelledby="int-h">
               <div class="card-head">
-                <h2 id="int-h">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.intBonus.header'}}</h2>
-                <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.intBonus.hint'}}</p>
+                <h2 id="int-h">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.intBonus.header'}}</h2>
+                <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.intBonus.hint'}}</p>
               </div>
               {{#each intSkills}}
-                {{> "modules/next-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
+                {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
               {{/each}}
             </section>
           {{/if}}
@@ -131,7 +131,7 @@
               <div class="card-head">
                 <h2 id="lang-h">{{languages.title}}</h2>
                 {{#if languages.showCounter}}<span class="counter{{#if languages.complete}} is-complete{{/if}}">{{languages.chosenCount}}/{{languages.count}}</span>{{/if}}
-                <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.hint'}}</p>
+                <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.languages.hint'}}</p>
               </div>
               <div class="chip-row" role="group" aria-labelledby="lang-h">
                 {{#each languages.chips}}
@@ -144,12 +144,12 @@
                 {{#if languages.canToggle}}
                   <button type="button" name="lang-more" class="lvl-link" data-action="toggleAllLanguages"
                     aria-expanded="{{#if languages.expanded}}true{{else}}false{{/if}}">
-                    {{#if languages.expanded}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.fewer'}}{{else}}{{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.more'}}{{/if}}
+                    {{#if languages.expanded}}{{localize 'DUMB_LEVEL_UP_WIZARD.menu.languages.fewer'}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.menu.languages.more'}}{{/if}}
                   </button>
                 {{/if}}
                 <button type="button" name="lang-later" class="lvl-link quiet" data-action="clearLanguages"
                   aria-pressed="{{#if languages.later}}true{{else}}false{{/if}}">
-                  {{localize 'NEXT_LEVEL_UP_WIZARD.menu.languages.later'}}
+                  {{localize 'DUMB_LEVEL_UP_WIZARD.menu.languages.later'}}
                 </button>
               </div>
             </section>
@@ -158,17 +158,17 @@
           {{#if potency}}
             <section class="choice-card potency" aria-labelledby="potency-h">
               <div class="card-head">
-                <h2 id="potency-h">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillPotency.header'}}</h2>
+                <h2 id="potency-h">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.skillPotency.header'}}</h2>
                 {{#if potency.current.length}}
                   <p class="hint">
-                    {{localize 'NEXT_LEVEL_UP_WIZARD.menu.skillPotency.current'}}
+                    {{localize 'DUMB_LEVEL_UP_WIZARD.menu.skillPotency.current'}}
                     {{#each potency.current}}<span class="tag">{{label}} +{{potency}}</span>{{/each}}
                   </p>
                 {{/if}}
               </div>
               {{#each potency.selects}}
                 <h3 class="grid-title">{{label}}</h3>
-                {{> "modules/next-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
+                {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
               {{/each}}
             </section>
           {{/if}}
@@ -177,45 +177,45 @@
         {{! Spells: slot changes and new spells for the class spellcasting entry }}
         {{#if show.spells}}
           <section class="choice-block spells" aria-labelledby="spells-h">
-            <h2 id="spells-h" class="block-title">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.header'}}</h2>
+            <h2 id="spells-h" class="block-title">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.header'}}</h2>
             {{#if spells.setup}}
               <div class="panel inline">
-                <span>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.setupHint' className=spells.className}}</span>
+                <span>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.setupHint' className=spells.className}}</span>
                 <button type="button" name="spell-setup" class="lvl-toggle{{#if spells.active}} is-selected{{/if}}" data-action="toggleSpellSetup"
-                  aria-pressed="{{#if spells.active}}true{{else}}false{{/if}}">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.setup'}}</button>
+                  aria-pressed="{{#if spells.active}}true{{else}}false{{/if}}">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.setup'}}</button>
               </div>
             {{else}}
-              <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.managed' entry=spells.entryName}}</p>
+              <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.managed' entry=spells.entryName}}</p>
             {{/if}}
             {{#if spells.active}}
               {{#if spells.needTradition}}
                 <label class="form-row">
-                  <span>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.tradition'}}</span>
+                  <span>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.tradition'}}</span>
                   <select data-spell-tradition name="spell-tradition">
-                    <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.builder.spells.chooseTradition'}}</option>
+                    <option value="">{{localize 'DUMB_LEVEL_UP_WIZARD.builder.spells.chooseTradition'}}</option>
                     {{#each spells.traditionOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
                   </select>
                 </label>
               {{/if}}
               {{#if spells.slotChanges.length}}
-                <div class="lvl-spell-slots" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.slots'}}">
+                <div class="lvl-spell-slots" aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.slots'}}">
                   {{#each spells.slotChanges}}<span class="lvl-spell-slot">{{label}}: {{from}} → <strong>{{to}}</strong></span>{{/each}}
                 </div>
               {{/if}}
-              {{#if spells.noPicks}}<p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.noPicks'}}</p>{{/if}}
+              {{#if spells.noPicks}}<p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.noPicks'}}</p>{{/if}}
               {{#with spells}}{{#if groups.length}}{{> lvlupSpellPicker spellGroups=groups}}{{/if}}{{/with}}
               {{#if spells.signature}}
                 <div class="lvl-signature">
-                  <h3>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureHeader'}}</h3>
+                  <h3>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.signatureHeader'}}</h3>
                   {{#if spells.signature.all}}
-                    <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureAll'}}</p>
+                    <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.signatureAll'}}</p>
                   {{else}}
-                    <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureHint'}}</p>
+                    <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.signatureHint'}}</p>
                     {{#each spells.signature.rows}}
                       <label class="form-row{{#if missing}} missing{{/if}}">
                         <span>{{label}}</span>
                         <select data-signature-rank="{{rank}}" name="signature-{{rank}}">
-                          <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureChoose'}}</option>
+                          <option value="">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.signatureChoose'}}</option>
                           {{#each options}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
                         </select>
                       </label>
@@ -231,14 +231,14 @@
         {{#unless stepped}}
           {{#if classFeatures.length}}
             <section class="choice-block features" aria-labelledby="features-h">
-              <h2 id="features-h" class="block-title small">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.class.header'}}</h2>
-              <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.class.hint'}}</p>
+              <h2 id="features-h" class="block-title small">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.features.class.header'}}</h2>
+              <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.features.class.hint'}}</p>
               {{#each classFeatures}}
                 <details class="class-feature" data-sync="feature-{{@index}}">
                   <summary>
                     <img src="{{img}}" alt="" loading="lazy">
                     <a class="content-link" draggable="true" data-link data-uuid="{{uuid}}" data-type="Item">{{name}}</a>
-                    <span class="feature-level">{{localize 'NEXT_LEVEL_UP_WIZARD.selector.level' level=level}}</span>
+                    <span class="feature-level">{{localize 'DUMB_LEVEL_UP_WIZARD.selector.level' level=level}}</span>
                   </summary>
                   <div class="feature-description">{{{description}}}</div>
                 </details>
@@ -249,13 +249,13 @@
           {{#if manual.empty}}
             <div class="panel good inline">
               <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
-              <span>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.nothingByHand' level=targetLevel}}</span>
+              <span>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.features.nothingByHand' level=targetLevel}}</span>
             </div>
           {{else}}
             <div class="panel warn">
               <div class="panel-title">
                 <i class="fa-solid fa-hand-point-right" aria-hidden="true"></i>
-                {{localize 'NEXT_LEVEL_UP_WIZARD.menu.features.byHand'}}
+                {{localize 'DUMB_LEVEL_UP_WIZARD.menu.features.byHand'}}
               </div>
               <ul>{{#each manual.items}}<li>{{this}}</li>{{/each}}</ul>
             </div>
@@ -264,7 +264,7 @@
 
         {{#if classJournals.length}}
           <p class="class-journals">
-            {{localize 'NEXT_LEVEL_UP_WIZARD.menu.notes.classJournal'}}
+            {{localize 'DUMB_LEVEL_UP_WIZARD.menu.notes.classJournal'}}
             {{#each classJournals}}
               <a class="content-link" draggable="true" data-link data-uuid="{{uuid}}" data-type="JournalEntryPage">
                 <i class="fa-solid fa-book-open" aria-hidden="true"></i>{{name}}

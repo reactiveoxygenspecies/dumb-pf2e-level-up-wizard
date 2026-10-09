@@ -47,7 +47,7 @@
 /*  theme is. Tokens: styles/tokens.css      */
 /* ------------------------------------------ */
 
-.next-pf2e-level-up-wizard {
+.dumb-pf2e-level-up-wizard {
   /* Older names, kept for stylesheets that still use them */
   --lvlup-accent: var(--lvl-crimson);
   --lvlup-accent-dark: var(--lvl-crimson-hover);
@@ -89,7 +89,7 @@
   border-radius: 10px;
 }
 
-.next-pf2e-level-up-wizard .window-content {
+.dumb-pf2e-level-up-wizard .window-content {
   padding: 0;
   gap: 0;
   background: transparent;
@@ -100,7 +100,7 @@
 
 /* Title bar */
 
-.next-pf2e-level-up-wizard .window-header {
+.dumb-pf2e-level-up-wizard .window-header {
   flex: 0 0 44px;
   height: 44px;
   padding: 0 8px 0 16px;
@@ -111,13 +111,13 @@
   font-size: 16px;
 }
 
-.next-pf2e-level-up-wizard .window-header .window-icon {
+.dumb-pf2e-level-up-wizard .window-header .window-icon {
   margin-right: 6px;
   font-size: 18px;
   color: var(--lvl-gilt);
 }
 
-.next-pf2e-level-up-wizard .window-header .window-title {
+.dumb-pf2e-level-up-wizard .window-header .window-title {
   font-family: var(--lvl-font-display);
   font-weight: 600;
   font-size: 16px;
@@ -125,7 +125,7 @@
   color: var(--lvl-bar-text);
 }
 
-.next-pf2e-level-up-wizard .window-header button.header-control {
+.dumb-pf2e-level-up-wizard .window-header button.header-control {
   --button-size: 36px;
   --button-background-color: transparent;
   --button-border-color: transparent;
@@ -141,19 +141,19 @@
   font-size: 15px;
 }
 
-.next-pf2e-level-up-wizard .window-header button.header-control:focus-visible {
+.dumb-pf2e-level-up-wizard .window-header button.header-control:focus-visible {
   outline: 2px solid var(--lvl-gilt);
   outline-offset: -2px;
   box-shadow: none;
 }
 
-.next-pf2e-level-up-wizard .window-resize-handle {
+.dumb-pf2e-level-up-wizard .window-resize-handle {
   filter: none;
 }
 
 /* Text */
 
-.next-pf2e-level-up-wizard.application :is(h1, h2, h3, h4) {
+.dumb-pf2e-level-up-wizard.application :is(h1, h2, h3, h4) {
   margin: 0;
   padding: 0;
   border: 0;
@@ -167,19 +167,19 @@
   color: var(--lvl-ink);
 }
 
-.next-pf2e-level-up-wizard p {
+.dumb-pf2e-level-up-wizard p {
   margin: 0;
 }
 
-.next-pf2e-level-up-wizard a {
+.dumb-pf2e-level-up-wizard a {
   color: var(--lvl-crimson);
 }
 
-.next-pf2e-level-up-wizard a:hover {
+.dumb-pf2e-level-up-wizard a:hover {
   color: var(--lvl-crimson-hover);
 }
 
-.next-pf2e-level-up-wizard a.content-link {
+.dumb-pf2e-level-up-wizard a.content-link {
   margin: 0;
   padding: 0;
   border: 0;
@@ -191,17 +191,17 @@
   text-underline-offset: 3px;
 }
 
-.next-pf2e-level-up-wizard a.content-link:hover {
+.dumb-pf2e-level-up-wizard a.content-link:hover {
   color: var(--lvl-crimson);
   text-decoration-color: currentcolor;
 }
 
-.next-pf2e-level-up-wizard a.content-link > i {
+.dumb-pf2e-level-up-wizard a.content-link > i {
   margin-right: 0.35em;
   font-size: 0.85em;
 }
 
-.next-pf2e-level-up-wizard .eyebrow {
+.dumb-pf2e-level-up-wizard .eyebrow {
   margin: 0;
   font-family: var(--lvl-font-body);
   font-size: 12px;
@@ -211,17 +211,17 @@
   color: var(--lvl-ink-muted);
 }
 
-.next-pf2e-level-up-wizard .muted {
+.dumb-pf2e-level-up-wizard .muted {
   color: var(--lvl-ink-muted);
 }
 
-.next-pf2e-level-up-wizard .hint {
+.dumb-pf2e-level-up-wizard .hint {
   margin: 0;
   color: var(--lvl-ink-muted);
   font-size: 14px;
 }
 
-.next-pf2e-level-up-wizard .sr-only {
+.dumb-pf2e-level-up-wizard .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -233,16 +233,16 @@
   border: 0;
 }
 
-.next-pf2e-level-up-wizard ::selection {
+.dumb-pf2e-level-up-wizard ::selection {
   background: var(--lvl-gilt);
   color: var(--lvl-ink);
 }
 
 /* Form controls */
 
-.next-pf2e-level-up-wizard input,
-.next-pf2e-level-up-wizard select,
-.next-pf2e-level-up-wizard textarea {
+.dumb-pf2e-level-up-wizard input,
+.dumb-pf2e-level-up-wizard select,
+.dumb-pf2e-level-up-wizard textarea {
   --input-background-color: var(--lvl-white);
   --input-border-color: var(--lvl-border);
   --input-text-color: var(--lvl-ink);
@@ -254,30 +254,30 @@
   color-scheme: light;
 }
 
-.next-pf2e-level-up-wizard input:focus,
-.next-pf2e-level-up-wizard select:focus,
-.next-pf2e-level-up-wizard textarea:focus {
+.dumb-pf2e-level-up-wizard input:focus,
+.dumb-pf2e-level-up-wizard select:focus,
+.dumb-pf2e-level-up-wizard textarea:focus {
   --input-text-color: var(--lvl-ink);
 }
 
-.next-pf2e-level-up-wizard input:disabled,
-.next-pf2e-level-up-wizard select:disabled,
-.next-pf2e-level-up-wizard textarea:disabled {
+.dumb-pf2e-level-up-wizard input:disabled,
+.dumb-pf2e-level-up-wizard select:disabled,
+.dumb-pf2e-level-up-wizard textarea:disabled {
   --input-background-color: var(--lvl-sunken);
   --input-border-color: var(--lvl-hairline);
   --input-text-color: var(--lvl-ink-faint);
 }
 
-.next-pf2e-level-up-wizard select option {
+.dumb-pf2e-level-up-wizard select option {
   background: var(--lvl-white);
   color: var(--lvl-ink);
 }
 
-.next-pf2e-level-up-wizard input[type='search']::-webkit-search-cancel-button {
+.dumb-pf2e-level-up-wizard input[type='search']::-webkit-search-cancel-button {
   filter: none;
 }
 
-.next-pf2e-level-up-wizard input[type='checkbox'] {
+.dumb-pf2e-level-up-wizard input[type='checkbox'] {
   appearance: none;
   -webkit-appearance: none;
   flex: none;
@@ -292,27 +292,27 @@
   cursor: pointer;
 }
 
-.next-pf2e-level-up-wizard input[type='checkbox']::before,
-.next-pf2e-level-up-wizard input[type='checkbox']::after {
+.dumb-pf2e-level-up-wizard input[type='checkbox']::before,
+.dumb-pf2e-level-up-wizard input[type='checkbox']::after {
   content: none;
 }
 
-.next-pf2e-level-up-wizard input[type='checkbox']:checked {
+.dumb-pf2e-level-up-wizard input[type='checkbox']:checked {
   border-color: var(--lvl-crimson);
   background: var(--lvl-crimson)
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E")
     center / 14px no-repeat;
 }
 
-.next-pf2e-level-up-wizard input[type='checkbox']:focus-visible {
+.dumb-pf2e-level-up-wizard input[type='checkbox']:focus-visible {
   outline: var(--lvl-focus);
   outline-offset: 2px;
 }
 
 /* Buttons: any plain button in a module window gets the parchment look; the classes below refine it */
 
-.next-pf2e-level-up-wizard button:not(.header-control),
-.next-pf2e-level-up-wizard a.button {
+.dumb-pf2e-level-up-wizard button:not(.header-control),
+.dumb-pf2e-level-up-wizard a.button {
   --button-background-color: var(--lvl-paper);
   --button-border-color: var(--lvl-border);
   --button-text-color: var(--lvl-ink);
@@ -327,19 +327,19 @@
     color 0.12s;
 }
 
-.next-pf2e-level-up-wizard button:not(.header-control):focus,
-.next-pf2e-level-up-wizard a.button:focus {
+.dumb-pf2e-level-up-wizard button:not(.header-control):focus,
+.dumb-pf2e-level-up-wizard a.button:focus {
   box-shadow: none;
   outline: none;
 }
 
-.next-pf2e-level-up-wizard button:not(.header-control):focus-visible,
-.next-pf2e-level-up-wizard a.button:focus-visible {
+.dumb-pf2e-level-up-wizard button:not(.header-control):focus-visible,
+.dumb-pf2e-level-up-wizard a.button:focus-visible {
   outline: var(--lvl-focus);
   outline-offset: 2px;
 }
 
-.next-pf2e-level-up-wizard button:not(.header-control):disabled {
+.dumb-pf2e-level-up-wizard button:not(.header-control):disabled {
   --button-background-color: var(--lvl-disabled-bg);
   --button-border-color: transparent;
   --button-text-color: var(--lvl-disabled-ink);
@@ -348,7 +348,7 @@
   --button-hover-text-color: var(--lvl-disabled-ink);
 }
 
-.next-pf2e-level-up-wizard .lvl-btn {
+.dumb-pf2e-level-up-wizard .lvl-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -368,26 +368,26 @@
   cursor: pointer;
 }
 
-.next-pf2e-level-up-wizard .lvl-btn:hover {
+.dumb-pf2e-level-up-wizard .lvl-btn:hover {
   background: var(--lvl-sunken);
   border-color: var(--lvl-border-strong);
   color: var(--lvl-ink);
 }
 
-.next-pf2e-level-up-wizard .lvl-btn.ghost {
+.dumb-pf2e-level-up-wizard .lvl-btn.ghost {
   background: transparent;
 }
 
-.next-pf2e-level-up-wizard .lvl-btn.ghost:hover {
+.dumb-pf2e-level-up-wizard .lvl-btn.ghost:hover {
   background: var(--lvl-sunken);
 }
 
-.next-pf2e-level-up-wizard .lvl-btn.large {
+.dumb-pf2e-level-up-wizard .lvl-btn.large {
   height: 48px;
   padding: 0 24px;
 }
 
-.next-pf2e-level-up-wizard .lvl-btn.icon {
+.dumb-pf2e-level-up-wizard .lvl-btn.icon {
   flex: 0 0 44px;
   width: 44px;
   padding: 0;
@@ -395,29 +395,29 @@
   color: var(--lvl-ink-muted);
 }
 
-.next-pf2e-level-up-wizard .lvl-btn.primary {
+.dumb-pf2e-level-up-wizard .lvl-btn.primary {
   border-color: var(--lvl-crimson);
   background: var(--lvl-crimson);
   color: #fff;
 }
 
-.next-pf2e-level-up-wizard .lvl-btn.primary:hover {
+.dumb-pf2e-level-up-wizard .lvl-btn.primary:hover {
   border-color: var(--lvl-crimson-hover);
   background: var(--lvl-crimson-hover);
   color: #fff;
 }
 
-.next-pf2e-level-up-wizard .lvl-btn:disabled,
-.next-pf2e-level-up-wizard .lvl-btn.is-disabled,
-.next-pf2e-level-up-wizard .lvl-btn.primary:disabled,
-.next-pf2e-level-up-wizard .lvl-btn.primary.is-disabled {
+.dumb-pf2e-level-up-wizard .lvl-btn:disabled,
+.dumb-pf2e-level-up-wizard .lvl-btn.is-disabled,
+.dumb-pf2e-level-up-wizard .lvl-btn.primary:disabled,
+.dumb-pf2e-level-up-wizard .lvl-btn.primary.is-disabled {
   border-color: transparent;
   background: var(--lvl-disabled-bg);
   color: var(--lvl-disabled-ink);
   cursor: not-allowed;
 }
 
-.next-pf2e-level-up-wizard .lvl-link {
+.dumb-pf2e-level-up-wizard .lvl-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -433,17 +433,17 @@
   cursor: pointer;
 }
 
-.next-pf2e-level-up-wizard .lvl-link:hover {
+.dumb-pf2e-level-up-wizard .lvl-link:hover {
   background: var(--lvl-crimson-tint);
   color: var(--lvl-crimson-hover);
 }
 
-.next-pf2e-level-up-wizard .lvl-link.quiet {
+.dumb-pf2e-level-up-wizard .lvl-link.quiet {
   color: var(--lvl-ink-muted);
   font-weight: 500;
 }
 
-.next-pf2e-level-up-wizard .lvl-link.quiet[aria-pressed='true'] {
+.dumb-pf2e-level-up-wizard .lvl-link.quiet[aria-pressed='true'] {
   color: var(--lvl-ink);
   font-weight: 700;
   text-decoration: underline;
@@ -452,7 +452,7 @@
 
 /* Toggle chips (aria-pressed) */
 
-.next-pf2e-level-up-wizard .lvl-toggle {
+.dumb-pf2e-level-up-wizard .lvl-toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -468,26 +468,26 @@
   cursor: pointer;
 }
 
-.next-pf2e-level-up-wizard .lvl-toggle:hover {
+.dumb-pf2e-level-up-wizard .lvl-toggle:hover {
   background: var(--lvl-sunken);
 }
 
-.next-pf2e-level-up-wizard .lvl-toggle[aria-pressed='true'] {
+.dumb-pf2e-level-up-wizard .lvl-toggle[aria-pressed='true'] {
   border-color: var(--lvl-crimson);
   background: var(--lvl-crimson-tint);
   box-shadow: inset 0 0 0 1px var(--lvl-crimson);
 }
 
-.next-pf2e-level-up-wizard .lvl-toggle i {
+.dumb-pf2e-level-up-wizard .lvl-toggle i {
   color: var(--lvl-met-solid);
 }
 
-.next-pf2e-level-up-wizard .lvl-toggle small {
+.dumb-pf2e-level-up-wizard .lvl-toggle small {
   font-weight: 400;
   color: var(--lvl-ink-muted);
 }
 
-.next-pf2e-level-up-wizard .lvl-toggle:disabled {
+.dumb-pf2e-level-up-wizard .lvl-toggle:disabled {
   border-style: dashed;
   background: transparent;
   color: var(--lvl-ink-faint);
@@ -496,7 +496,7 @@
 
 /* Pills and chips */
 
-.next-pf2e-level-up-wizard .lvl-pill {
+.dumb-pf2e-level-up-wizard .lvl-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -511,68 +511,68 @@
   line-height: 1.3;
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.small {
+.dumb-pf2e-level-up-wizard .lvl-pill.small {
   padding: 1px 8px;
   font-size: 12px;
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.type-ancestry {
+.dumb-pf2e-level-up-wizard .lvl-pill.type-ancestry {
   background: var(--lvl-type-ancestry);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.type-class {
+.dumb-pf2e-level-up-wizard .lvl-pill.type-class {
   background: var(--lvl-type-class);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.type-archetype {
+.dumb-pf2e-level-up-wizard .lvl-pill.type-archetype {
   background: var(--lvl-type-archetype);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.type-skill {
+.dumb-pf2e-level-up-wizard .lvl-pill.type-skill {
   background: var(--lvl-type-skill);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.type-general {
+.dumb-pf2e-level-up-wizard .lvl-pill.type-general {
   background: var(--lvl-type-general);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.type-mythic {
+.dumb-pf2e-level-up-wizard .lvl-pill.type-mythic {
   background: var(--lvl-type-mythic);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.type-other {
+.dumb-pf2e-level-up-wizard .lvl-pill.type-other {
   background: var(--lvl-type-other);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.status-met {
+.dumb-pf2e-level-up-wizard .lvl-pill.status-met {
   background: var(--lvl-met-bg);
   color: var(--lvl-met);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.status-unmet {
+.dumb-pf2e-level-up-wizard .lvl-pill.status-unmet {
   background: var(--lvl-unmet-bg);
   color: var(--lvl-unmet);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill.status-unknown {
+.dumb-pf2e-level-up-wizard .lvl-pill.status-unknown {
   background: var(--lvl-unknown-bg);
   color: var(--lvl-unknown);
 }
 
-.next-pf2e-level-up-wizard .lvl-pill i {
+.dumb-pf2e-level-up-wizard .lvl-pill i {
   flex: none;
   font-size: 0.85em;
 }
 
-.next-pf2e-level-up-wizard .pill-text {
+.dumb-pf2e-level-up-wizard .pill-text {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.next-pf2e-level-up-wizard .lvl-chip,
-.next-pf2e-level-up-wizard .tag {
+.dumb-pf2e-level-up-wizard .lvl-chip,
+.dumb-pf2e-level-up-wizard .tag {
   display: inline-block;
   padding: 1px 8px;
   border: 1px solid var(--lvl-border);
@@ -585,49 +585,49 @@
   white-space: nowrap;
 }
 
-.next-pf2e-level-up-wizard .lvl-chip.rarity.uncommon {
+.dumb-pf2e-level-up-wizard .lvl-chip.rarity.uncommon {
   border-color: transparent;
   background: var(--lvl-rarity-uncommon);
   color: #fff;
 }
 
-.next-pf2e-level-up-wizard .lvl-chip.rarity.rare {
+.dumb-pf2e-level-up-wizard .lvl-chip.rarity.rare {
   border-color: transparent;
   background: var(--lvl-rarity-rare);
   color: #fff;
 }
 
-.next-pf2e-level-up-wizard .lvl-chip.rarity.unique {
+.dumb-pf2e-level-up-wizard .lvl-chip.rarity.unique {
   border-color: transparent;
   background: var(--lvl-rarity-unique);
   color: #fff;
 }
 
-.next-pf2e-level-up-wizard .lvl-chip.archetype {
+.dumb-pf2e-level-up-wizard .lvl-chip.archetype {
   border-color: transparent;
   background: var(--lvl-type-archetype);
   color: #fff;
 }
 
-.next-pf2e-level-up-wizard .lvl-chip.taken {
+.dumb-pf2e-level-up-wizard .lvl-chip.taken {
   border-style: dashed;
 }
 
-.next-pf2e-level-up-wizard .prereq.met {
+.dumb-pf2e-level-up-wizard .prereq.met {
   color: var(--lvl-met);
 }
 
-.next-pf2e-level-up-wizard .prereq.unmet {
+.dumb-pf2e-level-up-wizard .prereq.unmet {
   color: var(--lvl-unmet);
 }
 
-.next-pf2e-level-up-wizard .prereq.unknown {
+.dumb-pf2e-level-up-wizard .prereq.unknown {
   color: var(--lvl-unknown);
 }
 
 /* Action glyphs (the PF2e actions font: 1 2 3, R reaction, F free action) */
 
-.next-pf2e-level-up-wizard .lvl-glyph {
+.dumb-pf2e-level-up-wizard .lvl-glyph {
   display: inline-block;
   font-family: var(--lvl-font-actions);
   font-size: 1.15em;
@@ -638,7 +638,7 @@
 
 /* Panels */
 
-.next-pf2e-level-up-wizard .panel {
+.dumb-pf2e-level-up-wizard .panel {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -646,24 +646,24 @@
   border-radius: var(--lvl-radius-l);
 }
 
-.next-pf2e-level-up-wizard .panel .panel-title {
+.dumb-pf2e-level-up-wizard .panel .panel-title {
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 700;
 }
 
-.next-pf2e-level-up-wizard .panel ul {
+.dumb-pf2e-level-up-wizard .panel ul {
   margin: 0;
   padding-left: 1.25rem;
 }
 
-.next-pf2e-level-up-wizard .panel.good {
+.dumb-pf2e-level-up-wizard .panel.good {
   background: var(--lvl-met-bg);
   color: var(--lvl-met);
 }
 
-.next-pf2e-level-up-wizard .panel.good.inline {
+.dumb-pf2e-level-up-wizard .panel.good.inline {
   flex-direction: row;
   align-items: center;
   gap: 12px;
@@ -671,26 +671,26 @@
   border-radius: 10px;
 }
 
-.next-pf2e-level-up-wizard .panel.warn {
+.dumb-pf2e-level-up-wizard .panel.warn {
   background: var(--lvl-unknown-bg);
   color: var(--lvl-ink);
 }
 
-.next-pf2e-level-up-wizard .panel.warn .panel-title {
+.dumb-pf2e-level-up-wizard .panel.warn .panel-title {
   color: var(--lvl-unknown);
 }
 
-.next-pf2e-level-up-wizard .panel.plain {
+.dumb-pf2e-level-up-wizard .panel.plain {
   border: 1px solid var(--lvl-hairline);
   background: var(--lvl-paper);
   color: var(--lvl-ink-soft);
 }
 
-.next-pf2e-level-up-wizard .panel.plain .panel-title {
+.dumb-pf2e-level-up-wizard .panel.plain .panel-title {
   color: var(--lvl-ink);
 }
 
-.next-pf2e-level-up-wizard .notice {
+.dumb-pf2e-level-up-wizard .notice {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -700,21 +700,21 @@
   color: var(--lvl-ink);
 }
 
-.next-pf2e-level-up-wizard .notice i {
+.dumb-pf2e-level-up-wizard .notice i {
   color: var(--lvl-unknown);
 }
 
-.next-pf2e-level-up-wizard .counter {
+.dumb-pf2e-level-up-wizard .counter {
   font-weight: 700;
   color: var(--lvl-unknown);
 }
 
-.next-pf2e-level-up-wizard .counter.is-complete {
+.dumb-pf2e-level-up-wizard .counter.is-complete {
   color: var(--lvl-met);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .next-pf2e-level-up-wizard * {
+  .dumb-pf2e-level-up-wizard * {
     transition: none !important;
   }
 }

@@ -1,14 +1,18 @@
-# Next PF2e Level-Up Wizard
+# Dumb PF2e Level-Up Wizard
 
 A level-up assistant and level-1 character builder for PF2e on Foundry VTT, rebuilt for **Foundry VTT v14 (14.364)** and **PF2e 8.x**.
 
-It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2e-level-up-wizard) (originally by Zumanzo), released under its own module ID (`next-pf2e-level-up-wizard`) so it can be installed next to the original. If you enjoy the original module consider [buying its author a coffee](https://buymeacoffee.com/zumanzo)!
+It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2e-level-up-wizard) (originally by Zumanzo), released under its own module ID (`dumb-pf2e-level-up-wizard`) so it can be installed next to the original. If you enjoy the original module consider [buying its author a coffee](https://buymeacoffee.com/zumanzo)!
 
 ## Coming from the original module
 
 - Install this module and **disable the original** in Manage Modules (you can uninstall it later). With both enabled, characters get two level-up buttons; a GM warning says so.
 - Settings are copied from the original the first time this module runs: world settings when a GM logs in, and each player's display preferences in their own browser. "Hide Rare and Uncommon Feats" becomes "Hidden Feat Rarities".
 - Level-up history starts fresh; the original didn't keep one.
+
+## Coming from "Next PF2e Level-Up Wizard"
+
+This module used to be called Next PF2e Level-Up Wizard (`next-pf2e-level-up-wizard`). Install this one, enable it and disable the old one. The first time a GM logs in, its settings, level-up history and spellcasting entries are moved over; each player's display preferences move the first time they log in.
 
 ## What changed compared to the original
 
@@ -49,7 +53,7 @@ If the GM disables the button, the wizard opens automatically after a character'
 ### Macro API
 
 ```js
-const api = game.modules.get('next-pf2e-level-up-wizard').api;
+const api = game.modules.get('dumb-pf2e-level-up-wizard').api;
 api.open(actor);            // open the wizard (or the builder for a character without a class)
 api.build(actor);           // open the character builder
 api.history(actor);         // show the history window
@@ -81,10 +85,10 @@ api.undoLastLevelUp(actor); // undo the most recent one (asks for confirmation)
 npm install
 npm run lint
 npm test
-npm run build   # copies the files Foundry needs into dist/next-pf2e-level-up-wizard/
+npm run build   # copies the files Foundry needs into dist/dumb-pf2e-level-up-wizard/
 ```
 
-To install on a server, upload `dist/next-pf2e-level-up-wizard/` into the server's `Data/modules/` folder (replace the folder if it's already there), restart Foundry and enable the module in the world.
+To install on a server, upload `dist/dumb-pf2e-level-up-wizard/` into the server's `Data/modules/` folder (replace the folder if it's already there), restart Foundry and enable the module in the world.
 
 `npm test` runs the unit tests (prerequisite parser, slot matching and boost math against real PF2e data) and checks that every localization key exists. The data tests read a PF2e source checkout; pass its path with `PF2E_SOURCE=/path/to/pf2e`. `tests/prereq-coverage.mjs <pf2e-path>` reports how many real prerequisite lines the parser understands.
 

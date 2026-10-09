@@ -32,7 +32,7 @@ test('prerequisite pill gives the reason', () => {
   );
   assert.equal(unmet.status, 'unmet');
   assert.match(unmet.text, /expert in Medicine/);
-  assert.equal(prereqPill({ status: 'met', results: [] }, [], true).text, 'NEXT_LEVEL_UP_WIZARD.selector.fits');
+  assert.equal(prereqPill({ status: 'met', results: [] }, [], true).text, 'DUMB_LEVEL_UP_WIZARD.selector.fits');
   assert.equal(prereqPill(null), null);
 });
 

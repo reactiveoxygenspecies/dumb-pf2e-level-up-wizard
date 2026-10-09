@@ -1,6 +1,6 @@
 {
-  "id": "next-pf2e-level-up-wizard",
-  "title": "Next PF2e Level-Up Wizard",
+  "id": "dumb-pf2e-level-up-wizard",
+  "title": "Dumb PF2e Level-Up Wizard",
   "description": "A level-up assistant for PF2e on Foundry VTT v14. A rebuilt fork of the PF2e Level-Up Wizard by Zumanzo and BenABaron.",
   "version": "1.0.0",
   "compatibility": {

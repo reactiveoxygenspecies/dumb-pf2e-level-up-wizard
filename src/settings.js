@@ -1,4 +1,4 @@
-import { MODULE_ID, ORIGINAL_MODULE_ID } from './constants.js';
+import { MODULE_ID, ORIGINAL_MODULE_ID, PREVIOUS_MODULE_ID } from './constants.js';
 import { invalidateFeatIndex } from './data/featIndex.js';
 import { localize, openApplications } from './helpers/utility.js';
 
@@ -32,7 +32,7 @@ const rerenderWizards = () => {
 const choices = (base, keys) =>
   Object.fromEntries(keys.map(([value, key]) => [value, `${base}.${key}`]));
 
-const S = 'NEXT_LEVEL_UP_WIZARD.settings';
+const S = 'DUMB_LEVEL_UP_WIZARD.settings';
 
 export const registerSettings = () => {
   const register = (key, data) =>
@@ -176,6 +176,13 @@ export const registerSettings = () => {
     default: 0
   });
 
+  game.settings.register(MODULE_ID, 'flags-version', {
+    scope: 'world',
+    config: false,
+    type: Number,
+    default: 0
+  });
+
   game.settings.register(MODULE_ID, 'client-settings-version', {
     scope: 'client',
     config: false,
@@ -198,9 +205,9 @@ const ORIGINAL_WORLD_SETTINGS = [
 ];
 const ORIGINAL_CLIENT_SETTINGS = ['button-placement', 'feat-sort-method', 'skill-increase-info'];
 
-/** A stored value of the original module, or undefined if it was never changed from its default */
-const readOriginal = (scope, key) => {
-  const id = `${ORIGINAL_MODULE_ID}.${key}`;
+/** A stored value of another module's setting, or undefined if it was never changed from its default */
+const readStored = (moduleId, scope, key) => {
+  const id = `${moduleId}.${key}`;
   const raw =
     scope === 'world'
       ? game.settings.storage.get('world')?.getItem(id)
@@ -213,8 +220,10 @@ const readOriginal = (scope, key) => {
   }
 };
 
-const copyOriginal = async (key, scope) => {
-  const value = readOriginal(scope, key);
+const readOriginal = (scope, key) => readStored(ORIGINAL_MODULE_ID, scope, key);
+
+const copyFrom = async (moduleId, key, scope) => {
+  const value = readStored(moduleId, scope, key);
   if (value === undefined) return false;
   const setting = game.settings.settings.get(`${MODULE_ID}.${key}`);
   if (setting?.choices && !(value in setting.choices)) return false;
@@ -228,14 +237,23 @@ const copyOriginal = async (key, scope) => {
  */
 export const migrateSettings = async () => {
   if (game.settings.get(MODULE_ID, 'client-settings-version') < 1) {
-    for (const key of ORIGINAL_CLIENT_SETTINGS) await copyOriginal(key, 'client');
+    // Settings saved under this module's previous ID win over the original module's
+    if (!(await copyPrevious('client'))) {
+      for (const key of ORIGINAL_CLIENT_SETTINGS) await copyFrom(ORIGINAL_MODULE_ID, key, 'client');
+    }
     await game.settings.set(MODULE_ID, 'client-settings-version', 1);
   }
 
   if (!game.user.isGM || game.settings.get(MODULE_ID, 'settings-version') >= 1) return;
+  const previous = await copyPrevious('world');
+  if (previous.length) {
+    await game.settings.set(MODULE_ID, 'settings-version', 1);
+    console.log(`${MODULE_ID} | ${localize('notifications.settingsMigrated')}`, previous);
+    return;
+  }
   const copied = [];
   for (const key of ORIGINAL_WORLD_SETTINGS) {
-    if (await copyOriginal(key, 'world')) copied.push(key);
+    if (await copyFrom(ORIGINAL_MODULE_ID, key, 'world')) copied.push(key);
   }
   // The original's single "hide rare and uncommon feats" switch became a rarity choice (#94)
   if (readOriginal('world', 'hide-uncommon-feats') === true) {
@@ -246,6 +264,49 @@ export const migrateSettings = async () => {
   if (copied.length) {
     console.log(`${MODULE_ID} | ${localize('notifications.settingsMigrated')}`, copied);
   }
+};
+
+/** Copy every setting of a scope saved under the previous module ID; returns the copied keys */
+const copyPrevious = async (scope) => {
+  const copied = [];
+  for (const setting of game.settings.settings.values()) {
+    if (setting.namespace !== MODULE_ID || setting.scope !== scope) continue;
+    if (setting.key.endsWith('settings-version')) continue;
+    if (await copyFrom(PREVIOUS_MODULE_ID, setting.key, scope)) copied.push(setting.key);
+  }
+  return copied;
+};
+
+/**
+ * Move level-up history and managed-entry markers saved under the previous module ID onto this one.
+ * Runs once per world, by a GM.
+ */
+export const migratePreviousFlags = async () => {
+  if (!game.user.isGM || game.settings.get(MODULE_ID, 'flags-version') >= 1) return;
+  let moved = 0;
+  for (const actor of game.actors) {
+    const old = actor.flags?.[PREVIOUS_MODULE_ID];
+    if (old) {
+      await actor.update({
+        [`flags.${MODULE_ID}`]: old,
+        [`flags.${PREVIOUS_MODULE_ID}`]: foundry.data.operators.ForcedDeletion.create()
+      });
+      moved++;
+    }
+    const items = actor.items
+      .filter((item) => item.flags?.[PREVIOUS_MODULE_ID])
+      .map((item) => ({
+        _id: item.id,
+        [`flags.${MODULE_ID}`]: item.flags[PREVIOUS_MODULE_ID],
+        [`flags.${PREVIOUS_MODULE_ID}`]: foundry.data.operators.ForcedDeletion.create()
+      }));
+    if (items.length) {
+      await actor.updateEmbeddedDocuments('Item', items);
+      moved += items.length;
+    }
+  }
+  await game.settings.set(MODULE_ID, 'flags-version', 1);
+  if (moved) console.log(`${MODULE_ID} | Moved ${moved} flags from ${PREVIOUS_MODULE_ID}`);
 };
 
 /** Both modules add a hat to the sheet and react to level changes; running both is confusing */

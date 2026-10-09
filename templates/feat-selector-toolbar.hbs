@@ -2,8 +2,8 @@
   <label class="search-field">
     <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
     <input type="search" data-filter="search" value="{{filters.search}}"
-      placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}"
-      aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.search'}}">
+      placeholder="{{localize 'DUMB_LEVEL_UP_WIZARD.menu.filters.placeholder.nameSearch'}}"
+      aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.menu.filters.search'}}">
   </label>
   {{#each chips}}
     <button type="button" name="chip-{{key}}" class="lvl-toggle" data-action="toggleFilter" data-filter="{{key}}"
@@ -13,7 +13,7 @@
     </button>
   {{/each}}
   <label class="sort-field">
-    <span>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.filters.sort'}}</span>
+    <span>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.filters.sort'}}</span>
     <select data-filter="sort" name="sort">
       {{#each sorts}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
     </select>

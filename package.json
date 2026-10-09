@@ -1,5 +1,5 @@
 {
-  "name": "next-pf2e-level-up-wizard",
+  "name": "dumb-pf2e-level-up-wizard",
   "scripts": {
     "lint": "eslint .",
     "test": "node --test && node tests/i18n-keys.mjs",

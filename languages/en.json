@@ -1,5 +1,5 @@
 {
-  "NEXT_LEVEL_UP_WIZARD": {
+  "DUMB_LEVEL_UP_WIZARD": {
     "button-tooltip": "Level Up!",
     "button": {
       "needXp": "Not enough XP to level up ({needed} more needed)",

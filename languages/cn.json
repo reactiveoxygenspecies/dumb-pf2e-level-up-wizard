@@ -1,5 +1,5 @@
 {
-  "NEXT_LEVEL_UP_WIZARD": {
+  "DUMB_LEVEL_UP_WIZARD": {
     "button-tooltip": "升级！",
     "button": {
       "needXp": "经验值不足，无法升级（还需要 {needed}）",

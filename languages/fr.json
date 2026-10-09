@@ -1,5 +1,5 @@
 {
-  "NEXT_LEVEL_UP_WIZARD": {
+  "DUMB_LEVEL_UP_WIZARD": {
     "button-tooltip": "Monter de niveau !",
     "button": {
       "needXp": "Pas assez d'XP pour monter de niveau ({needed} de plus requis)",

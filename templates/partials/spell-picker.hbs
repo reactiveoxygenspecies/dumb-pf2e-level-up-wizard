@@ -5,17 +5,17 @@
         <span class="lvl-spell-group-name">{{label}}</span>
         <span class="lvl-spell-counter {{#if complete}}done{{/if}}">
           {{#if complete}}<i class="fa-solid fa-check" aria-hidden="true"></i>{{/if}}
-          {{localize 'NEXT_LEVEL_UP_WIZARD.spells.counter' chosen=chosenCount count=count}}
+          {{localize 'DUMB_LEVEL_UP_WIZARD.spells.counter' chosen=chosenCount count=count}}
         </span>
       </summary>
       <label class="lvl-spell-search">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <input type="search" data-spell-search="{{key}}" value="{{search}}"
-          placeholder="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.search'}}"
-          aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.search'}}">
+          placeholder="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.search'}}"
+          aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.search'}}">
       </label>
       {{#if empty}}
-        <p class="lvl-spell-empty">{{localize 'NEXT_LEVEL_UP_WIZARD.spells.none'}}</p>
+        <p class="lvl-spell-empty">{{localize 'DUMB_LEVEL_UP_WIZARD.spells.none'}}</p>
       {{else}}
         <ul class="lvl-spell-list">
           {{#each rows}}
@@ -29,7 +29,7 @@
                 <span class="lvl-spell-rank">{{rankLabel}}</span>
               </button>
               <a class="lvl-spell-open content-link" data-link data-uuid="{{uuid}}" data-type="Item"
-                data-tooltip="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.read'}}" aria-label="{{localize 'NEXT_LEVEL_UP_WIZARD.spells.read'}}: {{name}}">
+                data-tooltip="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.read'}}" aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.read'}}: {{name}}">
                 <i class="fa-solid fa-book-open"></i>
               </a>
             </li>

@@ -2,7 +2,7 @@
   {{#if reviewing}}
     <button type="button" name="back-to-choices" class="lvl-btn" data-action="backToChoices">
       <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-      {{localize 'NEXT_LEVEL_UP_WIZARD.review.back'}}
+      {{localize 'DUMB_LEVEL_UP_WIZARD.review.back'}}
     </button>
     <div class="footer-actions">
       {{#if footer.left}}
@@ -13,16 +13,16 @@
       {{/if}}
       <button type="submit" name="apply" class="lvl-btn primary large" {{#unless canSubmit}}disabled{{/unless}}>
         {{#if submitting}}
-          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.applying'}}
+          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> {{localize 'DUMB_LEVEL_UP_WIZARD.menu.footer.applying'}}
         {{else}}
-          <i class="fa-solid fa-hat-wizard" aria-hidden="true"></i> {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.submit' targetLevel=targetLevel}}
+          <i class="fa-solid fa-hat-wizard" aria-hidden="true"></i> {{localize 'DUMB_LEVEL_UP_WIZARD.menu.footer.submit' targetLevel=targetLevel}}
         {{/if}}
       </button>
     </div>
   {{else}}
     <div class="footer-status" role="status">
       {{#if footer.allChosen}}
-        <span class="status-title is-good">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.allChosen'}}</span>
+        <span class="status-title is-good">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.footer.allChosen'}}</span>
         <span class="status-detail">{{footer.levels}}</span>
       {{else}}
         <span class="status-title">{{footer.left}}</span>
@@ -33,16 +33,16 @@
       {{#if canUndo}}
         <button type="button" name="undo" class="lvl-btn ghost" data-action="undo">
           <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
-          {{localize 'NEXT_LEVEL_UP_WIZARD.history.undoButton'}}
+          {{localize 'DUMB_LEVEL_UP_WIZARD.history.undoButton'}}
         </button>
       {{/if}}
       <button type="button" name="cancel" class="lvl-btn ghost" data-action="close">
-        {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.cancel'}}
+        {{localize 'DUMB_LEVEL_UP_WIZARD.menu.footer.cancel'}}
       </button>
       {{#if footer.canGoBack}}
         <button type="button" name="prev" class="lvl-btn" data-action="prevStep">
           <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-          {{localize 'NEXT_LEVEL_UP_WIZARD.menu.footer.back'}}
+          {{localize 'DUMB_LEVEL_UP_WIZARD.menu.footer.back'}}
         </button>
       {{/if}}
       {{#if stepped}}

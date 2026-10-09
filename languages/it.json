@@ -1,5 +1,5 @@
 {
-  "NEXT_LEVEL_UP_WIZARD": {
+  "DUMB_LEVEL_UP_WIZARD": {
     "button-tooltip": "Sali di livello!",
     "button": {
       "needXp": "PE insufficienti per salire di livello (ne servono ancora {needed})",

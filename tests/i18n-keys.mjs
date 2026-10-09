@@ -4,7 +4,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1');
-const PREFIX = 'NEXT_LEVEL_UP_WIZARD';
+const PREFIX = 'DUMB_LEVEL_UP_WIZARD';
 
 const walk = (dir) =>
   readdirSync(dir).flatMap((name) => {
@@ -30,7 +30,7 @@ for (const file of walk(join(root, 'src')).filter((f) => f.endsWith('.js'))) {
     // System keys (PF2E.*) go through game.i18n directly and aren't ours to check
     for (const key of [m[1], m[2]]) if (!/^[A-Z]/.test(key)) used.add(`${PREFIX}.${key}`);
   }
-  for (const m of text.matchAll(/['"`](NEXT_LEVEL_UP_WIZARD\.[\w.-]+)['"`]/g)) used.add(m[1]);
+  for (const m of text.matchAll(/['"`](DUMB_LEVEL_UP_WIZARD\.[\w.-]+)['"`]/g)) used.add(m[1]);
 }
 // Keys picked indirectly (stored in a variable first): any string literal that is exactly a defined key
 for (const file of walk(join(root, 'src')).filter((f) => f.endsWith('.js'))) {
@@ -41,7 +41,7 @@ for (const file of walk(join(root, 'src')).filter((f) => f.endsWith('.js'))) {
 }
 for (const file of walk(join(root, 'templates'))) {
   const text = readFileSync(file, 'utf8');
-  for (const m of text.matchAll(/'(NEXT_LEVEL_UP_WIZARD\.[\w.-]+)'/g)) used.add(m[1]);
+  for (const m of text.matchAll(/'(DUMB_LEVEL_UP_WIZARD\.[\w.-]+)'/g)) used.add(m[1]);
 }
 
 const missing = [...used].filter((k) => {

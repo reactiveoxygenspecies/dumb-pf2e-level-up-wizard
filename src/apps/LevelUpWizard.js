@@ -191,7 +191,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
     return [
       {
         icon: 'fa-solid fa-clock-rotate-left',
-        label: 'NEXT_LEVEL_UP_WIZARD.history.title',
+        label: 'DUMB_LEVEL_UP_WIZARD.history.title',
         action: 'openHistory'
       }
     ];

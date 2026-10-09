@@ -1,5 +1,5 @@
 import { MODULE_ID, SUPPORTED_SYSTEMS, TEMPLATE_PATH } from './constants.js';
-import { migrateSettings, registerSettings, warnIfOriginalActive } from './settings.js';
+import { migratePreviousFlags, migrateSettings, registerSettings, warnIfOriginalActive } from './settings.js';
 import { registerFeatIndexHooks } from './data/featIndex.js';
 import { registerAbcIndexHooks } from './data/abcIndex.js';
 import { registerSpellIndexHooks } from './data/spellIndex.js';
@@ -52,6 +52,11 @@ Hooks.once('ready', async () => {
     await migrateSettings();
   } catch (error) {
     console.error(`${MODULE_ID} | Settings migration failed`, error);
+  }
+  try {
+    await migratePreviousFlags();
+  } catch (error) {
+    console.error(`${MODULE_ID} | Flag migration failed`, error);
   }
   warnIfOriginalActive();
 
