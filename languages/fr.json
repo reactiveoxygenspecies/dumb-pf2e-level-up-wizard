@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "Lire {name}",
       "title": "{group} : niveau {level}",
       "count": "{count} dons sur {total}",
       "noResults": "Aucun don ne correspond à ces filtres.",
@@ -123,7 +124,11 @@
       "met": "Prérequis remplis",
       "unmet": "Prérequis non remplis",
       "unknown": "Certains prérequis ne peuvent pas être vérifiés automatiquement",
-      "dedicationRule": "D'abord deux autres dons de votre archétype {dedication} (vous en avez {count})"
+      "dedicationRule": "D'abord deux autres dons de votre archétype {dedication} (vous en avez {count})",
+      "reincarnated": "Uniquement pour un personnage qui s'est réincarné au moins une fois",
+      "noAncestry": "Lié à aucune ascendance : vérifiez qui peut le prendre",
+      "askGm": "Demander au MJ",
+      "askGmHint": "Les dons peu courants et rares nécessitent l'accord de votre MJ"
     },
     "history": {
       "title": "Historique des montées de niveau",

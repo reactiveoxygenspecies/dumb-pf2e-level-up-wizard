@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "Ler {name}",
       "title": "{group}: Nível {level}",
       "count": "{count} de {total} talentos",
       "noResults": "Nenhum talento corresponde a estes filtros.",
@@ -123,7 +124,11 @@
       "met": "Pré-requisitos cumpridos",
       "unmet": "Pré-requisitos não cumpridos",
       "unknown": "Alguns pré-requisitos não podem ser verificados automaticamente",
-      "dedicationRule": "Antes, dois outros talentos do seu arquétipo {dedication} (você tem {count})"
+      "dedicationRule": "Antes, dois outros talentos do seu arquétipo {dedication} (você tem {count})",
+      "reincarnated": "Apenas para um personagem que reencarnou pelo menos uma vez",
+      "noAncestry": "Não ligado a uma ancestralidade: verifique quem pode pegá-lo",
+      "askGm": "Pergunte ao mestre",
+      "askGmHint": "Talentos incomuns e raros precisam da aprovação do mestre"
     },
     "history": {
       "title": "Histórico de Avanços de Nível",

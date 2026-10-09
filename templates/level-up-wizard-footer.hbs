@@ -46,7 +46,7 @@
         </button>
       {{/if}}
       {{#if stepped}}
-        <button type="button" name="next" class="lvl-btn primary large{{#if reviewBlocked}} is-disabled{{/if}}"
+        <button type="button" name="next" class="lvl-btn primary large{{#if footer.nextIsReview}}{{#if reviewBlocked}} is-disabled{{/if}}{{/if}}"
           data-action="{{#if footer.nextIsReview}}review{{else}}nextStep{{/if}}"
           {{#if footer.nextIsReview}}{{#if reviewBlocked}}aria-disabled="true"{{/if}}{{/if}}>
           {{footer.nextLabel}}

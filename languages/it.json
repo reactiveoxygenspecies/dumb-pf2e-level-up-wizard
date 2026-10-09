@@ -109,6 +109,7 @@
       }
     },
     "selector": {
+      "readFeat": "Leggi {name}",
       "title": "{group}: livello {level}",
       "count": "{count} talenti su {total}",
       "noResults": "Nessun talento corrisponde a questi filtri.",
@@ -123,7 +124,11 @@
       "met": "Prerequisiti soddisfatti",
       "unmet": "Prerequisiti non soddisfatti",
       "unknown": "Alcuni prerequisiti non possono essere verificati automaticamente",
-      "dedicationRule": "Prima due altri talenti dell'archetipo {dedication} (ne hai {count})"
+      "dedicationRule": "Prima due altri talenti dell'archetipo {dedication} (ne hai {count})",
+      "reincarnated": "Solo per un personaggio che si è reincarnato almeno una volta",
+      "noAncestry": "Non legato a un'ascendenza: verifica chi può prenderlo",
+      "askGm": "Chiedi al GM",
+      "askGmHint": "I talenti non comuni e rari richiedono l'approvazione del GM"
     },
     "history": {
       "title": "Cronologia degli avanzamenti di livello",

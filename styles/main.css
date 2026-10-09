@@ -44,7 +44,9 @@
 
 /* ------------------------------------------ */
 /*  Theme: parchment, whatever Foundry's      */
-/*  theme is. Tokens: styles/tokens.css      */
+/*  theme is. src/apps/lightTheme.js also     */
+/*  pins each window to Foundry's light       */
+/*  theme. Tokens: styles/tokens.css          */
 /* ------------------------------------------ */
 
 .dumb-pf2e-level-up-wizard {
@@ -92,7 +94,7 @@
 .dumb-pf2e-level-up-wizard .window-content {
   padding: 0;
   gap: 0;
-  background: transparent;
+  background: var(--lvl-parchment);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   font-size: inherit;
@@ -557,6 +559,20 @@
 .dumb-pf2e-level-up-wizard .lvl-pill.status-unknown {
   background: var(--lvl-unknown-bg);
   color: var(--lvl-unknown);
+}
+
+.dumb-pf2e-level-up-wizard .lvl-pill.status-gm {
+  background: var(--lvl-crimson-tint);
+  color: var(--lvl-crimson);
+}
+
+/* A prerequisite pill and an "Ask GM" pill side by side */
+.dumb-pf2e-level-up-wizard .pill-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
 }
 
 .dumb-pf2e-level-up-wizard .lvl-pill i {
@@ -1250,6 +1266,15 @@
   font-weight: 400;
 }
 
+/* The modifier once raised, on a chosen skill */
+.lvlup-wizard .skill-mod-new {
+  margin-left: 2px;
+  color: var(--lvl-met);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .lvlup-wizard .skill-sub,
 .lvlup-wizard .skill-state {
   color: var(--lvl-ink-muted);
@@ -1914,10 +1939,13 @@
   font-size: 13px;
 }
 
-.lvlup-feat-selector .feat-row .lvl-pill {
+.lvlup-feat-selector .feat-row .pill-group {
   flex: 0 1 auto;
-  min-width: 0;
   max-width: 55%;
+}
+
+.lvlup-feat-selector .feat-row .lvl-pill {
+  min-width: 0;
   font-size: 13px;
 }
 
@@ -1984,6 +2012,16 @@
   margin-top: 8px;
 }
 
+.lvlup-feat-selector .feat-details .gm-note {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 10px 0 0;
+  color: var(--lvl-ink-muted);
+  font-size: 13px;
+}
+
 .lvlup-feat-selector .prereq-box {
   padding: 12px 14px;
   border-radius: var(--lvl-radius);
@@ -2037,6 +2075,27 @@
 .lvlup-feat-selector .prereq-line i {
   flex: none;
   width: 1.1em;
+}
+
+/* Book after a prerequisite that names a feat: opens that feat */
+.lvlup-feat-selector .prereq-line a.prereq-link {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 2px;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.lvlup-feat-selector .prereq-line a.prereq-link:hover,
+.lvlup-feat-selector .prereq-line a.prereq-link:focus-visible {
+  color: var(--lvl-crimson);
+  opacity: 1;
+}
+
+.lvlup-feat-selector .prereq-line a.prereq-link > i {
+  width: auto;
+  margin: 0;
 }
 
 .lvlup-feat-selector .description {

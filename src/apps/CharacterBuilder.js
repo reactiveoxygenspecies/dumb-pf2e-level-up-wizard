@@ -50,6 +50,8 @@ import {
 } from '../helpers/prerequisites.js';
 import { attributeLabel, enrichHTML, localize, signedNumber, sluggify } from '../helpers/utility.js';
 import { FeatSelector } from './FeatSelector.js';
+import { withTraitRequirements } from './wizardView.js';
+import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -79,7 +81,7 @@ const hiddenRarities = () => {
  * Step-by-step creation of a level-1 character. The character is previewed in memory after every
  * choice (the system prepares it like the real actor), and nothing is written until "Create".
  */
-export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) {
+export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin(ApplicationV2)) {
   constructor(options = {}) {
     const { actor, ...rest } = options;
     super({ ...rest, id: `${MODULE_ID}-builder-${actor.uuid.replace(/\./g, '-')}` });
@@ -215,7 +217,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   }
 
   evaluateFeat(entry, ctx) {
-    return evaluatePrerequisites(entry.prerequisites, ctx);
+    return withTraitRequirements(evaluatePrerequisites(entry.prerequisites, ctx), entry, ctx);
   }
 
   #prereqContext(excludeSlot) {
@@ -982,7 +984,8 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       slot,
       candidates,
       prereqContext: this.#prereqContext(slot.key),
-      currentPick: this.build.feats[slot.key] ?? null
+      currentPick: this.build.feats[slot.key] ?? null,
+      featIndex: this.data.feats
     });
     if (typeof this.renderChild === 'function') await this.renderChild(selector);
     else await selector.render({ force: true });

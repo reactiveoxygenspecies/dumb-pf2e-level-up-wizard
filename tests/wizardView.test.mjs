@@ -10,7 +10,7 @@ globalThis.game = {
   }
 };
 
-const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips } =
+const { chooseLayout, prereqPill, mergeSkillChanges, actionGlyph, rankDots, languageChips, withTraitRequirements, gmApprovalPill, featLinkLookup, prereqFeatLinks } =
   await import('../src/apps/wizardView.js');
 
 test('a level with two feats stays on one page', () => {
@@ -70,4 +70,62 @@ test('language chips keep chosen uncommon languages visible', () => {
   assert.equal(chips.length, 9);
   assert.ok(chips.some((c) => c.slug === 'aklo'));
   assert.equal(hasMore, true);
+});
+
+test('a reincarnated feat with no prerequisites is a check, not a fit', () => {
+  const none = { status: 'met', results: [] };
+  const ctx = { traits: ['human'], featTraits: [] };
+  const reincarnated = { category: 'ancestry', traits: ['reincarnated'] };
+  const verdict = withTraitRequirements(none, reincarnated, ctx);
+  assert.equal(verdict.status, 'unknown');
+  assert.equal(verdict.results[0].text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.reincarnated');
+  assert.equal(withTraitRequirements(none, reincarnated, { featTraits: ['reincarnated'] }).status, 'met');
+  const human = { category: 'ancestry', traits: ['human'] };
+  assert.equal(withTraitRequirements(none, human, ctx), none);
+  const unmet = { status: 'unmet', results: [{ text: 'x', status: 'unmet' }] };
+  assert.equal(withTraitRequirements(unmet, reincarnated, ctx).status, 'unmet');
+});
+
+test('an ancestry feat with no traits is a check only when nothing else can be checked', () => {
+  const ctx = { traits: ['human'], featTraits: [] };
+  const untraited = { category: 'ancestry', traits: [] };
+  const none = { status: 'met', results: [] };
+  const verdict = withTraitRequirements(none, untraited, ctx);
+  assert.equal(verdict.status, 'unknown');
+  assert.equal(verdict.results[0].text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.noAncestry');
+  // its own prerequisites decide: "plant trait" for a leshy fits, for a human it doesn't
+  const met = { status: 'met', results: [{ text: 'plant trait', status: 'met' }] };
+  assert.equal(withTraitRequirements(met, untraited, ctx), met);
+  const unmet = { status: 'unmet', results: [{ text: 'plant trait', status: 'unmet' }] };
+  assert.equal(withTraitRequirements(unmet, untraited, ctx), unmet);
+  // a general feat without traits is not an ancestry question
+  assert.equal(withTraitRequirements(none, { category: 'general', traits: [] }, ctx), none);
+});
+
+test('uncommon, rare and unique feats get an Ask GM pill beside the fit pill', () => {
+  assert.equal(gmApprovalPill('common'), null);
+  assert.equal(gmApprovalPill(undefined), null);
+  for (const rarity of ['uncommon', 'rare', 'unique']) {
+    const pill = gmApprovalPill(rarity);
+    assert.equal(pill.status, 'gm');
+    assert.equal(pill.text, 'DUMB_LEVEL_UP_WIZARD.prerequisites.askGm');
+  }
+});
+
+test('prerequisites that name feats link to them', () => {
+  const feat = (name) => ({ uuid: `uuid-${name}`, name, slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-') });
+  const lookup = featLinkLookup(
+    ['Fey Influence', 'Assurance', 'Power Attack', 'Sudden Charge', 'Celebrity Dedication', 'Dandy Dedication', 'Orc Lore', 'Ironblood Stance'].map(feat)
+  );
+  const names = (text) => prereqFeatLinks(text, lookup).map((l) => l.name);
+  assert.deepEqual(names('Fey Influence'), ['Fey Influence']);
+  assert.deepEqual(names('Assurance (Athletics)'), ['Assurance']);
+  assert.deepEqual(names('Power Attack or Sudden Charge'), ['Power Attack', 'Sudden Charge']);
+  assert.deepEqual(names('Celebrity or Dandy Dedication'), ['Celebrity Dedication', 'Dandy Dedication']);
+  assert.deepEqual(names('two stances (Ironblood Stance or another)'), ['Ironblood Stance']);
+  // a Lore skill in a list is not the ancestry feat of the same name; the feat on its own is
+  assert.deepEqual(names('trained in Belkzen Lore or Orc Lore'), []);
+  assert.deepEqual(names('Orc Lore'), ['Orc Lore']);
+  assert.deepEqual(names('trained in Athletics'), []);
+  assert.equal(prereqFeatLinks('Fey Influence', lookup)[0].uuid, 'uuid-Fey Influence');
 });

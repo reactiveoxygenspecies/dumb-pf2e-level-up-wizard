@@ -5,7 +5,8 @@ import {
   applyPendingChoices,
   buildPrereqContext,
   cleanPrerequisiteText,
-  evaluatePrerequisites
+  evaluatePrerequisites,
+  traitRequirements
 } from '../src/helpers/prerequisites.js';
 
 const baseCtx = () => ({
@@ -565,7 +566,14 @@ test('buildPrereqContext reads a mocked PF2e character', () => {
     items: [
       feat('Battle Medicine', 'battle-medicine'),
       feat('Medizinische Kampfhilfe', 'battle-medicine', 'Battle Medicine'),
-      feat('Assurance (Athletics)', 'assurance')
+      feat('Assurance (Athletics)', 'assurance'),
+      {
+        type: 'feat',
+        name: 'Sleep of the Reborn',
+        slug: 'sleep-of-the-reborn',
+        system: { slug: 'sleep-of-the-reborn', traits: { value: ['reincarnated'] } },
+        flags: {}
+      }
     ],
     class: { slug: 'fighter', hpPerLevel: 10 },
     ancestry: { slug: 'human' },
@@ -599,6 +607,7 @@ test('buildPrereqContext reads a mocked PF2e character', () => {
     assert.ok(ctx.feats.includes('battle medicine'));
     assert.ok(ctx.feats.includes('assurance'));
     assert.deepEqual(ctx.traits, ['human', 'humanoid']);
+    assert.deepEqual(ctx.featTraits, ['reincarnated']);
     assert.doesNotThrow(() => JSON.parse(JSON.stringify(ctx)));
     assert.equal(one('Battle Medicine', ctx), 'met');
     assert.equal(one('trained in Warfare Lore', ctx), 'met');
@@ -611,4 +620,19 @@ test('buildPrereqContext reads a mocked PF2e character', () => {
     globalThis.CONFIG = saved.CONFIG;
     globalThis.game = saved.game;
   }
+});
+
+test('reincarnated feats need a character who has reincarnated', () => {
+  const ctx = { traits: ['human', 'humanoid'], featTraits: ['human'] };
+  assert.deepEqual(traitRequirements(['human'], ctx), []);
+  assert.deepEqual(traitRequirements(['reincarnated'], ctx), [
+    { trait: 'reincarnated', status: 'unknown' }
+  ]);
+  // an earlier reincarnated feat, or the trait on the actor, shows they have
+  assert.equal(
+    traitRequirements(['reincarnated'], { ...ctx, featTraits: ['reincarnated'] })[0].status,
+    'met'
+  );
+  assert.equal(traitRequirements(['reincarnated'], { traits: ['reincarnated'] })[0].status, 'met');
+  assert.equal(traitRequirements(['reincarnated'], {})[0].status, 'unknown');
 });

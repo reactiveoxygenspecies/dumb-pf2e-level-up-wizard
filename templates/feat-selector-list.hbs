@@ -22,12 +22,20 @@
               </span>
               {{#if subtitle}}<span class="subtitle">{{subtitle}}</span>{{/if}}
             </span>
-            {{#if pill}}
-              <span class="lvl-pill status-{{pill.status}}" data-tooltip="{{pillTooltip}}">
-                <i class="fa-solid {{pill.icon}}" aria-hidden="true"></i>
-                <span class="pill-text">{{pill.text}}</span>
-              </span>
-            {{/if}}
+            <span class="pill-group">
+              {{#if pill}}
+                <span class="lvl-pill status-{{pill.status}}" data-tooltip="{{pillTooltip}}">
+                  <i class="fa-solid {{pill.icon}}" aria-hidden="true"></i>
+                  <span class="pill-text">{{pill.text}}</span>
+                </span>
+              {{/if}}
+              {{#if gmPill}}
+                <span class="lvl-pill status-gm" data-tooltip="{{gmPill.tooltip}}">
+                  <i class="fa-solid {{gmPill.icon}}" aria-hidden="true"></i>
+                  <span class="pill-text">{{gmPill.text}}</span>
+                </span>
+              {{/if}}
+            </span>
           </button>
         </li>
       {{/each}}

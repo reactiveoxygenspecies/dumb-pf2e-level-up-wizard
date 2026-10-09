@@ -1,4 +1,5 @@
-import { localize } from '../helpers/utility.js';
+import { traitRequirements, worstStatus } from '../helpers/prerequisites.js';
+import { localize, sluggify } from '../helpers/utility.js';
 
 /* -------------------------------------------- */
 /*  Layout: single page or steps                */
@@ -98,6 +99,29 @@ const STATUS_ICONS = {
   unknown: 'fa-circle-question'
 };
 
+const TRAIT_REQUIREMENT_TEXT = {
+  reincarnated: () => localize('prerequisites.reincarnated')
+};
+
+/**
+ * Adds to a verdict of `evaluatePrerequisites` what the feat's prerequisite lines leave out: the
+ * requirements it carries in its traits (see `traitRequirements`), and a check for an ancestry
+ * feat with no traits and no prerequisites, which says nothing about who can take it.
+ */
+export const withTraitRequirements = (verdict, entry, ctx) => {
+  const traits = entry.traits ?? [];
+  const lines = traitRequirements(traits, ctx).map(({ trait, status }) => ({
+    text: TRAIT_REQUIREMENT_TEXT[trait]?.() ?? trait,
+    status
+  }));
+  if (entry.category === 'ancestry' && !traits.length && !verdict.results?.length) {
+    lines.push({ text: localize('prerequisites.noAncestry'), status: 'unknown' });
+  }
+  if (!lines.length) return verdict;
+  const results = [...(verdict.results ?? []), ...lines];
+  return { status: worstStatus(results.map((r) => r.status)), results };
+};
+
 /**
  * Prerequisite pill: the status, icon and a text that gives the reason.
  * @param {object|null} verdict result of `evaluatePrerequisites`
@@ -119,6 +143,72 @@ export const prereqPill = (verdict, prerequisites = [], short = false) => {
     text = localize('prerequisites.check');
   }
   return { status, text, icon: STATUS_ICONS[status] ?? STATUS_ICONS.unknown };
+};
+
+/** "Ask GM" pill for an uncommon, rare or unique feat; shown beside the prerequisite pill */
+export const gmApprovalPill = (rarity) =>
+  rarity && rarity !== 'common'
+    ? {
+        status: 'gm',
+        text: localize('prerequisites.askGm'),
+        tooltip: localize('prerequisites.askGmHint'),
+        icon: 'fa-dice-d20'
+      }
+    : null;
+
+/* -------------------------------------------- */
+/*  Prerequisite links                          */
+/* -------------------------------------------- */
+
+/** "Assurance (Athletics)" and "Assurance" are the same feat for a link */
+const linkKey = (name) => sluggify(String(name ?? '').replace(/\s*\(.*\)\s*$/, ''));
+
+const lookups = new WeakMap();
+
+/** Feat index entries by name, original (untranslated) name and slug; built once per index */
+export const featLinkLookup = (index) => {
+  let map = lookups.get(index);
+  if (map) return map;
+  map = new Map();
+  for (const entry of index) {
+    for (const key of [linkKey(entry.name), linkKey(entry.originalName), entry.slug]) {
+      if (key && !map.has(key)) map.set(key, entry);
+    }
+  }
+  lookups.set(index, map);
+  return map;
+};
+
+/**
+ * Feats a prerequisite line names, to link to: the whole line ("Fey Influence"), or each
+ * name in a list ("Power Attack or Sudden Charge"). Only exact feat names count.
+ * @returns {Array<{uuid: string, name: string, tooltip: string}>}
+ */
+export const prereqFeatLinks = (text, lookup) => {
+  const clean = (part) =>
+    part
+      .trim()
+      .replace(/[.;]+$/, '')
+      .replace(/^the\s+/i, '')
+      .replace(/\s+feat$/i, '');
+  const whole = lookup.get(linkKey(clean(String(text ?? ''))));
+  const parts = String(text ?? '')
+    .split(/[,;()]|\bor\b|\band\b/i)
+    .map(clean)
+    .filter(Boolean);
+  // "Celebrity or Dandy Dedication" names Celebrity Dedication too
+  const suffix = parts.at(-1)?.match(/\s(dedication)$/i)?.[1];
+  const find = (part) =>
+    // In a list, "Orc Lore" after "trained in" is a skill, not the feat of that name
+    /\slore$/i.test(part)
+      ? null
+      : (lookup.get(linkKey(part)) ?? (suffix ? lookup.get(linkKey(`${part} ${suffix}`)) : null));
+  const entries = whole ? [whole] : parts.map(find).filter(Boolean);
+  return [...new Map(entries.map((e) => [e.uuid, e])).values()].map((e) => ({
+    uuid: e.uuid,
+    name: e.name,
+    tooltip: localize('selector.readFeat', { name: e.name })
+  }));
 };
 
 /** HTML tooltip listing every prerequisite with its verdict; `esc` escapes the lines */
