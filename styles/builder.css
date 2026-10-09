@@ -968,3 +968,8 @@
   display: flex;
   gap: 10px;
 }
+
+/* Steps scroll as a page: keep bordered blocks at full height */
+.lvlup-builder .lvlb-main > * {
+  flex-shrink: 0;
+}

@@ -66,8 +66,8 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     const { actor, ...rest } = options;
     super({ ...rest, id: `${MODULE_ID}-builder-${actor.uuid.replace(/\./g, '-')}` });
     this.actor = actor;
-    this.state = createBuildState(actor);
-    this.step = this.state.class ? 'boosts' : 'ancestry';
+    this.build = createBuildState(actor);
+    this.step = this.build.class ? 'boosts' : 'ancestry';
     this.filters = { search: {}, rarities: ['common'] };
     this.descriptions = new Map();
     this.view = null;
@@ -102,7 +102,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   };
 
   get title() {
-    return localize('builder.windowTitle', { actorName: this.state.name || this.actor.name });
+    return localize('builder.windowTitle', { actorName: this.build.name || this.actor.name });
   }
 
   /* -------------------------------------------- */
@@ -134,21 +134,21 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
 
   /** Rebuild the preview after every choice; trims choices that no longer fit */
   async #refresh() {
-    const sources = await buildSources(this.state);
-    const preview = buildPreview(this.actor, this.state, sources);
+    const sources = await buildSources(this.build);
+    const preview = buildPreview(this.actor, this.build, sources);
 
-    const skills = skillChoices(preview, sources, this.state);
-    if (this.state.skills.length > skills.count) {
-      this.state.skills = this.state.skills.slice(0, skills.count);
+    const skills = skillChoices(preview, sources, this.build);
+    if (this.build.skills.length > skills.count) {
+      this.build.skills = this.build.skills.slice(0, skills.count);
     }
-    const languages = languageChoices(preview, sources, this.state, this.data.languages);
-    if (this.state.languages.length > languages.total) {
-      this.state.languages = this.state.languages.slice(0, languages.total);
+    const languages = languageChoices(preview, sources, this.build, this.data.languages);
+    if (this.build.languages.length > languages.total) {
+      this.build.languages = this.build.languages.slice(0, languages.total);
     }
 
     const slots = featSlotsFor(preview, sources);
-    for (const key of Object.keys(this.state.feats)) {
-      if (!slots.some((s) => s.key === key)) delete this.state.feats[key];
+    for (const key of Object.keys(this.build.feats)) {
+      if (!slots.some((s) => s.key === key)) delete this.build.feats[key];
     }
 
     let prereq = null;
@@ -166,13 +166,13 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   /* FeatSelector host interface: id, actor, selection.feats, selectFeat, evaluateFeat */
 
   get selection() {
-    return { feats: this.state.feats };
+    return { feats: this.build.feats };
   }
 
   selectFeat(slotKey, pick) {
     const slot = this.view?.slots.find((s) => s.key === slotKey);
     if (!slot) return;
-    this.state.feats[slotKey] = { ...pick, slot };
+    this.build.feats[slotKey] = { ...pick, slot };
     this.render();
   }
 
@@ -183,7 +183,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   #prereqContext(excludeSlot) {
     const base = this.view?.prereq;
     if (!base) return null;
-    const feats = Object.entries(this.state.feats)
+    const feats = Object.entries(this.build.feats)
       .filter(([key, pick]) => pick && key !== excludeSlot)
       .flatMap(([, f]) => [f.name, f.originalName, f.slug].filter(Boolean));
     try {
@@ -198,7 +198,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   /* -------------------------------------------- */
 
   #isComplete(step) {
-    const s = this.state;
+    const s = this.build;
     const v = this.view;
     switch (step) {
       case 'ancestry':
@@ -253,7 +253,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     const size = preview.size ?? preview.system.traits?.size?.value;
     const summary = {
       img: this.actor.img,
-      name: this.state.name,
+      name: this.build.name,
       picks: ['ancestry', 'heritage', 'background', 'class'].map((type) => ({
         label: localize(`builder.steps.${type}`),
         value: sources[type]?.name ?? null
@@ -341,7 +341,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   async #stepContext(step) {
     const { abc } = this.data;
     const { sources, preview, skills, languages, slots } = this.view;
-    const s = this.state;
+    const s = this.build;
     const sizeLabel = (size) => game.i18n.localize(CONFIG.PF2E.actorSizes?.[size] ?? size);
     const boostText = (boosts) => {
       const fixed = Object.values(boosts ?? {})
@@ -511,7 +511,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   }
 
   #boostContext(sources, preview) {
-    const s = this.state;
+    const s = this.build;
     const rows = [];
     const cell = (attr, kind, extra = {}) => ({ attr, kind, label: attributeLabel(attr), ...extra });
 
@@ -623,7 +623,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   }
 
   #reviewContext(sources, preview) {
-    const s = this.state;
+    const s = this.build;
     const rows = [
       { label: localize('builder.review.name'), value: s.name || this.actor.name },
       ...['ancestry', 'heritage', 'background', 'class', 'deity']
@@ -679,11 +679,11 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       });
     });
     htmlElement.querySelector('[data-builder-name]')?.addEventListener('change', (event) => {
-      this.state.name = event.currentTarget.value.trim();
+      this.build.name = event.currentTarget.value.trim();
       this.render({ parts: ['body'] });
     });
     htmlElement.querySelector('[data-builder-deity]')?.addEventListener('change', (event) => {
-      this.state.deity = event.currentTarget.value || null;
+      this.build.deity = event.currentTarget.value || null;
       this.render();
     });
   }
@@ -712,7 +712,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
 
   static #onPick(event, target) {
     const { kind, uuid } = target.dataset;
-    const s = this.state;
+    const s = this.build;
     if (s[kind] === uuid) return;
     s[kind] = uuid;
     // Later choices that depended on this one start over
@@ -742,7 +742,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
   }
 
   static #onAncestryMode() {
-    const s = this.state;
+    const s = this.build;
     s.ancestryMode = s.ancestryMode === 'alternate' ? 'standard' : 'alternate';
     s.ancestryPicks = [];
     s.alternateBoosts = [];
@@ -751,7 +751,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
 
   static #onBoost(event, target) {
     const { row, attr } = target.dataset;
-    const s = this.state;
+    const s = this.build;
     const toggle = (list, max, allowed = true) => {
       if (list.includes(attr)) return list.filter((a) => a !== attr);
       if (list.length >= max || !allowed) return list;
@@ -785,7 +785,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
 
   static #onSkill(event, target) {
     const slug = target.dataset.skill;
-    const s = this.state;
+    const s = this.build;
     if (s.skills.includes(slug)) s.skills = s.skills.filter((x) => x !== slug);
     else if (s.skills.length < (this.view?.skills.count ?? 0)) s.skills = [...s.skills, slug];
     this.render();
@@ -793,7 +793,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
 
   static #onLanguage(event, target) {
     const slug = target.dataset.language;
-    const s = this.state;
+    const s = this.build;
     if (s.languages.includes(slug)) s.languages = s.languages.filter((x) => x !== slug);
     else if (s.languages.length < (this.view?.languages.total ?? 0)) s.languages = [...s.languages, slug];
     this.render();
@@ -804,7 +804,7 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     if (!slot) return;
     const { feats, lookups } = this.data;
     const preview = this.view.preview;
-    const pending = Object.entries(this.state.feats)
+    const pending = Object.entries(this.build.feats)
       .filter(([key, pick]) => pick && key !== slot.key)
       .map(([, pick]) => pick);
     const ownedKeys = getOwnedFeatKeys(preview);
@@ -822,14 +822,14 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
       slot,
       candidates,
       prereqContext: this.#prereqContext(slot.key),
-      currentPick: this.state.feats[slot.key] ?? null
+      currentPick: this.build.feats[slot.key] ?? null
     });
     if (typeof this.renderChild === 'function') await this.renderChild(selector);
     else await selector.render({ force: true });
   }
 
   static #onClearFeat(event, target) {
-    delete this.state.feats[target.dataset.slotKey];
+    delete this.build.feats[target.dataset.slotKey];
     this.render();
   }
 
@@ -839,9 +839,9 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     await this.render({ parts: ['footer'] });
     try {
       const picks = Object.fromEntries(
-        Object.entries(this.state.feats).filter(([, pick]) => pick)
+        Object.entries(this.build.feats).filter(([, pick]) => pick)
       );
-      const done = await applyBuild(this.actor, this.state, picks);
+      const done = await applyBuild(this.actor, this.build, picks);
       if (done) {
         await this.close();
         this.actor.sheet?.render(true);
