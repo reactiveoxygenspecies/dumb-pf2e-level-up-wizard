@@ -1270,6 +1270,13 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       )
     ];
     if (other.length) chatLines.push(other.join(' · '));
+    if (this.#spellsActive()) {
+      const spellNames = new Map((plan.spellIndex ?? []).map((s) => [s.uuid, s.name]));
+      const newSpells = Object.values(sel.spells)
+        .flat()
+        .map((uuid) => spellNames.get(uuid) ?? uuid);
+      if (newSpells.length) chatLines.push(newSpells.join(' · '));
+    }
     if (!chatLines.length) chatLines.push(localize('messages.global.noChoices'));
 
     return {

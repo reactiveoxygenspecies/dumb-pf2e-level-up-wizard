@@ -224,10 +224,10 @@
       "undoButton": "Undo last level-up",
       "undoThis": "Undo this level-up",
       "undoTitle": "Undo Level-Up",
-      "undoConfirm": "Undo the last level-up of {actorName}? The feats it added are removed and the level goes back from {fromLevel} to {toLevel}. Skill ranks, attribute boosts, languages and XP are restored.",
-      "undoConfirmManual": "Undo the last level-up of {actorName}? The feats it added are removed, and skill ranks, attribute boosts, languages and XP are restored. The level stays at {fromLevel} because it was changed by hand.",
+      "undoConfirm": "Undo the last level-up of {actorName}? The feats and spells it added are removed and the level goes back from {fromLevel} to {toLevel}. Skill ranks, attribute boosts, languages, spell slots and XP are restored.",
+      "undoConfirmManual": "Undo the last level-up of {actorName}? The feats and spells it added are removed, and skill ranks, attribute boosts, languages, spell slots and XP are restored. The level stays at {fromLevel} because it was changed by hand.",
       "built": "Character created",
-      "undoConfirmBuild": "Undo the character build of {actorName}? Everything the builder added is removed: ancestry, heritage, background, class, deity, feats, trained skills, boosts and languages."
+      "undoConfirmBuild": "Undo the character build of {actorName}? Everything the builder added is removed: ancestry, heritage, background, class, deity, feats, spellcasting, trained skills, boosts and languages."
     },
     "review": {
       "title": "Review level {level}",
@@ -519,7 +519,8 @@
         "heading": "Spells",
         "hint": {
           "prepared": "As a {className} you prepare spells. Pick the spells you start with; you prepare from them each day.",
-          "spontaneous": "As a {className} you cast spontaneously from your repertoire. Pick the spells you know."
+          "spontaneous": "As a {className} you cast spontaneously from your repertoire. Pick the spells you know.",
+          "fullList": "As a {className} you prepare spells each day from the full list of your tradition."
         },
         "tradition": "Spell tradition",
         "traditionHint": "A {className}'s tradition comes from a level-1 choice. Pick the one that matches it.",

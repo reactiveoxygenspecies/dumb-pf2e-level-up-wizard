@@ -711,7 +711,9 @@ export class CharacterBuilder extends HandlebarsApplicationMixin(ApplicationV2) 
     return {
       spellStep: true,
       heading: localize('builder.spells.heading'),
-      hint: localize(`builder.spells.hint.${sp.rules.preparation}`, { className: this.view.sources.class.name }),
+      hint: localize(`builder.spells.hint.${sp.picks.length ? sp.rules.preparation : 'fullList'}`, {
+        className: this.view.sources.class.name
+      }),
       traditionChoice: sp.rules.tradition
         ? null
         : {

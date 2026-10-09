@@ -156,6 +156,7 @@ const pickLabel = (pick) => {
   if (pick.rank === null && pick.minRank > 1) {
     return localize('spells.rankRange', { min: pick.minRank, max: pick.maxRank });
   }
+  if (pick.rank === null && (pick.maxRank ?? 1) <= 1) return rankName(1);
   if (pick.rank === null) return localize('spells.anyRank', { rank: pick.maxRank });
   return rankName(pick.rank);
 };
@@ -208,10 +209,12 @@ export const entrySlotUpdate = (rules, entry, slug, level) => {
     const current = entry.system?.slots?.[key] ?? {};
     if ((current.max ?? 0) === slots[rank]) continue;
     update[`system.slots.${key}.max`] = slots[rank];
-    // Spontaneous casters track remaining slots in `value`; give new slots as available
-    if (rules.preparation === 'spontaneous') {
-      update[`system.slots.${key}.value`] = Math.max(0, (current.value ?? 0) + slots[rank] - (current.max ?? 0));
-    }
+    // Spontaneous casters spend `value` as they cast: new slots arrive unspent. Prepared casters
+    // don't spend it, so it simply follows the maximum.
+    update[`system.slots.${key}.value`] =
+      rules.preparation === 'spontaneous'
+        ? Math.min(slots[rank], Math.max(0, (current.value ?? 0) + slots[rank] - (current.max ?? 0)))
+        : slots[rank];
   }
   return update;
 };
