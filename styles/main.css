@@ -1266,6 +1266,14 @@
   font-weight: 400;
 }
 
+/* The modifier once raised, on a chosen skill */
+.lvlup-wizard .skill-mod-new {
+  margin-left: 2px;
+  color: var(--lvl-met);
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .lvlup-wizard .skill-sub,
 .lvlup-wizard .skill-state {
   color: var(--lvl-ink-muted);

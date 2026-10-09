@@ -899,6 +899,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
               ? localize('menu.skillIncreases.taken')
               : null,
           mod: showMod ? signedNumber(s.modifier) : null,
+          newMod: showMod && selected && !capped ? this.#raisedModText(s) : null,
           sub: showRank ? (capped ? rankLabel(s.rank) : rankText) : null,
           srText: capped ? rankLabel(s.rank) : rankText,
           dots: rankDots(s.rank, selected ? next : s.rank),
@@ -906,6 +907,11 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         };
       });
     return { choice, index, label, items };
+  }
+
+  #raisedModText(option) {
+    const mod = this.#raisedModifier(option);
+    return mod === null ? null : signedNumber(mod);
   }
 
   #potency() {
@@ -1052,6 +1058,56 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     return typeof max === 'number' ? max : null;
   }
 
+  /** Actor changes for the attribute boosts chosen so far */
+  #boostChanges() {
+    const changes = {};
+    for (const { set, existing } of this.plan.boostSets) {
+      const chosen = this.selection.boosts[set] ?? [];
+      if (chosen.length) {
+        foundry.utils.setProperty(changes, `system.build.attributes.boosts.${set}`, [
+          ...existing,
+          ...chosen
+        ]);
+      }
+    }
+    return changes;
+  }
+
+  /**
+   * A skill's modifier at the new level once raised one rank, with the boosts chosen so far:
+   * read from a preview of the actor, so items, rule elements and variant rules all count.
+   * @returns {number|null} null when the preview fails
+   */
+  #raisedModifier(option) {
+    const plan = this.plan;
+    const rank = Math.min(option.rank + 1, 4);
+    const boosts = this.#boostChanges();
+    const key = `${plan.targetLevel}|${option.slug}|${rank}|${JSON.stringify(boosts)}`;
+    const cache = (this.#cache.raised ??= new Map());
+    if (cache.has(key)) return cache.get(key);
+    let value = null;
+    try {
+      const changes = boosts;
+      if (option.isLore) {
+        changes.items = this.actor._source.items.map((item) => {
+          if (item._id !== option.itemId) return item;
+          const raised = foundry.utils.deepClone(item);
+          foundry.utils.setProperty(raised, 'system.proficient.value', rank);
+          return raised;
+        });
+      } else {
+        foundry.utils.setProperty(changes, `system.skills.${option.slug}.rank`, rank);
+      }
+      const preview = createPreviewActor(this.actor, plan.targetLevel, changes);
+      const mod = preview.skills?.[option.slug]?.mod;
+      value = typeof mod === 'number' ? mod : null;
+    } catch (error) {
+      console.warn(`${MODULE_ID} | Could not preview ${option.slug}`, error);
+    }
+    cache.set(key, value);
+    return value;
+  }
+
   /** Hit points before and after, with the chosen boosts applied to a preview of the new level */
   #hp() {
     const plan = this.plan;
@@ -1062,16 +1118,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
           ? this.#hpOf(createPreviewActor(this.actor, plan.previousLevel))
           : this.#hpOf(this.actor);
       }
-      const changes = {};
-      for (const { set, existing } of plan.boostSets) {
-        const chosen = this.selection.boosts[set] ?? [];
-        if (chosen.length) {
-          foundry.utils.setProperty(changes, `system.build.attributes.boosts.${set}`, [
-            ...existing,
-            ...chosen
-          ]);
-        }
-      }
+      const changes = this.#boostChanges();
       const key = JSON.stringify(changes);
       if (cache.hp?.key !== key) {
         const preview = key === '{}' ? plan.preview : createPreviewActor(this.actor, plan.targetLevel, changes);

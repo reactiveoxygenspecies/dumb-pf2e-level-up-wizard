@@ -4,7 +4,7 @@
       data-action="pickSkill" data-choice="{{../choice}}" data-index="{{../index}}" data-value="{{slug}}"
       aria-pressed="{{#if selected}}true{{else}}false{{/if}}"{{#if disabled}} disabled{{/if}}>
       <span class="skill-text">
-        <span class="skill-name">{{label}}{{#if mod}} <span class="skill-mod">{{mod}}</span>{{/if}}</span>
+        <span class="skill-name">{{label}}{{#if mod}} <span class="skill-mod">{{mod}}</span>{{/if}}{{#if newMod}} <span class="skill-mod-new"><span aria-hidden="true">→ </span>{{newMod}}</span>{{/if}}</span>
         {{#if sub}}<span class="skill-sub">{{sub}}</span>{{/if}}
         {{#if stateLabel}}<span class="skill-state">{{stateLabel}}</span>{{/if}}
         {{#if srText}}<span class="sr-only">{{srText}}</span>{{/if}}
