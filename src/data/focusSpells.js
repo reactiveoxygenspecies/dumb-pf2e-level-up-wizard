@@ -183,9 +183,20 @@ const dialogContent = (groups) => {
     const pickHint = group.options.length
       ? `<p class="hint">${localize('focus.pickHint', { count: group.count })}</p>`
       : '';
-    return `<fieldset class="lvl-focus-group"><legend>${escapeHTML(group.source)}</legend>${fixed}${pickHint}${options}${traditionSelect(group)}</fieldset>`;
+    // Grants matched from the feat's wording (not checked by hand) carry a tag and the sentence itself
+    const unchecked = group.grant.confidence === 'heuristic';
+    const tag = unchecked
+      ? ` <span class="lvl-focus-check" data-tooltip="${escapeHTML(localize('focus.checkTooltip'))}">${localize('focus.check')}</span>`
+      : '';
+    const quote =
+      unchecked && group.grant.note
+        ? `<p class="lvl-focus-quote">${localize('focus.checkHint')} <q>${escapeHTML(group.grant.note)}</q></p>`
+        : '';
+    return `<fieldset class="lvl-focus-group${unchecked ? ' unchecked' : ''}"><legend>${escapeHTML(group.source)}${tag}</legend>${quote}${fixed}${pickHint}${options}${traditionSelect(group)}</fieldset>`;
   });
-  return `<p>${localize('focus.intro')}</p>${blocks.join('')}`;
+  const anyUnchecked = groups.some((g) => g.grant.confidence === 'heuristic');
+  const intro = anyUnchecked ? `${localize('focus.intro')} ${localize('focus.introCheck')}` : localize('focus.intro');
+  return `<p>${intro}</p>${blocks.join('')}`;
 };
 
 /**

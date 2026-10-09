@@ -556,7 +556,11 @@
       "add": "Add focus spells",
       "skip": "Skip",
       "entryName": "{name} Focus Spells",
-      "failed": "The focus spells could not be added; add them on the sheet."
+      "failed": "The focus spells could not be added; add them on the sheet.",
+      "check": "Check",
+      "checkTooltip": "Found from the feat's wording, not checked by hand. Make sure the spell applies.",
+      "checkHint": "The feat says:",
+      "introCheck": "Spells tagged \"Check\" were found from the feat's wording rather than checked by hand: read the quote and untick them if they don't apply."
     }
   }
 }

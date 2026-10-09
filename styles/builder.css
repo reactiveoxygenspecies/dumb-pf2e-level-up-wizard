@@ -1281,3 +1281,32 @@
   gap: 8px;
   margin-top: 4px;
 }
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-group.unchecked {
+  border-color: var(--lvl-unknown);
+  border-style: dashed;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-check {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--lvl-unknown-bg);
+  color: var(--lvl-unknown);
+  font-family: var(--lvl-font-body);
+  font-size: 0.8em;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-quote {
+  margin: 0 0 4px;
+  color: var(--lvl-ink-muted);
+  font-size: 0.9em;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-quote q {
+  font-style: italic;
+  color: var(--lvl-ink-soft);
+}
