@@ -14,9 +14,11 @@ import { getSpellIndex } from '../data/spellIndex.js';
 import {
   TRADITIONS,
   classRules,
+  currentSignatures,
   detectTradition,
   findClassEntry,
   loadSpellcastingData,
+  signatureAt,
   slotChanges,
   spellPicks
 } from '../data/spellcasting.js';
@@ -111,7 +113,8 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       potency: {},
       spells: {},
       spellTradition: null,
-      spellSetup: false
+      spellSetup: false,
+      signature: null
     };
     this.spellSearch = {};
     this.showMissed = false;
@@ -306,6 +309,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       picks: spellPicks(rules, entry, entry ? previousLevel : 0, targetLevel),
       slotChanges: slotChanges(rules, entry, targetLevel),
       known,
+      signature: signatureAt(rules, targetLevel),
       className: cls.name,
       attribute: cls.system?.keyAbility?.selected ?? null
     };
@@ -358,9 +362,62 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
           : [],
       chosen,
       total,
-      complete: !active || (!!tradition && chosen === total),
+      signature: active ? this.#signatureView() : null,
+      complete: !active || (!!tradition && chosen === total && this.#signatureComplete()),
       noPicks: sp.picks.length === 0
     };
+  }
+
+  /** Repertoire spells by rank (held and newly picked), keyed `item:<id>` / `new:<uuid>` */
+  #repertoireByRank() {
+    const sp = this.plan.spells;
+    const byRank = {};
+    const add = (rank, key, name) => (byRank[rank] ??= []).push({ key, name });
+    for (const spell of sp.entry?.spells ?? []) {
+      if (!spell.isCantrip) add(spell.baseRank, `item:${spell.id}`, spell.name);
+    }
+    const index = new Map((this.plan.spellIndex ?? []).map((s) => [s.uuid, s]));
+    for (const uuid of Object.values(this.selection.spells).flat()) {
+      const s = index.get(uuid);
+      if (s && !s.cantrip) add(s.rank, `new:${uuid}`, s.name);
+    }
+    for (const list of Object.values(byRank)) list.sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
+    return byRank;
+  }
+
+  /** Signature choices, rank → key; starts from the entry's current signature spells */
+  #signatureChoice() {
+    const sig = this.plan.spells?.signature;
+    if (!sig || sig.mode !== 'onePerRank') return {};
+    this.selection.signature ??= currentSignatures(this.plan.spells.entry);
+    const byRank = this.#repertoireByRank();
+    // Drop choices whose spell is no longer available (an unpicked new spell)
+    for (const [rank, key] of Object.entries(this.selection.signature)) {
+      if (!byRank[rank]?.some((s) => s.key === key)) delete this.selection.signature[rank];
+    }
+    return this.selection.signature;
+  }
+
+  #signatureView() {
+    const sig = this.plan.spells?.signature;
+    if (!sig) return null;
+    if (sig.mode === 'all') return { all: true };
+    const byRank = this.#repertoireByRank();
+    const choice = this.#signatureChoice();
+    const rows = sig.ranks
+      .filter((rank) => byRank[rank]?.length)
+      .map((rank) => ({
+        rank,
+        label: localize('spells.rank', { rank }),
+        options: byRank[rank].map((s) => ({ ...s, selected: choice[rank] === s.key })),
+        missing: !choice[rank]
+      }));
+    return rows.length ? { rows } : null;
+  }
+
+  #signatureComplete() {
+    const view = this.#signatureView();
+    return !view?.rows || view.rows.every((r) => !r.missing);
   }
 
   /**
@@ -577,7 +634,8 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       (boosts?.sets ?? []).reduce((n, s) => n + (s.remaining - s.chosen), 0) +
       sel.intSkills.filter((s) => !s).length +
       (potency?.selects.filter((s) => !s.value).length ?? 0) +
-      (spells?.active ? spells.total - spells.chosen + (spells.needTradition ? 1 : 0) : 0);
+      (spells?.active ? spells.total - spells.chosen + (spells.needTradition ? 1 : 0) : 0) +
+      (spells?.signature?.rows?.filter((r) => r.missing).length ?? 0);
 
     // Steps
     const sections = this.#sections({ featSlots, missedSlots, boosts, intSkills, languages, potency, spells });
@@ -749,7 +807,7 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
         total: required
       });
     }
-    if (spells && (spells.setup || spells.total || spells.slotChanges.length)) {
+    if (spells && (spells.setup || spells.total || spells.slotChanges.length || spells.signature)) {
       sections.push({
         key: 'spells',
         label: localize('menu.steps.spells'),
@@ -1226,6 +1284,16 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
           .flat()
           .map((uuid) => ({ plus: true, label: names.get(uuid) ?? uuid }))
       ]);
+      const signature = this.#signatureView();
+      if (signature?.all) row('signature', [{ label: localize('menu.spells.signatureAll') }]);
+      else if (signature?.rows) {
+        row(
+          'signature',
+          signature.rows.map((r) => ({
+            label: `${r.label}: ${r.options.find((o) => o.selected)?.name ?? '—'}`
+          }))
+        );
+      }
     }
 
     if (plan.xpEnforcement && !plan.levelAlreadyApplied) {
@@ -1314,6 +1382,15 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
       this.selection.spellTradition = event.currentTarget.value || null;
       this.selection.spells = {};
       this.render();
+    });
+    htmlElement.querySelectorAll('[data-signature-rank]').forEach((select) => {
+      select.addEventListener('change', (event) => {
+        const { signatureRank } = event.currentTarget.dataset;
+        this.#signatureChoice();
+        if (event.currentTarget.value) this.selection.signature[signatureRank] = event.currentTarget.value;
+        else delete this.selection.signature[signatureRank];
+        this.render();
+      });
     });
   }
 
@@ -1539,7 +1616,8 @@ export class LevelUpWizard extends HandlebarsApplicationMixin(ApplicationV2) {
             tradition: this.#spellTradition(),
             className: sp.className,
             attribute: sp.attribute,
-            selection: this.selection.spells
+            selection: this.selection.spells,
+            signature: sp.signature ? { at: sp.signature, choice: this.#signatureChoice() } : null
           }
         : null,
       feats: Object.fromEntries(

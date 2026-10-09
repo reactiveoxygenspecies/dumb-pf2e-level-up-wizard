@@ -99,3 +99,19 @@ test('candidates follow tradition, rank, known spells and rarity', () => {
   assert.deepEqual(ids({ rank: null, maxRank: 2 }, { tradition: 'arcane', known: new Set(['fear']) }), ['c', 'd']);
   assert.deepEqual(ids({ rank: null, minRank: 2, maxRank: 3 }, { tradition: 'arcane' }), ['c']);
 });
+
+test('signature spells start at level 3, one per rank up to 9', async () => {
+  const { signatureAt, isSignature } = await import('../src/data/spellcasting.js');
+  assert.equal(signatureAt(classRules('sorcerer'), 2), null);
+  assert.deepEqual(signatureAt(classRules('sorcerer'), 3), { mode: 'onePerRank', ranks: [1, 2] });
+  assert.deepEqual(signatureAt(classRules('bard'), 20).ranks, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  assert.equal(signatureAt(classRules('wizard'), 5), null, 'prepared casters have none');
+  const summoner = signatureAt(classRules('summoner'), 5);
+  assert.equal(summoner.mode, 'all');
+  assert.deepEqual(summoner.ranks, [2, 3], 'only the ranks the summoner still has');
+  const choice = { 1: 'item:a', 2: 'new:b' };
+  assert.equal(isSignature(signatureAt(classRules('sorcerer'), 3), choice, 'new:b', false), true);
+  assert.equal(isSignature(signatureAt(classRules('sorcerer'), 3), choice, 'item:c', false), false);
+  assert.equal(isSignature(summoner, {}, 'item:c', false), true);
+  assert.equal(isSignature(summoner, {}, 'item:c', true), false, 'cantrips never');
+});

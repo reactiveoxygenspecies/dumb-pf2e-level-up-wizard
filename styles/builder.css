@@ -1221,3 +1221,26 @@
   justify-content: space-between;
   gap: 12px;
 }
+
+.next-pf2e-level-up-wizard.lvlup-wizard .lvl-signature {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.next-pf2e-level-up-wizard.lvlup-wizard .lvl-signature h3 {
+  margin: 0;
+  font-family: var(--lvl-font-display);
+  font-size: 1.05rem;
+  border: none;
+}
+
+.next-pf2e-level-up-wizard.lvlup-wizard .lvl-signature .form-row > span {
+  min-width: 70px;
+}
+
+.next-pf2e-level-up-wizard.lvlup-wizard .lvl-signature .form-row.missing select {
+  outline: 2px dashed var(--lvl-crimson);
+  outline-offset: 1px;
+}

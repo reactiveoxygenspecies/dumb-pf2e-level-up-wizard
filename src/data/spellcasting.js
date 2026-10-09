@@ -173,6 +173,45 @@ export const slotChanges = (rules, entry, level) => {
 };
 
 /* -------------------------------------------- */
+/*  Signature spells                            */
+/* -------------------------------------------- */
+
+/**
+ * Signature spells at a level: `{ mode, ranks }`, or null when the class has none (yet).
+ * Mode "onePerRank": one chosen spell per rank (bard, sorcerer, oracle, psychic).
+ * Mode "all": every repertoire spell is a signature spell (summoner).
+ * 10th-rank spells can't be signature spells.
+ */
+export const signatureAt = (rules, level) => {
+  const sig = rules?.signatureSpells;
+  if (!sig || level < (sig.fromLevel ?? 1)) return null;
+  return { mode: sig.mode ?? 'onePerRank', ranks: ranksAt(rules, level).filter((r) => r <= 9) };
+};
+
+/** The entry's current signature spells, as rank → `item:<id>` */
+export const currentSignatures = (entry) => {
+  const out = {};
+  for (const spell of entry?.spells ?? []) {
+    if (spell.isCantrip || !spell.system?.location?.signature) continue;
+    out[spell.baseRank] ??= `item:${spell.id}`;
+  }
+  return out;
+};
+
+/**
+ * Whether a spell should be a signature spell after this change.
+ * @param {{ mode: string }} sig from `signatureAt`
+ * @param {Record<number, string>} choice rank → `item:<id>` or `new:<uuid>`
+ * @param {string} key the spell's key in the same form
+ * @param {boolean} cantrip
+ */
+export const isSignature = (sig, choice, key, cantrip) => {
+  if (!sig || cantrip) return false;
+  if (sig.mode === 'all') return true;
+  return Object.values(choice ?? {}).includes(key);
+};
+
+/* -------------------------------------------- */
 /*  Sources and updates                         */
 /* -------------------------------------------- */
 

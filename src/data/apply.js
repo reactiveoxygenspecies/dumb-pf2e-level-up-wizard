@@ -2,7 +2,7 @@ import { MODULE_ID } from '../constants.js';
 import { attributeLabel, localize, rankLabel } from '../helpers/utility.js';
 import { buildPotencyModifier, SPELL_HINT_PATTERN, xpInfo } from './plan.js';
 import { postLevelUpMessages } from '../helpers/chat.js';
-import { entrySlotSnapshot, entrySlotUpdate, entrySource, spellSource } from './spellcasting.js';
+import { entrySlotSnapshot, entrySlotUpdate, entrySource, isSignature, spellSource } from './spellcasting.js';
 
 const HISTORY_LIMIT = 10;
 const HISTORY_PATH = `flags.${MODULE_ID}.history`;
@@ -154,10 +154,25 @@ const spellChanges = async (actor, plan, spellPlan) => {
   const { rules, slug, entry } = spellPlan;
   const uuids = Object.values(spellPlan.selection ?? {}).flat();
   const sources = await Promise.all(uuids.map((uuid) => spellSource(uuid, entry?.id ?? null)));
+  const sig = spellPlan.signature ?? null;
+  for (const source of sources) {
+    const cantrip = source.system?.traits?.value?.includes('cantrip') ?? false;
+    source.system.location.signature = isSignature(sig?.at, sig?.choice, `new:${source._stats.compendiumSource}`, cantrip);
+  }
+  // Existing spells whose signature mark changes
+  const signatureUpdates = sig?.at
+    ? [...(entry?.spells ?? [])]
+        .map((spell) => ({
+          spell,
+          signature: isSignature(sig.at, sig.choice, `item:${spell.id}`, spell.isCantrip)
+        }))
+        .filter(({ spell, signature }) => !!spell.system?.location?.signature !== signature)
+        .map(({ spell, signature }) => ({ _id: spell.id, 'system.location.signature': signature }))
+    : [];
   if (entry) {
     const entryUpdate = entrySlotUpdate(rules, entry, slug, plan.targetLevel);
     if (!entry.system?.tradition?.value) entryUpdate['system.tradition.value'] = spellPlan.tradition;
-    return { entryUpdate, newEntry: null, sources };
+    return { entryUpdate, newEntry: null, sources, signatureUpdates };
   }
   const newEntry = entrySource(rules, {
     slug,
@@ -166,7 +181,7 @@ const spellChanges = async (actor, plan, spellPlan) => {
     attribute: spellPlan.attribute,
     level: plan.targetLevel
   });
-  return { entryUpdate: null, newEntry, sources };
+  return { entryUpdate: null, newEntry, sources, signatureUpdates };
 };
 
 /** Create or update the class entry and add the picked spells; returns the created items */
@@ -177,12 +192,12 @@ const applySpells = async (actor, spells, created) => {
     created.push(entry);
     entryId = entry.id;
   } else if (spells.entryUpdate) {
-    await actor.updateEmbeddedDocuments('Item', [spells.entryUpdate]);
+    await actor.updateEmbeddedDocuments('Item', [spells.entryUpdate, ...spells.signatureUpdates]);
   }
   if (!spells.sources.length) return;
   const sources = spells.sources.map((source) => {
     const copy = foundry.utils.deepClone(source);
-    copy.system.location = { value: entryId };
+    copy.system.location = { value: entryId, signature: !!source.system.location.signature };
     return copy;
   });
   created.push(...(await actor.createEmbeddedDocuments('Item', sources)));
@@ -217,7 +232,10 @@ const snapshot = (actor, plan, selection, changes) => {
           id: spellEntry.id,
           slots: entrySlotSnapshot(spellEntry),
           flag: spellEntry.flags?.[MODULE_ID]?.classEntry ?? null,
-          tradition: spellEntry.system?.tradition?.value ?? ''
+          tradition: spellEntry.system?.tradition?.value ?? '',
+          signatures: Object.fromEntries(
+            [...(spellEntry.spells ?? [])].map((s) => [s.id, !!s.system?.location?.signature])
+          )
         }
       : null,
     level: plan.previousLevel,
@@ -263,7 +281,13 @@ const revertTo = async (actor, entry, { keepHistory = false } = {}) => {
       entryUpdate[`system.slots.slot${rank}.value`] = value;
     }
     entryUpdate[`flags.${MODULE_ID}.classEntry`] = spellEntry.flag;
-    await actor.updateEmbeddedDocuments('Item', [entryUpdate]);
+    const signatureUpdates = Object.entries(spellEntry.signatures ?? {})
+      .filter(([id, signature]) => {
+        const spell = actor.items.get(id);
+        return spell && !!spell.system?.location?.signature !== signature;
+      })
+      .map(([id, signature]) => ({ _id: id, 'system.location.signature': signature }));
+    await actor.updateEmbeddedDocuments('Item', [entryUpdate, ...signatureUpdates]);
   }
 
   const loreUpdates = Object.entries(before.lores ?? {})

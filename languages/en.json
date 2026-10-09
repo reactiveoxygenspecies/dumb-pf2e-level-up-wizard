@@ -172,7 +172,11 @@
         "tradition": "Spell tradition",
         "slots": "Spell slot changes",
         "noPicks": "No spells to choose at this level: you prepare from the full list each day.",
-        "newEntry": "{className} spellcasting entry"
+        "newEntry": "{className} spellcasting entry",
+        "signatureHeader": "Signature spells",
+        "signatureHint": "Choose one spell of each rank. You can cast a signature spell heightened to any rank you have slots for.",
+        "signatureChoose": "Choose a signature spell",
+        "signatureAll": "Every spell in your repertoire is a signature spell; new ones are marked for you."
       }
     },
     "selector": {
@@ -252,7 +256,8 @@
       "safe": "Safe to apply",
       "safeHint": "Everything is applied in one step. Changed your mind later? Undo it from the level-up history.",
       "chat": "Chat will show",
-      "spells": "Spells"
+      "spells": "Spells",
+      "signature": "Signature spells"
     },
     "settings": {
       "showButton": {

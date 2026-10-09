@@ -204,6 +204,25 @@
               {{/if}}
               {{#if spells.noPicks}}<p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.noPicks'}}</p>{{/if}}
               {{#with spells}}{{#if groups.length}}{{> lvlupSpellPicker spellGroups=groups}}{{/if}}{{/with}}
+              {{#if spells.signature}}
+                <div class="lvl-signature">
+                  <h3>{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureHeader'}}</h3>
+                  {{#if spells.signature.all}}
+                    <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureAll'}}</p>
+                  {{else}}
+                    <p class="hint">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureHint'}}</p>
+                    {{#each spells.signature.rows}}
+                      <label class="form-row{{#if missing}} missing{{/if}}">
+                        <span>{{label}}</span>
+                        <select data-signature-rank="{{rank}}" name="signature-{{rank}}">
+                          <option value="">{{localize 'NEXT_LEVEL_UP_WIZARD.menu.spells.signatureChoose'}}</option>
+                          {{#each options}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}
+                        </select>
+                      </label>
+                    {{/each}}
+                  {{/if}}
+                </div>
+              {{/if}}
             {{/if}}
           </section>
         {{/if}}
