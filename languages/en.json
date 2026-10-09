@@ -547,6 +547,16 @@
       "read": "Read the spell",
       "entryName": "{className} Spells",
       "rankRange": "Spells of rank {min} to {max}"
+    },
+    "focus": {
+      "title": "Focus spells",
+      "intro": "Your new feats and class features give these focus spells. Untick any that don't apply, then add them to the sheet.",
+      "pickHint": "Choose {count}:",
+      "tradition": "Tradition",
+      "add": "Add focus spells",
+      "skip": "Skip",
+      "entryName": "{name} Focus Spells",
+      "failed": "The focus spells could not be added; add them on the sheet."
     }
   }
 }

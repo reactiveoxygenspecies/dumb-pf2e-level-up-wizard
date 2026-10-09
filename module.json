@@ -2,7 +2,7 @@
   "id": "dumb-pf2e-level-up-wizard",
   "title": "Dumb PF2e Level-Up Wizard",
   "description": "A level-up assistant for PF2e on Foundry VTT v14. A rebuilt fork of the PF2e Level-Up Wizard by Zumanzo and BenABaron.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "compatibility": {
     "minimum": "14",
     "verified": "14"

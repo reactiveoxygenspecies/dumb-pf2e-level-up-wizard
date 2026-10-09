@@ -2,6 +2,7 @@ import { MODULE_ID } from '../constants.js';
 import { attributeLabel, localize, rankLabel } from '../helpers/utility.js';
 import { buildPotencyModifier, SPELL_HINT_PATTERN, xpInfo } from './plan.js';
 import { postLevelUpMessages } from '../helpers/chat.js';
+import { offerFocusSpells } from './focusSpells.js';
 import { entrySlotSnapshot, entrySlotUpdate, entrySource, isSignature, spellSource } from './spellcasting.js';
 
 const HISTORY_LIMIT = 10;
@@ -370,6 +371,19 @@ export const applyLevelUp = async (actor, plan, selection) => {
     return false;
   }
 
+  // Focus spells from the new feats and features, once PF2e has asked its own questions (domains...)
+  const focus = await offerFocusSpells(
+    actor,
+    actor.items.filter((i) => !itemsBefore.has(i.id))
+  );
+  created.push(...focus.created);
+  const focusSpells = focus.created.filter((i) => i.type === 'spell');
+  if (focusSpells.length) {
+    entry.summary.spells = [
+      ...(entry.summary.spells ?? []),
+      ...focusSpells.map((s) => ({ name: s.name, uuid: s.sourceId }))
+    ];
+  }
   entry.createdItemIds = topLevelIds(created);
 
   // A cancelled choice prompt (e.g. a ChoiceSet) makes the system skip that feat
@@ -397,7 +411,8 @@ export const applyLevelUp = async (actor, plan, selection) => {
   try {
     const spellHints = created
       .filter((item) => SPELL_HINT_PATTERN.test(item.system?.description?.value ?? ''))
-      .map((item) => item.name);
+      .map((item) => item.name)
+      .filter((name) => !focus.handled.includes(name));
     await postLevelUpMessages(actor, plan, selection, entry.summary, spellHints);
   } catch (error) {
     console.error(`${MODULE_ID} | Could not post the level-up messages`, error);

@@ -1244,3 +1244,40 @@
   outline: 2px dashed var(--lvl-crimson);
   outline-offset: 1px;
 }
+
+/* Focus spell dialog */
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 10px;
+  padding: 6px 10px 8px;
+  border: 1px solid var(--lvl-border);
+  border-radius: 6px;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-group legend {
+  padding: 0 4px;
+  font-family: var(--lvl-font-display);
+  font-weight: 600;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-rank {
+  margin-left: auto;
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-tradition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}

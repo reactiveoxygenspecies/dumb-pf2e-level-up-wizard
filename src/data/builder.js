@@ -4,6 +4,7 @@ import { getFeatSlots } from './featSlots.js';
 import { loadDocument } from './abcIndex.js';
 import { getHistory } from './apply.js';
 import { entrySource, spellSource } from './spellcasting.js';
+import { offerFocusSpells } from './focusSpells.js';
 
 export const ATTRIBUTES = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 const ABC_ORDER = ['ancestry', 'heritage', 'background', 'deity', 'class'];
@@ -442,6 +443,13 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     ui.notifications.error(localize('builder.notifications.failed'));
     return false;
   }
+
+  // Focus spells from the class features and feats (domain, bloodline, school, order...)
+  const focus = await offerFocusSpells(
+    actor,
+    actor.items.filter((i) => !itemsBefore.has(i.id))
+  );
+  created.push(...focus.created);
 
   const summary = {
     feats: Object.values(featPicks).map((p) => ({
