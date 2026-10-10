@@ -24,9 +24,6 @@ export const systemSetting = (key, fallback = null) => {
   }
 };
 
-/** Proficiency ranks, 0 = untrained … 4 = legendary */
-export const RANK_KEYS = ['untrained', 'trained', 'expert', 'master', 'legendary'];
-
 /** Class item slugs (and English names) for actors the wizard should not level */
 export const COMPANION_CLASSES = [
   'animal-companion',

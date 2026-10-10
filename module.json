@@ -11,6 +11,14 @@
     {
       "name": "Zumanzo",
       "discord": "Zumanzo#8754"
+    },
+    {
+      "name": "BenABaron",
+      "url": "https://github.com/BenABaron"
+    },
+    {
+      "name": "reactiveoxygenspecies",
+      "url": "https://github.com/reactiveoxygenspecies"
     }
   ],
   "relationships": {
@@ -69,5 +77,9 @@
     }
   ],
   "license": "LICENSE",
-  "readme": "README.md"
+  "readme": "README.md",
+  "url": "https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard",
+  "manifest": "https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard/releases/latest/download/module.json",
+  "download": "https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard/releases/latest/download/module.zip",
+  "bugs": "https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard/issues"
 }

@@ -9,25 +9,17 @@
       "historyHint": "Clique com o botão direito para ver o histórico de avanços de nível"
     },
     "menu": {
-      "windowTitle": "Assistente de Avanço de Nível: {actorName} (Nível {targetLevel})",
+      "windowTitle": "Avançar de Nível · {actorName}",
       "header": {
-        "name": "{actorName} está alcançando o nível {targetLevel}!",
-        "description": "Aqui está o que você ganha. Faça suas escolhas abaixo e depois aplique o avanço de nível.",
         "levelJump": "O nível subiu de {previousLevel} para {targetLevel} em um só passo. As escolhas de todos os níveis intermediários são mostradas juntas."
       },
       "nothingToChoose": "Não há escolhas a fazer neste nível. Revise suas novas características de classe abaixo e aplique o avanço de nível.",
       "notes": {
         "classJournal": "Aprenda mais sobre a sua classe:"
       },
-      "dropdown": {
-        "placeholder": "Faça uma escolha"
-      },
       "feats": {
         "header": "Talentos",
-        "missedHeader": "Espaços de talento vazios de níveis anteriores ({count})",
         "missedHint": "Estes espaços nunca foram preenchidos. São opcionais: preencha agora os que quiser.",
-        "slotLevel": "Nível do espaço",
-        "change": "Trocar talento",
         "clear": "Limpar seleção"
       },
       "skillIncreases": {
@@ -48,9 +40,6 @@
         "label": "Melhore {count} atributos diferentes.",
         "gradualLabel": "Melhorias graduais: melhore {count} atributo(s) do conjunto do nível {set}.",
         "boost": "Melhorar",
-        "partial": "Parcial",
-        "partialHint": "Este atributo já está em +4 ou mais, então esta melhoria conta apenas pela metade. Uma segunda melhoria depois aumentará o modificador.",
-        "alreadyBoosted": "Já melhorado neste conjunto",
         "manual": "Este personagem usa modificadores de atributo inseridos manualmente, então o assistente ignora as melhorias de atributo. Atualize-as na ficha de personagem."
       },
       "intBonus": {
@@ -61,40 +50,27 @@
       "languages": {
         "header": "Idiomas",
         "hint": "Você pode aprender mais idiomas. Escolha agora ou depois, na ficha de personagem.",
-        "label": "Idioma",
         "later": "Escolher depois"
       },
       "features": {
         "class": {
           "header": "Novas Características de Classe",
           "hint": "Elas são adicionadas ao seu personagem automaticamente."
-        },
-        "spellcasting": {
-          "header": "Conjuração",
-          "rank": "Magias de círculo {rank} agora estão disponíveis.",
-          "slots": "Espaços de magia e repertórios não são automatizados. Revise-os na aba de Conjuração para:"
         }
       },
       "footer": {
-        "missing": "Ainda falta escolher:",
         "submit": "Aplicar nível {targetLevel}",
         "applying": "Aplicando…"
       },
       "confirmDialog": {
-        "title": "Confirmar Avanço de Nível",
-        "content": "Aplicar estas mudanças a {actorName} e avançar ao nível {targetLevel}?",
         "skipped": "Estas escolhas ficam vazias e podem ser preenchidas depois, na ficha de personagem:"
       },
       "filters": {
-        "orderBy": "Ordenar por",
         "level": "Nível",
-        "name": "Nome",
         "rarity": "Raridade",
         "skills": "Filtrar por perícias",
         "archetypeFeats": "Mostrar talentos de arquétipo",
         "hideSkillFeats": "Ocultar talentos de perícia",
-        "hideUnmet": "Ocultar talentos com pré-requisitos não cumpridos",
-        "toggleOrder": "Inverter a ordem",
         "reset": "Redefinir filtros",
         "placeholder": {
           "nameSearch": "Pesquisar por nome",
@@ -104,7 +80,6 @@
         }
       },
       "tooltips": {
-        "selectFeat": "Escolher este talento",
         "sendToChat": "Enviar para o chat"
       }
     },
@@ -116,7 +91,6 @@
       "level": "Nível {level}",
       "prerequisites": "Pré-requisitos",
       "pickHint": "Escolha um talento à esquerda para lê-lo aqui. Clique duas vezes em um talento para escolhê-lo de imediato.",
-      "choose": "Escolher",
       "takenElsewhere": "Escolhido em outro espaço",
       "grantedBy": "Disponível por meio de {dedication}."
     },
@@ -261,7 +235,7 @@
         "compendiumNotFound": "Compêndio {key} não encontrado. Verifique a grafia nas configurações do Assistente de Avanço de Nível."
       },
       "openFailed": "Não foi possível abrir o assistente de subida de nível. Veja o console (F12) para detalhes.",
-      "originalActive": "O módulo original “PF2e Level-Up Wizard” também está ativo. Desative um dos dois em Gerenciar Módulos, senão os personagens terão dois botões de subida de nível."
+      "originalActive": "O módulo “{title}” também está ativo. Desative um dos dois em Gerenciar Módulos, senão os personagens terão dois botões de subida de nível."
     }
   }
 }

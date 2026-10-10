@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # Secrets can't be read in `if:`; the Foundry publish step checks this instead
+      PACKAGE_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
 
     steps:
       - name: Checkout Repository
@@ -41,8 +44,10 @@ jobs:
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
 
+      # Needs the PACKAGE_TOKEN secret and the module registered on foundryvtt.com; skipped otherwise
       - name: Publish Module to FoundryVTT Website
         id: publish-to-foundry-website
+        if: env.PACKAGE_TOKEN != ''
         uses: cs96and/FoundryVTT-release-package@v1
         with:
           package-token: ${{ secrets.PACKAGE_TOKEN }}

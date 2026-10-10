@@ -80,10 +80,6 @@ import { LightThemeMixin } from './lightTheme.js';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
-const PARTIALS = ['rail', 'review', 'skill-grid'].map(
-  (name) => `${TEMPLATE_PATH}/partials/wizard-${name}.hbs`
-);
-
 const POTENCY_KEYS = ['newBoost', 'upgradeTo2', 'upgradeTo3'];
 const POTENCY_VALUES = { newBoost: 1, upgradeTo2: 2, upgradeTo3: 3 };
 
@@ -173,7 +169,6 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
   static PARTS = {
     body: {
       template: `${TEMPLATE_PATH}/level-up-wizard.hbs`,
-      templates: PARTIALS,
       scrollable: ['.wizard-main', '.wizard-rail']
     },
     footer: {
@@ -188,10 +183,15 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     });
   }
 
-  /** The history button sits in the title bar (the controls menu is only for rarely used entries) */
-  _getFrameButtons() {
-    if (!getHistory(this.actor).length) return [];
+  /**
+   * The history button sits in the title bar (the controls menu is only for rarely used entries),
+   * after whatever buttons Foundry puts there
+   */
+  _getFrameButtons(options) {
+    const buttons = super._getFrameButtons(options);
+    if (!getHistory(this.actor).length) return buttons;
     return [
+      ...buttons,
       {
         icon: 'fa-solid fa-clock-rotate-left',
         label: 'DUMB_LEVEL_UP_WIZARD.history.title',

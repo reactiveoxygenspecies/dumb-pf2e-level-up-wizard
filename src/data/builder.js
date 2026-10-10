@@ -2,7 +2,7 @@ import { MODULE_ID } from '../constants.js';
 import { attributeLabel, escapeHTML, localize, rankLabel } from '../helpers/utility.js';
 import { getFeatSlots } from './featSlots.js';
 import { loadDocument } from './abcIndex.js';
-import { getHistory } from './apply.js';
+import { getHistory, HISTORY_LIMIT, topLevelIds } from './apply.js';
 import { entrySource, spellSource } from './spellcasting.js';
 import { offerFocusSpells } from './focusSpells.js';
 
@@ -351,13 +351,6 @@ const featSource = async (pick) => {
   return source;
 };
 
-const topLevelIds = (items) => {
-  const ids = new Set(items.map((i) => i.id));
-  return items
-    .filter((i) => !ids.has(i.flags?.[game.system.id]?.grantedBy?.id))
-    .map((i) => i.id);
-};
-
 /**
  * Create the character. The ABC items go in the order the system expects (the deity before the
  * class, so class features can offer its domains), then the level-1 feats. The system asks its own
@@ -392,6 +385,15 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     ];
   }
 
+  const picks = Object.values(featPicks);
+  let featSources;
+  try {
+    featSources = await Promise.all(picks.map(featSource));
+  } catch (error) {
+    console.error(`${MODULE_ID} | Character build failed`, error);
+    ui.notifications.error(localize('builder.notifications.failed'));
+    return false;
+  }
   const created = [];
   const itemsBefore = new Set(actor.items.map((i) => i.id));
   const create = async (list) => {
@@ -405,7 +407,7 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     // Existing items of the same kind are replaced by the system when the new ones are created
     await create([sources.ancestry, sources.heritage, sources.background, sources.deity]);
     await create([sources.class]);
-    await create(await Promise.all(Object.values(featPicks).map(featSource)));
+    await create(featSources);
     // The class spellcasting entry, its slots and the starting spells
     if (spellPlan?.rules && spellPlan.tradition) {
       const [entry] = await actor.createEmbeddedDocuments('Item', [
@@ -451,8 +453,16 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
   );
   created.push(...focus.created);
 
+  // A cancelled choice prompt (e.g. a ChoiceSet) makes the system skip that feat
+  const createdSources = new Set(created.map((i) => i.sourceId));
+  const added = picks.filter((_, i) => createdSources.has(featSources[i]._stats.compendiumSource));
+  const skipped = picks.filter((p) => !added.includes(p)).map((p) => p.name);
+  if (skipped.length) {
+    ui.notifications.warn(localize('notifications.featsSkipped', { feats: skipped.join(', ') }));
+  }
+
   const summary = {
-    feats: Object.values(featPicks).map((p) => ({
+    feats: added.map((p) => ({
       name: p.name,
       uuid: p.uuid,
       slot: p.slot.groupLabel
@@ -467,7 +477,9 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     ),
     potency: [],
     build: ABC_ORDER.map((t) => created.find((i) => i.type === t)?.name).filter(Boolean),
-    spells: created.filter((i) => i.type === 'spell').map((i) => i.name)
+    spells: created
+      .filter((i) => i.type === 'spell')
+      .map((i) => ({ name: i.name, uuid: i.sourceId }))
   };
 
   const entry = {
@@ -485,7 +497,7 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     summary
   };
   try {
-    const history = [...getHistory(actor), entry].slice(-10);
+    const history = [...getHistory(actor), entry].slice(-HISTORY_LIMIT);
     await actor.update(
       { [`flags.${MODULE_ID}.history`]: history },
       { [MODULE_ID]: { history: true } }

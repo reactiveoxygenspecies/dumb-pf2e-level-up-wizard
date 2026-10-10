@@ -1,20 +1,23 @@
 {
   "name": "dumb-pf2e-level-up-wizard",
+  "private": true,
   "scripts": {
     "lint": "eslint .",
     "test": "node --test && node tests/i18n-keys.mjs",
     "build:archetype-feats": "node scripts/build-archetype-feats.mjs",
+    "build:spellcasting": "node scripts/build-spellcasting.mjs",
+    "build:focus-spells": "node scripts/build-focus-spells.mjs",
     "build": "node scripts/build-dist.mjs"
   },
   "type": "module",
   "author": "Zumanzo",
-  "homepage": "https://github.com/BenABaron/pf2e-level-up-wizard#readme",
+  "homepage": "https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BenABaron/pf2e-level-up-wizard.git"
+    "url": "https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard.git"
   },
   "bugs": {
-    "url": "https://github.com/BenABaron/pf2e-level-up-wizard/issues"
+    "url": "https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard/issues"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

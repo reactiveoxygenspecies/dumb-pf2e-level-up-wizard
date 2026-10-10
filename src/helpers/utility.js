@@ -5,8 +5,6 @@ export const localize = (key, data) =>
     ? game.i18n.format(`${I18N}.${key}`, data)
     : game.i18n.localize(`${I18N}.${key}`);
 
-export const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-
 /** Same output as PF2e's sluggify for the plain names found in compendium data */
 export const sluggify = (str) => {
   const system = game.pf2e?.system?.sluggify;

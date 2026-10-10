@@ -5,11 +5,12 @@ import { postLevelUpMessages } from '../helpers/chat.js';
 import { offerFocusSpells } from './focusSpells.js';
 import { entrySlotSnapshot, entrySlotUpdate, entrySource, isSignature, spellSource } from './spellcasting.js';
 
-const HISTORY_LIMIT = 10;
+/** Level-ups and builds kept per actor; only the latest can be undone */
+export const HISTORY_LIMIT = 10;
 const HISTORY_PATH = `flags.${MODULE_ID}.history`;
 
 /** Top-level items only: deleting a feat also deletes what it granted, so granted items are not tracked */
-const topLevelIds = (items) => {
+export const topLevelIds = (items) => {
   const ids = new Set(items.map((i) => i.id));
   return items
     .filter((i) => !ids.has(i.flags?.[game.system.id]?.grantedBy?.id))

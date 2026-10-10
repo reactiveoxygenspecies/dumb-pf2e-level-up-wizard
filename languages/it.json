@@ -9,25 +9,17 @@
       "historyHint": "Clic destro per la cronologia degli avanzamenti di livello"
     },
     "menu": {
-      "windowTitle": "Procedura guidata di avanzamento: {actorName} (livello {targetLevel})",
+      "windowTitle": "Sali di livello · {actorName}",
       "header": {
-        "name": "{actorName} sta raggiungendo il livello {targetLevel}!",
-        "description": "Ecco cosa ottieni. Fai le tue scelte qui sotto, poi applica l'avanzamento di livello.",
         "levelJump": "Il livello è passato da {previousLevel} a {targetLevel} in un solo passaggio. Le scelte di tutti i livelli intermedi sono mostrate insieme."
       },
       "nothingToChoose": "A questo livello non ci sono scelte da fare. Controlla le tue nuove capacità di classe qui sotto e applica l'avanzamento di livello.",
       "notes": {
         "classJournal": "Scopri di più sulla tua classe:"
       },
-      "dropdown": {
-        "placeholder": "Fai una scelta"
-      },
       "feats": {
         "header": "Talenti",
-        "missedHeader": "Slot talento vuoti dei livelli precedenti ({count})",
         "missedHint": "Questi slot non sono mai stati riempiti. Sono facoltativi: riempi ora quelli che vuoi.",
-        "slotLevel": "Livello dello slot",
-        "change": "Cambia talento",
         "clear": "Cancella selezione"
       },
       "skillIncreases": {
@@ -48,9 +40,6 @@
         "label": "Potenzia {count} attributi diversi.",
         "gradualLabel": "Potenziamenti graduali: potenzia {count} attributo/i del set del livello {set}.",
         "boost": "Potenzia",
-        "partial": "Parziale",
-        "partialHint": "Questo attributo è già +4 o più, quindi questo potenziamento vale solo a metà. Un secondo potenziamento più avanti aumenterà il modificatore.",
-        "alreadyBoosted": "Già potenziato in questo set",
         "manual": "Questo personaggio usa modificatori di attributo inseriti a mano, quindi la procedura salta i potenziamenti di attributo. Aggiornali sulla scheda del personaggio."
       },
       "intBonus": {
@@ -61,40 +50,27 @@
       "languages": {
         "header": "Lingue",
         "hint": "Puoi imparare altre lingue. Sceglile ora o più tardi sulla scheda del personaggio.",
-        "label": "Lingua",
         "later": "Scegli più tardi"
       },
       "features": {
         "class": {
           "header": "Nuove capacità di classe",
           "hint": "Vengono aggiunte automaticamente al tuo personaggio."
-        },
-        "spellcasting": {
-          "header": "Incantesimi",
-          "rank": "Ora sono disponibili gli incantesimi di grado {rank}.",
-          "slots": "Gli slot incantesimo e i repertori non sono automatizzati. Controllali nella scheda Incantesimi per:"
         }
       },
       "footer": {
-        "missing": "Ancora da scegliere:",
         "submit": "Applica livello {targetLevel}",
         "applying": "Applicazione in corso…"
       },
       "confirmDialog": {
-        "title": "Conferma avanzamento di livello",
-        "content": "Applicare queste modifiche a {actorName} e salire al livello {targetLevel}?",
         "skipped": "Queste scelte restano vuote e potranno essere fatte più tardi sulla scheda del personaggio:"
       },
       "filters": {
-        "orderBy": "Ordina per",
         "level": "Livello",
-        "name": "Nome",
         "rarity": "Rarità",
         "skills": "Filtra per abilità",
         "archetypeFeats": "Mostra talenti di archetipo",
         "hideSkillFeats": "Nascondi talenti di abilità",
-        "hideUnmet": "Nascondi i talenti con prerequisiti non soddisfatti",
-        "toggleOrder": "Inverti l'ordinamento",
         "reset": "Reimposta filtri",
         "placeholder": {
           "nameSearch": "Cerca per nome",
@@ -104,7 +80,6 @@
         }
       },
       "tooltips": {
-        "selectFeat": "Scegli questo talento",
         "sendToChat": "Invia in chat"
       }
     },
@@ -116,7 +91,6 @@
       "level": "Livello {level}",
       "prerequisites": "Prerequisiti",
       "pickHint": "Scegli un talento a sinistra per leggerlo qui. Fai doppio clic su un talento per sceglierlo subito.",
-      "choose": "Scegli",
       "takenElsewhere": "Scelto in un altro slot",
       "grantedBy": "Disponibile tramite {dedication}."
     },
@@ -261,7 +235,7 @@
         "compendiumNotFound": "Compendio {key} non trovato. Controlla l'ortografia nelle impostazioni della Procedura guidata di avanzamento."
       },
       "openFailed": "Impossibile aprire la procedura di avanzamento. Vedi la console (F12) per i dettagli.",
-      "originalActive": "Anche il modulo originale «PF2e Level-Up Wizard» è attivo. Disattivane uno dei due in Gestisci moduli, altrimenti i personaggi avranno due pulsanti di avanzamento."
+      "originalActive": "Anche il modulo «{title}» è attivo. Disattivane uno dei due in Gestisci moduli, altrimenti i personaggi avranno due pulsanti di avanzamento."
     }
   }
 }
