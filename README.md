@@ -2,7 +2,81 @@
 
 A level-up assistant and level-1 character builder for PF2e on Foundry VTT, rebuilt for **Foundry VTT v14 (14.364)** and **PF2e 8.x**.
 
+Click the wizard hat on a character sheet, make the choices the new level asks for, check the summary, and the wizard applies everything to the sheet in one step: level, Hit Points, feats, skills, attribute boosts, languages and spells. Characters without a class get a step-by-step builder instead.
+
 It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2e-level-up-wizard) (originally by Zumanzo), released under its own module ID (`dumb-pf2e-level-up-wizard`) so it can be installed next to the original. If you enjoy the original module consider [buying its author a coffee](https://buymeacoffee.com/zumanzo)!
+
+![The level-up wizard for a level 5 alchemist, with a class feat and a skill feat chosen](screenshots/level-up.png)
+
+## Installation
+
+In Foundry, go to **Add-on Modules → Install Module** and paste this manifest URL:
+
+```
+https://github.com/reactiveoxygenspecies/dumb-pf2e-level-up-wizard/releases/latest/download/module.json
+```
+
+The manifest URL works once a GitHub release has been published. To install from source instead, see [Development](#development).
+
+Then enable **Dumb PF2e Level-Up Wizard** in the world's Manage Modules. If you used the original PF2e Level-Up Wizard, read [Coming from the original module](#coming-from-the-original-module) first.
+
+## A quick tour
+
+### The wizard hat
+
+A wizard hat appears next to the character's level on the sheet (or in the window header, depending on the client setting). **Left-click** opens the wizard for the next level, or the character builder if the character has no class yet. **Right-click** opens the level-up history. The hat is dimmed when the character can't level up yet (not enough XP, or level 20).
+
+![The wizard hat next to the level on a PF2e character sheet](screenshots/sheet-button.png)
+
+### One page for small level-ups, steps for big ones
+
+A level-up with only a few feats fits on one page (shown at the top of this README). The side panel shows the level change, the Hit Points gained and a checklist of what's left to choose. A level with boosts, skill increases or spells switches to steps automatically. Each skill shows its modifier and the rank it would reach, and the chosen one shows its new modifier.
+
+![Step mode: the skill increase step, with Arcana going from trained to expert](screenshots/steps-skills.png)
+
+### A feat picker that knows your character
+
+The wizard previews the character at the new level and offers exactly the feat slots the character sheet would show, Free Archetype and other variant slots included. Every feat is marked as fitting, not fitting with the reason ("Needs: expert in Athletics"), or "check yourself" when the prerequisite can't be checked automatically. Choices made in the same level-up count, so a skill increase picked a step earlier can qualify a feat. Uncommon, rare and unique feats get an "Ask GM" pill. You can filter by level, skill, rarity and archetype, read the full description next to the list, and post a feat to chat.
+
+![The feat picker: filters on the left, feats grouped by level with prerequisite pills, and the selected feat's description on the right](screenshots/feat-picker.png)
+
+### Spells are kept up to date
+
+For bard, cleric, druid, magus, oracle, psychic, sorcerer, summoner, witch and wizard, the wizard updates the class spellcasting entry's slots at every level and asks for the new repertoire, spellbook or familiar spells. From level 3, spontaneous casters also pick their signature spells here.
+
+![The spells step for a level 5 wizard: rank 3 slots added and Fireball chosen for the spellbook](screenshots/steps-spells.png)
+
+### Review before anything changes
+
+The last step lists every change, what still needs doing by hand, and a preview of the chat message. Nothing touches the character until you press Apply.
+
+![The review step: level, Hit Points, attributes, class features, feats, skills and spells, with a to-do box and a chat preview](screenshots/review.png)
+
+### Chat summary, history and undo
+
+After applying, a chat card lists what was chosen, and a whisper lists anything left to do by hand. Each level-up is recorded, and the most recent one can be undone from the history (right-click the hat).
+
+<p>
+  <img src="screenshots/chat.png" align="top" alt="The chat card for the level-up and the reminder whisper" width="300">
+  &nbsp;
+  <img src="screenshots/history.png" align="top" alt="The level-up history window, with an undo button on the most recent level-up" width="400">
+</p>
+
+### Character builder
+
+A character without a class gets a builder instead of the level-up wizard: ancestry, heritage, background, class, attribute boosts, trained skills, level-1 feats, spells for casters, languages and deity, then a review. The system previews the character after every choice and nothing is saved until "Create character". The build can be undone from the history like a level-up.
+
+![The character builder's ancestry step, with Elf selected and the character summary on the right](screenshots/builder-ancestry.png)
+
+Attribute boosts are laid out one row per source, so it's easy to see where each boost comes from and which ones are still free.
+
+![The builder's attribute boost table: ancestry, background, class key attribute and the four level-1 boosts](screenshots/builder-boosts.png)
+
+### Focus spells
+
+After a build or level-up, the focus spells that the new feats and class features grant are offered in one dialog: domain spells, bloodline, school, order and mystery spells, compositions and more. The chosen spells go into a focus spellcasting entry of the right tradition, and PF2e raises the focus pool.
+
+<img src="screenshots/focus-spells.png" alt="The focus spells dialog offering Dazzling Flash for a cleric with the Sun domain" width="460">
 
 ## Coming from the original module
 
@@ -40,14 +114,7 @@ It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2
 
 ## Usage
 
-By default, a wizard hat appears next to the character's level on the character sheet (or in the window header, depending on the client setting).
-
-- **Left-click** opens the wizard for the next level, or the **character builder** if the character has no class yet.
-- **Right-click** opens the level-up history, with undo for the most recent level-up or build.
-
-The hat is dimmed when the character can't level up yet (not enough XP, or level 20).
-
-If the GM disables the button, the wizard opens automatically after a character's level is raised manually. Characters without a class still get the hat, for the builder.
+See [the wizard hat](#the-wizard-hat) above for the button. If the GM disables the button, the wizard opens automatically after a character's level is raised manually. Characters without a class still get the hat, for the builder.
 
 ### Macro API
 
@@ -90,6 +157,8 @@ npm run build   # copies the files Foundry needs into dist/dumb-pf2e-level-up-wi
 To install on a server, upload `dist/dumb-pf2e-level-up-wizard/` into the server's `Data/modules/` folder (replace the folder if it's already there), restart Foundry and enable the module in the world.
 
 `npm test` runs the unit tests (prerequisite parser, slot matching and boost math against real PF2e data) and checks the localization files: every key the code uses must exist in English, and translations may not keep keys English no longer has or use placeholders English doesn't. Lint and tests run on GitHub for every push to `main` and every pull request. The data tests read a PF2e source checkout; pass its path with `PF2E_SOURCE=/path/to/pf2e`. `tests/prereq-coverage.mjs <pf2e-path>` reports how many real prerequisite lines the parser understands.
+
+The screenshots in `screenshots/` were taken on Foundry 14.364 with PF2e 8.2.0.
 
 ## Credits
 
