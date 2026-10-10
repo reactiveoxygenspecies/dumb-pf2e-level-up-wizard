@@ -6,13 +6,10 @@ It's a fork of [BenABaron/pf2e-level-up-wizard](https://github.com/BenABaron/pf2
 
 ## Coming from the original module
 
-- Install this module and **disable the original** in Manage Modules (you can uninstall it later). With both enabled, characters get two level-up buttons; a GM warning says so.
+- Install this module and **disable the original** in Manage Modules (you can uninstall it later if you prefer this one). With both enabled, characters get two level-up buttons; a GM warning says so.
 - Settings are copied from the original the first time this module runs: world settings when a GM logs in, and each player's display preferences in their own browser. "Hide Rare and Uncommon Feats" becomes "Hidden Feat Rarities".
 - Level-up history starts fresh; the original didn't keep one.
 
-## Coming from "Next PF2e Level-Up Wizard"
-
-This module used to be called Next PF2e Level-Up Wizard (`next-pf2e-level-up-wizard`). Install this one, enable it and disable the old one (a GM warning says so while both are enabled). The first time a GM logs in, its settings, level-up history and spellcasting entries are moved over; each player's display preferences move the first time they log in.
 
 ## What changed compared to the original
 
