@@ -34,9 +34,9 @@ A level-up with only a few feats fits on one page (shown at the top of this READ
 
 ![Step mode: the skill increase step, with Arcana going from trained to expert](screenshots/steps-skills.png)
 
-### A feat picker that knows your character
+### A feat picker that checks for prerequisites
 
-The wizard previews the character at the new level and offers exactly the feat slots the character sheet would show, Free Archetype and other variant slots included. Every feat is marked as fitting, not fitting with the reason ("Needs: expert in Athletics"), or "check yourself" when the prerequisite can't be checked automatically. Choices made in the same level-up count, so a skill increase picked a step earlier can qualify a feat. Uncommon, rare and unique feats get an "Ask GM" pill. You can filter by level, skill, rarity and archetype, read the full description next to the list, and post a feat to chat.
+The wizard previews the character at the new level and offers exactly the feat slots the character sheet would show, Free Archetype and other variant slots included. Every feat is marked as fitting, not fitting with the reason ("Needs: expert in Athletics"), or "double check" when the prerequisite can't be checked automatically. Choices made in the same level-up count, so a skill increase picked a step earlier can qualify a feat. Uncommon, rare and unique feats get an "Ask GM" pill. You can filter by level, skill, rarity and archetype, read the full description next to the list, and post a feat to chat.
 
 ![The feat picker: filters on the left, feats grouped by level with prerequisite pills, and the selected feat's description on the right](screenshots/feat-picker.png)
 
