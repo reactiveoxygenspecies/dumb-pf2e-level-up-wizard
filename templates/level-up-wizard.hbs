@@ -16,12 +16,12 @@
 
   <div class="wizard-split">
     {{#if showRail}}
-      {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-rail.hbs" rail}}
+      {{> lvlupWizardRail rail}}
     {{/if}}
 
     <div class="wizard-main" tabindex="-1">
       {{#if reviewing}}
-        {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-review.hbs" review actorName=actorName targetLevel=targetLevel}}
+        {{> lvlupWizardReview review actorName=actorName targetLevel=targetLevel}}
       {{else}}
         {{#unless stepped}}
           <header class="main-head">
@@ -75,7 +75,7 @@
                   <h2 id="skill-h-{{index}}">{{title}}</h2>
                   <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.skillIncreases.hint' rank=@root.maxSkillRankLabel}}</p>
                 </div>
-                {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
+                {{> lvlupWizardSkillGrid grid}}
               </div>
             {{/each}}
           </section>
@@ -121,7 +121,7 @@
                 <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.intBonus.hint'}}</p>
               </div>
               {{#each intSkills}}
-                {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
+                {{> lvlupWizardSkillGrid grid}}
               {{/each}}
             </section>
           {{/if}}
@@ -168,7 +168,7 @@
               </div>
               {{#each potency.selects}}
                 <h3 class="grid-title">{{label}}</h3>
-                {{> "modules/dumb-pf2e-level-up-wizard/templates/partials/wizard-skill-grid.hbs" grid}}
+                {{> lvlupWizardSkillGrid grid}}
               {{/each}}
             </section>
           {{/if}}

@@ -238,7 +238,7 @@ const copyFrom = async (moduleId, key, scope) => {
 export const migrateSettings = async () => {
   if (game.settings.get(MODULE_ID, 'client-settings-version') < 1) {
     // Settings saved under this module's previous ID win over the original module's
-    if (!(await copyPrevious('client'))) {
+    if (!(await copyPrevious('client')).length) {
       for (const key of ORIGINAL_CLIENT_SETTINGS) await copyFrom(ORIGINAL_MODULE_ID, key, 'client');
     }
     await game.settings.set(MODULE_ID, 'client-settings-version', 1);
@@ -309,8 +309,17 @@ export const migratePreviousFlags = async () => {
   if (moved) console.log(`${MODULE_ID} | Moved ${moved} flags from ${PREVIOUS_MODULE_ID}`);
 };
 
-/** Both modules add a hat to the sheet and react to level changes; running both is confusing */
+/**
+ * The original module and this one under its previous ID both add a hat to the sheet and react to
+ * level changes; running either next to this one is confusing
+ */
 export const warnIfOriginalActive = () => {
-  if (!game.user.isGM || !game.modules.get(ORIGINAL_MODULE_ID)?.active) return;
-  ui.notifications.warn(localize('notifications.originalActive'), { permanent: true });
+  if (!game.user.isGM) return;
+  for (const id of [ORIGINAL_MODULE_ID, PREVIOUS_MODULE_ID]) {
+    const module = game.modules.get(id);
+    if (!module?.active) continue;
+    ui.notifications.warn(localize('notifications.originalActive', { title: module.title }), {
+      permanent: true
+    });
+  }
 };

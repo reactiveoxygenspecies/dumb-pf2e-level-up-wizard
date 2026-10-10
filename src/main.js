@@ -24,7 +24,10 @@ Hooks.once('init', () => {
 
   foundry.applications.handlebars.loadTemplates({
     lvlupFeatSlot: `${TEMPLATE_PATH}/partials/feat-slot.hbs`,
-    lvlupSpellPicker: `${TEMPLATE_PATH}/partials/spell-picker.hbs`
+    lvlupSpellPicker: `${TEMPLATE_PATH}/partials/spell-picker.hbs`,
+    lvlupWizardRail: `${TEMPLATE_PATH}/partials/wizard-rail.hbs`,
+    lvlupWizardReview: `${TEMPLATE_PATH}/partials/wizard-review.hbs`,
+    lvlupWizardSkillGrid: `${TEMPLATE_PATH}/partials/wizard-skill-grid.hbs`
   });
 
   const helpers = {

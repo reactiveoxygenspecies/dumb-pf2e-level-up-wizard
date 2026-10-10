@@ -9,25 +9,17 @@
       "historyHint": "Kliknij prawym przyciskiem, aby zobaczyć historię awansów"
     },
     "menu": {
-      "windowTitle": "Level-Up Wizard: {actorName} (poziom {targetLevel})",
+      "windowTitle": "Awans · {actorName}",
       "header": {
-        "name": "{actorName} osiąga poziom {targetLevel}!",
-        "description": "Oto, co zyskujesz. Dokonaj wyborów poniżej, a następnie zastosuj awans.",
         "levelJump": "Poziom został podniesiony z {previousLevel} do {targetLevel} w jednym kroku. Wybory dla wszystkich pośrednich poziomów są pokazane razem."
       },
       "nothingToChoose": "Na tym poziomie nie ma żadnych wyborów. Przejrzyj poniżej nowe zdolności klasowe i zastosuj awans.",
       "notes": {
         "classJournal": "Dowiedz się więcej o swojej klasie:"
       },
-      "dropdown": {
-        "placeholder": "Dokonaj wyboru"
-      },
       "feats": {
         "header": "Atuty",
-        "missedHeader": "Puste miejsca na atuty z wcześniejszych poziomów ({count})",
         "missedHint": "Te miejsca nigdy nie zostały wypełnione. Są opcjonalne: wypełnij teraz te, które chcesz.",
-        "slotLevel": "Poziom miejsca",
-        "change": "Zmień atut",
         "clear": "Wyczyść wybór"
       },
       "skillIncreases": {
@@ -48,9 +40,6 @@
         "label": "Wzmocnij różne atrybuty. Liczba wzmocnień: {count}.",
         "gradualLabel": "Stopniowe wzmocnienia: wzmocnij atrybuty z zestawu poziomu {set} (liczba: {count}).",
         "boost": "Wzmocnij",
-        "partial": "Częściowe",
-        "partialHint": "Ten atrybut ma już +4 lub więcej, więc to wzmocnienie liczy się tylko jako połowa. Drugie wzmocnienie później podniesie modyfikator.",
-        "alreadyBoosted": "Już wzmocniony w tym zestawie",
         "manual": "Ta postać używa ręcznie wpisanych modyfikatorów atrybutów, więc kreator pomija wzmocnienia atrybutów. Zaktualizuj je na karcie postaci."
       },
       "intBonus": {
@@ -61,40 +50,27 @@
       "languages": {
         "header": "Języki",
         "hint": "Możesz nauczyć się kolejnych języków. Wybierz je teraz lub później na karcie postaci.",
-        "label": "Język",
         "later": "Wybierz później"
       },
       "features": {
         "class": {
           "header": "Nowe zdolności klasowe",
           "hint": "Są one dodawane do postaci automatycznie."
-        },
-        "spellcasting": {
-          "header": "Rzucanie zaklęć",
-          "rank": "Dostępne są teraz zaklęcia rangi {rank}.",
-          "slots": "Miejsca na zaklęcia i repertuary nie są zautomatyzowane. Sprawdź je w zakładce Rzucanie zaklęć dla:"
         }
       },
       "footer": {
-        "missing": "Pozostało do wyboru:",
         "submit": "Zastosuj poziom {targetLevel}",
         "applying": "Stosowanie…"
       },
       "confirmDialog": {
-        "title": "Potwierdź awans",
-        "content": "Zastosować te zmiany dla {actorName} i awansować na poziom {targetLevel}?",
         "skipped": "Te wybory pozostają puste i można je uzupełnić później na karcie postaci:"
       },
       "filters": {
-        "orderBy": "Sortuj według",
         "level": "Poziom",
-        "name": "Nazwa",
         "rarity": "Rzadkość",
         "skills": "Filtruj według umiejętności",
         "archetypeFeats": "Pokaż atuty archetypu",
         "hideSkillFeats": "Ukryj atuty umiejętności",
-        "hideUnmet": "Ukryj atuty z niespełnionymi wymaganiami wstępnymi",
-        "toggleOrder": "Zmień kierunek sortowania",
         "reset": "Resetuj filtry",
         "placeholder": {
           "nameSearch": "Szukaj według nazwy",
@@ -104,7 +80,6 @@
         }
       },
       "tooltips": {
-        "selectFeat": "Wybierz ten atut",
         "sendToChat": "Wyślij na czat"
       }
     },
@@ -116,7 +91,6 @@
       "level": "Poziom {level}",
       "prerequisites": "Wymagania wstępne",
       "pickHint": "Wybierz atut po lewej, aby przeczytać go tutaj. Kliknij atut dwukrotnie, aby od razu go wybrać.",
-      "choose": "Wybierz",
       "takenElsewhere": "Wybrany w innym miejscu",
       "grantedBy": "Dostępny dzięki archetypowi {dedication}."
     },
@@ -261,7 +235,7 @@
         "compendiumNotFound": "Nie znaleziono kompendium {key}. Sprawdź pisownię w ustawieniach Level-Up Wizard."
       },
       "openFailed": "Nie udało się otworzyć kreatora awansu. Szczegóły w konsoli (F12).",
-      "originalActive": "Oryginalny moduł „PF2e Level-Up Wizard” również jest aktywny. Wyłącz jeden z nich w Zarządzaniu modułami, inaczej postacie będą miały dwa przyciski awansu."
+      "originalActive": "Moduł „{title}” również jest aktywny. Wyłącz jeden z nich w Zarządzaniu modułami, inaczej postacie będą miały dwa przyciski awansu."
     }
   }
 }

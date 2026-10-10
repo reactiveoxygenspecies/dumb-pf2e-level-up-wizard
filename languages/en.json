@@ -386,7 +386,7 @@
         "compendiumNotFound": "Compendium {key} not found. Check the spelling in the Level-Up Wizard settings."
       },
       "openFailed": "The Level-Up Wizard could not open. See the console (F12) for details.",
-      "originalActive": "The original \"PF2e Level-Up Wizard\" module is also active. Disable one of the two in Manage Modules, otherwise characters get two level-up buttons."
+      "originalActive": "The \"{title}\" module is also active. Disable one of the two in Manage Modules, otherwise characters get two level-up buttons."
     },
     "builder": {
       "windowTitle": "Build Character: {actorName}",

@@ -9,25 +9,17 @@
       "historyHint": "右键查看升级历史"
     },
     "menu": {
-      "windowTitle": "升级向导：{actorName}（{targetLevel} 级）",
+      "windowTitle": "升级 · {actorName}",
       "header": {
-        "name": "{actorName} 即将升到 {targetLevel} 级！",
-        "description": "以下是你获得的内容。请在下方做出选择，然后应用升级。",
         "levelJump": "等级已一次性从 {previousLevel} 级提升到 {targetLevel} 级。中间每个等级的选择会一并显示。"
       },
       "nothingToChoose": "这一等级没有需要做出的选择。请查看下方的新职业特性，然后应用升级。",
       "notes": {
         "classJournal": "了解更多关于你的职业："
       },
-      "dropdown": {
-        "placeholder": "进行选择"
-      },
       "feats": {
         "header": "专长",
-        "missedHeader": "之前等级遗留的空专长位（{count}）",
         "missedHint": "这些专长位一直没有填写。它们是可选的：现在可以随意填写。",
-        "slotLevel": "专长位等级",
-        "change": "更换专长",
         "clear": "清除选择"
       },
       "skillIncreases": {
@@ -48,9 +40,6 @@
         "label": "提升 {count} 个不同的属性。",
         "gradualLabel": "渐进提升：从 {set} 级的属性组中提升 {count} 个属性。",
         "boost": "提升",
-        "partial": "部分",
-        "partialHint": "该属性已经是 +4 或更高，因此这次提升只算一半。之后再提升一次才会提高调整值。",
-        "alreadyBoosted": "此属性组中已提升",
         "manual": "该角色使用手动输入的属性调整值，因此向导会跳过属性提升。请在角色卡上自行更新。"
       },
       "intBonus": {
@@ -61,40 +50,27 @@
       "languages": {
         "header": "语言",
         "hint": "你可以学习更多语言。可以现在选择，也可以稍后在角色卡上选择。",
-        "label": "语言",
         "later": "稍后选择"
       },
       "features": {
         "class": {
           "header": "新职业特性",
           "hint": "这些会自动添加到你的角色上。"
-        },
-        "spellcasting": {
-          "header": "施法",
-          "rank": "现在可以使用 {rank} 环法术。",
-          "slots": "法术位和法术库不会自动处理。请在法术分页中检查以下项目："
         }
       },
       "footer": {
-        "missing": "尚待选择：",
         "submit": "应用 {targetLevel} 级",
         "applying": "正在应用…"
       },
       "confirmDialog": {
-        "title": "确认升级",
-        "content": "将这些变更应用到 {actorName} 并升至 {targetLevel} 级？",
         "skipped": "以下选择仍为空，可稍后在角色卡上补充："
       },
       "filters": {
-        "orderBy": "排序方式",
         "level": "等级",
-        "name": "名称",
         "rarity": "稀有度",
         "skills": "按技能筛选",
         "archetypeFeats": "显示变体专长",
         "hideSkillFeats": "隐藏技能专长",
-        "hideUnmet": "隐藏未满足先决条件的专长",
-        "toggleOrder": "切换排序方向",
         "reset": "重置筛选",
         "placeholder": {
           "nameSearch": "按名称搜索",
@@ -104,7 +80,6 @@
         }
       },
       "tooltips": {
-        "selectFeat": "选择此专长",
         "sendToChat": "发送到聊天"
       }
     },
@@ -116,7 +91,6 @@
       "level": "{level} 级",
       "prerequisites": "先决条件",
       "pickHint": "在左侧选择一个专长即可在此阅读。双击专长可直接选择。",
-      "choose": "选择",
       "takenElsewhere": "已在其他专长位选择",
       "grantedBy": "可通过 {dedication} 获得。"
     },
@@ -261,7 +235,7 @@
         "compendiumNotFound": "未找到合集包 {key}。请在升级向导设置中检查拼写。"
       },
       "openFailed": "无法打开升级向导。详情请查看控制台（F12）。",
-      "originalActive": "原版“PF2e Level-Up Wizard”模组也处于启用状态。请在“管理模组”中停用其中一个，否则角色会出现两个升级按钮。"
+      "originalActive": "“{title}”模组也处于启用状态。请在“管理模组”中停用其中一个，否则角色会出现两个升级按钮。"
     }
   }
 }
