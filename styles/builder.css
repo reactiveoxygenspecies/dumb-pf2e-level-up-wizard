@@ -302,6 +302,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
   padding: 0;
   height: auto;
   border: 1px solid var(--lvl-hairline);
@@ -1246,6 +1248,14 @@
 }
 
 /* Focus spell dialog */
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .window-content {
+  padding: 14px 16px 16px;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .dialog-content > p {
+  margin: 0 0 12px;
+}
+
 .dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-group {
   display: flex;
   flex-direction: column;

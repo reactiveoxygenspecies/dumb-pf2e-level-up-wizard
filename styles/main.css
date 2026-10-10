@@ -1886,6 +1886,7 @@
   justify-content: flex-start;
   gap: 12px;
   width: 100%;
+  height: auto;
   min-height: 52px;
   padding: 6px 20px 6px 17px;
   border: 0;
@@ -1988,6 +1989,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   font-size: 26px;
   line-height: 1.1;
 }
@@ -1995,6 +1997,8 @@
 .lvlup-feat-selector .feat-details h2 a.content-link {
   font-family: var(--lvl-font-display);
   font-weight: 600;
+  white-space: normal;
+  word-break: normal;
   text-decoration: none;
 }
 
