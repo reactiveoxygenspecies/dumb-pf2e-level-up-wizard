@@ -6,10 +6,8 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-const PF2E =
-  process.argv[2] ??
-  process.env.PF2E_SOURCE ??
-  'C:/Users/danie/AppData/Local/Temp/claude/D--Websites-FoundryVTT-Character-Sheet/010b4a55-334c-4c8f-bd9c-338fca65ea05/scratchpad/lvlup/pf2e-820';
+// A PF2e source checkout: `PF2E_SOURCE=/path/to/pf2e node --test`. The data tests skip without one.
+const PF2E = process.argv[2] ?? process.env.PF2E_SOURCE ?? null;
 
 // Minimal Foundry/PF2e globals used by the modules under test
 globalThis.game = {
@@ -35,8 +33,8 @@ const walk = (dir) =>
     return statSync(path).isDirectory() ? walk(path) : path.endsWith('.json') && !name.startsWith('_') ? [path] : [];
   });
 
-const featsDir = join(PF2E, 'packs/pf2e/feats');
-const haveData = existsSync(featsDir);
+const featsDir = PF2E ? join(PF2E, 'packs/pf2e/feats') : null;
+const haveData = !!featsDir && existsSync(featsDir);
 const pack = { collection: 'pf2e.feats-srd' };
 const index = haveData
   ? walk(featsDir).map((file) => toEntry({ ...JSON.parse(readFileSync(file, 'utf8')), type: 'feat' }, pack))

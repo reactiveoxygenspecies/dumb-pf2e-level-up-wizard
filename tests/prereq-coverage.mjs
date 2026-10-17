@@ -1,4 +1,5 @@
-// Usage: node tests/prereq-coverage.mjs [path-to-pf2e-checkout] [--no-known] [--unmet] [--sample=N]
+// Usage: node tests/prereq-coverage.mjs <path-to-pf2e-checkout> [--no-known] [--unmet] [--sample=N]
+// (or set PF2E_SOURCE instead of passing the path)
 // Walks every feat JSON in a PF2e checkout and reports how the prerequisite
 // parser classifies each prerequisite line for a sample mid-level character.
 import fs from 'node:fs';
@@ -7,9 +8,11 @@ import { evaluatePrerequisites } from '../src/helpers/prerequisites.js';
 
 const args = process.argv.slice(2);
 const flags = args.filter((a) => a.startsWith('--'));
-const root =
-  args.find((a) => !a.startsWith('--')) ??
-  'C:/Users/danie/AppData/Local/Temp/claude/D--Websites-FoundryVTT-Character-Sheet/010b4a55-334c-4c8f-bd9c-338fca65ea05/scratchpad/lvlup/pf2e-820';
+const root = args.find((a) => !a.startsWith('--')) ?? process.env.PF2E_SOURCE;
+if (!root) {
+  console.error('Usage: node tests/prereq-coverage.mjs <path-to-pf2e-checkout> (or set PF2E_SOURCE)');
+  process.exit(1);
+}
 const packs = path.join(root, 'packs/pf2e');
 
 const readJsonTree = (dir) => {
