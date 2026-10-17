@@ -10,13 +10,17 @@ import {
   loadGrantedArchetypeFeats
 } from '../data/featSlots.js';
 import { getFeatIndex } from '../data/featIndex.js';
-import { getSpellIndex } from '../data/spellIndex.js';
+import { findSpellUuid, getSpellIndex } from '../data/spellIndex.js';
 import {
   TRADITIONS,
   classRules,
   currentSignatures,
   detectTradition,
+  extraEntryName,
+  extraEntrySlotChanges,
+  extraEntrySpellSlug,
   findClassEntry,
+  findExtraEntry,
   loadSpellcastingData,
   signatureAt,
   slotChanges,
@@ -300,6 +304,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     if (!rules) return null;
     const found = findClassEntry(actor, rules, slug);
     const entry = found?.entry ?? null;
+    const extra = findExtraEntry(actor, rules, slug);
     const known = new Set(
       entry ? [...(entry.spells ?? [])].flatMap((s) => [s.sourceId, s.slug].filter(Boolean)) : []
     );
@@ -311,6 +316,11 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       tradition: entry?.system?.tradition?.value || detectTradition(actor, rules, slug),
       picks: spellPicks(rules, entry, entry ? previousLevel : 0, targetLevel),
       slotChanges: slotChanges(rules, entry, targetLevel),
+      // Divine font: an entry of its own, checked apart from the regular slots
+      extraEntry: extra?.entry ?? null,
+      extraLabel: extraEntryName(rules),
+      extraChanges: extraEntrySlotChanges(rules, extra?.entry ?? null, targetLevel),
+      extraSpellSlug: extraEntrySpellSlug(actor, rules),
       known,
       signature: signatureAt(rules, targetLevel),
       className: cls.name,
@@ -351,6 +361,8 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         selected: t === tradition
       })),
       slotChanges: sp.slotChanges.map((c) => ({ ...c, gained: c.to > c.from })),
+      extraLabel: sp.extraLabel,
+      extraChanges: sp.extraChanges.map((c) => ({ ...c, gained: c.to > c.from })),
       groups:
         active && tradition
           ? spellPickerView({
@@ -818,7 +830,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         total: required
       });
     }
-    if (spells && (spells.setup || spells.total || spells.slotChanges.length || spells.signature)) {
+    if (spells && (spells.setup || spells.total || spells.slotChanges.length || spells.extraChanges.length || spells.signature)) {
       sections.push({
         key: 'spells',
         label: localize('menu.steps.spells'),
@@ -1339,6 +1351,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       row('spells', [
         ...(sp.entry ? [] : [{ plus: true, label: localize('menu.spells.newEntry', { className: sp.className }) }]),
         ...sp.slotChanges.map((c) => ({ label: c.label, from: c.from, to: c.to })),
+        ...sp.extraChanges.map((c) => ({ label: `${sp.extraLabel} · ${c.label}`, from: c.from, to: c.to })),
         ...Object.values(sel.spells)
           .flat()
           .map((uuid) => ({ plus: true, label: names.get(uuid) ?? uuid }))
@@ -1660,10 +1673,10 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     const sp = this.plan.spells;
     if (this.#spellsActive()) {
       // The managed entry is updated for the player; only other entries still need a reminder
-      const managed = sp.entry?.id ?? null;
+      const managed = [sp.entry?.id, sp.extraEntry?.id].filter(Boolean);
       this.plan.spellcasting = {
         newRank: null,
-        entries: (this.plan.spellcasting?.entries ?? []).filter((e) => e.id !== managed)
+        entries: (this.plan.spellcasting?.entries ?? []).filter((e) => !managed.includes(e.id))
       };
     }
     const selection = {
@@ -1673,6 +1686,8 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
             rules: sp.rules,
             slug: sp.slug,
             entry: sp.entry,
+            extraEntry: sp.extraEntry,
+            extraSpell: findSpellUuid(this.plan.spellIndex, sp.extraSpellSlug),
             tradition: this.#spellTradition(),
             className: sp.className,
             attribute: sp.attribute,

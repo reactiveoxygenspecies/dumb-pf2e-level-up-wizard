@@ -202,6 +202,11 @@
                   {{#each spells.slotChanges}}<span class="lvl-spell-slot">{{label}}: {{from}} → <strong>{{to}}</strong></span>{{/each}}
                 </div>
               {{/if}}
+              {{#if spells.extraChanges.length}}
+                <div class="lvl-spell-slots" aria-label="{{spells.extraLabel}}">
+                  {{#each spells.extraChanges}}<span class="lvl-spell-slot">{{../spells.extraLabel}} · {{label}}: {{from}} → <strong>{{to}}</strong></span>{{/each}}
+                </div>
+              {{/if}}
               {{#if spells.noPicks}}<p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.noPicks'}}</p>{{/if}}
               {{#with spells}}{{#if groups.length}}{{> lvlupSpellPicker spellGroups=groups}}{{/if}}{{/with}}
               {{#if spells.signature}}
