@@ -171,6 +171,9 @@ const RULES = {
       label: 'Divine font',
       restriction: 'Only heal (healing font) or harm (harmful font), depending on the deity / choice. Slots are at the cleric\'s highest rank of spell slot, 10th rank included at 19th-20th level as the table shows.',
       highestRankOnly: true,
+      // Kept in a "Divine Font" entry of its own, apart from the cleric's regular slots. The feature's
+      // ChoiceSet (flag "divineFont") holds the slug of the spell the slots take: heal or harm.
+      ownEntry: { feature: 'divine-font', choiceFlag: 'divineFont' },
       cantrips: null,
       slots: Object.fromEntries(
         RANKS.map((r) => [

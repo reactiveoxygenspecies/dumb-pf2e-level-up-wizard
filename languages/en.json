@@ -551,6 +551,9 @@
       "none": "No spells match. Check the tradition or the compendium settings.",
       "read": "Read the spell",
       "entryName": "{className} Spells",
+      "extraEntry": {
+        "divine-font": "Divine Font"
+      },
       "rankRange": "Spells of rank {min} to {max}"
     },
     "focus": {

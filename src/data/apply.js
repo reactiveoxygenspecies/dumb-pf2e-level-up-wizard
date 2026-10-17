@@ -3,7 +3,18 @@ import { attributeLabel, localize, rankLabel } from '../helpers/utility.js';
 import { buildPotencyModifier, SPELL_HINT_PATTERN, xpInfo } from './plan.js';
 import { postLevelUpMessages } from '../helpers/chat.js';
 import { offerFocusSpells } from './focusSpells.js';
-import { entrySlotSnapshot, entrySlotUpdate, entrySource, isSignature, spellSource } from './spellcasting.js';
+import {
+  entrySlotSnapshot,
+  entrySlotUpdate,
+  entrySource,
+  extraEntryPrepareUpdate,
+  extraEntrySlotsAt,
+  extraEntrySlotUpdate,
+  extraEntrySource,
+  extraEntrySpellId,
+  isSignature,
+  spellSource
+} from './spellcasting.js';
 
 /** Level-ups and builds kept per actor; only the latest can be undone */
 export const HISTORY_LIMIT = 10;
@@ -141,7 +152,7 @@ export const buildChanges = async (actor, plan, selection) => {
 
   const spells = await spellChanges(actor, plan, selection.spellPlan);
   if (spells) {
-    summary.spells = spells.sources.map((s) => ({ name: s.name, uuid: s._stats?.compendiumSource }));
+    summary.spells = addedSpells(spells).map((s) => ({ name: s.name, uuid: s._stats?.compendiumSource }));
   }
 
   return { update, itemUpdates, feats, spells, summary };
@@ -171,10 +182,11 @@ const spellChanges = async (actor, plan, spellPlan) => {
         .filter(({ spell, signature }) => !!spell.system?.location?.signature !== signature)
         .map(({ spell, signature }) => ({ _id: spell.id, 'system.location.signature': signature }))
     : [];
+  const extra = await extraEntryChanges(spellPlan, plan.targetLevel);
   if (entry) {
     const entryUpdate = entrySlotUpdate(rules, entry, slug, plan.targetLevel);
     if (!entry.system?.tradition?.value) entryUpdate['system.tradition.value'] = spellPlan.tradition;
-    return { entryUpdate, newEntry: null, sources, signatureUpdates };
+    return { entryUpdate, newEntry: null, sources, signatureUpdates, extra };
   }
   const newEntry = entrySource(rules, {
     slug,
@@ -183,8 +195,54 @@ const spellChanges = async (actor, plan, spellPlan) => {
     attribute: spellPlan.attribute,
     level: plan.targetLevel
   });
-  return { entryUpdate: null, newEntry, sources, signatureUpdates };
+  return { entryUpdate: null, newEntry, sources, signatureUpdates, extra };
 };
+
+/**
+ * The class's separate extra entry (cleric divine font), checked apart from the regular slots: its
+ * slots move to the level's rank, and the heal/harm spell is added when the entry doesn't hold one.
+ */
+export const extraEntryChanges = async (spellPlan, level) => {
+  const { rules, slug, extraEntry } = spellPlan;
+  if (!extraEntrySlotsAt(rules, level)) return null;
+  const spellId = extraEntry ? extraEntrySpellId(extraEntry) : null;
+  const spell = !spellId && spellPlan.extraSpell ? await spellSource(spellPlan.extraSpell, extraEntry?.id ?? null) : null;
+  return {
+    rules,
+    level,
+    update: extraEntry ? extraEntrySlotUpdate(rules, extraEntry, slug, level, spellId) : null,
+    newEntry: extraEntry
+      ? null
+      : extraEntrySource(rules, { slug, tradition: spellPlan.tradition, attribute: spellPlan.attribute, level }),
+    spell
+  };
+};
+
+/** Create or update the extra entry and prepare its heal/harm spell; returns the created items */
+export const applyExtraEntry = async (actor, extra, created) => {
+  if (!extra) return;
+  let entryId = extra.update?._id ?? null;
+  if (extra.newEntry) {
+    const [entry] = await actor.createEmbeddedDocuments('Item', [extra.newEntry]);
+    created.push(entry);
+    entryId = entry.id;
+  } else if (extra.update) {
+    await actor.updateEmbeddedDocuments('Item', [extra.update]);
+  }
+  if (!extra.spell || !entryId) return;
+  const source = foundry.utils.deepClone(extra.spell);
+  source.system.location = { value: entryId };
+  const [spell] = await actor.createEmbeddedDocuments('Item', [source]);
+  created.push(spell);
+  const prepare = extraEntryPrepareUpdate(extra.rules, entryId, spell.id, extra.level);
+  if (prepare) await actor.updateEmbeddedDocuments('Item', [prepare]);
+};
+
+/** Spell sources a level-up adds: the picks, plus the divine font's heal/harm when it was missing */
+const addedSpells = (spells) => [...spells.sources, ...(spells.extra?.spell ? [spells.extra.spell] : [])];
+
+/** Spellcasting entries the module manages: the class entry and its extra entry (divine font) */
+const managedEntry = (item) => !!(item.flags?.[MODULE_ID]?.classEntry || item.flags?.[MODULE_ID]?.extraEntry);
 
 /** Create or update the class entry and add the picked spells; returns the created items */
 const applySpells = async (actor, spells, created) => {
@@ -196,6 +254,7 @@ const applySpells = async (actor, spells, created) => {
   } else if (spells.entryUpdate) {
     await actor.updateEmbeddedDocuments('Item', [spells.entryUpdate, ...spells.signatureUpdates]);
   }
+  await applyExtraEntry(actor, spells.extra, created);
   if (!spells.sources.length) return;
   const sources = spells.sources.map((source) => {
     const copy = foundry.utils.deepClone(source);
@@ -228,7 +287,15 @@ const snapshot = (actor, plan, selection, changes) => {
   }
 
   const spellEntry = selection.spellPlan?.entry ?? null;
+  const extraEntry = selection.spellPlan?.extraEntry ?? null;
   return {
+    extraEntry: extraEntry
+      ? {
+          id: extraEntry.id,
+          slots: entrySlotSnapshot(extraEntry),
+          flag: extraEntry.flags?.[MODULE_ID]?.extraEntry ?? null
+        }
+      : null,
     spellEntry: spellEntry
       ? {
           id: spellEntry.id,
@@ -292,6 +359,20 @@ const revertTo = async (actor, entry, { keepHistory = false } = {}) => {
     await actor.updateEmbeddedDocuments('Item', [entryUpdate, ...signatureUpdates]);
   }
 
+  // The divine font entry: its slots move back to the old rank, with what was prepared there
+  const extraEntry = before.extraEntry;
+  if (extraEntry && actor.items.has(extraEntry.id)) {
+    const entryUpdate = { _id: extraEntry.id, [`flags.${MODULE_ID}.extraEntry`]: extraEntry.flag };
+    for (const [rank, { max, value, prepared }] of Object.entries(extraEntry.slots)) {
+      entryUpdate[`system.slots.slot${rank}.max`] = max;
+      entryUpdate[`system.slots.slot${rank}.value`] = value;
+      entryUpdate[`system.slots.slot${rank}.prepared`] = (prepared ?? []).filter(
+        (p) => !p.id || actor.items.has(p.id)
+      );
+    }
+    await actor.updateEmbeddedDocuments('Item', [entryUpdate]);
+  }
+
   const loreUpdates = Object.entries(before.lores ?? {})
     .filter(([id]) => actor.items.has(id))
     .map(([id, rank]) => ({ _id: id, 'system.proficient.value': rank }));
@@ -339,7 +420,7 @@ export const applyLevelUp = async (actor, plan, selection) => {
   const itemsBefore = new Set(actor.items.map((i) => i.id));
   const pickedSources = new Set([
     ...changes.feats.map((f) => f.doc.uuid),
-    ...(changes.spells?.sources ?? []).map((s) => s._stats?.compendiumSource)
+    ...(changes.spells ? addedSpells(changes.spells) : []).map((s) => s._stats?.compendiumSource)
   ]);
   let created = [];
   try {
@@ -360,7 +441,7 @@ export const applyLevelUp = async (actor, plan, selection) => {
     const strays = actor.items.filter(
       (i) =>
         !itemsBefore.has(i.id) &&
-        (pickedSources.has(i.sourceId) || (i.type === 'spellcastingEntry' && i.flags?.[MODULE_ID]?.classEntry))
+        (pickedSources.has(i.sourceId) || (i.type === 'spellcastingEntry' && managedEntry(i)))
     );
     entry.createdItemIds = topLevelIds([...new Set([...created, ...strays])]);
     try {

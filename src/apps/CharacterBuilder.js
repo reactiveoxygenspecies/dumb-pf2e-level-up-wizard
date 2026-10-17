@@ -23,6 +23,8 @@ import { getSpellIndex } from '../data/spellIndex.js';
 import {
   TRADITIONS,
   classRules,
+  extraEntryName,
+  extraEntrySlotsAt,
   loadSpellcastingData,
   slotsAt,
   spellPicks
@@ -702,13 +704,18 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
   #spellContext() {
     const sp = this.view.spells;
     if (!sp) return { spellStep: true, heading: localize('builder.spells.heading') };
-    const slots = slotsAt(sp.rules, 1);
-    const slotChips = Object.entries(slots)
-      .filter(([, n]) => n > 0)
-      .map(([rank, n]) => ({
-        label: Number(rank) === 0 ? localize('spells.cantrips') : localize('spells.rank', { rank }),
-        count: n
-      }));
+    const chips = (slots, prefix = '') =>
+      Object.entries(slots ?? {})
+        .filter(([, n]) => n > 0)
+        .map(([rank, n]) => ({
+          label: prefix + (Number(rank) === 0 ? localize('spells.cantrips') : localize('spells.rank', { rank })),
+          count: n
+        }));
+    // Divine font slots live in their own entry, so they get chips of their own
+    const slotChips = [
+      ...chips(slotsAt(sp.rules, 1)),
+      ...chips(extraEntrySlotsAt(sp.rules, 1), `${extraEntryName(sp.rules)} · `)
+    ];
     const known = new Set();
     return {
       spellStep: true,
@@ -1018,7 +1025,8 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
             tradition: sp.tradition,
             className: this.view.sources.class?.name,
             attribute: this.view.sources.class?.system.keyAbility?.selected,
-            selection: this.build.spells
+            selection: this.build.spells,
+            spellIndex: this.data?.spells ?? []
           }
         : null;
       const done = await applyBuild(this.actor, this.build, picks, spellPlan);

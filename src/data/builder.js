@@ -2,8 +2,9 @@ import { MODULE_ID } from '../constants.js';
 import { attributeLabel, escapeHTML, localize, rankLabel } from '../helpers/utility.js';
 import { getFeatSlots } from './featSlots.js';
 import { loadDocument } from './abcIndex.js';
-import { getHistory, HISTORY_LIMIT, topLevelIds } from './apply.js';
-import { entrySource, spellSource } from './spellcasting.js';
+import { applyExtraEntry, extraEntryChanges, getHistory, HISTORY_LIMIT, topLevelIds } from './apply.js';
+import { entrySource, extraEntrySpellSlug, spellSource } from './spellcasting.js';
+import { findSpellUuid } from './spellIndex.js';
 import { offerFocusSpells } from './focusSpells.js';
 
 export const ATTRIBUTES = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
@@ -424,6 +425,13 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
       if (uuids.length) {
         await create(await Promise.all(uuids.map((uuid) => spellSource(uuid, entry.id))));
       }
+      // Divine font: its own entry, with heal or harm as chosen on the class feature just added
+      const fontSlug = extraEntrySpellSlug(actor, spellPlan.rules);
+      const extra = await extraEntryChanges(
+        { ...spellPlan, extraEntry: null, extraSpell: findSpellUuid(spellPlan.spellIndex, fontSlug) },
+        1
+      );
+      await applyExtraEntry(actor, extra, created);
     }
   } catch (error) {
     console.error(`${MODULE_ID} | Character build failed, rolling back`, error);

@@ -83,6 +83,13 @@ export const getSpellIndex = async () => {
   return cache;
 };
 
+/** UUID of a spell by slug (heal, harm), preferring the PF2e system's own spells */
+export const findSpellUuid = (index, slug) => {
+  if (!slug || !index?.length) return null;
+  const matches = index.filter((s) => s.slug === slug);
+  return (matches.find((s) => s.uuid.startsWith('Compendium.pf2e.spells-srd.')) ?? matches[0])?.uuid ?? null;
+};
+
 export const registerSpellIndexHooks = () => {
   const onChange = (item) => {
     if (item.pack && item.type === 'spell') invalidateSpellIndex();

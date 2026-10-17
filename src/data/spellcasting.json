@@ -93,6 +93,10 @@
       "label": "Divine font",
       "restriction": "Only heal (healing font) or harm (harmful font), depending on the deity / choice. Slots are at the cleric's highest rank of spell slot, 10th rank included at 19th-20th level as the table shows.",
       "highestRankOnly": true,
+      "ownEntry": {
+        "feature": "divine-font",
+        "choiceFlag": "divineFont"
+      },
       "cantrips": null,
       "slots": {
         "1": [4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
