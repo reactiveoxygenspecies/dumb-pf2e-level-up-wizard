@@ -78,3 +78,13 @@ test('an empty boost slot (older ancestries such as Kitsune) needs no pick', asy
   const slots = ancestryBoostSlots(kitsune, { ancestryPicks: ['int'] });
   assert.deepEqual(slots.map((s) => s.selected), ['cha', 'int']);
 });
+
+test('background boost options leave out the free boost', async () => {
+  const { backgroundBoostOptions } = await import('../src/data/builder.js');
+  const acolyte = { 0: { value: ['int', 'wis'] }, 1: { value: ALL } };
+  assert.deepEqual([...backgroundBoostOptions(acolyte)].sort(), ['int', 'wis']);
+  const fixed = { 0: { value: ['str'] }, 1: { value: ALL } };
+  assert.deepEqual([...backgroundBoostOptions(fixed)], ['str']);
+  assert.equal(backgroundBoostOptions(undefined).size, 0);
+  assert.equal(backgroundBoostOptions({ 0: { value: ALL }, 1: { value: ALL } }).size, 0);
+});

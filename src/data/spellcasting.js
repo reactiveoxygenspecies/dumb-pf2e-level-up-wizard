@@ -77,9 +77,9 @@ const extraEntryFlag = (entry) => entry.flags?.[MODULE_ID]?.extraEntry ?? null;
 /** Name the module gives the extra entry ("Divine Font") */
 export const extraEntryName = (rules) => {
   const extra = ownEntryRules(rules);
-  const key = `spells.extraEntry.${extra?.ownEntry?.feature}`;
-  const name = localize(key);
-  return name.endsWith(key) ? (extra?.label ?? '') : name;
+  const feature = extra?.ownEntry?.feature;
+  const name = localize(`spells.extraEntry.${feature}`);
+  return name.endsWith(`spells.extraEntry.${feature}`) ? (extra?.label ?? '') : name;
 };
 
 /** Whether an entry the player made looks like the class's extra entry ("Divine Font", "Healing Font"...) */

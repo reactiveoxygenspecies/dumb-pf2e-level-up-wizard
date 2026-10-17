@@ -19,6 +19,16 @@
             aria-pressed="{{#if on}}true{{else}}false{{/if}}">{{label}}</button>
         {{/each}}
       </div>
+      {{#if boostChips}}
+        <div class="lvlb-toolbar lvlb-boost-filter" role="group"
+          aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.builder.background.boostFilter'}}">
+          <span class="lvlb-filter-label">{{localize 'DUMB_LEVEL_UP_WIZARD.builder.background.boostFilter'}}</span>
+          {{#each boostChips}}
+            <button type="button" class="lvlb-chip" data-action="toggleBoostFilter" data-attribute="{{key}}"
+              aria-pressed="{{#if on}}true{{else}}false{{/if}}">{{label}}</button>
+          {{/each}}
+        </div>
+      {{/if}}
 
       {{#if detail}}
         <details class="lvlb-detail" open>
@@ -33,13 +43,13 @@
 
       <div class="lvlb-cards">
         {{#each cards}}
-          <button type="button" class="lvlb-card {{#if selected}}selected{{/if}}" data-action="pick"
+          <button type="button" class="lvlb-card {{#if selected}}selected{{/if}} {{#if noArt}}no-art{{/if}}" data-action="pick"
             data-kind="{{kind}}" data-uuid="{{uuid}}" data-search="{{search}}"
             aria-pressed="{{#if selected}}true{{else}}false{{/if}}" {{#if hidden}}hidden{{/if}}>
-            <span class="lvlb-card-art">
-              {{#if img}}<img src="{{img}}" alt="" loading="lazy">{{/if}}
-              {{#if selected}}<span class="lvlb-card-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span>{{/if}}
-            </span>
+            {{#unless noArt}}
+              <span class="lvlb-card-art">{{#if img}}<img src="{{img}}" alt="" loading="lazy">{{/if}}</span>
+            {{/unless}}
+            {{#if selected}}<span class="lvlb-card-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span>{{/if}}
             <span class="lvlb-card-body">
               <span class="lvlb-card-name">{{name}}
                 {{#if rarityLabel}}<span class="lvlb-tag rarity {{rarity}}">{{rarityLabel}}</span>{{/if}}

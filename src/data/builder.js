@@ -10,6 +10,18 @@ import { offerFocusSpells } from './focusSpells.js';
 export const ATTRIBUTES = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 const ABC_ORDER = ['ancestry', 'heritage', 'background', 'deity', 'class'];
 
+/**
+ * Attributes a background can boost through its fixed or limited boosts ("Intelligence or Wisdom").
+ * The free boost (any attribute) is left out, since every background has one.
+ */
+export const backgroundBoostOptions = (boosts) =>
+  new Set(
+    Object.values(boosts ?? {})
+      .map((b) => b?.value ?? [])
+      .filter((value) => value.length > 0 && value.length < ATTRIBUTES.length)
+      .flat()
+  );
+
 /** Classes whose level-1 features are built around a deity */
 export const DEITY_CLASSES = ['cleric', 'champion'];
 

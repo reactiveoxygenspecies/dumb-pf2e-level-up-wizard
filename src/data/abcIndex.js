@@ -46,6 +46,23 @@ const FIELDS = {
 
 export const ABC_TYPES = Object.keys(FIELDS);
 
+/**
+ * Modules whose ancestries and classes build companions, not player characters (PF2e Animal
+ * Companions: animal companion, eidolon, construct companion and follower ancestries and classes).
+ */
+const COMPANION_PACKAGES = ['pf2e-animal-companions'];
+
+/** Ancestry traits only companions have; no playable ancestry carries them */
+const COMPANION_TRAITS = ['animal', 'eidolon', 'minion'];
+
+/** Whether an indexed item is a companion's ancestry or class rather than a character option */
+export const isCompanionOption = (raw, packageName) => {
+  if (COMPANION_PACKAGES.includes(packageName)) return true;
+  if (raw.type !== 'ancestry') return false;
+  const traits = raw.system?.traits?.value ?? [];
+  return traits.some((t) => COMPANION_TRAITS.includes(t));
+};
+
 const RARITY_ORDER = ['common', 'uncommon', 'rare', 'unique'];
 
 let cache = null;
@@ -88,7 +105,8 @@ export const getAbcIndex = async () => {
       try {
         const index = await pack.getIndex({ fields });
         for (const raw of index) {
-          if (byType[raw.type]) byType[raw.type].push(toEntry(raw, pack));
+          if (!byType[raw.type] || isCompanionOption(raw, pack.metadata?.packageName)) continue;
+          byType[raw.type].push(toEntry(raw, pack));
         }
       } catch (error) {
         console.error(`${MODULE_ID} | Failed to index ${pack.collection}`, error);
