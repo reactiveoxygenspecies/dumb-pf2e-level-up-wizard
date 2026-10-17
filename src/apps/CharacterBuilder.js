@@ -6,6 +6,7 @@ import {
   ancestryBoostSlots,
   ancestryFlaws,
   applyBuild,
+  backgroundBoostOptions,
   backgroundBoostSlots,
   backgroundSkillChoice,
   boostProblems,
@@ -79,6 +80,9 @@ const hiddenRarities = () => {
   return [];
 };
 
+/** A selected item's details without its image */
+const withoutArt = (detail) => (detail ? { ...detail, img: null } : null);
+
 /**
  * Step-by-step creation of a level-1 character. The character is previewed in memory after every
  * choice (the system prepares it like the real actor), and nothing is written until "Create".
@@ -90,7 +94,7 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
     this.actor = actor;
     this.build = createBuildState(actor);
     this.step = this.build.class ? 'boosts' : 'ancestry';
-    this.filters = { search: {}, rarities: ['common'], spellSearch: {} };
+    this.filters = { search: {}, rarities: ['common'], spellSearch: {}, boosts: [] };
     this.descriptions = new Map();
     this.view = null;
     this.busy = false;
@@ -106,6 +110,7 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       back: CharacterBuilder.#onBack,
       pick: CharacterBuilder.#onPick,
       toggleRarity: CharacterBuilder.#onToggleRarity,
+      toggleBoostFilter: CharacterBuilder.#onToggleBoostFilter,
       ancestryMode: CharacterBuilder.#onAncestryMode,
       boost: CharacterBuilder.#onBoost,
       skill: CharacterBuilder.#onSkill,
@@ -355,12 +360,13 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
     });
   }
 
-  #cards(type, list, selectedUuid, describe) {
+  /** Cards for a step; `keep` filters further (background boosts), the selected entry always stays */
+  #cards(type, list, selectedUuid, describe, keep = () => true) {
     const hidden = hiddenRarities();
     const search = (this.filters.search[type] ?? '').toLocaleLowerCase();
     return list
       .filter((e) => !hidden.includes(e.rarity))
-      .filter((e) => e.uuid === selectedUuid || this.filters.rarities.includes(e.rarity))
+      .filter((e) => e.uuid === selectedUuid || (this.filters.rarities.includes(e.rarity) && keep(e)))
       .map((e) => ({
         uuid: e.uuid,
         kind: type,
@@ -390,6 +396,15 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       this.descriptions.set(uuid, { name: doc?.name ?? '', img: doc?.img, html });
     }
     return this.descriptions.get(uuid);
+  }
+
+  /** Attribute chips for the background step: show backgrounds that can boost any chosen attribute */
+  #boostChips() {
+    return ATTRIBUTES.map((a) => ({
+      key: a,
+      label: attributeLabel(a),
+      on: this.filters.boosts.includes(a)
+    }));
   }
 
   #rarityChips() {
@@ -472,22 +487,36 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
           heading: localize('builder.background.heading'),
           hint: localize('builder.background.hint'),
           rarities: this.#rarityChips(),
+          boostChips: this.#boostChips(),
           cardStep: true,
           searchKind: 'background',
           search: this.filters.search.background ?? '',
-          detail: await this.#selectedDetail(s.background),
-          cards: this.#cards('background', abc.background, s.background, (e) => {
-            const trained = [
-              ...(e.system.trainedSkills?.value ?? []).map((sk) =>
-                game.i18n.localize(CONFIG.PF2E.skills?.[sk]?.label ?? sk)
-              ),
-              ...(e.system.trainedSkills?.lore ?? [])
-            ];
-            return {
-              line: boostText(e.system.boosts),
-              sub: trained.length ? localize('builder.background.trains', { skills: trained.join(', ') }) : null
-            };
-          })
+          // Backgrounds share one placeholder icon, so their cards and details go without art
+          detail: withoutArt(await this.#selectedDetail(s.background)),
+          cards: this.#cards(
+            'background',
+            abc.background,
+            s.background,
+            (e) => {
+              const trained = [
+                ...(e.system.trainedSkills?.value ?? []).map((sk) =>
+                  game.i18n.localize(CONFIG.PF2E.skills?.[sk]?.label ?? sk)
+                ),
+                ...(e.system.trainedSkills?.lore ?? [])
+              ];
+              return {
+                noArt: true,
+                line: boostText(e.system.boosts),
+                sub: trained.length ? localize('builder.background.trains', { skills: trained.join(', ') }) : null
+              };
+            },
+            (e) => {
+              const chosen = this.filters.boosts;
+              if (!chosen.length) return true;
+              const offered = backgroundBoostOptions(e.system.boosts);
+              return chosen.some((a) => offered.has(a));
+            }
+          )
         };
 
       case 'class':
@@ -892,6 +921,13 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       s.spellTradition = null;
     }
     this.render();
+  }
+
+  static #onToggleBoostFilter(event, target) {
+    const a = target.dataset.attribute;
+    const list = this.filters.boosts;
+    this.filters.boosts = list.includes(a) ? list.filter((x) => x !== a) : [...list, a];
+    this.render({ parts: ['body'] });
   }
 
   static #onToggleRarity(event, target) {

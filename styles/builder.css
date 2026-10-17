@@ -164,6 +164,20 @@
   flex-wrap: wrap;
 }
 
+/* Background boost filter: a second toolbar row */
+.lvlup-builder .lvlb-boost-filter {
+  margin-top: -4px;
+}
+
+.lvlup-builder .lvlb-filter-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lvl-ink-muted);
+  margin-right: 4px;
+}
+
 .lvlup-builder .lvlb-search {
   position: relative;
   flex: 1;
@@ -363,6 +377,15 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
+}
+
+/* Cards without art (backgrounds): keep the name clear of the check mark */
+.lvlup-builder .lvlb-card.no-art .lvlb-card-body {
+  padding: 12px 14px 14px;
+}
+
+.lvlup-builder .lvlb-card.no-art.selected .lvlb-card-body {
+  padding-right: 44px;
 }
 
 .lvlup-builder .lvlb-card-name {

@@ -437,7 +437,8 @@
       "background": {
         "heading": "Choose a background",
         "hint": "Your background gives two attribute boosts, a trained skill and a skill feat.",
-        "trains": "Trains {skills}"
+        "trains": "Trains {skills}",
+        "boostFilter": "Boosts"
       },
       "class": {
         "heading": "Choose a class",
