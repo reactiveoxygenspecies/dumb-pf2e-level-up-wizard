@@ -42,7 +42,7 @@ The wizard previews the character at the new level and offers exactly the feat s
 
 ### Spells are kept up to date
 
-For bard, cleric, druid, magus, oracle, psychic, sorcerer, summoner, witch and wizard, the wizard updates the class spellcasting entry's slots at every level and asks for the new repertoire, spellbook or familiar spells. From level 3, spontaneous casters also pick their signature spells here.
+For bard, cleric, druid, magus, oracle, psychic, sorcerer, summoner, witch and wizard, the wizard updates the class spellcasting entry's slots at every level and asks for the new repertoire, spellbook or familiar spells. From level 3, spontaneous casters also pick their signature spells here. A spontaneous caster can also swap one repertoire spell for another of the same rank at each level, as the rules allow.
 
 ![The spells step for a level 5 wizard: rank 3 slots added and Fireball chosen for the spellbook](screenshots/steps-spells.png)
 
@@ -64,19 +64,27 @@ After applying, a chat card lists what was chosen, and a whisper lists anything 
 
 ### Character builder
 
-A character without a class gets a builder instead of the level-up wizard: ancestry, heritage, background, class, attribute boosts, trained skills, level-1 feats, spells for casters, languages and deity, then a review. The system previews the character after every choice and nothing is saved until "Create character". The build can be undone from the history like a level-up.
+A character without a class gets a builder instead of the level-up wizard: ancestry, heritage, background, class, the class's level-1 choices, attribute boosts, trained skills, level-1 feats, spells for casters, languages and deity, then a review. The system previews the character after every choice and nothing is saved until "Create character". The build can be undone from the history like a level-up.
 
 ![The character builder's ancestry step, with Elf selected and the character summary on the right](screenshots/builder-ancestry.png)
+
+The class's level-1 choices get a step of their own: a sorcerer's bloodline, a cleric's deity, sanctification, doctrine and divine font, a bard's muse, a commander's tactics, a kineticist's gate and impulses, and so on. The options are the ones the system would offer, and the preview follows them, so the skills a bloodline trains are already marked and a bloodline, patron or eidolon sets the spell tradition. The answers are written into the class features, so the system doesn't ask again while the character is created.
 
 Attribute boosts are laid out one row per source, so it's easy to see where each boost comes from and which ones are still free.
 
 ![The builder's attribute boost table: ancestry, background, class key attribute and the four level-1 boosts](screenshots/builder-boosts.png)
 
-### Focus spells
+### Focus and innate spells
 
 After a build or level-up, the focus spells that the new feats and class features grant are offered in one dialog: domain spells, bloodline, school, order and mystery spells, compositions and more. The chosen spells go into a focus spellcasting entry of the right tradition, and PF2e raises the focus pool.
 
+Innate spells from feats and heritages (Seer Elf's detect magic, Arcane Sense, Fiendish Magic and many more) are offered in the same dialog, with the sentence they come from, since they are read from the feat's wording. They go into an innate spellcasting entry of their tradition, at the rank the feat names and with its daily uses.
+
 <img src="screenshots/focus-spells.png" alt="The focus spells dialog offering Dazzling Flash for a cleric with the Sun domain" width="460">
+
+### Alchemist formulas
+
+An alchemist's level-up has a Formulas step for the two common alchemical items the formula book gains each level, up to the new level. Investigators with Alchemical Sciences get one elixir or tool per level the same way. Formulas that a feat or class feature gives once are offered in a dialog after the build or level-up: the alchemist's starting formula book, Alchemical Crafting, the research field's formulas (bombs, healing elixirs, mutagens or poisons), and Alchemist Dedication. Stronger versions of a formula you already know aren't listed, since the base formula covers them. Undo removes the formulas that were added.
 
 ## Coming from the original module
 
@@ -87,10 +95,14 @@ After a build or level-up, the focus spells that the new feats and class feature
 
 ## What changed compared to the original
 
-- **Character builder (new, #81).** A character without a class gets a builder instead of the level-up wizard: ancestry, heritage, background, class, attribute boosts, trained skills, level-1 feats, languages and deity, then a review. The character is previewed by the system after every choice, nothing is saved until "Create character", and the build can be undone from the history like a level-up. Class archetypes that take a level-1 class feat slot (War Mage, #85) are offered in the class feat picker. Casters get a Spells step (see below).
+- **Character builder (new, #81).** A character without a class gets a builder instead of the level-up wizard: ancestry, heritage, background, class, the class's level-1 choices, attribute boosts, trained skills, level-1 feats, languages and deity, then a review. The character is previewed by the system after every choice, nothing is saved until "Create character", and the build can be undone from the history like a level-up. Class archetypes that take a level-1 class feat slot (War Mage, #85) are offered in the class feat picker. Casters get a Spells step (see below).
+- **Class choices in the builder (new).** The choices a class makes at level 1 (bloodline, doctrine, muse, research field, tactics, implement, gate...) and the choices of what they grant (a gate's impulses, a racket's skill) are made in the builder, with the options the system would offer and a description of the selected one. A cleric's or champion's deity is picked here too, since sanctification, cause and divine font depend on it. The preview includes the class features, so skills and spell tradition follow the choices. The answers are written into the features the way the system stores a made choice, so it doesn't prompt for them; choices that only exist once the character does (a feat's own options) are still asked by the system.
 - **Class spellcasting (new).** For bard, cleric, druid, magus, oracle, psychic, sorcerer, summoner, witch and wizard, the builder creates the class spellcasting entry with the right slots and the chosen starting spells (repertoire, spellbook or familiar). At each level-up the wizard updates the slots, including wizard curriculum and magus studious slots, and asks for the new repertoire, spellbook or familiar spells. Cleric divine font slots live in a separate Divine Font entry, kept at the highest rank with heal or harm prepared, apart from the regular slots. A caster without an entry can have one set up at any level. Undo restores the slots and removes what was added. Slot tables are generated from PF2e's class journal (`npm run build:spellcasting -- <pf2e checkout>`). Not automated: animist, the witch's patron lesson spell, and swapping out a summoner's lower-rank spells.
 - **Signature spells (new).** From level 3, bards, sorcerers, oracles and psychics choose one signature spell per rank in the level-up's Spells step. A summoner's repertoire spells are all marked as signature spells.
+- **Repertoire swaps (new).** At each level gained, a spontaneous caster can swap one spell in their repertoire for another spell of the same rank, in the Spells step. The new spell can be a signature spell; undo puts the old one back.
 - **Focus spells (new).** After a build or level-up, the focus spells the new feats and class features give are offered in one dialog: domain spells (following the domain chosen in PF2e's prompt), bloodline, school, order and mystery spells, composition spells, and choices such as devotion or qi spells. The chosen spells go into a focus spellcasting entry of the right tradition, PF2e raises the focus pool, and undo removes them. The data is generated from PF2e's feats, class features and domain journal (`npm run build:focus-spells -- <pf2e checkout>`); witch lessons, eidolon spells and a few archetype feats still need adding by hand, and the reminder whisper says so.
+- **Innate spells (new).** Innate spells that new feats and heritages give are offered in the same dialog as focus spells: the linked spells, the spell picked in a feat's own prompt (Fiendish Magic), or a cantrip picked from a tradition's list (First World Magic). Each goes into an innate entry of its tradition, at the rank the feat names (or heightened to half the level) and with its daily uses. Since the grants are read from the feats' wording (`npm run build:innate-spells -- <pf2e checkout>`), the dialog shows the sentence each one comes from to check. Feats that mention innate spells in a way the script can't read stay in the reminder whisper.
+- **Alchemist formulas (new).** The level-up wizard asks for the alchemist's two new formulas each level (and the investigator's one with Alchemical Sciences) in a Formulas step. Formulas from the starting formula book, Alchemical Crafting, the research field and Alchemist Dedication are offered in a dialog after the build or level-up, limited to the kind the field allows. Known formulas and their stronger versions are left out, and undo removes what was added.
 - **New look.** Every window uses a light "parchment" design that matches the PF2e sheet (Eczar headings from PF2e, Signika body text from Foundry; nothing is downloaded), regardless of Foundry's light or dark theme. The character sheet itself is not restyled.
 - **Single page or steps.** Small level-ups (a few feats) fit on one page with a side panel showing the level change, HP and a checklist. Bigger ones (boosts, many skills) switch to steps automatically.
 - **Review before applying.** A final step lists every change (level, HP, attributes, feats, skills, languages, spells, XP), what's left to do by hand, and a preview of the chat message, instead of a yes/no dialog.
@@ -99,6 +111,7 @@ After a build or level-up, the focus spells that the new feats and class feature
 - **Prerequisite checking (#93, #87, #95).** Every feat is marked as met, not met, or can't be checked. Same-level choices count, so a skill increase or boost picked in the wizard can qualify a feat. Players can hide feats with unmet prerequisites. Nothing is ever blocked.
 - **Applied as one change, with undo (#91).** All actor changes go out in one update; if adding the feats fails, everything is rolled back. Each level-up is recorded, and the most recent one can be undone from the wizard, the history window (right-click the hat), or the API.
 - **Intelligence increases (#32).** When a boost raises the Intelligence modifier, the wizard asks for the extra trained skill and offers the extra language.
+- **Feats that train a skill you already have.** A feat that makes you trained in a skill (Bouncy Goblin, the lore feats, many dedications) gives another skill of your choice when you're already trained in it. The builder and the wizard spot this, counting the background, class, this level's skill increases and the other picked feats, and ask for the other skill right under the feat. It's applied with the rest and undone with it.
 - **Languages.** Unassigned language slots can be filled in the wizard, respecting the campaign's language rarities.
 - **Lore skills** can be increased (they were written to the wrong place before).
 - **Attribute boosts** use the system's own allowed-boost counts and partial-boost rule, and skip characters with manually entered attributes.

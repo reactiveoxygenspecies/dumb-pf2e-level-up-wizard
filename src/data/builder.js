@@ -1,11 +1,19 @@
 import { MODULE_ID } from '../constants.js';
-import { attributeLabel, escapeHTML, localize, rankLabel } from '../helpers/utility.js';
+import { attributeLabel, escapeHTML, localize, rankLabel, sluggify } from '../helpers/utility.js';
 import { getFeatSlots } from './featSlots.js';
 import { loadDocument } from './abcIndex.js';
 import { applyExtraEntry, extraEntryChanges, getHistory, HISTORY_LIMIT, topLevelIds } from './apply.js';
 import { entrySource, extraEntrySpellSlug, spellSource } from './spellcasting.js';
 import { findSpellUuid } from './spellIndex.js';
 import { offerFocusSpells } from './focusSpells.js';
+import { offerFormulas } from './formulas.js';
+import {
+  chosenGrants,
+  hasSelections,
+  levelOneFeatures,
+  withGrantedAnswers,
+  writeSelections
+} from './classChoices.js';
 
 export const ATTRIBUTES = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 const ABC_ORDER = ['ancestry', 'heritage', 'background', 'deity', 'class'];
@@ -56,6 +64,9 @@ export const createBuildState = (actor) => {
     skills: [],
     languages: [],
     feats: {},
+    // Skills picked instead of a feat's training the character already has, by overlap key
+    featSkills: {},
+    classChoices: {},
     spellTradition: null,
     spells: {}
   };
@@ -115,7 +126,7 @@ export const canPick = (boosts, picks, attr) =>
 /** Compendium item ids are reused across renders so feat slots keyed by them stay stable */
 const stableIds = new Map();
 
-const baseSource = async (uuid) => {
+export const baseSource = async (uuid) => {
   const doc = await loadDocument(uuid);
   if (!doc) return null;
   const source = doc.toObject();
@@ -166,16 +177,68 @@ export const buildSources = async (state) => {
       sources.background.system.rules[choice.index].selection = state.backgroundSkill;
     }
   }
+  sources.features = [];
+  sources.granted = [];
   if (sources.class) {
     const key = sources.class.system.keyAbility ?? {};
     key.selected = key.value?.length === 1 ? key.value[0] : (state.keyAttribute ?? null);
+    // The class itself can ask too (a fighter's Acrobatics or Athletics)
+    writeSelections(sources.class, state.class, state.classChoices ?? {});
+    Object.assign(sources, await classFeatureSources(sources.class, state.classChoices ?? {}));
   }
   return sources;
+};
+
+/**
+ * The class's level-1 features with the build's answers written in, and the items those answers
+ * grant (the chosen bloodline, doctrine, ...) with their own answers. The features are what the
+ * system would add with the class; the granted items are only for the preview, since the system
+ * grants them itself.
+ */
+const classFeatureSources = async (classSource, choices) => {
+  const features = [];
+  const granted = [];
+  for (const entry of levelOneFeatures(classSource)) {
+    const source = await baseSource(entry.uuid);
+    if (source?.type !== 'feat') continue;
+    source.system.location = classSource._id;
+    source.system.level = { ...(source.system.level ?? {}), value: entry.level };
+    writeSelections(source, entry.uuid, choices);
+    // Roll options as the system leaves them once a choice is made: a chosen item adds its slug
+    // ("kinetic-gate:first-element:fire-gate"), which later choices can depend on. Preview only: on
+    // creation the system adds the slug itself.
+    const rollOptions = {};
+    for (const grant of chosenGrants(source, entry.uuid, choices)) {
+      const grantedSource = await baseSource(grant.uuid);
+      if (!grantedSource) continue;
+      writeSelections(grantedSource, grant.uuid, choices);
+      foundry.utils.setProperty(grantedSource, 'flags.pf2e.grantedBy', { id: source._id, onDelete: 'cascade' });
+      granted.push({ uuid: grant.uuid, source: grantedSource, parentKey: `${entry.uuid}#${grant.choiceIndex}` });
+      const option = source.system.rules[grant.choiceIndex].rollOption;
+      if (typeof option === 'string') {
+        rollOptions[grant.choiceIndex] = `${option}:${grantedSource.system?.slug || sluggify(grantedSource.name)}`;
+      }
+    }
+    features.push({ ...entry, source, rollOptions, answered: hasSelections(source) });
+  }
+  return { features, granted };
 };
 
 /* -------------------------------------------- */
 /*  Preview                                     */
 /* -------------------------------------------- */
+
+/** A class feature as the preview has it: with the roll options its made choices set */
+const previewFeature = (feature) => {
+  const entries = Object.entries(feature.rollOptions ?? {});
+  if (!entries.length) return feature.source;
+  const source = foundry.utils.deepClone(feature.source);
+  for (const [index, option] of entries) source.system.rules[index].rollOption = option;
+  return source;
+};
+
+/** Skills the build trains itself: the free picks and the skills taken instead of a feat's training */
+export const trainedSkills = (state) => [...new Set([...state.skills, ...Object.values(state.featSkills ?? {})])];
 
 /**
  * The character as it will be once built, prepared by the system in memory. Everything shown in
@@ -184,11 +247,15 @@ export const buildSources = async (state) => {
 export const buildPreview = (actor, state, sources) => {
   const source = actor.toObject();
   const replaced = new Set(ABC_ORDER.filter((t) => sources[t]));
+  // A new class brings its own features; the old class's go with it
+  const oldFeature = (i) => !!sources.class && i.type === 'feat' && i.system?.category === 'classfeature';
   const items = [
-    ...source.items.filter((i) => !replaced.has(i.type)),
-    ...ABC_ORDER.map((t) => sources[t]).filter(Boolean)
+    ...source.items.filter((i) => !replaced.has(i.type) && !oldFeature(i)),
+    ...ABC_ORDER.map((t) => sources[t]).filter(Boolean),
+    ...(sources.features ?? []).map(previewFeature),
+    ...(sources.granted ?? []).map((g) => g.source)
   ];
-  const skills = Object.fromEntries(state.skills.map((slug) => [slug, { rank: 1 }]));
+  const skills = Object.fromEntries(trainedSkills(state).map((slug) => [slug, { rank: 1 }]));
   const languages = [
     ...new Set([...(source.system.details?.languages?.value ?? []), ...state.languages])
   ];
@@ -350,6 +417,43 @@ export const boostProblems = (state, sources) => {
 /*  Apply                                       */
 /* -------------------------------------------- */
 
+/**
+ * Add the class. Features whose choices the build answered are left out of the class's feature list
+ * and added right after with the answers in place, so the system doesn't ask for them; the list is
+ * then put back as it was. Returns the ids of those features.
+ */
+const createClass = async (sources, create, created) => {
+  const ids = new Set();
+  if (!sources.class) return ids;
+  const answered = sources.features.filter((f) => f.answered);
+  if (!answered.length) {
+    await create([sources.class]);
+    return ids;
+  }
+  const classSource = foundry.utils.deepClone(sources.class);
+  for (const feature of answered) delete classSource.system.items[feature.key];
+  await create([classSource]);
+  const classItem = created.find((i) => i.type === 'class');
+  if (!classItem) return ids;
+  const order = levelOneFeatures(sources.class).map((f) => f.key);
+  // Fresh ids: the preview's may already be taken by an earlier build's features
+  const features = answered.map((feature) => ({
+    ...feature.source,
+    _id: foundry.utils.randomID(),
+    // The order the system gives class features
+    sort: order.indexOf(feature.key) * 100 * feature.level,
+    system: { ...feature.source.system, location: classItem.id }
+  }));
+  for (const feature of features) ids.add(feature._id);
+  // The chosen items' own answers (a gate's impulses) travel on the documents they're granted from
+  await withGrantedAnswers(sources.granted, () => create(features));
+  await classItem.update(
+    { 'system.items': Object.fromEntries(answered.map((f) => [f.key, sources.class.system.items[f.key]])) },
+    { [MODULE_ID]: { build: true } }
+  );
+  return ids;
+};
+
 const featSource = async (pick) => {
   const doc = await fromUuid(pick.uuid);
   if (!doc) throw new Error(`Feat not found: ${pick.uuid}`);
@@ -374,11 +478,12 @@ const featSource = async (pick) => {
 export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
   const sources = await buildSources(state);
   const sourceSystem = actor._source.system;
+  const skills = trainedSkills(state);
   const before = {
     level: actor.level,
     xp: sourceSystem.details?.xp?.value ?? 0,
     skills: Object.fromEntries(
-      state.skills.map((s) => [s, sourceSystem.skills?.[s]?.rank ?? 0])
+      skills.map((s) => [s, sourceSystem.skills?.[s]?.rank ?? 0])
     ),
     lores: {},
     boosts: { 1: [...(sourceSystem.build?.attributes?.boosts?.[1] ?? [])] },
@@ -391,7 +496,7 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     'system.build.attributes.boosts.1': [...state.level1]
   };
   if (state.name && state.name !== actor.name) update.name = state.name;
-  for (const slug of state.skills) update[`system.skills.${slug}.rank`] = 1;
+  for (const slug of skills) update[`system.skills.${slug}.rank`] = 1;
   if (state.languages.length) {
     update['system.details.languages.value'] = [
       ...new Set([...before.languages, ...state.languages])
@@ -409,6 +514,7 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
   }
   const created = [];
   const itemsBefore = new Set(actor.items.map((i) => i.id));
+  let answeredIds = new Set();
   const create = async (list) => {
     const docs = list.filter(Boolean);
     if (!docs.length) return;
@@ -419,7 +525,7 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     await actor.update(update, { [MODULE_ID]: { build: true } });
     // Existing items of the same kind are replaced by the system when the new ones are created
     await create([sources.ancestry, sources.heritage, sources.background, sources.deity]);
-    await create([sources.class]);
+    answeredIds = await createClass(sources, create, created);
     await create(featSources);
     // The class spellcasting entry, its slots and the starting spells
     if (spellPlan?.rules && spellPlan.tradition) {
@@ -473,6 +579,13 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
   );
   created.push(...focus.created);
 
+  // Starting formulas: the alchemist's formula book, Alchemical Crafting and the research field. The
+  // field is only known once the system has asked for it, so these are picked after creation.
+  const formulas = await offerFormulas(
+    actor,
+    actor.items.filter((i) => !itemsBefore.has(i.id))
+  );
+
   // A cancelled choice prompt (e.g. a ChoiceSet) makes the system skip that feat
   const createdSources = new Set(created.map((i) => i.sourceId));
   const added = picks.filter((_, i) => createdSources.has(featSources[i]._stats.compendiumSource));
@@ -487,7 +600,7 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
       uuid: p.uuid,
       slot: p.slot.groupLabel
     })),
-    skills: state.skills.map((s) => ({
+    skills: skills.map((s) => ({
       label: game.i18n.localize(CONFIG.PF2E.skills?.[s]?.label ?? s),
       rank: rankLabel(1)
     })),
@@ -496,10 +609,15 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
       game.i18n.localize(CONFIG.PF2E.languages?.[l] ?? l)
     ),
     potency: [],
-    build: ABC_ORDER.map((t) => created.find((i) => i.type === t)?.name).filter(Boolean),
+    // The ancestry, heritage, background, deity and class, then what the class choices granted
+    build: [
+      ...ABC_ORDER.map((t) => created.find((i) => i.type === t)?.name).filter(Boolean),
+      ...created.filter((i) => answeredIds.has(i.flags?.pf2e?.grantedBy?.id)).map((i) => i.name)
+    ],
     spells: created
       .filter((i) => i.type === 'spell')
-      .map((i) => ({ name: i.name, uuid: i.sourceId }))
+      .map((i) => ({ name: i.name, uuid: i.sourceId })),
+    formulas
   };
 
   const entry = {
@@ -514,6 +632,7 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
     languagesChanged: state.languages.length > 0,
     before,
     createdItemIds: topLevelIds(created),
+    addedFormulas: formulas.map((f) => f.uuid),
     summary
   };
   try {
@@ -532,6 +651,11 @@ export const applyBuild = async (actor, state, featPicks, spellPlan = null) => {
       summary.build.length ? `<p>${summary.build.map(escapeHTML).join(' · ')}</p>` : '',
       summary.feats.length
         ? `<p><strong>${localize('messages.global.feats')}</strong> ${summary.feats
+            .map((f) => `@UUID[${f.uuid}]{${escapeHTML(f.name)}}`)
+            .join(', ')}</p>`
+        : '',
+      formulas.length
+        ? `<p><strong>${localize('messages.global.formulas')}</strong> ${formulas
             .map((f) => `@UUID[${f.uuid}]{${escapeHTML(f.name)}}`)
             .join(', ')}</p>`
         : ''

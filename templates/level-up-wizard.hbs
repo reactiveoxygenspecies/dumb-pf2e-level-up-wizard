@@ -209,6 +209,26 @@
               {{/if}}
               {{#if spells.noPicks}}<p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.noPicks'}}</p>{{/if}}
               {{#with spells}}{{#if groups.length}}{{> lvlupSpellPicker spellGroups=groups}}{{/if}}{{/with}}
+              {{#if spells.swaps}}
+                <div class="lvl-swaps">
+                  <h3>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.swapHeader'}}</h3>
+                  <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.swapHint'}}</p>
+                  {{#each spells.swaps.rows}}
+                    <label class="form-row">
+                      <span>{{label}}</span>
+                      <select data-swap-out="{{index}}" name="swap-{{index}}">
+                        <option value="">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.swapNone'}}</option>
+                        {{#each ranks}}
+                          <optgroup label="{{label}}">
+                            {{#each options}}<option value="{{id}}" {{#if selected}}selected{{/if}} {{#if disabled}}disabled{{/if}}>{{name}}</option>{{/each}}
+                          </optgroup>
+                        {{/each}}
+                      </select>
+                    </label>
+                    {{#if groups.length}}{{> lvlupSpellPicker spellGroups=groups}}{{/if}}
+                  {{/each}}
+                </div>
+              {{/if}}
               {{#if spells.signature}}
                 <div class="lvl-signature">
                   <h3>{{localize 'DUMB_LEVEL_UP_WIZARD.menu.spells.signatureHeader'}}</h3>
@@ -229,6 +249,15 @@
                 </div>
               {{/if}}
             {{/if}}
+          </section>
+        {{/if}}
+
+        {{! Formulas the class adds to the formula book at this level }}
+        {{#if show.formulas}}
+          <section class="choice-block formulas" aria-labelledby="formulas-h">
+            <h2 id="formulas-h" class="block-title">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.formulas.header'}}</h2>
+            <p class="hint">{{localize 'DUMB_LEVEL_UP_WIZARD.menu.formulas.hint'}}</p>
+            {{> lvlupSpellPicker spellGroups=formulas.groups}}
           </section>
         {{/if}}
 

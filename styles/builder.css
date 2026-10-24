@@ -404,6 +404,20 @@
   color: var(--lvl-ink-muted);
 }
 
+/* A second set of cards under the main grid (versatile heritages) */
+.lvlup-builder .lvlb-card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--lvl-hairline);
+}
+
+/* Search can hide every card in the group; drop its heading too */
+.lvlup-builder .lvlb-card-group:not(:has(.lvlb-card:not([hidden]))) {
+  display: none;
+}
+
 .lvlup-builder .lvlb-empty {
   grid-column: 1 / -1;
   color: var(--lvl-ink-muted);
@@ -700,6 +714,28 @@
   border: 1px solid var(--lvl-hairline);
 }
 
+/* "Already trained in Acrobatics: pick another skill", on its own line under the feat */
+.lvlup-builder .lvlb-feat-slot:has(.lvlb-replacement) {
+  flex-wrap: wrap;
+}
+
+.lvlup-builder .lvlb-replacement {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0 0 12px;
+  border-top: 1px solid var(--lvl-hairline-soft);
+}
+
+.lvlup-builder .lvlb-replacement.lvlb-open {
+  border-left: 4px solid var(--lvl-crimson);
+}
+
+.lvlup-builder .lvlb-replacement .lvlb-hint {
+  margin: 0;
+}
+
 .lvlup-builder .lvlb-feat-slot.empty {
   background: transparent;
   border: 2px dashed var(--lvl-border);
@@ -827,6 +863,75 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+/* Class choices: one panel per choice, the open ones marked until answered */
+
+.lvlup-builder .lvlb-choice {
+  padding: 14px 16px;
+  border: 1px solid var(--lvl-hairline);
+  border-radius: var(--lvl-radius-l);
+  background: var(--lvl-paper);
+}
+
+.lvlup-builder .lvlb-choice.nested {
+  margin-left: 24px;
+}
+
+.lvlup-builder .lvlb-section.lvlb-open {
+  border-left: 4px solid var(--lvl-crimson);
+  padding-left: 13px;
+}
+
+.lvlup-builder .lvlb-choice h2 {
+  margin: 0;
+}
+
+.lvlup-builder .lvlb-choice-cards {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.lvlup-builder .lvlb-choice-cards .lvlb-card {
+  flex-direction: row;
+  align-items: center;
+}
+
+.lvlup-builder .lvlb-choice-cards .lvlb-card-art {
+  flex: none;
+  align-self: stretch;
+  width: 52px;
+  height: auto;
+  min-height: 52px;
+}
+
+.lvlup-builder .lvlb-choice-cards .lvlb-card-art img {
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.lvlup-builder .lvlb-choice-cards .lvlb-card-body {
+  padding: 8px 10px;
+}
+
+.lvlup-builder .lvlb-choice-cards .lvlb-card.selected .lvlb-card-body {
+  padding-right: 40px;
+}
+
+.lvlup-builder .lvlb-choice-cards .lvlb-card-name {
+  font-size: 16px;
+}
+
+.lvlup-builder .lvlb-choice-cards .lvlb-card-check {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+}
+
+.lvlup-builder .lvlb-card:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 /* Review */
@@ -1205,6 +1310,12 @@
   color: var(--lvl-ink-muted);
 }
 
+/* What a group takes, when it isn't plain from the label (formulas: "Common 1st-level bombs") */
+.dumb-pf2e-level-up-wizard .lvl-spell-hint {
+  margin: 0 16px 8px;
+  color: var(--lvl-ink-muted);
+}
+
 .dumb-pf2e-level-up-wizard .lvl-spell-slots {
   display: flex;
   flex-wrap: wrap;
@@ -1247,21 +1358,24 @@
   gap: 12px;
 }
 
-.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-signature {
+.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-signature,
+.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-swaps {
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding-top: 4px;
 }
 
-.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-signature h3 {
+.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-signature h3,
+.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-swaps h3 {
   margin: 0;
   font-family: var(--lvl-font-display);
   font-size: 1.05rem;
   border: none;
 }
 
-.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-signature .form-row > span {
+.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-signature .form-row > span,
+.dumb-pf2e-level-up-wizard.lvlup-wizard .lvl-swaps .form-row > span {
   min-width: 70px;
 }
 
@@ -1333,6 +1447,15 @@
   vertical-align: middle;
 }
 
+/* "Innate · 1/day": what kind of spell a group gives, next to its source */
+.dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-kind {
+  margin-left: 6px;
+  font-family: var(--lvl-font-body);
+  font-size: 0.8em;
+  font-weight: 400;
+  color: var(--lvl-ink-muted);
+}
+
 .dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-quote {
   margin: 0 0 4px;
   color: var(--lvl-ink-muted);
@@ -1342,4 +1465,19 @@
 .dumb-pf2e-level-up-wizard.lvlup-focus-dialog .lvl-focus-quote q {
   font-style: italic;
   color: var(--lvl-ink-soft);
+}
+
+/* Formula dialog (formulas from new feats and class features) */
+.dumb-pf2e-level-up-wizard.lvlup-formula-dialog .window-content {
+  padding: 14px 16px 16px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-formula-dialog .lvl-formula-dialog > p {
+  margin: 0 0 12px;
+}
+
+.dumb-pf2e-level-up-wizard.lvlup-formula-dialog .lvl-spell-list {
+  max-height: 240px;
 }

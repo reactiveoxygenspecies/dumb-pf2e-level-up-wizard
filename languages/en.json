@@ -34,7 +34,8 @@
         "review": "Review",
         "complete": "complete",
         "optional": "optional",
-        "spells": "Spells"
+        "spells": "Spells",
+        "formulas": "Formulas"
       },
       "rail": {
         "label": "Level-up summary",
@@ -58,6 +59,9 @@
       "feats": {
         "header": "Feats",
         "title": "Choose your level {level} feats",
+        "alreadyTrained": "{feat} trains {skill}, which you're already trained in. Choose another skill to become trained in instead.",
+        "replacementMissing": "Skill instead of {feat}'s training",
+        "replacementShort": "Feat skills",
         "chip": "{group} · level {level}",
         "chipShort": "{group} {level}",
         "optional": "Optional",
@@ -164,6 +168,10 @@
       "tooltips": {
         "sendToChat": "Post to chat"
       },
+      "formulas": {
+        "header": "Formulas",
+        "hint": "New formulas go into your formula book. Stronger versions of a formula you already know aren't listed: the base formula covers them."
+      },
       "spells": {
         "header": "Spells",
         "managed": "Slots and spells are kept up to date in {entry}.",
@@ -176,7 +184,13 @@
         "signatureHeader": "Signature spells",
         "signatureHint": "Choose one spell of each rank. You can cast a signature spell heightened to any rank you have slots for.",
         "signatureChoose": "Choose a signature spell",
-        "signatureAll": "Every spell in your repertoire is a signature spell; new ones are marked for you."
+        "signatureAll": "Every spell in your repertoire is a signature spell; new ones are marked for you.",
+        "swapHeader": "Swap a spell",
+        "swapHint": "Optional. When you gain a level, you can swap one spell in your repertoire for another spell of the same rank.",
+        "swapOut": "Swap out",
+        "swapNumbered": "Swap {number}",
+        "swapNone": "Keep all my spells",
+        "swapped": "Swapped"
       }
     },
     "selector": {
@@ -262,7 +276,8 @@
       "safeHint": "Everything is applied in one step. Changed your mind later? Undo it from the level-up history.",
       "chat": "Chat will show",
       "spells": "Spells",
-      "signature": "Signature spells"
+      "signature": "Signature spells",
+      "formulas": "Formulas"
     },
     "settings": {
       "showButton": {
@@ -353,7 +368,9 @@
         "languages": "Languages:",
         "potency": "Skill potency:",
         "noChoices": "No new choices at this level.",
-        "spells": "New spells:"
+        "spells": "New spells:",
+        "swaps": "Swapped spells:",
+        "formulas": "New formulas:"
       },
       "personal": {
         "header": "{actorName}: still to do",
@@ -396,6 +413,7 @@
         "heritage": "Heritage",
         "background": "Background",
         "class": "Class",
+        "choices": "Class choices",
         "boosts": "Boosts",
         "skills": "Skills",
         "feats": "Feats",
@@ -431,8 +449,10 @@
       },
       "heritage": {
         "heading": "Choose a heritage",
-        "hint": "Heritages for {ancestry}, plus versatile heritages any ancestry can take.",
-        "versatile": "Versatile"
+        "hint": "Heritages for {ancestry}. Versatile heritages any ancestry can take are listed below.",
+        "versatile": "Versatile",
+        "versatileHeading": "Versatile heritages",
+        "versatileHint": "Not tied to an ancestry: any ancestry can take one instead of its own heritages."
       },
       "background": {
         "heading": "Choose a background",
@@ -487,7 +507,8 @@
         "browse": "Browse feats",
         "change": "Change",
         "remove": "Remove feat",
-        "empty": "No feats to choose at level 1 with these choices."
+        "empty": "No feats to choose at level 1 with these choices.",
+        "alreadyTrained": "{feat} trains {skill}, which you're already trained in. Choose another skill to become trained in instead."
       },
       "languages": {
         "heading": "Languages and deity",
@@ -496,6 +517,14 @@
         "pick": "Extra languages ({chosen} of {count})",
         "suggestedNote": "Highlighted languages are the usual picks for your ancestry. Unpicked slots can be filled later on the sheet.",
         "short": "Languages"
+      },
+      "choices": {
+        "heading": "{className} choices",
+        "hint": "The choices your class makes at level 1. The preview, skills and spells follow what you pick here.",
+        "optional": "(Optional.)",
+        "empty": "Nothing to choose from: no compendium offers an option for this.",
+        "none": "Your class has no level-1 choices to make.",
+        "later": "A few choices can only be made once the character exists (a feat's own options, for example). The system asks for those while the character is created."
       },
       "deity": {
         "heading": "Deity",
@@ -514,7 +543,7 @@
         "languages": "Languages",
         "replaces": "These items already on the sheet will be replaced:",
         "levelNote": "The character is level {level}. Creating sets it to level 1; use the level-up wizard afterwards.",
-        "prompts": "The system may ask a few follow-up questions while the character is created, such as your background's skill or your class's specialisation.",
+        "prompts": "The system may still ask a few follow-up questions while the character is created, such as a feat's own options.",
         "undo": "You can undo this from the level-up history.",
         "spells": "Spells",
         "spellsPrepared": "Prepared daily from the full list"
@@ -555,7 +584,10 @@
       "extraEntry": {
         "divine-font": "Divine Font"
       },
-      "rankRange": "Spells of rank {min} to {max}"
+      "rankRange": "Spells of rank {min} to {max}",
+      "swap": {
+        "replacement": "Replacement for {spell} ({rank})"
+      }
     },
     "focus": {
       "title": "Focus spells",
@@ -570,6 +602,39 @@
       "checkTooltip": "Found from the feat's wording, not checked by hand. Make sure the spell applies.",
       "checkHint": "The feat says:",
       "introCheck": "Spells tagged \"Check\" were found from the feat's wording rather than checked by hand: read the quote and untick them if they don't apply."
+    },
+    "innate": {
+      "title": "Innate spells",
+      "titleMixed": "Focus and innate spells",
+      "intro": "Your new feats and features give these innate spells. Untick any that don't apply, then add them to the sheet.",
+      "introMixed": "Your new feats and features give these focus and innate spells. Untick any that don't apply, then add them to the sheet.",
+      "add": "Add spells",
+      "tag": "Innate",
+      "atWill": "at will",
+      "perDay": "{count}/day",
+      "entryName": "{tradition} Innate Spells"
+    },
+    "formulas": {
+      "atLevel": "{name} · level {level}",
+      "level": "Level {level}",
+      "search": "Search alchemical items",
+      "none": "No alchemical items match. Check the compendium settings.",
+      "read": "Read the item",
+      "failed": "The formulas could not be added; add them on the Crafting tab.",
+      "kind": {
+        "any": "Common alchemical items of level {level} or lower.",
+        "bomb": "Common alchemical bombs of level {level} or lower.",
+        "healingElixir": "Common alchemical elixirs with the healing trait, of level {level} or lower.",
+        "mutagen": "Common alchemical mutagens of level {level} or lower.",
+        "poison": "Common alchemical poisons of level {level} or lower.",
+        "elixirOrTool": "Common alchemical elixirs or tools of level {level} or lower."
+      },
+      "dialog": {
+        "title": "Formulas",
+        "intro": "Your new feats and class features add these formulas to your formula book. Stronger versions of a formula you already know aren't listed: the base formula covers them.",
+        "add": "Add formulas",
+        "skip": "Skip"
+      }
     }
   }
 }

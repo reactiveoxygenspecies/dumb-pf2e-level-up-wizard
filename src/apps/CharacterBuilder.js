@@ -19,6 +19,8 @@ import {
   openSlotCount,
   skillChoices
 } from '../data/builder.js';
+import { choiceGroups, chosenOption, settleChoices, traditionFrom } from '../data/classChoices.js';
+import { keepReplacements, overlappingTrainings, pickTrainings } from '../data/featSkills.js';
 import { getFeatIndex } from '../data/featIndex.js';
 import { getSpellIndex } from '../data/spellIndex.js';
 import {
@@ -63,6 +65,7 @@ export const BUILDER_STEPS = [
   'heritage',
   'background',
   'class',
+  'choices',
   'boosts',
   'skills',
   'feats',
@@ -115,6 +118,8 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       boost: CharacterBuilder.#onBoost,
       skill: CharacterBuilder.#onSkill,
       backgroundSkill: CharacterBuilder.#onBackgroundSkill,
+      classChoice: CharacterBuilder.#onClassChoice,
+      featSkill: CharacterBuilder.#onFeatSkill,
       language: CharacterBuilder.#onLanguage,
       openFeatSelector: CharacterBuilder.#onOpenFeatSelector,
       toggleSpell: CharacterBuilder.#onToggleSpell,
@@ -166,8 +171,33 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
 
   /** Rebuild the preview after every choice; trims choices that no longer fit */
   async #refresh() {
-    const sources = await buildSources(this.build);
-    const preview = buildPreview(this.actor, this.build, sources);
+    // The class's choices depend on each other (a cause on the sanctification, an impulse on the
+    // gate), so the preview is rebuilt until the answers settle
+    let sources;
+    let preview;
+    let groups = [];
+    for (let pass = 0; pass < 4; pass++) {
+      sources = await buildSources(this.build);
+      preview = buildPreview(this.actor, this.build, sources);
+      groups = await choiceGroups(
+        preview,
+        [
+          ...(sources.class ? [{ uuid: this.build.class, source: sources.class }] : []),
+          ...sources.features,
+          ...sources.granted
+        ],
+        this.build.classChoices
+      );
+      if (!settleChoices(this.build.classChoices, groups)) break;
+    }
+
+    // A feat training a skill the character already has gives another skill of their choice
+    const trainings = await this.#featTrainings(preview, sources);
+    const kept = keepReplacements(this.build.featSkills, trainings.overlaps);
+    if (Object.keys(kept).length !== Object.keys(this.build.featSkills).length) {
+      this.build.featSkills = kept;
+      preview = buildPreview(this.actor, this.build, sources);
+    }
 
     const skills = skillChoices(preview, sources, this.build);
     if (this.build.skills.length > skills.count) {
@@ -198,7 +228,14 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
     const rules = classSlug ? classRules(classSlug) : null;
     let spells = null;
     if (rules) {
-      const tradition = rules.tradition ?? this.build.spellTradition;
+      // A bloodline, patron or eidolon sets the tradition; a different one starts the spells over
+      const inferred =
+        sources.granted.map((g) => traditionFrom(g.source, classSlug)).find(Boolean) ?? null;
+      if (inferred !== this.build.inferredTradition) {
+        if (this.build.inferredTradition !== undefined && !this.build.spellTradition) this.build.spells = {};
+        this.build.inferredTradition = inferred;
+      }
+      const tradition = rules.tradition ?? this.build.spellTradition ?? inferred;
       const picks = spellPicks(rules, null, 0, 1);
       this.build.spells = trimSpellSelection(this.build.spells, picks);
       spells = { rules, slug: classSlug, tradition, picks };
@@ -206,8 +243,52 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       this.build.spells = {};
     }
 
-    this.view = { sources, preview, skills, languages, slots, prereq, spells };
+    this.view = { sources, preview, skills, languages, slots, prereq, spells, groups, trainings };
     return this.view;
+  }
+
+  /**
+   * Skills the picked feats train (`featTrained`) and those trainings that land on a skill the
+   * character already has (`overlaps`). Replacement skills already picked don't count as trained.
+   */
+  async #featTrainings(preview, sources) {
+    const skillSlugs = Object.keys(CONFIG.PF2E.skills ?? {});
+    const replacements = new Set(Object.values(this.build.featSkills));
+    const trained = skillSlugs.filter((s) => (preview.skills?.[s]?.rank ?? 0) > 0 && !replacements.has(s));
+    const picks = featSlotsFor(preview, sources)
+      .filter((slot) => this.build.feats[slot.key])
+      .map((slot) => ({ key: slot.key, uuid: this.build.feats[slot.key].uuid, name: this.build.feats[slot.key].name }));
+    const perFeat = await pickTrainings(picks, skillSlugs);
+    return {
+      overlaps: overlappingTrainings(perFeat, trained),
+      featTrained: new Set(perFeat.flatMap((p) => p.skills))
+    };
+  }
+
+  /** Skill chips for one overlap: untrained skills nothing else in the build trains */
+  #replacementView(overlap) {
+    const { preview, trainings } = this.view;
+    const chosen = this.build.featSkills[overlap.key] ?? null;
+    const elsewhere = new Set(Object.entries(this.build.featSkills).filter(([k]) => k !== overlap.key).map(([, s]) => s));
+    const skillName = (slug) => game.i18n.localize(CONFIG.PF2E.skills?.[slug]?.label ?? slug);
+    return {
+      key: overlap.key,
+      text: localize('builder.feats.alreadyTrained', { feat: overlap.featName, skill: skillName(overlap.skill) }),
+      chosen: !!chosen,
+      options: Object.keys(CONFIG.PF2E.skills ?? {})
+        .filter(
+          (slug) =>
+            slug === chosen ||
+            ((preview.skills?.[slug]?.rank ?? 0) === 0 && !trainings.featTrained.has(slug) && !elsewhere.has(slug))
+        )
+        .map((slug) => ({ slug, label: skillName(slug), selected: slug === chosen }))
+        .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang))
+    };
+  }
+
+  /** Whether the class's features build on a deity (cleric, champion) */
+  #deityClass() {
+    return DEITY_CLASSES.includes(this.view?.sources.class?.system.slug);
   }
 
   /* FeatSelector host interface: id, actor, selection.feats, selectFeat, evaluateFeat */
@@ -244,9 +325,16 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
   /*  Steps                                       */
   /* -------------------------------------------- */
 
-  /** Steps for this build: Spells only for caster classes the module automates */
+  /**
+   * Steps for this build: class choices only for a class that has some (or needs a deity), Spells
+   * only for caster classes the module automates
+   */
   #steps() {
-    return BUILDER_STEPS.filter((st) => st !== 'spells' || !!this.view?.spells);
+    return BUILDER_STEPS.filter((st) => {
+      if (st === 'spells') return !!this.view?.spells;
+      if (st === 'choices') return !!this.view?.groups.length || this.#deityClass();
+      return true;
+    });
   }
 
   #isComplete(step) {
@@ -261,6 +349,13 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
         return !!s.background;
       case 'class':
         return !!s.class;
+      case 'choices':
+        return (
+          !!v &&
+          !!s.class &&
+          (!this.#deityClass() || !!s.deity) &&
+          v.groups.every((g) => g.optional || !g.options.length || g.key in s.classChoices)
+        );
       case 'boosts':
         return !!v && !!s.ancestry && !!s.background && !!s.class && boostProblems(s, v.sources).length === 0;
       case 'skills': {
@@ -274,11 +369,15 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       }
       // Nothing to choose yet is not the same as done: these depend on earlier picks
       case 'feats':
-        return !!v && !!s.ancestry && !!s.class && v.slots.every((slot) => s.feats[slot.key]);
-      case 'languages': {
-        const deityOk = !DEITY_CLASSES.includes(v?.sources.class?.system.slug) || !!s.deity;
-        return !!v && !!s.ancestry && !!s.class && deityOk;
-      }
+        return (
+          !!v &&
+          !!s.ancestry &&
+          !!s.class &&
+          v.slots.every((slot) => s.feats[slot.key]) &&
+          v.trainings.overlaps.every((o) => s.featSkills[o.key])
+        );
+      case 'languages':
+        return !!v && !!s.ancestry && !!s.class;
       case 'spells': {
         const sp = v?.spells;
         if (!sp) return true;
@@ -464,6 +563,12 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
 
       case 'heritage': {
         const ancestry = abc.ancestry.find((a) => a.uuid === s.ancestry);
+        const cards = this.#cards('heritage', heritagesFor(abc, ancestry), s.heritage, (e) => ({
+          line: e.system.ancestry ? e.system.ancestry.name : localize('builder.heritage.versatile'),
+          sub: null,
+          versatile: !e.system.ancestry
+        }));
+        // The ancestry's own heritages come first; versatile ones get their own section below
         return {
           heading: localize('builder.heritage.heading'),
           hint: ancestry
@@ -474,11 +579,12 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
           searchKind: 'heritage',
           search: this.filters.search.heritage ?? '',
           detail: await this.#selectedDetail(s.heritage),
-          cards: this.#cards('heritage', heritagesFor(abc, ancestry), s.heritage, (e) => ({
-            line: e.system.ancestry ? e.system.ancestry.name : localize('builder.heritage.versatile'),
-            sub: null,
-            versatile: !e.system.ancestry
-          }))
+          cards: cards.filter((c) => !c.versatile),
+          versatileGroup: {
+            heading: localize('builder.heritage.versatileHeading'),
+            hint: localize('builder.heritage.versatileHint'),
+            cards: cards.filter((c) => c.versatile)
+          }
         };
       }
 
@@ -537,6 +643,9 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
           }))
         };
 
+      case 'choices':
+        return this.#choiceContext();
+
       case 'boosts':
         return this.#boostContext(sources, preview);
 
@@ -580,6 +689,9 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
           featSlots: slots.map((slot) => ({
             ...slot,
             pick: s.feats[slot.key] ?? null,
+            replacements: this.view.trainings.overlaps
+              .filter((o) => o.slotKey === slot.key)
+              .map((o) => this.#replacementView(o)),
             groupClass: `group-${['ancestry', 'class', 'archetype', 'skill', 'general', 'mythic'].includes(slot.groupId) ? slot.groupId : 'other'}`
           })),
           noFeatSlots: slots.length === 0
@@ -589,10 +701,8 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
         return this.#spellContext();
 
       case 'languages': {
-        const classSlug = sources.class?.system.slug;
-        const deities = abc.deity
-          .filter((d) => !hiddenRarities().includes(d.rarity))
-          .map((d) => ({ uuid: d.uuid, name: d.name, selected: d.uuid === s.deity }));
+        // A deity class picks its deity with the class choices
+        const deityClass = this.#deityClass();
         return {
           languageStep: true,
           heading: localize('builder.languages.heading'),
@@ -606,9 +716,7 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
             rarityLabel:
               l.rarity === 'common' ? null : game.i18n.localize(CONFIG.PF2E.rarityTraits?.[l.rarity] ?? l.rarity)
           })),
-          deityRequired: DEITY_CLASSES.includes(classSlug),
-          deities,
-          deityNone: !s.deity
+          deityPicker: deityClass ? null : this.#deityPicker(false)
         };
       }
 
@@ -616,6 +724,76 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
         return this.#reviewContext(sources, preview);
     }
     return {};
+  }
+
+  #deityPicker(required) {
+    const s = this.build;
+    return {
+      required,
+      none: !s.deity,
+      deities: this.data.abc.deity
+        .filter((d) => !hiddenRarities().includes(d.rarity))
+        .map((d) => ({ uuid: d.uuid, name: d.name, selected: d.uuid === s.deity }))
+    };
+  }
+
+  /** The class's level-1 choices; a chosen item's own choices sit right under it */
+  async #choiceContext() {
+    const s = this.build;
+    const groups = this.view.groups;
+    const hidden = hiddenRarities();
+    const ordered = groups
+      .filter((g) => !g.parentKey)
+      .flatMap((g) => [g, ...groups.filter((n) => n.parentKey === g.key)]);
+
+    const choiceGroups = [];
+    for (const group of ordered) {
+      const chosen = chosenOption(group, s.classChoices);
+      // Answers in sibling groups of the same item: the same list (tactics, ikons, gate elements), or
+      // the same item picked twice (a gate's two impulses)
+      const takenElsewhere = groups
+        .filter((g) => g !== group && g.uuid === group.uuid)
+        .map((g) => ({ same: g.signature === group.signature, option: chosenOption(g, s.classChoices) }))
+        .filter(({ same, option }) => option && (same || option.uuid))
+        .map(({ option }) => option.label);
+      const chosenIndex = group.options.indexOf(chosen);
+      const options = group.options
+        .map((o, index) => ({ ...o, index }))
+        .filter((o) => o.index === chosenIndex || !hidden.includes(o.rarity))
+        .map((o) => ({
+          index: o.index,
+          label: o.label,
+          img: o.img,
+          rarity: o.rarity,
+          rarityLabel:
+            o.rarity === 'common'
+              ? null
+              : game.i18n.localize(CONFIG.PF2E.rarityTraits?.[o.rarity] ?? o.rarity),
+          selected: o.index === chosenIndex,
+          disabled: o.index !== chosenIndex && takenElsewhere.includes(o.label)
+        }));
+      choiceGroups.push({
+        key: group.key,
+        title: group.itemName,
+        prompt: group.prompt,
+        nested: !!group.parentKey,
+        optional: group.optional,
+        chosen: !!chosen,
+        cards: options.some((o) => o.img),
+        options,
+        empty: !options.length,
+        detail: chosen?.uuid ? await this.#selectedDetail(chosen.uuid) : null
+      });
+    }
+
+    return {
+      choiceStep: true,
+      heading: localize('builder.choices.heading', { className: this.view.sources.class?.name ?? '' }),
+      hint: localize('builder.choices.hint'),
+      deityPicker: this.#deityClass() ? this.#deityPicker(true) : null,
+      choiceGroups,
+      noChoices: !choiceGroups.length
+    };
   }
 
   #boostContext(sources, preview) {
@@ -788,6 +966,18 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       ...['ancestry', 'heritage', 'background', 'class', 'deity']
         .filter((t) => sources[t])
         .map((t) => ({ label: localize(`builder.steps.${t === 'deity' ? 'deity' : t}`), value: sources[t].name })),
+      ...(this.view.groups.length
+        ? [
+            {
+              label: localize('builder.steps.choices'),
+              value:
+                this.view.groups
+                  .map((g) => chosenOption(g, s.classChoices)?.label)
+                  .filter(Boolean)
+                  .join(', ') || '—'
+            }
+          ]
+        : []),
       {
         label: localize('builder.review.attributes'),
         value: ATTRIBUTES.map(
@@ -917,9 +1107,30 @@ export class CharacterBuilder extends LightThemeMixin(HandlebarsApplicationMixin
       s.keyAttribute = null;
       s.skills = [];
       s.feats = {};
+      s.classChoices = {};
       s.spells = {};
       s.spellTradition = null;
+      s.inferredTradition = undefined;
     }
+    this.render();
+  }
+
+  static #onFeatSkill(event, target) {
+    const { key, skill } = target.dataset;
+    const featSkills = this.build.featSkills;
+    if (featSkills[key] === skill) delete featSkills[key];
+    else featSkills[key] = skill;
+    this.render();
+  }
+
+  static #onClassChoice(event, target) {
+    const { key } = target.dataset;
+    const group = this.view?.groups.find((g) => g.key === key);
+    const option = group?.options[Number(target.dataset.option)];
+    if (!option) return;
+    const choices = this.build.classChoices;
+    if (chosenOption(group, choices) === option) delete choices[key];
+    else choices[key] = option.value;
     this.render();
   }
 

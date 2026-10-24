@@ -10,7 +10,15 @@ import {
   loadGrantedArchetypeFeats
 } from '../data/featSlots.js';
 import { getFeatIndex } from '../data/featIndex.js';
+import { keepReplacements, overlappingTrainings, pickTrainings } from '../data/featSkills.js';
 import { findSpellUuid, getSpellIndex } from '../data/spellIndex.js';
+import {
+  describeFormulas,
+  formulaPickerView,
+  getFormulaIndex,
+  knownFormulas,
+  levelUpFormulaPicks
+} from '../data/formulas.js';
 import {
   TRADITIONS,
   classRules,
@@ -22,9 +30,12 @@ import {
   findClassEntry,
   findExtraEntry,
   loadSpellcastingData,
+  repertoireRank,
   signatureAt,
   slotChanges,
-  spellPicks
+  spellPicks,
+  swapCount,
+  swapPick
 } from '../data/spellcasting.js';
 import {
   bindSpellSearch,
@@ -111,13 +122,17 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       feats: {},
       skillIncreases: [],
       intSkills: [],
+      // Skills taken instead of a feat's training the character already has, by overlap key
+      featSkills: {},
       languages: [],
       boosts: {},
       potency: {},
       spells: {},
       spellTradition: null,
       spellSetup: false,
-      signature: null
+      signature: null,
+      swaps: [],
+      formulas: {}
     };
     this.spellSearch = {};
     this.showMissed = false;
@@ -159,7 +174,9 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       clearLanguages: LevelUpWizard.#onClearLanguages,
       toggleAllLanguages: LevelUpWizard.#onToggleAllLanguages,
       toggleSpell: LevelUpWizard.#onToggleSpell,
+      toggleSwap: LevelUpWizard.#onToggleSwap,
       toggleSpellSetup: LevelUpWizard.#onToggleSpellSetup,
+      toggleFormula: LevelUpWizard.#onToggleFormula,
       goStep: LevelUpWizard.#onGoStep,
       nextStep: LevelUpWizard.#onNextStep,
       prevStep: LevelUpWizard.#onPrevStep,
@@ -267,9 +284,11 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       prereqBase,
       xpEnforcement: game.settings.get(MODULE_ID, 'xp-enforcement'),
       languageSlots: 0,
-      spells: this.#planSpells(actor, previousLevel, targetLevel)
+      spells: this.#planSpells(actor, previousLevel, targetLevel),
+      formulas: this.#planFormulas(actor, previousLevel, targetLevel)
     };
     if (plan.spells) plan.spellIndex = await getSpellIndex();
+    if (plan.formulas) plan.formulaIndex = await getFormulaIndex();
 
     // The layout is decided once from what the level asks for, so it doesn't jump while choosing
     const maxRank = plan.maxSkillRank;
@@ -284,8 +303,8 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       potency: potencyLists.length,
       potencyOptions: Math.max(0, ...potencyLists.map((l) => l.length))
     }).layout;
-    // Spell lists are long: a level-up with spells to pick always uses steps
-    if (plan.spells?.picks.length) plan.layout = 'steps';
+    // Spell and formula lists are long: a level-up with either to pick always uses steps
+    if (plan.spells?.picks.length || plan.formulas) plan.layout = 'steps';
 
     this.selection.skillIncreases = new Array(plan.skillIncreaseCount).fill('');
     for (const { set } of boostSets) this.selection.boosts[set] = [];
@@ -323,9 +342,44 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       extraSpellSlug: extraEntrySpellSlug(actor, rules),
       known,
       signature: signatureAt(rules, targetLevel),
+      // Each level gained lets a spontaneous caster swap one repertoire spell for another of its rank
+      swapCount: swapCount(rules, entry, previousLevel, targetLevel),
       className: cls.name,
       attribute: cls.system?.keyAbility?.selected ?? null
     };
+  }
+
+  /** Formulas the class adds to the formula book each level (the alchemist's two), or null */
+  #planFormulas(actor, previousLevel, targetLevel) {
+    const features = (actor.itemTypes?.feat ?? []).map((f) => ({ slug: f.slug ?? sluggify(f.name), name: f.name }));
+    const picks = levelUpFormulaPicks(features, previousLevel, targetLevel);
+    return picks.length ? { picks, known: knownFormulas(actor) } : null;
+  }
+
+  /** View data for the Formulas section */
+  #formulas() {
+    const fp = this.plan.formulas;
+    if (!fp) return null;
+    this.selection.formulas = trimSpellSelection(this.selection.formulas, fp.picks);
+    const chosen = fp.picks.reduce((n, p) => n + (this.selection.formulas[p.key]?.length ?? 0), 0);
+    const total = fp.picks.reduce((n, p) => n + p.count, 0);
+    return {
+      groups: formulaPickerView({
+        picks: fp.picks,
+        index: this.plan.formulaIndex ?? [],
+        selection: this.selection.formulas,
+        known: fp.known,
+        search: this.spellSearch
+      }),
+      chosen,
+      total,
+      complete: chosen === total
+    };
+  }
+
+  /** Names of the formulas picked so far */
+  #formulaNames() {
+    return describeFormulas(this.plan.formulaIndex ?? [], Object.values(this.selection.formulas).flat());
   }
 
   /** Spells are handled when the class entry exists, or when the player chose to set it up now */
@@ -348,6 +402,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     if (active) this.selection.spells = trimSpellSelection(this.selection.spells, sp.picks);
     const chosen = sp.picks.reduce((n, p) => n + (this.selection.spells[p.key]?.length ?? 0), 0);
     const total = sp.picks.reduce((n, p) => n + p.count, 0);
+    const swaps = active && tradition ? this.#swapView(tradition) : null;
     return {
       active,
       setup: !sp.entry,
@@ -370,17 +425,92 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
               index: this.plan.spellIndex ?? [],
               selection: this.selection.spells,
               tradition,
-              known: sp.known,
+              // A spell taken as a swap's replacement isn't offered again
+              known: new Set([...sp.known, ...this.#swaps().map((s) => s.in).filter(Boolean)]),
               hiddenRarities: hiddenRarities(),
               search: this.spellSearch
             })
           : [],
       chosen,
       total,
+      swaps,
       signature: active ? this.#signatureView() : null,
-      complete: !active || (!!tradition && chosen === total && this.#signatureComplete()),
+      complete:
+        !active ||
+        (!!tradition && chosen === total && this.#signatureComplete() && !(swaps?.incomplete ?? 0)),
       noPicks: sp.picks.length === 0
     };
+  }
+
+  /** Swap choices, one per level gained: `{ out: spell id, in: uuid }`, either may be empty */
+  #swaps() {
+    const count = this.#spellsActive() ? (this.plan.spells?.swapCount ?? 0) : 0;
+    const spells = this.plan.spells?.entry?.spells;
+    const previous = this.selection.swaps;
+    this.selection.swaps = Array.from({ length: count }, (_, i) => {
+      const swap = previous[i] ?? {};
+      // A spell swapped out in an earlier row can't be swapped out again
+      const taken = previous.slice(0, i).some((s) => s?.out && s.out === swap.out);
+      const out = swap.out && spells?.get(swap.out) && !taken ? swap.out : null;
+      return { out, in: out ? (swap.in ?? null) : null };
+    });
+    return this.selection.swaps;
+  }
+
+  /** View data for the swap rows: the spell to swap out, then its replacement */
+  #swapView(tradition) {
+    const sp = this.plan.spells;
+    const swaps = this.#swaps();
+    if (!swaps.length) return null;
+    const repertoire = [...(sp.entry?.spells ?? [])]
+      .map((s) => ({ id: s.id, name: s.name, rank: repertoireRank(s) }))
+      .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name, game.i18n.lang));
+    const picks = swaps
+      .map((swap, i) => (swap.out ? swapPick(i, sp.entry.spells.get(swap.out)) : null))
+      .filter(Boolean);
+    const groups = spellPickerView({
+      picks,
+      index: this.plan.spellIndex ?? [],
+      selection: Object.fromEntries(swaps.map((s, i) => [`swap-${i}`, s.in ? [s.in] : []])),
+      tradition,
+      // New spells picked above aren't offered as replacements
+      known: new Set([...sp.known, ...Object.values(this.selection.spells).flat()]),
+      hiddenRarities: hiddenRarities(),
+      search: this.spellSearch
+    }).map((g) => ({ ...g, action: 'toggleSwap' }));
+    const rows = swaps.map((swap, i) => {
+      const ranks = new Map();
+      for (const spell of repertoire) {
+        const label = spell.rank === 0 ? localize('spells.cantrips') : localize('spells.rank', { rank: spell.rank });
+        if (!ranks.has(label)) ranks.set(label, []);
+        ranks.get(label).push({
+          id: spell.id,
+          name: spell.name,
+          selected: swap.out === spell.id,
+          disabled: swap.out !== spell.id && swaps.some((s) => s.out === spell.id)
+        });
+      }
+      return {
+        index: i,
+        label:
+          swaps.length > 1
+            ? localize('menu.spells.swapNumbered', { number: i + 1 })
+            : localize('menu.spells.swapOut'),
+        ranks: [...ranks].map(([label, options]) => ({ label, options })),
+        // The replacement picker, once a spell is chosen to swap out
+        groups: groups.filter((g) => g.key === `swap-${i}`)
+      };
+    });
+    return { rows, incomplete: swaps.filter((s) => s.out && !s.in).length };
+  }
+
+  /** Finished swaps by name: `{ out, in }` */
+  #swapNames() {
+    const spells = this.plan.spells?.entry?.spells;
+    const names = new Map((this.plan.spellIndex ?? []).map((s) => [s.uuid, s.name]));
+    return this.#swaps()
+      .filter((s) => s.out && s.in)
+      .map((s) => ({ out: spells?.get(s.out)?.name ?? s.out, in: names.get(s.in) ?? s.in }));
   }
 
   /** Repertoire spells by rank (held and newly picked), keyed `item:<id>` / `new:<uuid>` */
@@ -388,11 +518,15 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     const sp = this.plan.spells;
     const byRank = {};
     const add = (rank, key, name) => (byRank[rank] ??= []).push({ key, name });
+    // Swapped-out spells leave the repertoire; their replacements join it
+    const swaps = this.#swaps();
+    const out = new Set(swaps.map((s) => s.out).filter(Boolean));
     for (const spell of sp.entry?.spells ?? []) {
-      if (!spell.isCantrip) add(spell.baseRank, `item:${spell.id}`, spell.name);
+      if (!spell.isCantrip && !out.has(spell.id)) add(spell.baseRank, `item:${spell.id}`, spell.name);
     }
     const index = new Map((this.plan.spellIndex ?? []).map((s) => [s.uuid, s]));
-    for (const uuid of Object.values(this.selection.spells).flat()) {
+    const added = [...Object.values(this.selection.spells).flat(), ...swaps.map((s) => s.in).filter(Boolean)];
+    for (const uuid of added) {
       const s = index.get(uuid);
       if (s && !s.cantrip) add(s.rank, `new:${uuid}`, s.name);
     }
@@ -440,6 +574,53 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
    * a skill increase or boost gained at the same level to qualify for a feat.
    * @param {string} [excludeSlot] slot whose own pick should not count (a feat can't qualify itself)
    */
+  /**
+   * Every skill this level-up raises: skill increases, Intelligence trainings and the skills taken
+   * instead of a feat's training the character already has
+   */
+  #trainingPicks() {
+    const sel = this.selection;
+    return [...sel.skillIncreases, ...sel.intSkills, ...Object.values(sel.featSkills ?? {})].filter(Boolean);
+  }
+
+  /**
+   * Skills the picked feats train (`featTrained`) and the trainings that land on a skill the character
+   * already has, or gains from this level's skill increases (`overlaps`)
+   */
+  async #featTrainings() {
+    const plan = this.plan;
+    const sel = this.selection;
+    const options = plan.skillOptions.filter((s) => !s.isLore);
+    const skillSlugs = options.map((s) => s.slug);
+    const raised = new Set([...sel.skillIncreases, ...sel.intSkills].filter(Boolean));
+    const trained = options.filter((s) => s.rank > 0 || raised.has(s.slug)).map((s) => s.slug);
+    const picks = [...plan.slots.current, ...plan.slots.missed]
+      .filter((slot) => sel.feats[slot.key])
+      .map((slot) => ({ key: slot.key, uuid: sel.feats[slot.key].uuid, name: sel.feats[slot.key].name }));
+    const perFeat = await pickTrainings(picks, skillSlugs);
+    return {
+      overlaps: overlappingTrainings(perFeat, trained),
+      featTrained: new Set(perFeat.flatMap((p) => p.skills))
+    };
+  }
+
+  /** The "train another skill instead" pickers under a feat slot */
+  #replacementRows(slotKey, trainings) {
+    const sel = this.selection;
+    return trainings.overlaps
+      .filter((o) => o.slotKey === slotKey)
+      .map((o) => {
+        const skill = this.plan.skillOptions.find((s) => s.slug === o.skill)?.label ?? o.skill;
+        const text = localize('menu.feats.alreadyTrained', { feat: o.featName, skill });
+        return {
+          key: o.key,
+          text,
+          chosen: !!sel.featSkills[o.key],
+          grid: this.#skillGrid('featSkill', o.key, sel.featSkills[o.key] ?? '', text, true, trainings.featTrained)
+        };
+      });
+  }
+
   prereqContext(excludeSlot) {
     const base = this.plan?.prereqBase;
     if (!base) return null;
@@ -448,7 +629,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       .flatMap(([, f]) => [f.name, f.originalName, f.slug].filter(Boolean));
     try {
       return applyPendingChoices(base, {
-        skillIncrease: [...this.selection.skillIncreases, ...this.selection.intSkills].filter(Boolean),
+        skillIncrease: this.#trainingPicks(),
         feats,
         attributeBoosts: this.#nonPartialBoosts()
       });
@@ -522,6 +703,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         .map(([key, pick]) => [key, pick.uuid]),
       sel.skillIncreases,
       sel.intSkills,
+      sel.featSkills,
       sel.boosts
     ]);
   }
@@ -593,8 +775,13 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     const lang = game.i18n.lang;
 
     // Feats
-    const featSlots = plan.slots.current.map((s) => this.#featRow(s, true, prereqCtx, prereqMode));
-    const missedSlots = plan.slots.missed.map((s) => this.#featRow(s, false, prereqCtx, prereqMode));
+    // A feat training a skill the character already has gives another skill of their choice
+    const trainings = await this.#featTrainings();
+    sel.featSkills = keepReplacements(sel.featSkills, trainings.overlaps);
+    const replacementsLeft = trainings.overlaps.filter((o) => !sel.featSkills[o.key]);
+    const withReplacements = (row) => ({ ...row, replacements: this.#replacementRows(row.key, trainings) });
+    const featSlots = plan.slots.current.map((s) => withReplacements(this.#featRow(s, true, prereqCtx, prereqMode)));
+    const missedSlots = plan.slots.missed.map((s) => withReplacements(this.#featRow(s, false, prereqCtx, prereqMode)));
 
     // Attribute boosts, and the Intelligence skills and languages they open up
     const boosts = plan.boostSets.length
@@ -629,10 +816,12 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     const languages = this.#languages();
     const potency = this.#potency();
     const spells = this.#spells();
+    const formulas = this.#formulas();
 
     // What is still open
     const missing = [];
     for (const slot of featSlots) if (!slot.pick) missing.push(`${slot.groupLabel} (${slot.label})`);
+    for (const o of replacementsLeft) missing.push(localize('menu.feats.replacementMissing', { feat: o.featName }));
     if (sel.skillIncreases.some((s) => !s)) missing.push(localize('menu.skillIncreases.header'));
     for (const set of boosts?.sets ?? []) {
       if (!set.complete) missing.push(localize('menu.attributeBoosts.header'));
@@ -640,28 +829,34 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     if (potency?.selects.some((s) => !s.value)) missing.push(localize('menu.skillPotency.header'));
     if (sel.intSkills.some((s) => !s)) missing.push(localize('menu.intBonus.skill'));
     if (spells && !spells.complete) missing.push(localize('menu.steps.spells'));
+    if (formulas && !formulas.complete) missing.push(localize('menu.steps.formulas'));
 
     const missingGroups = [
       ...new Set([
         ...featSlots.filter((s) => !s.pick).map((s) => s.groupLabel),
+        ...(replacementsLeft.length ? [localize('menu.feats.replacementShort')] : []),
         ...(sel.skillIncreases.some((s) => !s) ? [localize('menu.steps.skills')] : []),
         ...((boosts?.sets ?? []).some((s) => !s.complete) ? [localize('menu.steps.boosts')] : []),
         ...(sel.intSkills.some((s) => !s) ? [localize('menu.intBonus.skill')] : []),
         ...(potency?.selects.some((s) => !s.value) ? [localize('menu.steps.potency')] : []),
-        ...(spells && !spells.complete ? [localize('menu.steps.spells')] : [])
+        ...(spells && !spells.complete ? [localize('menu.steps.spells')] : []),
+        ...(formulas && !formulas.complete ? [localize('menu.steps.formulas')] : [])
       ])
     ];
     const choicesLeft =
       featSlots.filter((s) => !s.pick).length +
+      replacementsLeft.length +
       sel.skillIncreases.filter((s) => !s).length +
       (boosts?.sets ?? []).reduce((n, s) => n + (s.remaining - s.chosen), 0) +
       sel.intSkills.filter((s) => !s).length +
       (potency?.selects.filter((s) => !s.value).length ?? 0) +
       (spells?.active ? spells.total - spells.chosen + (spells.needTradition ? 1 : 0) : 0) +
-      (spells?.signature?.rows?.filter((r) => r.missing).length ?? 0);
+      (spells?.signature?.rows?.filter((r) => r.missing).length ?? 0) +
+      (spells?.swaps?.incomplete ?? 0) +
+      (formulas ? formulas.total - formulas.chosen : 0);
 
     // Steps
-    const sections = this.#sections({ featSlots, missedSlots, boosts, intSkills, languages, potency, spells });
+    const sections = this.#sections({ featSlots, missedSlots, boosts, intSkills, languages, potency, spells, formulas, trainings });
     const stepped = plan.layout === 'steps';
     const choiceKeys = stepped ? sections.map((s) => s.key) : ['choices'];
     this.stepKeys = [...choiceKeys, 'review'];
@@ -670,7 +865,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     const reviewing = this.step === 'review';
     this.reviewBlocked = requireAll && missing.length > 0;
     const show = Object.fromEntries(
-      ['feats', 'skills', 'boosts', 'extras', 'spells'].map((key) => [
+      ['feats', 'skills', 'boosts', 'extras', 'spells', 'formulas'].map((key) => [
         key,
         sections.some((s) => s.key === key) && (!stepped || this.step === key)
       ])
@@ -758,6 +953,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       languages,
       potency,
       spells,
+      formulas,
       classFeatures: plan.classFeatures,
       manual: { items: manualStatic, empty: !manualStatic.length },
       hasNothingToChoose,
@@ -791,15 +987,16 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
   }
 
   /** The choice groups that have content, in step order */
-  #sections({ featSlots, missedSlots, boosts, intSkills, languages, potency, spells }) {
+  #sections({ featSlots, missedSlots, boosts, intSkills, languages, potency, spells, formulas, trainings }) {
     const sel = this.selection;
     const sections = [];
     if (featSlots.length || missedSlots.length) {
+      // The skills taken instead of an overlapping feat training count as feat choices
       sections.push({
         key: 'feats',
         label: localize('menu.steps.feats'),
-        done: featSlots.filter((s) => s.pick).length,
-        total: featSlots.length
+        done: featSlots.filter((s) => s.pick).length + trainings.overlaps.filter((o) => sel.featSkills[o.key]).length,
+        total: featSlots.length + trainings.overlaps.length
       });
     }
     if (sel.skillIncreases.length) {
@@ -830,12 +1027,20 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         total: required
       });
     }
-    if (spells && (spells.setup || spells.total || spells.slotChanges.length || spells.extraChanges.length || spells.signature)) {
+    if (spells && (spells.setup || spells.total || spells.slotChanges.length || spells.extraChanges.length || spells.signature || spells.swaps)) {
       sections.push({
         key: 'spells',
         label: localize('menu.steps.spells'),
         done: spells.active ? spells.chosen : 0,
         total: spells.active ? spells.total : 0
+      });
+    }
+    if (formulas) {
+      sections.push({
+        key: 'formulas',
+        label: localize('menu.steps.formulas'),
+        done: formulas.chosen,
+        total: formulas.total
       });
     }
     return sections;
@@ -883,13 +1088,13 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
   /* -------------------------------------------- */
 
   /** Grid of skill buttons for one skill increase, Intelligence training or potency choice */
-  #skillGrid(choice, index, value, label, forTraining = false) {
+  #skillGrid(choice, index, value, label, forTraining = false, alsoTaken = new Set()) {
     const plan = this.plan;
-    const sel = this.selection;
     const mode = game.settings.get(MODULE_ID, 'skill-increase-info');
     const showMod = mode.includes('MOD');
     const showRank = mode.includes('RANK');
-    const taken = new Set([...sel.skillIncreases, ...sel.intSkills].filter((s) => s && s !== value));
+    // Skills a picked feat trains are taken too: training one of them again would be lost
+    const taken = new Set([...this.#trainingPicks(), ...alsoTaken].filter((s) => s && s !== value));
     const items = plan.skillOptions
       .filter((s) => (forTraining ? s.rank === 0 && !s.isLore : true))
       .map((s) => {
@@ -1324,7 +1529,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
 
     row(
       'skills',
-      mergeSkillChanges(plan.skillOptions, [...sel.skillIncreases, ...sel.intSkills]).map((c) => ({
+      mergeSkillChanges(plan.skillOptions, this.#trainingPicks()).map((c) => ({
         label: c.label,
         from: rankLabel(c.from),
         to: rankLabel(c.to)
@@ -1354,7 +1559,8 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         ...sp.extraChanges.map((c) => ({ label: `${sp.extraLabel} · ${c.label}`, from: c.from, to: c.to })),
         ...Object.values(sel.spells)
           .flat()
-          .map((uuid) => ({ plus: true, label: names.get(uuid) ?? uuid }))
+          .map((uuid) => ({ plus: true, label: names.get(uuid) ?? uuid })),
+        ...this.#swapNames().map((s) => ({ label: localize('menu.spells.swapped'), from: s.out, to: s.in }))
       ]);
       const signature = this.#signatureView();
       if (signature?.all) row('signature', [{ label: localize('menu.spells.signatureAll') }]);
@@ -1366,6 +1572,10 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
           }))
         );
       }
+    }
+
+    if (plan.formulas) {
+      row('formulas', this.#formulaNames().map((f) => ({ plus: true, label: f.name, uuid: f.uuid })));
     }
 
     if (plan.xpEnforcement && !plan.levelAlreadyApplied) {
@@ -1395,7 +1605,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     const chatLines = [];
     if (picked.length) chatLines.push(picked.map((s) => s.pick.name).join(' · '));
     const other = [
-      ...mergeSkillChanges(plan.skillOptions, [...sel.skillIncreases, ...sel.intSkills]).map(
+      ...mergeSkillChanges(plan.skillOptions, this.#trainingPicks()).map(
         (c) => `${c.label}: ${rankLabel(c.to)}`
       ),
       ...(boosts
@@ -1416,6 +1626,12 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         .flat()
         .map((uuid) => spellNames.get(uuid) ?? uuid);
       if (newSpells.length) chatLines.push(newSpells.join(' · '));
+      const swapped = this.#swapNames().map((s) => `${s.out} → ${s.in}`);
+      if (swapped.length) chatLines.push(swapped.join(' · '));
+    }
+    if (plan.formulas) {
+      const newFormulas = this.#formulaNames().map((f) => f.name);
+      if (newFormulas.length) chatLines.push(newFormulas.join(' · '));
     }
     if (!chatLines.length) chatLines.push(localize('messages.global.noChoices'));
 
@@ -1454,6 +1670,15 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
       this.selection.spellTradition = event.currentTarget.value || null;
       this.selection.spells = {};
       this.render();
+    });
+    htmlElement.querySelectorAll('[data-swap-out]').forEach((select) => {
+      select.addEventListener('change', (event) => {
+        const swap = this.#swaps()[Number(event.currentTarget.dataset.swapOut)];
+        if (!swap) return;
+        swap.out = event.currentTarget.value || null;
+        swap.in = null;
+        this.render();
+      });
     });
     htmlElement.querySelectorAll('[data-signature-rank]').forEach((select) => {
       select.addEventListener('change', (event) => {
@@ -1518,6 +1743,19 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
     this.render();
   }
 
+  static #onToggleSwap(event, target) {
+    const swap = this.#swaps()[Number(target.dataset.pick.replace('swap-', ''))];
+    if (!swap?.out) return;
+    swap.in = swap.in === target.dataset.uuid ? null : target.dataset.uuid;
+    this.render();
+  }
+
+  static #onToggleFormula(event, target) {
+    const picks = this.plan?.formulas?.picks ?? [];
+    this.selection.formulas = toggleSpell(this.selection.formulas, picks, target.dataset.pick, target.dataset.uuid);
+    this.render();
+  }
+
   static #onToggleSpellSetup() {
     this.selection.spellSetup = !this.selection.spellSetup;
     if (!this.selection.spellSetup) this.selection.spells = {};
@@ -1561,6 +1799,10 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
         break;
       case 'intSkill':
         toggle(sel.intSkills, Number(index));
+        break;
+      case 'featSkill':
+        if (sel.featSkills[index] === value) delete sel.featSkills[index];
+        else sel.featSkills[index] = value;
         break;
       case 'potency':
         sel.potency[index] = sel.potency[index] === value ? '' : value;
@@ -1692,6 +1934,7 @@ export class LevelUpWizard extends LightThemeMixin(HandlebarsApplicationMixin(Ap
             className: sp.className,
             attribute: sp.attribute,
             selection: this.selection.spells,
+            swaps: this.#swaps().filter((s) => s.out && s.in),
             signature: sp.signature ? { at: sp.signature, choice: this.#signatureChoice() } : null
           }
         : null,

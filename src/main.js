@@ -3,6 +3,7 @@ import { migratePreviousFlags, migrateSettings, registerSettings, warnIfOriginal
 import { registerFeatIndexHooks } from './data/featIndex.js';
 import { registerAbcIndexHooks } from './data/abcIndex.js';
 import { registerSpellIndexHooks } from './data/spellIndex.js';
+import { registerFormulaIndexHooks } from './data/formulas.js';
 import { getHistory, undoLastLevelUp } from './data/apply.js';
 import {
   onGetHeaderButtons,
@@ -21,6 +22,7 @@ Hooks.once('init', () => {
   registerFeatIndexHooks();
   registerAbcIndexHooks();
   registerSpellIndexHooks();
+  registerFormulaIndexHooks();
 
   foundry.applications.handlebars.loadTemplates({
     lvlupFeatSlot: `${TEMPLATE_PATH}/partials/feat-slot.hbs`,

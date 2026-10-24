@@ -49,6 +49,18 @@ export const postLevelUpMessages = async (actor, plan, selection, summary, spell
       list(summary.spells.map((s) => (s.uuid ? `@UUID[${s.uuid}]{${escapeHTML(s.name)}}` : escapeHTML(s.name))))
     );
   }
+  if (summary.swaps?.length) {
+    sections.push(
+      `<p><strong>${localize('messages.global.swaps')}</strong></p>`,
+      list(summary.swaps.map((s) => `${escapeHTML(s.from)} → @UUID[${s.uuid}]{${escapeHTML(s.to)}}`))
+    );
+  }
+  if (summary.formulas?.length) {
+    sections.push(
+      `<p><strong>${localize('messages.global.formulas')}</strong></p>`,
+      list(summary.formulas.map((f) => `@UUID[${f.uuid}]{${escapeHTML(f.name)}}`))
+    );
+  }
   if (!sections.length) {
     sections.push(`<p>${localize('messages.global.noChoices')}</p>`);
   }

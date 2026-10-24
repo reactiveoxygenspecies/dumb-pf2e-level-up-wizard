@@ -81,7 +81,8 @@ export const captureSpellScroll = (root) => {
     if (list) lists[group.dataset.spellGroup] = list.scrollTop;
   });
   const active = root.ownerDocument.activeElement;
-  const focus = active?.matches?.('[data-action="toggleSpell"]') && root.contains(active)
+  // Formula lists share the picker, so any pick button counts
+  const focus = active?.matches?.('[data-pick][data-uuid]') && root.contains(active)
     ? { pick: active.dataset.pick, uuid: active.dataset.uuid }
     : null;
   return { lists, focus };
@@ -96,7 +97,7 @@ export const restoreSpellScroll = (root, saved) => {
   if (saved.focus) {
     const { pick, uuid } = saved.focus;
     root
-      .querySelector(`[data-action="toggleSpell"][data-pick="${CSS.escape(pick)}"][data-uuid="${CSS.escape(uuid)}"]`)
+      .querySelector(`[data-pick="${CSS.escape(pick)}"][data-uuid="${CSS.escape(uuid)}"]`)
       ?.focus({ preventScroll: true });
   }
 };
