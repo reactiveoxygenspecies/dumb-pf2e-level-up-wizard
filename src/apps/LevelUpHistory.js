@@ -54,7 +54,9 @@ export class LevelUpHistory extends LightThemeMixin(HandlebarsApplicationMixin(A
           ...(summary.potency ?? []).map((p) => ({ label: `${p.label} +${p.value}` })),
           ...(summary.spells ?? []).map((s) =>
             typeof s === 'string' ? { label: s } : { label: s.name, uuid: s.uuid }
-          )
+          ),
+          ...(summary.swaps ?? []).map((s) => ({ label: `${s.from} → ${s.to}`, uuid: s.uuid })),
+          ...(summary.formulas ?? []).map((f) => ({ label: f.name, uuid: f.uuid }))
         ];
         return {
           id: entry.id,

@@ -1,6 +1,7 @@
 import { MODULE_ID } from '../constants.js';
 import { escapeHTML, localize, sluggify } from '../helpers/utility.js';
 import { TRADITIONS, classRules, detectTradition, findClassEntry, loadSpellcastingData } from './spellcasting.js';
+import { addInnateSpells, innateGrantsFor } from './innateSpells.js';
 
 let focusData = null;
 
@@ -155,8 +156,23 @@ const spellLabel = (uuid) => {
   return `${escapeHTML(s.name)} <span class="lvl-focus-rank">${rank}</span>`;
 };
 
+/** Which spells the dialog offers: focus, innate or both; picks its title, intro and button */
+const dialogKind = (groups) => {
+  const innate = groups.some((g) => g.kind === 'innate');
+  const focus = groups.some((g) => g.kind !== 'innate');
+  return innate && focus ? 'mixed' : innate ? 'innate' : 'focus';
+};
+
+const DIALOG_TEXT = {
+  focus: { title: 'focus.title', intro: 'focus.intro', add: 'focus.add' },
+  innate: { title: 'innate.title', intro: 'innate.intro', add: 'innate.add' },
+  mixed: { title: 'innate.titleMixed', intro: 'innate.introMixed', add: 'innate.add' }
+};
+
 /** Dialog content: one block per source, fixed spells ticked, picks as radios or checkboxes */
 const dialogContent = (groups) => {
+  // Innate groups carry their own labels (rank as cast, not the spell's own)
+  const label = (group, uuid) => group.labels?.[uuid] ?? spellLabel(uuid);
   const traditionSelect = (group) =>
     group.tradition
       ? ''
@@ -168,7 +184,7 @@ const dialogContent = (groups) => {
     const fixed = group.fixed
       .map(
         (uuid) =>
-          `<label class="lvl-focus-option"><input type="checkbox" name="spell-${group.key}" value="${uuid}" checked> ${spellLabel(uuid)}</label>`
+          `<label class="lvl-focus-option"><input type="checkbox" name="spell-${group.key}" value="${uuid}" checked> ${label(group, uuid)}</label>`
       )
       .join('');
     const type = group.count === 1 ? 'radio' : 'checkbox';
@@ -177,7 +193,7 @@ const dialogContent = (groups) => {
         (uuid, i) =>
           `<label class="lvl-focus-option"><input type="${type}" name="pick-${group.key}" value="${uuid}" ${
             i < group.count && type === 'radio' ? 'checked' : ''
-          }> ${spellLabel(uuid)}</label>`
+          }> ${label(group, uuid)}</label>`
       )
       .join('');
     const pickHint = group.options.length
@@ -192,10 +208,12 @@ const dialogContent = (groups) => {
       unchecked && group.grant.note
         ? `<p class="lvl-focus-quote">${localize('focus.checkHint')} <q>${escapeHTML(group.grant.note)}</q></p>`
         : '';
-    return `<fieldset class="lvl-focus-group${unchecked ? ' unchecked' : ''}"><legend>${escapeHTML(group.source)}${tag}</legend>${quote}${fixed}${pickHint}${options}${traditionSelect(group)}</fieldset>`;
+    const kind = group.tag ? ` <span class="lvl-focus-kind">${escapeHTML(group.tag)}</span>` : '';
+    return `<fieldset class="lvl-focus-group${unchecked ? ' unchecked' : ''}"><legend>${escapeHTML(group.source)}${kind}${tag}</legend>${quote}${fixed}${pickHint}${options}${traditionSelect(group)}</fieldset>`;
   });
   const anyUnchecked = groups.some((g) => g.grant.confidence === 'heuristic');
-  const intro = anyUnchecked ? `${localize('focus.intro')} ${localize('focus.introCheck')}` : localize('focus.intro');
+  const text = localize(DIALOG_TEXT[dialogKind(groups)].intro);
+  const intro = anyUnchecked ? `${text} ${localize('focus.introCheck')}` : text;
   return `<p>${intro}</p>${blocks.join('')}`;
 };
 
@@ -204,8 +222,9 @@ const dialogContent = (groups) => {
  */
 export const askFocusSpells = async (groups, { windowId } = {}) => {
   if (!groups.length) return null;
+  const text = DIALOG_TEXT[dialogKind(groups)];
   return foundry.applications.api.DialogV2.wait({
-    window: { title: localize('focus.title'), icon: 'fa-solid fa-hand-sparkles' },
+    window: { title: localize(text.title), icon: 'fa-solid fa-hand-sparkles' },
     classes: [MODULE_ID, 'lvlup-focus-dialog'],
     position: { width: 460 },
     content: dialogContent(groups),
@@ -215,7 +234,7 @@ export const askFocusSpells = async (groups, { windowId } = {}) => {
     buttons: [
       {
         action: 'add',
-        label: localize('focus.add'),
+        label: localize(text.add),
         icon: 'fa-solid fa-check',
         default: true,
         callback: (event, button) => {
@@ -299,16 +318,23 @@ export const addFocusSpells = async (actor, choices) => {
 };
 
 /**
- * After a build or level-up: offer the focus spells the new items give and add the chosen ones.
- * Never throws; returns the created items (empty when nothing was added).
+ * After a build or level-up: offer the focus and innate spells the new items give and add the chosen
+ * ones. Never throws; returns the created items (empty when nothing was added).
  */
 export const offerFocusSpells = async (actor, newItems, options = {}) => {
   try {
-    const groups = await focusGrantsFor(actor, newItems);
+    const innate = await innateGrantsFor(actor, newItems).catch((error) => {
+      console.error(`${MODULE_ID} | Could not read innate spells`, error);
+      return [];
+    });
+    const groups = [...(await focusGrantsFor(actor, newItems)), ...innate];
     const choices = await askFocusSpells(groups, options);
     if (!choices) return { created: [], handled: [] };
-    const created = await addFocusSpells(actor, choices);
-    return { created, handled: groups.map((g) => g.source) };
+    const created = [
+      ...(await addFocusSpells(actor, choices.filter((c) => c.group.kind !== 'innate'))),
+      ...(await addInnateSpells(actor, choices.filter((c) => c.group.kind === 'innate')))
+    ];
+    return { created, handled: [...new Set(groups.map((g) => g.source))] };
   } catch (error) {
     console.error(`${MODULE_ID} | Could not add focus spells`, error);
     ui.notifications.warn(localize('focus.failed'));

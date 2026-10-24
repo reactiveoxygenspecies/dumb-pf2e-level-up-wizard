@@ -3,6 +3,7 @@ import { attributeLabel, localize, rankLabel } from '../helpers/utility.js';
 import { buildPotencyModifier, SPELL_HINT_PATTERN, xpInfo } from './plan.js';
 import { postLevelUpMessages } from '../helpers/chat.js';
 import { offerFocusSpells } from './focusSpells.js';
+import { describeFormulas, knownFormulas, offerFormulas, withFormulas } from './formulas.js';
 import {
   entrySlotSnapshot,
   entrySlotUpdate,
@@ -77,7 +78,8 @@ export const buildChanges = async (actor, plan, selection) => {
     boosts: [],
     languages: [],
     potency: [],
-    spells: []
+    spells: [],
+    formulas: []
   };
 
   if (!plan.levelAlreadyApplied) {
@@ -86,7 +88,8 @@ export const buildChanges = async (actor, plan, selection) => {
 
   // Skill increases and Intelligence trainings; ranks build on the prepared rank
   const rankChanges = new Map();
-  for (const slug of [...selection.skillIncreases, ...selection.intSkills]) {
+  // Skill increases, Intelligence trainings and skills taken instead of a feat's overlapping training
+  for (const slug of [...selection.skillIncreases, ...selection.intSkills, ...Object.values(selection.featSkills ?? {})]) {
     if (!slug) continue;
     const option = plan.skillOptions.find((s) => s.slug === slug);
     if (!option) continue;
@@ -152,10 +155,26 @@ export const buildChanges = async (actor, plan, selection) => {
 
   const spells = await spellChanges(actor, plan, selection.spellPlan);
   if (spells) {
-    summary.spells = addedSpells(spells).map((s) => ({ name: s.name, uuid: s._stats?.compendiumSource }));
+    summary.spells = [...spells.sources, ...(spells.extra?.spell ? [spells.extra.spell] : [])].map((s) => ({
+      name: s.name,
+      uuid: s._stats?.compendiumSource
+    }));
+    summary.swaps = spells.swaps.map((swap) => ({
+      from: actor.items.get(swap.out)?.name ?? '',
+      to: swap.source.name,
+      uuid: swap.source._stats?.compendiumSource
+    }));
   }
 
-  return { update, itemUpdates, feats, spells, summary };
+  // Formula book: only formulas it doesn't hold yet, so undo removes exactly these
+  const known = knownFormulas(actor);
+  const formulas = [...new Set(Object.values(selection.formulas ?? {}).flat())].filter((u) => !known.has(u));
+  if (formulas.length) {
+    update['system.crafting.formulas'] = withFormulas(actor, formulas);
+    summary.formulas = describeFormulas(plan.formulaIndex ?? [], formulas);
+  }
+
+  return { update, itemUpdates, feats, spells, formulas, summary };
 };
 
 /**
@@ -167,14 +186,20 @@ const spellChanges = async (actor, plan, spellPlan) => {
   const { rules, slug, entry } = spellPlan;
   const uuids = Object.values(spellPlan.selection ?? {}).flat();
   const sources = await Promise.all(uuids.map((uuid) => spellSource(uuid, entry?.id ?? null)));
+  // Swaps: the old spell leaves the repertoire, the new one takes its place
+  const swaps = await Promise.all(
+    (spellPlan.swaps ?? []).map(async (swap) => ({ out: swap.out, source: await spellSource(swap.in, entry?.id ?? null) }))
+  );
+  const swappedOut = new Set(swaps.map((s) => s.out));
   const sig = spellPlan.signature ?? null;
-  for (const source of sources) {
+  for (const source of [...sources, ...swaps.map((s) => s.source)]) {
     const cantrip = source.system?.traits?.value?.includes('cantrip') ?? false;
     source.system.location.signature = isSignature(sig?.at, sig?.choice, `new:${source._stats.compendiumSource}`, cantrip);
   }
   // Existing spells whose signature mark changes
   const signatureUpdates = sig?.at
     ? [...(entry?.spells ?? [])]
+        .filter((spell) => !swappedOut.has(spell.id))
         .map((spell) => ({
           spell,
           signature: isSignature(sig.at, sig.choice, `item:${spell.id}`, spell.isCantrip)
@@ -186,7 +211,7 @@ const spellChanges = async (actor, plan, spellPlan) => {
   if (entry) {
     const entryUpdate = entrySlotUpdate(rules, entry, slug, plan.targetLevel);
     if (!entry.system?.tradition?.value) entryUpdate['system.tradition.value'] = spellPlan.tradition;
-    return { entryUpdate, newEntry: null, sources, signatureUpdates, extra };
+    return { entryUpdate, newEntry: null, sources, swaps, signatureUpdates, extra };
   }
   const newEntry = entrySource(rules, {
     slug,
@@ -195,7 +220,7 @@ const spellChanges = async (actor, plan, spellPlan) => {
     attribute: spellPlan.attribute,
     level: plan.targetLevel
   });
-  return { entryUpdate: null, newEntry, sources, signatureUpdates, extra };
+  return { entryUpdate: null, newEntry, sources, swaps: [], signatureUpdates, extra };
 };
 
 /**
@@ -238,8 +263,15 @@ export const applyExtraEntry = async (actor, extra, created) => {
   if (prepare) await actor.updateEmbeddedDocuments('Item', [prepare]);
 };
 
-/** Spell sources a level-up adds: the picks, plus the divine font's heal/harm when it was missing */
-const addedSpells = (spells) => [...spells.sources, ...(spells.extra?.spell ? [spells.extra.spell] : [])];
+/**
+ * Spell sources a level-up adds: the picks, the swaps' replacements, plus the divine font's heal/harm
+ * when it was missing
+ */
+const addedSpells = (spells) => [
+  ...spells.sources,
+  ...spells.swaps.map((s) => s.source),
+  ...(spells.extra?.spell ? [spells.extra.spell] : [])
+];
 
 /** Spellcasting entries the module manages: the class entry and its extra entry (divine font) */
 const managedEntry = (item) => !!(item.flags?.[MODULE_ID]?.classEntry || item.flags?.[MODULE_ID]?.extraEntry);
@@ -255,8 +287,11 @@ const applySpells = async (actor, spells, created) => {
     await actor.updateEmbeddedDocuments('Item', [spells.entryUpdate, ...spells.signatureUpdates]);
   }
   await applyExtraEntry(actor, spells.extra, created);
-  if (!spells.sources.length) return;
-  const sources = spells.sources.map((source) => {
+  const swappedOut = spells.swaps.map((s) => s.out).filter((id) => actor.items.has(id));
+  if (swappedOut.length) await actor.deleteEmbeddedDocuments('Item', swappedOut);
+  const added = [...spells.sources, ...spells.swaps.map((s) => s.source)];
+  if (!added.length) return;
+  const sources = added.map((source) => {
     const copy = foundry.utils.deepClone(source);
     copy.system.location = { value: entryId, signature: !!source.system.location.signature };
     return copy;
@@ -266,7 +301,7 @@ const applySpells = async (actor, spells, created) => {
 
 const snapshot = (actor, plan, selection, changes) => {
   const sourceSystem = actor._source.system;
-  const touchedSkills = [...selection.skillIncreases, ...selection.intSkills].filter(
+  const touchedSkills = [...selection.skillIncreases, ...selection.intSkills, ...Object.values(selection.featSkills ?? {})].filter(
     Boolean
   );
   const { skills, lores } = snapshotSkills(actor, touchedSkills, plan.skillOptions);
@@ -289,6 +324,10 @@ const snapshot = (actor, plan, selection, changes) => {
   const spellEntry = selection.spellPlan?.entry ?? null;
   const extraEntry = selection.spellPlan?.extraEntry ?? null;
   return {
+    // Spells swapped out of the repertoire, to put back on undo
+    removedSpells: (changes.spells?.swaps ?? [])
+      .map((s) => actor.items.get(s.out)?.toObject())
+      .filter(Boolean),
     extraEntry: extraEntry
       ? {
           id: extraEntry.id,
@@ -323,6 +362,9 @@ const revertTo = async (actor, entry, { keepHistory = false } = {}) => {
   if (existing.length) await actor.deleteEmbeddedDocuments('Item', existing);
 
   const before = entry.before;
+  // Swapped-out spells come back with their old ids, so the signature marks below find them
+  const removed = (before.removedSpells ?? []).filter((s) => !actor.items.has(s._id));
+  if (removed.length) await actor.createEmbeddedDocuments('Item', removed, { keepId: true });
   const update = {};
   if (entry.levelChanged) update['system.details.level.value'] = before.level;
   if (entry.xpChanged) update['system.details.xp.value'] = before.xp;
@@ -336,6 +378,13 @@ const revertTo = async (actor, entry, { keepHistory = false } = {}) => {
     update['system.details.languages.value'] = before.languages;
   for (const [slug, modifiers] of Object.entries(before.customModifiers ?? {})) {
     update[`system.customModifiers.${slug}`] = modifiers;
+  }
+  // Formulas added since may still be in the book; only the ones this entry added go
+  if (entry.addedFormulas?.length) {
+    const added = new Set(entry.addedFormulas);
+    update['system.crafting.formulas'] = (actor._source.system.crafting?.formulas ?? []).filter(
+      (f) => !added.has(f.uuid)
+    );
   }
   if (!keepHistory) {
     update[HISTORY_PATH] = getHistory(actor).filter((h) => h.id !== entry.id);
@@ -405,6 +454,7 @@ export const applyLevelUp = async (actor, plan, selection) => {
     languagesChanged: 'system.details.languages.value' in changes.update,
     before: snapshot(actor, plan, selection, changes),
     createdItemIds: [],
+    addedFormulas: [...changes.formulas],
     summary: changes.summary
   };
 
@@ -467,6 +517,14 @@ export const applyLevelUp = async (actor, plan, selection) => {
     ];
   }
   entry.createdItemIds = topLevelIds(created);
+
+  // Formulas from the new feats (Alchemical Crafting, Alchemist Dedication...)
+  const formulas = await offerFormulas(
+    actor,
+    actor.items.filter((i) => !itemsBefore.has(i.id))
+  );
+  entry.addedFormulas.push(...formulas.map((f) => f.uuid));
+  entry.summary.formulas = [...(entry.summary.formulas ?? []), ...formulas];
 
   // A cancelled choice prompt (e.g. a ChoiceSet) makes the system skip that feat
   const createdSources = new Set(created.map((i) => i.sourceId));

@@ -1,4 +1,5 @@
 <div class="lvl-spells">
+  {{! Also lists formulas: a group can bring its own action, hint and labels }}
   {{#each spellGroups}}
     <details class="lvl-spell-group {{#if complete}}complete{{/if}}" data-spell-group="{{key}}" data-sync="spells-{{key}}" {{#unless complete}}open{{/unless}}>
       <summary>
@@ -8,19 +9,20 @@
           {{localize 'DUMB_LEVEL_UP_WIZARD.spells.counter' chosen=chosenCount count=count}}
         </span>
       </summary>
+      {{#if hint}}<p class="lvl-spell-hint">{{hint}}</p>{{/if}}
       <label class="lvl-spell-search">
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <input type="search" data-spell-search="{{key}}" value="{{search}}"
-          placeholder="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.search'}}"
-          aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.search'}}">
+          placeholder="{{#if searchLabel}}{{searchLabel}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.spells.search'}}{{/if}}"
+          aria-label="{{#if searchLabel}}{{searchLabel}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.spells.search'}}{{/if}}">
       </label>
       {{#if empty}}
-        <p class="lvl-spell-empty">{{localize 'DUMB_LEVEL_UP_WIZARD.spells.none'}}</p>
+        <p class="lvl-spell-empty">{{#if emptyLabel}}{{emptyLabel}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.spells.none'}}{{/if}}</p>
       {{else}}
         <ul class="lvl-spell-list">
           {{#each rows}}
             <li class="lvl-spell-row {{#if chosen}}chosen{{/if}}" data-spell-row data-search="{{searchText}}" {{#if hidden}}hidden{{/if}}>
-              <button type="button" class="lvl-spell-toggle" data-action="toggleSpell" data-pick="{{../key}}" data-uuid="{{uuid}}"
+              <button type="button" class="lvl-spell-toggle" data-action="{{#if ../action}}{{../action}}{{else}}toggleSpell{{/if}}" data-pick="{{../key}}" data-uuid="{{uuid}}"
                 aria-pressed="{{#if chosen}}true{{else}}false{{/if}}" {{#if disabled}}disabled{{/if}}>
                 <span class="lvl-spell-check" aria-hidden="true">{{#if chosen}}<i class="fa-solid fa-check"></i>{{/if}}</span>
                 <img src="{{img}}" alt="" loading="lazy">
@@ -29,7 +31,8 @@
                 <span class="lvl-spell-rank">{{rankLabel}}</span>
               </button>
               <a class="lvl-spell-open content-link" data-link data-uuid="{{uuid}}" data-type="Item"
-                data-tooltip="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.read'}}" aria-label="{{localize 'DUMB_LEVEL_UP_WIZARD.spells.read'}}: {{name}}">
+                data-tooltip="{{#if ../readLabel}}{{../readLabel}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.spells.read'}}{{/if}}"
+                aria-label="{{#if ../readLabel}}{{../readLabel}}{{else}}{{localize 'DUMB_LEVEL_UP_WIZARD.spells.read'}}{{/if}}: {{name}}">
                 <i class="fa-solid fa-book-open"></i>
               </a>
             </li>

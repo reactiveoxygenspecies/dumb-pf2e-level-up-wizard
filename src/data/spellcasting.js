@@ -244,6 +244,35 @@ const changesTo = (entry, target) => {
 };
 
 /* -------------------------------------------- */
+/*  Swapping repertoire spells                  */
+/* -------------------------------------------- */
+
+/**
+ * How many repertoire spells a level change lets the character swap: one for each level gained.
+ * Only spontaneous casters with spells in their repertoire can.
+ */
+export const swapCount = (rules, entry, fromLevel, toLevel) =>
+  rules?.repertoire && [...(entry?.spells ?? [])].length ? Math.max(0, toLevel - fromLevel) : 0;
+
+/** The rank a repertoire spell takes: the rank it was learned at, or its own (0 = cantrip) */
+export const repertoireRank = (spell) =>
+  spell.isCantrip ? 0 : (spell.system?.location?.heightenedLevel ?? spell.baseRank ?? 1);
+
+/** The pick for a swap's replacement: one spell of the swapped spell's rank */
+export const swapPick = (index, spell) => {
+  const rank = repertoireRank(spell);
+  return {
+    kind: 'swap',
+    key: `swap-${index}`,
+    rank,
+    minRank: null,
+    maxRank: null,
+    count: 1,
+    label: localize('spells.swap.replacement', { spell: spell.name, rank: rankName(rank) })
+  };
+};
+
+/* -------------------------------------------- */
 /*  Signature spells                            */
 /* -------------------------------------------- */
 

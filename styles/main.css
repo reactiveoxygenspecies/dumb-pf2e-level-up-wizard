@@ -1101,6 +1101,23 @@
   gap: 14px;
 }
 
+/* "Already trained in Acrobatics: pick another skill", marked until a skill is picked */
+.lvlup-wizard .feat-slot .slot-replacement {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0 0 12px;
+  border-top: 1px solid var(--lvl-hairline-soft);
+}
+
+.lvlup-wizard .feat-slot .slot-replacement.is-open {
+  border-left: 4px solid var(--lvl-crimson);
+}
+
+.lvlup-wizard .feat-slot .slot-replacement .hint {
+  margin: 0;
+}
+
 .lvlup-wizard .feat-slot .slot-icon {
   flex: none;
   width: 52px;

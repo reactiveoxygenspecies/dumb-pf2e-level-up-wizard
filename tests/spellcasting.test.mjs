@@ -223,3 +223,22 @@ test('signature spells start at level 3, one per rank up to 9', async () => {
   assert.equal(isSignature(summoner, {}, 'item:c', false), true);
   assert.equal(isSignature(summoner, {}, 'item:c', true), false, 'cantrips never');
 });
+
+test('a spontaneous caster swaps one repertoire spell per level gained', async () => {
+  const { repertoireRank, swapCount, swapPick } = await import('../src/data/spellcasting.js');
+  const repertoire = entryWith({ 0: 5, 1: 3 });
+  assert.equal(swapCount(classRules('sorcerer'), repertoire, 4, 5), 1);
+  assert.equal(swapCount(classRules('bard'), repertoire, 3, 5), 2, 'two levels at once');
+  assert.equal(swapCount(classRules('wizard'), repertoire, 4, 5), 0, 'prepared casters keep a spellbook');
+  assert.equal(swapCount(classRules('sorcerer'), entryWith({}), 4, 5), 0, 'nothing to swap');
+  assert.equal(swapCount(classRules('sorcerer'), null, 4, 5), 0);
+
+  const cantrip = { name: 'Shield', isCantrip: true, baseRank: 1, system: { location: {} } };
+  const heightened = { name: 'Fear', isCantrip: false, baseRank: 1, system: { location: { heightenedLevel: 3 } } };
+  assert.equal(repertoireRank(cantrip), 0);
+  assert.equal(repertoireRank(heightened), 3, 'the rank it was learned at');
+  assert.deepEqual(
+    { ...swapPick(1, heightened), label: undefined },
+    { kind: 'swap', key: 'swap-1', rank: 3, minRank: null, maxRank: null, count: 1, label: undefined }
+  );
+});

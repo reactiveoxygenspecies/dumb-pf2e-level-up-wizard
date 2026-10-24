@@ -41,6 +41,13 @@
         </button>
       </div>
     </div>
+    {{! The feat trains a skill the character already has: another skill instead }}
+    {{#each replacements}}
+      <div class="slot-replacement{{#unless chosen}} is-open{{/unless}}">
+        <p class="hint">{{text}}</p>
+        {{> lvlupWizardSkillGrid grid}}
+      </div>
+    {{/each}}
   {{else}}
     <div class="slot-empty">
       <div class="slot-empty-text">

@@ -1,0 +1,4981 @@
+{
+  "_meta": {
+    "source": "foundryvtt/pf2e packs, read by scripts/build-innate-spells.mjs",
+    "counts": {
+      "items": 212,
+      "linked": 198,
+      "chosen": 5,
+      "list": 9,
+      "unparsed": 81
+    },
+    "unparsed": [
+      "class-features/Angel Eidolon",
+      "class-features/Palatine Detective",
+      "feats/Accursed Magic",
+      "feats/Advanced Deific Power",
+      "feats/Advanced Runelord Magic",
+      "feats/Anarchic Arcana",
+      "feats/Ancestral Mage",
+      "feats/Ancestral Mind",
+      "feats/Avenging Runelord Dedication",
+      "feats/Awakened Jewel",
+      "feats/Axuma's Awakening",
+      "feats/Basic Captivator Spellcasting",
+      "feats/Bend Space",
+      "feats/Bone Magic",
+      "feats/Captivating Intensity",
+      "feats/Captivator Dedication",
+      "feats/Cautious Curiosity",
+      "feats/Cautious Delver",
+      "feats/Core Attunement",
+      "feats/Cycle Spell",
+      "feats/Determined Lore Seeker",
+      "feats/Devil in Plain Sight",
+      "feats/Domain Embodiment",
+      "feats/Dracomancer",
+      "feats/Draconic Paragon",
+      "feats/Dragonblood Paragon",
+      "feats/Elite Dracomancer",
+      "feats/Esoteric Spellcasting",
+      "feats/Evolved Spellhorn",
+      "feats/Expanded Runelord Magic",
+      "feats/Expert Captivator Spellcasting",
+      "feats/Extraplanar Supplication",
+      "feats/Eye of the Arclords",
+      "feats/Final Form",
+      "feats/Font of Life or Death",
+      "feats/Greater Deific Power",
+      "feats/Greater Esoteric Spellcasting",
+      "feats/Hurricane Swing",
+      "feats/Innate Magical Intuition",
+      "feats/Kitsune Spell Expertise",
+      "feats/Kitsune Spell Familiarity",
+      "feats/Kitsune Spell Mysteries",
+      "feats/Knight Reclaimant Dedication",
+      "feats/Life-Giving Magic",
+      "feats/Magic Finder",
+      "feats/Magical Adept",
+      "feats/Magical Master",
+      "feats/Magical Understudy",
+      "feats/Maiden's Mending",
+      "feats/Major Deific Power",
+      "feats/Mask of Power",
+      "feats/Master Captivator Spellcasting",
+      "feats/Minor Deific Power",
+      "feats/Nagaji Spell Expertise",
+      "feats/Nagaji Spell Mysteries",
+      "feats/No Hands, No Problem",
+      "feats/Otherworldly Acumen",
+      "feats/Pact of Huldra's Renewal",
+      "feats/Reclaimant Plea",
+      "feats/Resplendent Spellhorn",
+      "feats/Sequestered Spell",
+      "feats/Share Eidolon Magic",
+      "feats/Simple Crystal Magic",
+      "feats/Speaker in Training",
+      "feats/Spell Runes",
+      "feats/Spiritual Echo",
+      "feats/Stonebound Magic",
+      "feats/Summon Nephilim Kin",
+      "feats/Tactile Magic Feedback",
+      "feats/Time Mage Dedication",
+      "feats/Unstable Patronage",
+      "feats/Vigilant Benediction",
+      "heritages/Budding Speaker Centaur",
+      "heritages/Mage Automaton",
+      "heritages/Oracular Samsaran",
+      "heritages/Plane-Hopper Jotunborn",
+      "heritages/Ragdyan Vanara",
+      "heritages/Rite of Invocation",
+      "heritages/Spellhorn Kobold",
+      "heritages/Spellkeeper Shisk",
+      "heritages/Wellspring Gnome"
+    ]
+  },
+  "spells": {
+    "Compendium.pf2e.spells-srd.Item.0jadeyQIItIuRgeH": {
+      "name": "Eclipse Burst",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.0qaqksrGGDj74HXE": {
+      "name": "Revealing Light",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.0zU8CPejjQFnhZFI": {
+      "name": "Figment",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.115Xp9E38CJENhNS": {
+      "name": "Magic Passage",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.1b55SgYTV65JvmQd": {
+      "name": "Blessing of Defiance",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.1K6AYGisvo9gqdhs": {
+      "name": "Elemental Form",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.24U1b9K4Lj94cgaj": {
+      "name": "Magnetic Repulsion",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.29ytKctjg7qSW2ff": {
+      "name": "Summon Fiend",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.2BV2yYPfVJ5zirZt": {
+      "name": "Mountain Resilience",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.2oH5IufzdESuYxat": {
+      "name": "Illusory Object",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.2qGqa33E4GPUCbMV": {
+      "name": "Humanoid Form",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.2Vkd1IxylPceUAAF": {
+      "name": "Regenerate",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.3526YUgCvB5ZsKuX": {
+      "name": "Mantle of the Unwavering Heart",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.3ehSrqTAm7IPqbIZ": {
+      "name": "Spirit Sense",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.3JG1t3T4mWn6vTke": {
+      "name": "Blur",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.41TZEjhO6D1nWw2X": {
+      "name": "Augury",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.4nEY2BcV85wavKLO": {
+      "name": "Prismatic Armor",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.4YnON9JHYqtLzccu": {
+      "name": "Summon Animal",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ": {
+      "name": "Interplanar Teleport",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.5c692cCcTDXjSEzk": {
+      "name": "Dragon Form",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.5KobTMrZeZxuXMgl": {
+      "name": "Gecko Grip",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.6DfLZBl8wKIV03Iq": {
+      "name": "Ignition",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.6s0UW4bujggma9TC": {
+      "name": "Fabricated Truth",
+      "rank": 10,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.73rToy0v5Ra9NvL6": {
+      "name": "Duplicate Foe",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.7dKtMehJ6YrXwJLR": {
+      "name": "Magnetic Attraction",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.8kJbiBEjMWG4VUjs": {
+      "name": "Warp Mind",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.8ViwItUgwT4lOvvb": {
+      "name": "False Vitality",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.8xRzLhwGL7Dgy3EZ": {
+      "name": "Sanctuary",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.9HpwDN4MYQJnW0LG": {
+      "name": "Dispel Magic",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.9s5tqqXNzcoKamWx": {
+      "name": "Web",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.9XHmC2JgTUIQ1CCm": {
+      "name": "Mist",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.A2JfEKe6BZcTG1S8": {
+      "name": "Fly",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Aap7nGpC7neTWm78": {
+      "name": "Animal Allies",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.aIHY2DArKFweIrpf": {
+      "name": "Command",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.APDrC83QljsyHenB": {
+      "name": "Sage's Curse",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.aqRYNoSvxsVfqglH": {
+      "name": "Unfettered Movement",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.b515AZlB0sridKSq": {
+      "name": "Calm",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.bay4AfSu2iIozNNW": {
+      "name": "Banishment",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.BBvV7qoXGdw09q1C": {
+      "name": "Speak with Animals",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.bVtkBJvGLP69qVGI": {
+      "name": "Unfettered Pack",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.D2nPKbIS67m9199U": {
+      "name": "Ethereal Jaunt",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.d7Lwx6KAs47MtF0q": {
+      "name": "Share Life",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.dARE6VfJ3Uoq5M53": {
+      "name": "Daydreamer's Curse",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.dileJ0Yxqg76LMvu": {
+      "name": "One with Plants",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.dINQzhqGmIsqGMUY": {
+      "name": "Mending",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.dLdRqT6UxTKlsPgp": {
+      "name": "Death Knell",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.dN8QBNuTiaBHCKUe": {
+      "name": "Cursed Metamorphosis",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.dxOF7d5kAWusLKWF": {
+      "name": "Reaper's Lantern",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.DyiD239dNS7RIxZE": {
+      "name": "Holy Light",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Ek5XI0aEdZhBgm21": {
+      "name": "Scouting Eye",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.EoKBlgf6Smt8opaU": {
+      "name": "Veil of Privacy",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Et8RSCLx8w7uOLvo": {
+      "name": "Sound Body",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.f8SBoXiXQjlCKqly": {
+      "name": "Illusory Creature",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.fd31tAHSSGXyOxW6": {
+      "name": "Vampiric Exsanguination",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.FM3SmEW8N1FCRjqt": {
+      "name": "Talking Corpse",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Fr58LDSrbndgld9n": {
+      "name": "Resist Energy",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.fZPCv2VHuM2yPbC8": {
+      "name": "Deafness",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.g8QqHpv2CWDwmIm1": {
+      "name": "Gust of Wind",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Gb7SeieEvd0pL2Eh": {
+      "name": "Sure Strike",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.gIdDLrbswTV3OBJy": {
+      "name": "Silence",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.gpzpAAAJ1Lza2JVl": {
+      "name": "Detect Magic",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.GYmXvS9NJ7QwfWGg": {
+      "name": "Seize Soul",
+      "rank": 9,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Hnc7eGi7vyZenAIm": {
+      "name": "Breath of Life",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.HRb2doyaLtaoCfi3": {
+      "name": "Faerie Fire",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.hs7h8f4Z1ZNdUt3s": {
+      "name": "Summon Fey",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.HTou8cG05yuSkesj": {
+      "name": "Status",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.i35dpZFI7jZcRoBo": {
+      "name": "Illusory Disguise",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.IHUs4qn27RrdFQ5Y": {
+      "name": "Cosmic Form",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.IihxWhRfpsBgQ5jS": {
+      "name": "Enthrall",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.IqJ9URobmJ9L9UBG": {
+      "name": "Shadow Blast",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.J6vNvrUT3b1hx2iA": {
+      "name": "Entangling Flora",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.j8vIoIEWElvpwkcI": {
+      "name": "Mirror Image",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.JbAcSLu62TU1OgNF": {
+      "name": "Tangling Creepers",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.jfVCuOpzC6mUrf6f": {
+      "name": "Hydraulic Push",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.jQdm301h6e8hIY4U": {
+      "name": "Spiritual Guardian",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.jSRAyd57kd4WZ4yE": {
+      "name": "Summon Plant or Fungus",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.jwK43yKsHTkJQvQ9": {
+      "name": "See the Unseen",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.K9gI08enGtmih5X1": {
+      "name": "Protector Tree",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.kBhaPuzLUSwS6vVf": {
+      "name": "Electric Arc",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.kcelf6IHl3L9VXXg": {
+      "name": "Vitality Lash",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.kCgkreCT6g0dipMd": {
+      "name": "Murderous Vine",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.kghwmH3tQjMIhdH1": {
+      "name": "Summon Dragon",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.KhM8MhoUgoUjBMIz": {
+      "name": "Dinosaur Form",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.KSAEhNfZyXMO7Z7V": {
+      "name": "Outcast's Curse",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.KsWhliKfUs3IpW3c": {
+      "name": "Wall of Thorns",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.lpT6LotUaQPfinjj": {
+      "name": "Summon Elemental",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.LQzlKbYjZSMFQawP": {
+      "name": "Locate",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.MJx7DmjsWYzDZ3a4": {
+      "name": "Phantasmagoria",
+      "rank": 9,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.MlpbeZ61Euhl0d60": {
+      "name": "Toxic Cloud",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.mrDi3v933gsmnw25": {
+      "name": "Telekinetic Maneuver",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Mt6ZzkVX8Q4xigFq": {
+      "name": "Create Food",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.MZGkMsPBztFN0pUO": {
+      "name": "Water Breathing",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.nX85Brzax9f650aK": {
+      "name": "Invisible Item",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.NzXpEzcZAjuDTZjK": {
+      "name": "Aerial Form",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.o4lRVTwSxnOOn5vl": {
+      "name": "Sleep",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.O6VQC1Bs4aSYDa6R": {
+      "name": "Mask of Terror",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.o6YCGx4lycsYpww4": {
+      "name": "Haste",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.O7ZEqWjwdKyo2CUv": {
+      "name": "Volcanic Eruption",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Oj1PJBMQD9vuwCv7": {
+      "name": "Quandary",
+      "rank": 8,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.OsOhx3TGIZ7AhD0P": {
+      "name": "Dominate",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.oUDNCArkQTdhllxD": {
+      "name": "Aqueous Orb",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.PHVHBbdHeQRfjLmE": {
+      "name": "Spirit Blast",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.PjhUmyKnq6K5uDby": {
+      "name": "Shrink",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.pkcOby5prOausy1k": {
+      "name": "Read Omens",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.Q7QQ91vQtyi1Ux36": {
+      "name": "Jump",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.qsNeG9KZpODSACMq": {
+      "name": "Foresight",
+      "rank": 9,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.qvwIwJ9QBihy8R0t": {
+      "name": "Speak with Plants",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.qwlh6aDgi86U3Q7H": {
+      "name": "Suggestion",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.qXTB7Ec9yYh5JPPV": {
+      "name": "Cleanse Cuisine",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.rfZpqmj0AIIdkVIs": {
+      "name": "Heal",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.RvBlSIJmxiqfCpR9": {
+      "name": "Feet to Fins",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.rxvS7EMJ7qmexAyA": {
+      "name": "Umbral Journey",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.SUKaxVZW2TlM8lu0": {
+      "name": "Cleanse Affliction",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.SwUiVavHKMWG7t5K": {
+      "name": "Truespeech",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.sX2o0HH4RjJDAZ8C": {
+      "name": "Divine Decree",
+      "rank": 7,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.TaaMEYdZXQXF0Sks": {
+      "name": "Blood Vendetta",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.tFKJCPvOQZxKq6ON": {
+      "name": "Mad Monkeys",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.TTwOKGqmZeKSyNMH": {
+      "name": "Gentle Landing",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.TUj8eugNqAvB1vVR": {
+      "name": "Creation",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.tXa5vOu5giBNCjdR": {
+      "name": "Know the Way",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.Ucf8eynbZMfUucjE": {
+      "name": "Illusory Scene",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.vh1RpbWfqdNC4L3P": {
+      "name": "One with Stone",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.vJZ83ehQiM906lea": {
+      "name": "Detect Metal",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.vLA0q0WOK2YPuJs6": {
+      "name": "Charm",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.VlNcjmYyu95vOUe8": {
+      "name": "Translocate",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.vTQvfYu2llKQedmY": {
+      "name": "Translate",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.W69zswpj0Trdy5rj": {
+      "name": "Air Bubble",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.WBmvzNDfpwka3qT4": {
+      "name": "Light",
+      "rank": 1,
+      "cantrip": true
+    },
+    "Compendium.pf2e.spells-srd.Item.wdA52JJnsuQWeyqz": {
+      "name": "Harm",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp": {
+      "name": "Animal Form",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.WPKJOhEihhcIm2uQ": {
+      "name": "Marvelous Mount",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.wzctak6BxOW8xvFV": {
+      "name": "Enlarge",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.WzLKjSw6hsBhuklC": {
+      "name": "Create Water",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.x5rGOmhDRDVQPrnW": {
+      "name": "Field of Life",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.xRgU9rrhmGAgG4Rc": {
+      "name": "Peaceful Rest",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.XXqE1eY3w3z6xJCB": {
+      "name": "Invisibility",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.yHujiDQPdtXW797e": {
+      "name": "Spirit Link",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.yhz9fF69uwRhnHix": {
+      "name": "Animal Messenger",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.YIMampGpij4Y30yE": {
+      "name": "Speak with Stones",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.yM3KTTSAIHhyuP14": {
+      "name": "Dream Message",
+      "rank": 3,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.YtBZq49N4Um1cwm7": {
+      "name": "Nature's Reprisal",
+      "rank": 6,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.YtesyvfAIwXOqISq": {
+      "name": "Moon Frenzy",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.yV7Ouzaoe7DHLESI": {
+      "name": "Ventriloquism",
+      "rank": 1,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.YWrfKetOqDwVFut7": {
+      "name": "Oaken Resilience",
+      "rank": 2,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.zCcfPS4y5SrZzU2x": {
+      "name": "Plant Form",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.zfn5RqAdF63neqpP": {
+      "name": "Control Water",
+      "rank": 5,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.zR67Rt3UMHKC5evy": {
+      "name": "Flicker",
+      "rank": 4,
+      "cantrip": false
+    },
+    "Compendium.pf2e.spells-srd.Item.ZYoC630tNGutgbE0": {
+      "name": "Hypercognition",
+      "rank": 3,
+      "cantrip": false
+    }
+  },
+  "grants": {
+    "aboleth-transmutation": {
+      "name": "Aboleth Transmutation",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Thhcli0PR7HBBcPX",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.RvBlSIJmxiqfCpR9",
+              "rank": 3
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.MZGkMsPBztFN0pUO",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain 3rd-rank Feet to Fins and 2nd-rank Water Breathing as arcane innate spells."
+        }
+      ]
+    },
+    "adamantine-mantra": {
+      "name": "Adamantine Mantra",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.nCVX6szvnW1Js57w",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.1b55SgYTV65JvmQd",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Blessing of Defiance as a 5th-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "advanced-targeting-system": {
+      "name": "Advanced Targeting System",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ThqMksZRxNB18ivs",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Gb7SeieEvd0pL2Eh",
+              "rank": 1
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Sure Strike once per day as a 1st-rank arcane innate spell."
+        }
+      ]
+    },
+    "agathion-magic": {
+      "name": "Agathion Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.n46s9MB8LLRQKwOp",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.b515AZlB0sridKSq",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Animal Form and Calm each once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "analyze-information": {
+      "name": "Analyze Information",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.RTxPL1reRcJhhYeG",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.ZYoC630tNGutgbE0",
+              "rank": 3
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 3rd-rank Hypercognition once per day as a divine innate spell."
+        }
+      ]
+    },
+    "ancestors-rage": {
+      "name": "Ancestor's Rage",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ytgmam8COVq8B7Do",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp",
+              "rank": 5
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Animal Form (canine form only) once per day as a 5th-rank occult innate spell."
+        }
+      ]
+    },
+    "ancestors-transformation": {
+      "name": "Ancestor's Transformation",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.3X8BkDZEDWp90U4u",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.NzXpEzcZAjuDTZjK",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 5th-rank Aerial Form as a primal innate spell once per day, but you take the form of a primeval strix, using the statistics for a bird form."
+        }
+      ]
+    },
+    "ancestral-form": {
+      "name": "Ancestral Form",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.UWOSRX6FH6MZDlEw",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp",
+              "rank": 3
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Animal Form on yourself as a 3rd-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "animal-magic": {
+      "name": "Animal Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.JeMGDAD5s9AXCZ2G",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yhz9fF69uwRhnHix",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.b515AZlB0sridKSq",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.BBvV7qoXGdw09q1C",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Animal Messenger, Calm (animals only), and Speak with Animals as 2nd-rank primal innate spells once per day each."
+        }
+      ]
+    },
+    "animal-soul-siblings": {
+      "name": "Animal Soul Siblings",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.3omfgwa6waDNj0Eg",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.BBvV7qoXGdw09q1C"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Speak with Animals as a primal innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "animal-summoner": {
+      "name": "Animal Summoner",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.0hmGJt1GiGYYxFFA",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.4YnON9JHYqtLzccu",
+              "heighten": "half"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Summon Animal as a primal innate spell once per day, heightened to half your level rounded up."
+        }
+      ]
+    },
+    "apprentice-sea-witch": {
+      "name": "Apprentice Sea Witch",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ZhXlvowfVIAr8E2x",
+      "grants": [
+        {
+          "kind": "linked",
+          "choose": 1,
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.WzLKjSw6hsBhuklC",
+              "rank": 1
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jfVCuOpzC6mUrf6f",
+              "rank": 1
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast either Create Water or Hydraulic Push as a 1st-rank primal innate spell."
+        }
+      ]
+    },
+    "arcane-camouflage": {
+      "name": "Arcane Camouflage",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.N8Ci3w5gQ68rj6a6",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.3JG1t3T4mWn6vTke",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.XXqE1eY3w3z6xJCB",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Blur and Invisibility each once per day as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "arcane-eye": {
+      "name": "Arcane Eye",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.YG6OCTbbqZwqRTr3",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jwK43yKsHTkJQvQ9"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast See the Unseen as an arcane innate spell once per hour."
+        }
+      ]
+    },
+    "arcane-sense": {
+      "name": "Arcane Sense",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.blMeVamjGz4ODWxq",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.gpzpAAAJ1Lza2JVl",
+              "rank": 1
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast 1st-rank Detect Magic at will as an arcane innate spell."
+        }
+      ]
+    },
+    "arise-ye-worthy": {
+      "name": "Arise, Ye Worthy!",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.YryDlMt3zARg6j7T",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Hnc7eGi7vyZenAIm"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Breath of Life as a divine innate spell once per day."
+        }
+      ]
+    },
+    "ascendant-blood": {
+      "name": "Ascendant Blood",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.TafPYNuDBD2GEAxQ",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": null,
+          "note": "Twice per week, you can cast Interplanar Teleport as an innate spell of the tradition corresponding to your draconic exemplar."
+        }
+      ]
+    },
+    "asura-magic": {
+      "name": "Asura Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.gOv0OGTzKUhMoI8d",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.TaaMEYdZXQXF0Sks",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.dLdRqT6UxTKlsPgp",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Blood Vendetta and Death Knell once per day each as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "avatars-audience": {
+      "name": "Avatar's Audience",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.opeP0JF9WGmNG0pb",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Third, once per day, you can cast Interplanar Teleport as a divine innate spell, but only to travel to the realm of your deity."
+        }
+      ]
+    },
+    "awakened-magic": {
+      "name": "Awakened Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.LaThPZtOGJ1VTNxl",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "primal",
+            "cantrip": true
+          },
+          "tradition": "primal",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the primal spell list. You can cast this spell as an primal innate spell at will."
+        }
+      ]
+    },
+    "axial-recall": {
+      "name": "Axial Recall",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.h9b5CId7S7gV7j2t",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Interplanar Teleport twice per week as an arcane innate spell that can only target yourself; you can travel only to Axis or the Universe, and your body serves as the focus component."
+        }
+      ]
+    },
+    "azaersis-roads": {
+      "name": "Azaersi's Roads",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.LoZY48txEgHZxewj",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Interplanar Teleport as a primal innate spell."
+        }
+      ]
+    },
+    "azarketi-purification": {
+      "name": "Azarketi Purification",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.u94fcPT5Oukqzql5",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.qXTB7Ec9yYh5JPPV"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Cleanse Cuisine as a primal innate spell, but only on liquids."
+        }
+      ]
+    },
+    "bark-and-tendril": {
+      "name": "Bark and Tendril",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.2kAyZ3LB28BDhXKa",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.J6vNvrUT3b1hx2iA",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.YWrfKetOqDwVFut7",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Entangling Flora and Oaken Resilience as 2nd-rank primal innate spells once per day each."
+        }
+      ]
+    },
+    "bone-caller": {
+      "name": "Bone Caller",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.B53sWzd5irAoLn2U",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yhz9fF69uwRhnHix"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.WPKJOhEihhcIm2uQ"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Animal Messenger and Marvelous Mount as primal innate spells once per day each."
+        }
+      ]
+    },
+    "bone-investiture": {
+      "name": "Bone Investiture",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.XuL3g2ExgadFtWbb",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.KhM8MhoUgoUjBMIz",
+              "rank": 5
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Dinosaur Form on yourself as a 5th-rank innate spell once per day."
+        }
+      ]
+    },
+    "boneyard-acquaintance": {
+      "name": "Boneyard Acquaintance",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.fjzxzlHhiORtV7Ll",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jQdm301h6e8hIY4U",
+              "rank": 9
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "This functions as Spiritual Guardian that you can cast once per day as a 9th-rank divine innate spell."
+        }
+      ]
+    },
+    "boneyards-call": {
+      "name": "Boneyard's Call",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.wfOGyLnuVMFo7Rwy",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Interplanar Teleport as a divine innate spell twice per week."
+        }
+      ]
+    },
+    "breath-like-honey": {
+      "name": "Breath Like Honey",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.FZZXgmVMAmvKHWIo",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.IihxWhRfpsBgQ5jS",
+              "rank": 3
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "In addition, you can cast Enthrall as a 3rd-rank occult innate spell once per day, except the spell has a range of 30 feet and the olfactory trait instead of the auditory trait."
+        }
+      ]
+    },
+    "call-draconic-ally": {
+      "name": "Call Draconic Ally",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.7hucfLLgeNeX5Pkw",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.kghwmH3tQjMIhdH1",
+              "heighten": "half"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day while you are Channeling Draconic Essence, you can cast Summon Dragon as an innate spell with a tradition matching your draconic exemplar, heightened to half your level rounded up."
+        }
+      ]
+    },
+    "call-of-the-green-man": {
+      "name": "Call of the Green Man",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.uDFgL6uCwJsaTHi3",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.zCcfPS4y5SrZzU2x",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Plant Form as a 5th-rank primal innate spell."
+        }
+      ]
+    },
+    "call-ursine-ally": {
+      "name": "Call Ursine Ally",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.kYYB7ziQZjlgQWWu",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.4YnON9JHYqtLzccu",
+              "rank": 3
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast a 3rd-rank Summon Animal as an innate spell, but only to summon a Black Bear."
+        }
+      ]
+    },
+    "captivating-curiosity": {
+      "name": "Captivating Curiosity",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.uOFzs058hy144rzm",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.IihxWhRfpsBgQ5jS",
+              "rank": 3
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Enthrall as a 3rd-rank occult innate spell once per day."
+        }
+      ]
+    },
+    "catrinas-presence": {
+      "name": "Catrina's Presence",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.pt4oMtjAVGFQHtVw",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.b515AZlB0sridKSq",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 2,
+          "note": "So long as you are visibly carrying fresh flowers or colorful ribbons somewhere on your person, you can cast Calm twice per day as a 2nd-rank divine innate spell."
+        }
+      ]
+    },
+    "celestial-magic": {
+      "name": "Celestial Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.esKk5XrnlqRayDPG",
+      "grants": [
+        {
+          "kind": "chosen",
+          "flag": "spell",
+          "slugs": true,
+          "rank": 2,
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can use each of the chosen spells once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "celestial-mercy": {
+      "name": "Celestial Mercy",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.V6iJ4v15Qc8awVCH",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.SUKaxVZW2TlM8lu0",
+              "rank": 4
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 2,
+          "note": "You can cast Cleanse Affliction twice per day as a 4th-rank divine innate spell."
+        }
+      ]
+    },
+    "ceremony-of-aeons-guidance": {
+      "name": "Ceremony of Aeon's Guidance",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.nYSSdczKdRj7pdW6",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.41TZEjhO6D1nWw2X",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.b515AZlB0sridKSq",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Augury and Calm each once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "ceremony-of-aeons-shield": {
+      "name": "Ceremony of Aeon's Shield",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.qAdlJvAHkWBisDJ0",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Fr58LDSrbndgld9n",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.d7Lwx6KAs47MtF0q",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Resist Energy and Share Life each once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "colugos-traversal": {
+      "name": "Colugo's Traversal",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.xlPT1vT8pkgV3iCp",
+      "grants": [
+        {
+          "kind": "linked",
+          "choose": 1,
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.TTwOKGqmZeKSyNMH"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Q7QQ91vQtyi1Ux36"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast your choice of Gentle Landing or Jump as a primal innate spell once per day."
+        }
+      ]
+    },
+    "corpse-tenders-font": {
+      "name": "Corpse Tender's Font",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.LQ5YW01UD9hGKk0l",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wdA52JJnsuQWeyqz"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Harm as a divine innate spell once per day."
+        }
+      ]
+    },
+    "crones-cruelty": {
+      "name": "Crone's Cruelty",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.kt5UJEfTzO3LiInN",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.8kJbiBEjMWG4VUjs"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Warp Mind once per day as an occult innate spell."
+        }
+      ]
+    },
+    "cross-the-threshold": {
+      "name": "Cross the Threshold",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.XXOc3MxbkEBMgFeT",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.D2nPKbIS67m9199U"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Ethereal Jaunt as an occult innate spell once per day."
+        }
+      ]
+    },
+    "cunning-tinker": {
+      "name": "Cunning Tinker",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.m64PtRsaiOkylVVk",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.dINQzhqGmIsqGMUY",
+              "rank": 1
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 1st-rank Mending once per day as an arcane innate spell."
+        }
+      ]
+    },
+    "deny-the-songs-of-war": {
+      "name": "Deny the Songs of War",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.1F4FD5OdDCEyiEvk",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.fZPCv2VHuM2yPbC8"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.gIdDLrbswTV3OBJy",
+              "rank": 4
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Deafness and 4th-rank Silence once per day each as innate spells."
+        }
+      ]
+    },
+    "devil-allies": {
+      "name": "Devil Allies",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.w7dOgJvqAqyqSeSQ",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.29ytKctjg7qSW2ff",
+              "rank": 6
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Summon Fiend as a 6th-rank innate spell of a tradition of your choice, which you can cast once per day."
+        }
+      ]
+    },
+    "devilish-wiles": {
+      "name": "Devilish Wiles",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.z0v9ENqGAwVodXpu",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.vLA0q0WOK2YPuJs6",
+              "rank": 1
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Charm once per day as a 1st-rank divine innate spell."
+        }
+      ]
+    },
+    "dissolutions-sovereignty": {
+      "name": "Dissolution's Sovereignty",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.PbSyQ8PRlG3x42zY",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.73rToy0v5Ra9NvL6"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Duplicate Foe as an occult innate spell once per day."
+        }
+      ]
+    },
+    "distant-cackle": {
+      "name": "Distant Cackle",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.P19AnciwNcSqxU7z",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yV7Ouzaoe7DHLESI",
+              "rank": 1
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Ventriloquism once per day as a 1st-rank occult innate spell."
+        }
+      ]
+    },
+    "divine-declaration": {
+      "name": "Divine Declaration",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.KL3Pk10ReItAHTw9",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.sX2o0HH4RjJDAZ8C",
+              "rank": 7
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Divine Decree as a 7th-rank divine innate spell."
+        }
+      ]
+    },
+    "djinni-magic": {
+      "name": "Djinni Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.nHoRM1gLL7MtIiCS",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.g8QqHpv2CWDwmIm1",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.XXqE1eY3w3z6xJCB",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Gust of Wind and Invisibility once per day each as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "dominating-gaze": {
+      "name": "Dominating Gaze",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.yqIorA6QGWmbKoOz",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.OsOhx3TGIZ7AhD0P",
+              "rank": 7
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast 7th-rank Dominate as a divine innate spell, using your class DC or spell DC, whichever is higher."
+        }
+      ]
+    },
+    "draconic-veil": {
+      "name": "Draconic Veil",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.VDOROn71nTjuQ7To",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2qGqa33E4GPUCbMV",
+              "rank": 5
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Humanoid Form as a 5th-rank innate spell once per day, except that the duration is increased to 1 hour."
+        }
+      ]
+    },
+    "dream-magic": {
+      "name": "Dream Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.lH8FwUM9bX9rpVsa",
+      "grants": [
+        {
+          "kind": "linked",
+          "choose": 1,
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yM3KTTSAIHhyuP14",
+              "rank": 4
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.o4lRVTwSxnOOn5vl",
+              "rank": 4
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Choose Dream Message or Sleep upon taking this feat; you learn this spell as a 4th-rank occult innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "duskwalker-magic": {
+      "name": "Duskwalker Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.PxWdf4HAhZ8fUB3R",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.41TZEjhO6D1nWw2X",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.xRgU9rrhmGAgG4Rc",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Augury and Peaceful Rest each once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "efreeti-magic": {
+      "name": "Efreeti Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.AJVx3sHm6f6i8ZQW",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wzctak6BxOW8xvFV",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2oH5IufzdESuYxat",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Enlarge and Illusory Object once per day each as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "elytron-surki": {
+      "name": "Elytron Surki",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.0Anj61DzUimJ1uMS",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.A2JfEKe6BZcTG1S8"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Fly as an innate spell once per day, targeting yourself; while your wings are energized, you shed bright light in a 20-foot radius and dim light for the next 20 feet."
+        }
+      ]
+    },
+    "emissary-assistance": {
+      "name": "Emissary Assistance",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.4Pttzj49WiROm3ua",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.RvBlSIJmxiqfCpR9",
+              "rank": 3
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.MZGkMsPBztFN0pUO",
+              "rank": 3
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Feet to Fins and Water Breathing as 3rd-rank primal innate spells."
+        }
+      ]
+    },
+    "enthralling-allure": {
+      "name": "Enthralling Allure",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Zz5A8Yg0jGSK8GNu",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.vLA0q0WOK2YPuJs6"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Charm as a divine innate spell once per day."
+        }
+      ]
+    },
+    "favor-of-heaven": {
+      "name": "Favor of Heaven",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.VbHuOvF1MM9ls6Tg",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.PHVHBbdHeQRfjLmE",
+              "rank": 6
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast a 6th-rank Spirit Blast as a divine innate spell."
+        }
+      ]
+    },
+    "fearsome-form": {
+      "name": "Fearsome Form",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.WlVPcOUu1GfbRSZy",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.O6VQC1Bs4aSYDa6R"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Mask of Terror as a primal innate spell once per day."
+        }
+      ]
+    },
+    "fey-disguise": {
+      "name": "Fey Disguise",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.GTA6QM7cH40L8H5Q",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.i35dpZFI7jZcRoBo",
+              "rank": 1
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Illusory Disguise once per day as a 1st-rank primal innate spell."
+        }
+      ]
+    },
+    "fey-life": {
+      "name": "Fey Life",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.jSu9h6UvZtUJ7InD",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.hs7h8f4Z1ZNdUt3s",
+              "rank": 7
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain the ability to cast Summon Fey as a 7th-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "fey-magic": {
+      "name": "Fey Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Qe9IUDVo7gsowMHq",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.HRb2doyaLtaoCfi3"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.XXqE1eY3w3z6xJCB"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Faerie Fire and Invisibility each once per day as primal innate spells."
+        }
+      ]
+    },
+    "fey-touched-gnome": {
+      "name": "Fey-Touched Gnome",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.D3hTAqgwSank8OyO",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "primal",
+            "cantrip": true
+          },
+          "tradition": "primal",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the primal spell list. You can cast this spell as a primal innate spell at will."
+        }
+      ]
+    },
+    "fiendish-magic": {
+      "name": "Fiendish Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.UKYO5kiOnCY1hgCD",
+      "grants": [
+        {
+          "kind": "chosen",
+          "flag": "spell",
+          "slugs": true,
+          "rank": 2,
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can use each of the chosen spells once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "first-world-adept": {
+      "name": "First World Adept",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.WUVNZoIZvr9XFv2x",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.XXqE1eY3w3z6xJCB",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.0qaqksrGGDj74HXE",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Invisibility and Revealing Light as 2nd-rank primal innate spells."
+        }
+      ]
+    },
+    "first-world-magic": {
+      "name": "First World Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.yJ8Ez5dEscIk1xr5",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "primal",
+            "cantrip": true
+          },
+          "tradition": "primal",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the primal spell list. You can cast this spell as a primal innate spell at will."
+        }
+      ]
+    },
+    "flourish-and-ruin": {
+      "name": "Flourish and Ruin",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.U9nJy5suyYDE0b20",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.x5rGOmhDRDVQPrnW",
+              "rank": 6
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.JbAcSLu62TU1OgNF",
+              "rank": 6
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Field of Life and Tangling Creepers as 6th-rank primal innate spells once per day each."
+        }
+      ]
+    },
+    "flower-magic": {
+      "name": "Flower Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.oGPX29AOsyHj18mK",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.YWrfKetOqDwVFut7",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.dileJ0Yxqg76LMvu",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Oaken Resilience and One with Plants as 2nd-rank arcane innate spells once per day each."
+        }
+      ]
+    },
+    "form-of-the-beloved-mother": {
+      "name": "Form of the Beloved Mother",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.GDyYYA91A3r80Oec",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp",
+              "rank": 5
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 5th-rank Animal Form as an occult innate spell once per day, but you can choose only snake form with the spell."
+        }
+      ]
+    },
+    "form-of-the-dragon": {
+      "name": "Form of the Dragon",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ehiLW2Kjl5csT3fk",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5c692cCcTDXjSEzk",
+              "rank": 8
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Dragon Form as an 8th-rank innate spell once per day."
+        }
+      ]
+    },
+    "fossil-rider": {
+      "name": "Fossil Rider",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.IOlvpmeIwlk0IACr",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.O6VQC1Bs4aSYDa6R"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Mask of Terror on yourself as an innate spell once per day."
+        }
+      ]
+    },
+    "garuda-magic": {
+      "name": "Garuda Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.T6yXzRKNZrYKIcDi",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.3JG1t3T4mWn6vTke",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jwK43yKsHTkJQvQ9",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Blur and See the Unseen each once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "ghorans-wrath": {
+      "name": "Ghoran's Wrath",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.4TndDyCjnF7pc1GC",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.YtBZq49N4Um1cwm7"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Nature's Reprisal once per hour as a primal innate spell."
+        }
+      ]
+    },
+    "ghost-bull-minotaur": {
+      "name": "Ghost Bull Minotaur",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.bHgGh3vtXL7fkhIy",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.tXa5vOu5giBNCjdR"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast Know the Way as an occult innate spell at will."
+        }
+      ]
+    },
+    "gift-of-the-moon": {
+      "name": "Gift of the Moon",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.7Lx8rsEbBJkg6C17",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.YtesyvfAIwXOqISq",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast a 5th-rank Moon Frenzy as a primal innate spell once per day."
+        }
+      ]
+    },
+    "grandmothers-wisdom": {
+      "name": "Grandmother's Wisdom",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.mU8vTzrWX9fIlG0d",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.41TZEjhO6D1nWw2X",
+              "rank": 2
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 2,
+          "note": "You can cast Augury twice per day as a 2nd-rank occult innate spell."
+        }
+      ]
+    },
+    "greater-magical-scholastics": {
+      "name": "Greater Magical Scholastics",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ErKwliHplziJY2BW",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.41TZEjhO6D1nWw2X"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.LQzlKbYjZSMFQawP"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.EoKBlgf6Smt8opaU"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Augury, Locate, and Veil of Privacy as occult innate spells, each once per day."
+        }
+      ]
+    },
+    "greater-than-the-sum": {
+      "name": "Greater than the Sum",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.BS6UoGLyJ12xVD9P",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wzctak6BxOW8xvFV",
+              "rank": 6
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Enlarge as a 6th-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "hag-magic": {
+      "name": "Hag Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.t6GBBIwX7hvvxYyV",
+      "grants": [
+        {
+          "kind": "chosen",
+          "flag": "hagMagic",
+          "slugs": true,
+          "rank": 4,
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast this spell once per day as a 4th-rank occult innate spell."
+        }
+      ]
+    },
+    "homeward-bound": {
+      "name": "Homeward Bound",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.UKHIKipBvOGhzcSQ",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Interplanar Teleport as a primal innate spell."
+        }
+      ]
+    },
+    "homing-drake": {
+      "name": "Homing Drake",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.EG0zqAipDIMGBAKz",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.tXa5vOu5giBNCjdR"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Know the Way cantrip as an arcane innate spell at will."
+        }
+      ]
+    },
+    "horn-and-bone-incantation": {
+      "name": "Horn and Bone Incantation",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.JXKbfwsyYWcqZUUl",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2qGqa33E4GPUCbMV",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain the ability to cast Animal Form and Humanoid Form as 2nd-rank primal innate spells, each once per day."
+        }
+      ]
+    },
+    "i-sense-malevolence": {
+      "name": "I Sense Malevolence",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.aEcK9cX64xDrbzwH",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.3ehSrqTAm7IPqbIZ",
+              "rank": 6
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Spirit Sense as a 6th-rank occult innate spell, which you can cast once per day."
+        }
+      ]
+    },
+    "iivlars-boundary-break": {
+      "name": "Iivlar's Boundary Break",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.mBYXOPc37AawNza6",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.zR67Rt3UMHKC5evy",
+              "rank": 4
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Flicker as a 4th-rank occult innate spell once per day."
+        }
+      ]
+    },
+    "impossible-gossip": {
+      "name": "Impossible Gossip",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.5BEY7VzDVuiAg4PX",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.YIMampGpij4Y30yE"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Speak with Stones once per day as an arcane innate spell, but instead of speaking with natural or worked stone, you speak with toys, statues, or other three-dimensional inanimate objects crafted to mimic a creature's appearance, regardless of their composition."
+        }
+      ]
+    },
+    "into-the-labyrinth": {
+      "name": "Into the Labyrinth",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.krQcx7hANwaLjoy0",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Oj1PJBMQD9vuwCv7",
+              "rank": 8
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Quandary as an 8th-rank occult innate spell, which takes the form of a labyrinth instead of a puzzle room."
+        }
+      ]
+    },
+    "invisible-trickster": {
+      "name": "Invisible Trickster",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.XzTklOArNQle7rQP",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.XXqE1eY3w3z6xJCB",
+              "rank": 4
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast 4th-rank Invisibility as a primal innate spell once per hour."
+        }
+      ]
+    },
+    "jalmeri-rakshasa-magic": {
+      "name": "Jalmeri Rakshasa Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.fYkAlUeIryOw7Ht8",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.9HpwDN4MYQJnW0LG",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.dxOF7d5kAWusLKWF",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Dispel Magic and Reaper's Lantern once per day each as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "janni-hospitality": {
+      "name": "Janni Hospitality",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.6WwxTbX8KvU3Xxak",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Mt6ZzkVX8Q4xigFq",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.WzLKjSw6hsBhuklC"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 2nd-rank Create Food once per day and Create Water twice per day as arcane innate spells."
+        }
+      ]
+    },
+    "janni-magic": {
+      "name": "Janni Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.xDCtfNtbnaG166cy",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wzctak6BxOW8xvFV",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.BBvV7qoXGdw09q1C",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Enlarge and Speak with Animals once per day each as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "jotuns-transposition": {
+      "name": "Jotun's Transposition",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.TH4mB4nyHqmBAOnR",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Interplanar Teleport twice per week as an occult innate spell that can target only yourself."
+        }
+      ]
+    },
+    "kijimuna-whistle": {
+      "name": "Kijimuna Whistle",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Bekco7lCUkqyLi6S",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jSRAyd57kd4WZ4yE",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can whistle the distinct, cheery sound that's a signature of the kijimuna gnome community to cast Summon Plant or Fungus as a 5th-rank primal innate spell."
+        }
+      ]
+    },
+    "killing-stone": {
+      "name": "Killing Stone",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.93vQcuKBESXUKoH5",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.MlpbeZ61Euhl0d60",
+              "rank": 5
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 5th-rank Toxic Cloud as a divine innate spell once per day."
+        }
+      ]
+    },
+    "kizidhar-magic": {
+      "name": "Kizidhar Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.j7BhuP2ccnwpbQhw",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.J6vNvrUT3b1hx2iA",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.dileJ0Yxqg76LMvu",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can wield the arcane magic of a kizidhar, casting Entangling Flora and One with Plants once per day each as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "labyrinthine-echoes": {
+      "name": "Labyrinthine Echoes",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.1rPcBoqCsmgFjily",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yV7Ouzaoe7DHLESI"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Ventriloquism as an occult innate spell."
+        }
+      ]
+    },
+    "legendary-size": {
+      "name": "Legendary Size",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.IlzUi1viWgeRolU8",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wzctak6BxOW8xvFV",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.PjhUmyKnq6K5uDby",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Enlarge and Shrink once per day each as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "liminal-catfolk": {
+      "name": "Liminal Catfolk",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.3F5ffk7cmnrBhPcT",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.gpzpAAAJ1Lza2JVl"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Detect Magic cantrip as an occult innate spell at will."
+        }
+      ]
+    },
+    "lingering-echoes": {
+      "name": "Lingering Echoes",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ZTIM5YyCiNxIO3Mp",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.FM3SmEW8N1FCRjqt"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Talking Corpse as an occult innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "linguistic-revival": {
+      "name": "Linguistic Revival",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.xSOpBaHbrjiaQsME",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.SwUiVavHKMWG7t5K",
+              "rank": 5
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Truespeech as a 5th-rank occult innate spell that you can cast once a day on only yourself."
+        }
+      ]
+    },
+    "lions-magic": {
+      "name": "Lion's Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.hh0e2aeFjQOwu51T",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.qwlh6aDgi86U3Q7H",
+              "rank": 4
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast a 4th-rank Suggestion as an occult innate spell once per day."
+        }
+      ]
+    },
+    "locate-lawbreakers": {
+      "name": "Locate Lawbreakers",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.jrDCPvkruz8y740Z",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.LQzlKbYjZSMFQawP"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Locate as an innate spell of a tradition of your choice, which you can cast once per day."
+        }
+      ]
+    },
+    "lore-seeker": {
+      "name": "Lore Seeker",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.BFgrPAK2v3GSKQ5e",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.vTQvfYu2llKQedmY"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Et8RSCLx8w7uOLvo"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jwK43yKsHTkJQvQ9"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Translate, Sound Body, and See the Unseen as innate spells, each once per day."
+        }
+      ]
+    },
+    "manipulative-charm": {
+      "name": "Manipulative Charm",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.lkLwEfc3ZhLJSkVr",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.vLA0q0WOK2YPuJs6"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Charm as a divine innate spell using your class DC or spell DC, whichever is higher."
+        }
+      ]
+    },
+    "marid-magic": {
+      "name": "Marid Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.hgfRHSS5BsoyQ9Fj",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jfVCuOpzC6mUrf6f",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.9XHmC2JgTUIQ1CCm",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Hydraulic Push and Mist each once per day as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "mariners-fire": {
+      "name": "Mariner's Fire",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.TmaxLWraJrvSQOkY",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.6DfLZBl8wKIV03Iq",
+              "heighten": "half"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Ignition cantrip as a primal innate spell at will, heightened to a spell rank equal to half your level rounded up."
+        }
+      ]
+    },
+    "may-death-itself-reconsider": {
+      "name": "May Death Itself Reconsider",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.bO5ULM0yxTZVydtn",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Hnc7eGi7vyZenAIm",
+              "rank": 5
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 3,
+          "note": "You gain the ability to cast Breath of Life up to three times per day as a 5th-rank divine innate spell."
+        }
+      ]
+    },
+    "merge-with-the-source": {
+      "name": "Merge with the Source",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Ekk2iEYMAXYT3EK2",
+      "grants": [
+        {
+          "kind": "chosen",
+          "flag": "spell",
+          "slugs": true,
+          "rank": 7,
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "Select one of the following spells, which you can cast once per day as a 7th-rank innate spell."
+        }
+      ]
+    },
+    "methodical-magic": {
+      "name": "Methodical Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.IJa7dQvH3HLCBUhC",
+      "grants": [
+        {
+          "kind": "chosen",
+          "flag": "spell",
+          "slugs": true,
+          "rank": 2,
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can use each of the chosen spells once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "monkey-spirits": {
+      "name": "Monkey Spirits",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.7NsqI50oBIJ4bFwb",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.tFKJCPvOQZxKq6ON",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Mad Monkeys once per day as a 5th-rank primal innate spell."
+        }
+      ]
+    },
+    "mooneater": {
+      "name": "Mooneater",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.FKS9nLz07v9x49sE",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.0jadeyQIItIuRgeH"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Eclipse Burst as a primal innate spell once per day."
+        }
+      ]
+    },
+    "more-real-than-real": {
+      "name": "More Real Than Real",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Bf5rqe6tJyR6GoS3",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.6s0UW4bujggma9TC"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain the ability to cast Fabricated Truth once per day as an occult innate spell."
+        }
+      ]
+    },
+    "morrignas-spider-affinity": {
+      "name": "Morrigna's Spider Affinity",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.TPX0fm9wxndpIqpk",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yhz9fF69uwRhnHix",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.BBvV7qoXGdw09q1C",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5KobTMrZeZxuXMgl",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Animal Messenger, Speak with Animals, and Gecko Grip each once per day as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "mountainkeeper-tengu": {
+      "name": "Mountainkeeper Tengu",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.ptpK6H1rM4Bu3ry4",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.kcelf6IHl3L9VXXg"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Vitality Lash cantrip as a primal innate spell at will."
+        }
+      ]
+    },
+    "natural-magnetism": {
+      "name": "Natural Magnetism",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.S6ilPkeroXoGgZXm",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.7dKtMehJ6YrXwJLR",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.24U1b9K4Lj94cgaj",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Magnetic Attraction and Magnetic Repulsion once per day each as 2nd-rank primal innate spells."
+        }
+      ]
+    },
+    "necromantic-heir": {
+      "name": "Necromantic Heir",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.LTIARSoQP8WYE33A",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wdA52JJnsuQWeyqz",
+              "rank": 6
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": null,
+          "note": "Once per hour, you can cast Harm as a 6th-rank divine innate spell."
+        }
+      ]
+    },
+    "night-magic": {
+      "name": "Night Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.iRpVW1DPKVxlzIzt",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.9XHmC2JgTUIQ1CCm",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Animal Form (wolf only, using the statistics for a canine) and Mist as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "nocturnal-kindred": {
+      "name": "Nocturnal Kindred",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.8bDwJieEVCjrceM7",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Aap7nGpC7neTWm78"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Animal Allies as a divine innate spell, using your class DC or spell DC, whichever is higher."
+        }
+      ]
+    },
+    "nodal-regeneration": {
+      "name": "Nodal Regeneration",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.qGJ9vZbDpYPdD1UR",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2Vkd1IxylPceUAAF"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Regenerate once per day as an innate spell."
+        }
+      ]
+    },
+    "offensive-analysis": {
+      "name": "Offensive Analysis",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.HCxmS8QGHL5O7LUf",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Gb7SeieEvd0pL2Eh"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Sure Strike as a divine innate spell once per day."
+        }
+      ]
+    },
+    "onis-mask": {
+      "name": "Oni's Mask",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.YrawssRNHsyqYuHi",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.i35dpZFI7jZcRoBo",
+              "rank": 1
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Illusory Disguise as a 1st-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "open-mind": {
+      "name": "Open Mind",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.mAAlean6DuWd3wDT",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "occult",
+            "cantrip": true
+          },
+          "tradition": "occult",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the occult spell list. You can cast this spell as an occult innate spell at will."
+        }
+      ]
+    },
+    "otherworldly-magic": {
+      "name": "Otherworldly Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Pat4H0VbmApblZxc",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "arcane",
+            "cantrip": true
+          },
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the arcane spell list. You can cast this cantrip as an arcane innate spell at will."
+        }
+      ]
+    },
+    "pact-of-eldritch-eyes": {
+      "name": "Pact of Eldritch Eyes",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.k0h4jvjxK0fYFvOU",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Ek5XI0aEdZhBgm21"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Scouting Eye as an occult innate spell once per hour, using the higher of your class DC and your spell DC to determine the DC."
+        }
+      ]
+    },
+    "pact-of-fey-glamour": {
+      "name": "Pact of Fey Glamour",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.0VsrXyQYdluGRfsY",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.i35dpZFI7jZcRoBo"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "Additionally, you can cast Illusory Disguise as a primal innate spell once per hour, using the higher of your class DC and your spell DC to determine the DC."
+        }
+      ]
+    },
+    "pantheon-magic": {
+      "name": "Pantheon Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.O8FRS2PI66r73fBZ",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "divine",
+            "cantrip": true
+          },
+          "tradition": "divine",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the divine spell list. You can cast this cantrip as a divine innate spell at will."
+        }
+      ]
+    },
+    "patrons-glamour": {
+      "name": "Patron's Glamour",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ejGRaQTZYWFSFIW0",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.i35dpZFI7jZcRoBo"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Illusory Disguise as an innate spell of your patron's tradition, automatically heightened to the rank of your witch cantrips, but you can use it only to disguise yourself as the humanoid representation of your patron."
+        }
+      ]
+    },
+    "persistent-creation": {
+      "name": "Persistent Creation",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.L9aBLPG2veBkVow9",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.TUj8eugNqAvB1vVR"
+            }
+          ],
+          "tradition": null,
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast Creation as an innate spell at will, choosing whether it is arcane or primal each time."
+        }
+      ]
+    },
+    "phantom-orchestra": {
+      "name": "Phantom Orchestra",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.18B3fL77WgEY25M1",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.0zU8CPejjQFnhZFI",
+              "heighten": "half"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can also cast the Figment cantrip as a primal innate spell at will, heightened to a spell rank equal to half your level rounded up."
+        }
+      ]
+    },
+    "pierce-the-light": {
+      "name": "Pierce the Light",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ABx8keV4c43gEmeN",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.5bTt2CvYHPvaR7QQ"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Interplanar Teleport twice per week as an occult innate spell that can only target yourself; you can travel only to the Universe or Netherworld, and your body serves as the focus component."
+        }
+      ]
+    },
+    "pinch-time": {
+      "name": "Pinch Time",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.8ukixWL8MBJOhPbW",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.o6YCGx4lycsYpww4",
+              "rank": 3
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Haste as a 3rd-rank arcane innate spell, though you can target only yourself."
+        }
+      ]
+    },
+    "plant-soul-siblings": {
+      "name": "Plant Soul Siblings",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.mlFDIQuh84VLj5IC",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.qvwIwJ9QBihy8R0t"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Speak with Plants as a primal innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "primal-rampage": {
+      "name": "Primal Rampage",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.X1SPiYJqWzqwzPTs",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.aqRYNoSvxsVfqglH",
+              "rank": 4
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2BV2yYPfVJ5zirZt",
+              "rank": 4
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Unfettered Movement and Mountain Resilience as 4th-rank primal innate spells that you can cast once per day."
+        }
+      ]
+    },
+    "prismatic-scales": {
+      "name": "Prismatic Scales",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.SFnKHPrd65RORTgN",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.4nEY2BcV85wavKLO"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Prismatic Armor as an occult innate spell, except the spell alters the coloration of your scales instead of causing you to be clad in armor."
+        }
+      ]
+    },
+    "qlippoth-magic": {
+      "name": "Qlippoth Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.JXBEnawN7vHFtdNp",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.3JG1t3T4mWn6vTke",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.gIdDLrbswTV3OBJy",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Blur and Silence once per day each as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "rakshasa-magic": {
+      "name": "Rakshasa Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.lftLbPzfOzqAxbGW",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2qGqa33E4GPUCbMV",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.f8SBoXiXQjlCKqly",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Humanoid Form and Illusory Creature once per day each as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "rat-magic": {
+      "name": "Rat Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.8MMYFIudSDkdo8cx",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yhz9fF69uwRhnHix"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Animal Messenger once per day as a primal innate spell."
+        }
+      ]
+    },
+    "realm-strider": {
+      "name": "Realm Strider",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.DFA3qFdvSD5uHBKI",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.VlNcjmYyu95vOUe8",
+              "rank": 4
+            }
+          ],
+          "tradition": "divine",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast Translocate as a 4th-rank divine innate spell at will."
+        }
+      ]
+    },
+    "receive-prayers": {
+      "name": "Receive Prayers",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ttWl0hOh9cdk7Zko",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Hnc7eGi7vyZenAIm",
+              "rank": 5
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain the ability to cast Breath of Life once per day as a 5th-rank divine innate spell."
+        }
+      ]
+    },
+    "regrowth": {
+      "name": "Regrowth",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ffjoPXtAoIR2Drwe",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2Vkd1IxylPceUAAF",
+              "rank": 7
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Regenerate as a 7th-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "resist-ruin": {
+      "name": "Resist Ruin",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.FqZKSSBU7M4zhsXM",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.8ViwItUgwT4lOvvb",
+              "rank": 5
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain resistance 5 to void, and once per day, you can cast False Vitality as a 5th-rank divine innate spell."
+        }
+      ]
+    },
+    "restitch": {
+      "name": "Restitch",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.dftzUTOrj9dQyN3q",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2Vkd1IxylPceUAAF",
+              "rank": 7
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Regenerate as a 7th-rank arcane innate spell once per day."
+        }
+      ]
+    },
+    "return-to-the-pit": {
+      "name": "Return to the Pit!",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.oyIswzxeih08b4rA",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.bay4AfSu2iIozNNW"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Banishment once per day as a divine innate spell."
+        }
+      ]
+    },
+    "righteous-resistance": {
+      "name": "Righteous Resistance",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Kz4E8heU12IGcYoi",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Fr58LDSrbndgld9n"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 2,
+          "note": "You can cast Resist Energy as a divine innate spell twice per day, except you can target only yourself."
+        }
+      ]
+    },
+    "rivethun-adept": {
+      "name": "Rivethun Adept",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.PVx3D9ndoytRAPca",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.YIMampGpij4Y30yE",
+              "rank": 5
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jQdm301h6e8hIY4U",
+              "rank": 5
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Speak with Stones and Spiritual Guardian as a 5th-rank divine innate spells."
+        }
+      ]
+    },
+    "rivethun-devotion": {
+      "name": "Rivethun Devotion",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ESSdufyTeO6h4H5W",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.jwK43yKsHTkJQvQ9",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yHujiDQPdtXW797e",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain See the Unseen and Spirit Link as 2nd-rank divine innate spells."
+        }
+      ]
+    },
+    "rokoan-arts": {
+      "name": "Rokoan Arts",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Xwk41o4fERfM07NR",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.BBvV7qoXGdw09q1C"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.HTou8cG05yuSkesj"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Speak with Animals and Status as primal innate spells once per day each."
+        }
+      ]
+    },
+    "salt-kissed": {
+      "name": "Salt Kissed",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.jyNLPVWczMYA1ZXR",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.W69zswpj0Trdy5rj",
+              "rank": 4
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.MZGkMsPBztFN0pUO",
+              "rank": 4
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Air Bubble and Water Breathing as 4th-rank divine innate spells once per day each."
+        }
+      ]
+    },
+    "sea-witch": {
+      "name": "Sea Witch",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.rBSU5s8hsKiIqOID",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.oUDNCArkQTdhllxD",
+              "rank": 5
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.zfn5RqAdF63neqpP",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Aqueous Orb and Control Water as 5th-rank primal innate spells, each once per day."
+        }
+      ]
+    },
+    "secrets-of-the-past": {
+      "name": "Secrets of the Past",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Wu6refn3bqI1vYvi",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.ZYoC630tNGutgbE0"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Hypercognition as an occult innate spell once per day."
+        }
+      ]
+    },
+    "seer-elf": {
+      "name": "Seer Elf",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.jEtVesbqYcWGbBYk",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.gpzpAAAJ1Lza2JVl"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Detect Magic cantrip as an arcane innate spell at will."
+        }
+      ]
+    },
+    "shadow-of-the-hermit": {
+      "name": "Shadow of the Hermit",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.yxZtNE87im9yZFXk",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "occult",
+            "cantrip": true
+          },
+          "tradition": "occult",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the occult spell list. You can cast this spell as an occult innate spell at will."
+        }
+      ]
+    },
+    "shadows-assault": {
+      "name": "Shadow's Assault",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.8Qn80RunXaChOM5p",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.IqJ9URobmJ9L9UBG",
+              "rank": 5
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Shadow Blast as a 5th-rank occult innate spell once per day."
+        }
+      ]
+    },
+    "shadowy-disguise": {
+      "name": "Shadowy Disguise",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.oSA1Ii6gTRGobeSO",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.i35dpZFI7jZcRoBo",
+              "rank": 1
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Illusory Disguise as a 1st-rank occult innate spell once per day."
+        }
+      ]
+    },
+    "shaitan-magic": {
+      "name": "Shaitan Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.8buK32r3i3aGyyOR",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.0qaqksrGGDj74HXE",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Fr58LDSrbndgld9n",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Revealing Light and Resist Energy once per day each as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "shaitan-skin": {
+      "name": "Shaitan Skin",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.3YByhZJi93ie5F45",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2BV2yYPfVJ5zirZt",
+              "rank": 4
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 3,
+          "note": "You can cast Mountain Resilience on yourself only, 3 times per day as a 4th-rank arcane innate spell."
+        }
+      ]
+    },
+    "shrouded-magic": {
+      "name": "Shrouded Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.gsDDw5KAb7qlPkms",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "occult",
+            "cantrip": true
+          },
+          "tradition": "occult",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the occult spell list. You can cast this cantrip as an occult innate spell at will, heightened to a spell rank equal to half your level rounded up."
+        }
+      ]
+    },
+    "skeletal-transformation": {
+      "name": "Skeletal Transformation",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.TtSLIMiNw1hqMui5",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wp09USMB3GIW1qbp"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Animal Form as a divine innate spell."
+        }
+      ]
+    },
+    "skirt-the-light": {
+      "name": "Skirt the Light",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.dor2F3g8gL2KVwX6",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.rxvS7EMJ7qmexAyA"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Umbral Journey as an occult innate spell once per day."
+        }
+      ]
+    },
+    "slip-sideways": {
+      "name": "Slip Sideways",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.rCajlx2KjGxzabAJ",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.VlNcjmYyu95vOUe8",
+              "rank": 5
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Translocate as a 5th-rank divine innate spell."
+        }
+      ]
+    },
+    "soul-vessel-mount": {
+      "name": "Soul Vessel Mount",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.drcZf55HVsTnnTcF",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.GYmXvS9NJ7QwfWGg"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Seize Soul as a divine innate spell."
+        }
+      ]
+    },
+    "soulforger-dedication": {
+      "name": "Soulforger Dedication",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.SoocjFrWNOpchTVb",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.rfZpqmj0AIIdkVIs"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Heal once as an innate spell with a level equal to half your level rounded up."
+        }
+      ]
+    },
+    "spiritual-headhunter": {
+      "name": "Spiritual Headhunter",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Y5w2BOMeZpbSC6Ss",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.FM3SmEW8N1FCRjqt"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "Once before your next daily preparations, you can cast Talking Corpse as a primal innate spell, which targets the spiritual head trapped in your coffin, not its physical corpse."
+        }
+      ]
+    },
+    "splendid-illusion": {
+      "name": "Splendid Illusion",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.bft7gWfibx3BY5BK",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Ucf8eynbZMfUucjE",
+              "rank": 6
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 6th-rank Illusory Scene as a primal innate spell once per day."
+        }
+      ]
+    },
+    "starlit-spells": {
+      "name": "Starlit Spells",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.SVfD887ocfUFikVA",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.0qaqksrGGDj74HXE"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.DyiD239dNS7RIxZE",
+              "rank": 3
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Revealing Light and 3rd-rank Holy Light as occult innate spells, each once per day."
+        }
+      ]
+    },
+    "stem-the-tide": {
+      "name": "Stem the Tide",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.aW6Fg2Nowl4oB3qP",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.K9gI08enGtmih5X1",
+              "rank": 1
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Protector Tree as a 1st-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "stone-form": {
+      "name": "Stone Form",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.GYvaR6ZD8ZKdQWrF",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.1K6AYGisvo9gqdhs",
+              "rank": 7
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Elemental Form as a 7th-rank primal innate spell, but you can only choose the earth elemental form."
+        }
+      ]
+    },
+    "stone-soul-siblings": {
+      "name": "Stone Soul Siblings",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.NPVi1iPfY1GpiC8A",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.YIMampGpij4Y30yE"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Speak with Stones as a primal innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "stonegate": {
+      "name": "Stonegate",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.UquGIEFKhutgJsEz",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.115Xp9E38CJENhNS",
+              "rank": 7
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Magic Passage as a 7th-rank divine innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "stonewalker": {
+      "name": "Stonewalker",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.KTLdk65OOAVixqtY",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.vh1RpbWfqdNC4L3P",
+              "rank": 3
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast One with Stone as a 3rd-rank divine innate spell once per day."
+        }
+      ]
+    },
+    "storm-form": {
+      "name": "Storm Form",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.FBhBnyGX0Uje0tbJ",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.1K6AYGisvo9gqdhs",
+              "rank": 7
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Elemental Form as a 7th-rank primal innate spell, but you can only choose the air elemental form."
+        }
+      ]
+    },
+    "storms-lash": {
+      "name": "Storm's Lash",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.bWyY9NtLU5wXr03y",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.kBhaPuzLUSwS6vVf"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Electric Arc cantrip as a primal innate spell at will."
+        }
+      ]
+    },
+    "storytellers-mask": {
+      "name": "Storyteller's Mask",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.dj0aOPPcDOqmptpX",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.qsNeG9KZpODSACMq"
+            }
+          ],
+          "tradition": null,
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Foresight once per day as an innate spell, either arcane if you have Wizard Dedication or primal if you have Druid Dedication, but the duration is 10 minutes instead of 1 hour."
+        }
+      ]
+    },
+    "strident-command": {
+      "name": "Strident Command",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.D6bncWAOvFYX7hCE",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.aIHY2DArKFweIrpf",
+              "rank": 1
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": null,
+          "note": "You can cast Command once every 10 minutes as a 1st-rank occult innate spell."
+        }
+      ]
+    },
+    "studious-adept": {
+      "name": "Studious Adept",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.C2PmqTxQgWGTHluf",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2qGqa33E4GPUCbMV",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.j8vIoIEWElvpwkcI",
+              "rank": 2
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain Humanoid Form and Mirror Image as 2nd-rank arcane innate spells."
+        }
+      ]
+    },
+    "studious-magic": {
+      "name": "Studious Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.jNDjLsqpq13RqzD4",
+      "grants": [
+        {
+          "kind": "list",
+          "filter": {
+            "tradition": "arcane",
+            "cantrip": true
+          },
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "Choose one cantrip from the arcane spell list. You can cast this spell as an arcane innate spell at will."
+        }
+      ]
+    },
+    "suli-amir": {
+      "name": "Suli Amir",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.7bVJEZt2vwAAnILV",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.pkcOby5prOausy1k",
+              "heighten": "half"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.XXqE1eY3w3z6xJCB",
+              "rank": 4,
+              "heighten": "half"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.gpzpAAAJ1Lza2JVl",
+              "heighten": "half"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast Read Omens and 4th-rank Invisibility each once per day as arcane innate spells, and you can cast Detect Magic at will as an arcane innate cantrip, heightened to a spell rank equal to half your level rounded up."
+        }
+      ]
+    },
+    "summon-air-elemental": {
+      "name": "Summon Air Elemental",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.569SxRBvTCDiHlbW",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.lpT6LotUaQPfinjj",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Summon Elemental as a 5th-rank primal innate spell, but the elemental summoned must be an air elemental."
+        }
+      ]
+    },
+    "summon-earth-elemental": {
+      "name": "Summon Earth Elemental",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.lrTRELs8uDpVpsk0",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.lpT6LotUaQPfinjj",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Summon Elemental as a 5th-rank primal innate spell, but the elemental summoned must be an earth elemental."
+        }
+      ]
+    },
+    "summon-fire-elemental": {
+      "name": "Summon Fire Elemental",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.cIJfKlbfKezdDbwK",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.lpT6LotUaQPfinjj",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Summon Elemental as a 5th-rank primal innate spell, but the elemental summoned must be a fire elemental."
+        }
+      ]
+    },
+    "summon-metal-elemental": {
+      "name": "Summon Metal Elemental",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.j5AFlrvDipO0s7UW",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.lpT6LotUaQPfinjj",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Summon Elemental as a 5th-rank primal innate spell, but the elemental summoned must be a metal elemental."
+        }
+      ]
+    },
+    "summon-water-elemental": {
+      "name": "Summon Water Elemental",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Fn8dEIcUZVxuWJgN",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.lpT6LotUaQPfinjj",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Summon Elemental as a 5th-rank primal innate spell, but the elemental summoned must be a water elemental."
+        }
+      ]
+    },
+    "summon-wood-elemental": {
+      "name": "Summon Wood Elemental",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Mjt89h8hvZS4nl0P",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.lpT6LotUaQPfinjj",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Summon Elemental as a 5th-rank primal innate spell, but the elemental must be a wood elemental."
+        }
+      ]
+    },
+    "supernatural-charm": {
+      "name": "Supernatural Charm",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Rr7GdUjXhGhV04Pe",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.vLA0q0WOK2YPuJs6",
+              "rank": 1
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast 1st-rank Charm as an arcane innate spell once per day."
+        }
+      ]
+    },
+    "symphony-of-blood": {
+      "name": "Symphony of Blood",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.nJRcbt72wRk5Rmc4",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.fd31tAHSSGXyOxW6",
+              "rank": 7
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Vampiric Exsanguination as a 7th-rank divine innate spell once per day."
+        }
+      ]
+    },
+    "talos": {
+      "name": "Talos",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.Ga7UEU186pjq7LBD",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.vJZ83ehQiM906lea"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Detect Metal cantrip as an arcane innate spell at will."
+        }
+      ]
+    },
+    "the-moon-weavers-art": {
+      "name": "The Moon Weaver's Art",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ceQ09tTO4M7qwHXv",
+      "grants": [
+        {
+          "kind": "linked",
+          "choose": 1,
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.2oH5IufzdESuYxat"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.nX85Brzax9f650aK"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast either Illusory Object or Invisible Item as an occult innate spell once per day."
+        }
+      ]
+    },
+    "this-is-what-its-like-to-die": {
+      "name": "This is What it's Like to Die",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.20eTy6lRpCnMymTp",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.MJx7DmjsWYzDZ3a4"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Phantasmagoria as an occult innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "this-time-bring-the-body": {
+      "name": "This Time, Bring the Body",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.hBCK5r3Jjd719Ydk",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.D2nPKbIS67m9199U",
+              "rank": 9
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You gain Ethereal Jaunt as a 9th-rank occult innate spell that you can cast once per day."
+        }
+      ]
+    },
+    "thrown-voice": {
+      "name": "Thrown Voice",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.oEvcWFvBnsZ03OGW",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.yV7Ouzaoe7DHLESI"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Ventriloquism as a primal innate spell once per day."
+        }
+      ]
+    },
+    "towering-growth": {
+      "name": "Towering Growth",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.fiA3rfqPcCKFCI83",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wzctak6BxOW8xvFV",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain 2nd-rank Enlarge as a primal innate spell."
+        }
+      ]
+    },
+    "tranquil-sanctuary": {
+      "name": "Tranquil Sanctuary",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.GGlpvu7i24ZXXkmX",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.8xRzLhwGL7Dgy3EZ",
+              "rank": 1
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Sanctuary once per day as a 1st-rank divine innate spell."
+        }
+      ]
+    },
+    "transcend-the-azimuth": {
+      "name": "Transcend the Azimuth",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.Ce5xvrkgh9eyOJLL",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.IHUs4qn27RrdFQ5Y",
+              "rank": 7
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Cosmic Form on yourself as a 7th-rank primal innate spell once per day, your shadow lengthening and becoming a mandala of fundamental energies."
+        }
+      ]
+    },
+    "trees-ward": {
+      "name": "Tree's Ward",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.KeE8Ky38dCX8XaTg",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.K9gI08enGtmih5X1"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Protector Tree as a primal innate spell once per day."
+        }
+      ]
+    },
+    "trickster-tengu": {
+      "name": "Trickster Tengu",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.oItG5dqlPEi8wNnR",
+      "grants": [
+        {
+          "kind": "linked",
+          "choose": 1,
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.NzXpEzcZAjuDTZjK",
+              "rank": 7
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.dN8QBNuTiaBHCKUe",
+              "rank": 7
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast either Aerial Form or Cursed Metamorphosis as a 7th-rank primal innate spell."
+        }
+      ]
+    },
+    "truespeech": {
+      "name": "Truespeech",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.gio13ryyv0SJFHPb",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.SwUiVavHKMWG7t5K",
+              "rank": 5
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Truespeech as a 5th-rank divine innate spell once per day on yourself only."
+        }
+      ]
+    },
+    "underwater-volcano": {
+      "name": "Underwater Volcano",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.UOL44Qm1rOVD5TFg",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.O7ZEqWjwdKyo2CUv",
+              "rank": 7
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Volcanic Eruption as a 7th-rank primal innate spell once per day, except that you can only evoke the volcano on the floor of a body of water, and the effects that normally happen to flying creatures happen to swimming creatures instead."
+        }
+      ]
+    },
+    "unfettered-growth": {
+      "name": "Unfettered Growth",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.CFNjlHpVUit4ygaf",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.wzctak6BxOW8xvFV",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "You gain 2nd-rank Enlarge as a primal innate spell."
+        }
+      ]
+    },
+    "unfettering-prankster": {
+      "name": "Unfettering Prankster",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.IyFz7kVF8wzPdrfJ",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.bVtkBJvGLP69qVGI"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day, you can cast Unfettered Pack as a divine innate spell."
+        }
+      ]
+    },
+    "unhampered-passage": {
+      "name": "Unhampered Passage",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.RFXzsfEgz7WbDCQO",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.aqRYNoSvxsVfqglH"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Unfettered Movement on yourself as a primal innate spell once per day."
+        }
+      ]
+    },
+    "velstrac-magic": {
+      "name": "Velstrac Magic",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.cSJHihvgeDu5K44j",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.mrDi3v933gsmnw25",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.9s5tqqXNzcoKamWx",
+              "rank": 2
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Telekinetic Maneuver and Web once per day each as 2nd-rank divine innate spells; in both cases, the spells manifest shadowy chains rather than their usual visual signifiers."
+        }
+      ]
+    },
+    "vigilant-goloma": {
+      "name": "Vigilant Goloma",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.sGzhnQpgWErX1bmx",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.gpzpAAAJ1Lza2JVl"
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Detect Magic cantrip as an arcane innate spell at will."
+        }
+      ]
+    },
+    "violent-vines": {
+      "name": "Violent Vines",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.vWUPSvEBHr5AAPUU",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.kCgkreCT6g0dipMd"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": null,
+          "note": "Once per hour, you can cast Murderous Vine as a primal innate spell."
+        }
+      ]
+    },
+    "wall-of-roses": {
+      "name": "Wall of Roses",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.xANbzN9fbrrPSpZw",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.KsWhliKfUs3IpW3c",
+              "rank": 4
+            }
+          ],
+          "tradition": "divine",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Wall of Thorns once per day as a 4th-rank divine innate spell."
+        }
+      ]
+    },
+    "warding-light": {
+      "name": "Warding Light",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.J1MURfqf0kbxrKG9",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.WBmvzNDfpwka3qT4"
+            }
+          ],
+          "tradition": "divine",
+          "atWill": true,
+          "perDay": null,
+          "note": "The tattoo allows you to cast the Light cantrip as a divine innate spell at will."
+        }
+      ]
+    },
+    "water-conjuration": {
+      "name": "Water Conjuration",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.ab7xlmUzPUOFnAl2",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.WzLKjSw6hsBhuklC"
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Create Water as a primal innate spell once per day."
+        }
+      ]
+    },
+    "water-to-water": {
+      "name": "Water to Water",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.yWt2Em1Cz7mgDS1R",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.VlNcjmYyu95vOUe8"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 2,
+          "note": "You can cast Translocate as an occult innate spell twice per day; the spell additionally gains the water trait."
+        }
+      ]
+    },
+    "wheedle-and-jig": {
+      "name": "Wheedle and Jig",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.3yLdRzh16sT8RgFV",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.IihxWhRfpsBgQ5jS",
+              "rank": 3
+            }
+          ],
+          "tradition": "arcane",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Enthrall as a 3rd-rank arcane innate spell once per day."
+        }
+      ]
+    },
+    "witch-kholo": {
+      "name": "Witch Kholo",
+      "sourceUuid": "Compendium.pf2e.heritages.Item.kXp8qRh5AgtD4Izi",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.0zU8CPejjQFnhZFI"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": true,
+          "perDay": null,
+          "note": "You can cast the Figment cantrip as an occult innate spell at will."
+        }
+      ]
+    },
+    "wooden-mantle": {
+      "name": "Wooden Mantle",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.9UD7TwyMIjbUun6U",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.3526YUgCvB5ZsKuX",
+              "rank": 5
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Mantle of the Unwavering Heart as a 5th-rank primal innate spell once per day."
+        }
+      ]
+    },
+    "words-of-unraveling": {
+      "name": "Words of Unraveling",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.JgidFws6bOoGQcti",
+      "grants": [
+        {
+          "kind": "linked",
+          "choose": 1,
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.dARE6VfJ3Uoq5M53"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.KSAEhNfZyXMO7Z7V"
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.APDrC83QljsyHenB"
+            }
+          ],
+          "tradition": "occult",
+          "atWill": false,
+          "perDay": 1,
+          "note": "Once per day as an occult innate spell, you can cast Daydreamer's Curse, Outcast's Curse, or Sage's Curse."
+        }
+      ]
+    },
+    "world-protectors-hospitality": {
+      "name": "World-Protector's Hospitality",
+      "sourceUuid": "Compendium.pf2e.feats-srd.Item.2sVR3Z1TPZ8pQdQ0",
+      "grants": [
+        {
+          "kind": "linked",
+          "spells": [
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.Mt6ZzkVX8Q4xigFq",
+              "rank": 2
+            },
+            {
+              "uuid": "Compendium.pf2e.spells-srd.Item.qXTB7Ec9yYh5JPPV",
+              "rank": 2
+            }
+          ],
+          "tradition": "primal",
+          "atWill": false,
+          "perDay": 1,
+          "note": "You can cast Create Food and Cleanse Cuisine as 2nd-rank primal innate spells, each once per day."
+        }
+      ]
+    }
+  }
+}
